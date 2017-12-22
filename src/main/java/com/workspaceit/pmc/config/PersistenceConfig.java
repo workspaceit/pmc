@@ -21,7 +21,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 
-@ComponentScan({ "com.workspaceit" })
+@ComponentScan({ "com.workspaceit.pmc" })
 public class PersistenceConfig {
 
     @Autowired
@@ -31,7 +31,7 @@ public class PersistenceConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(restDataSource());
         sessionFactory.setPackagesToScan(
-                new String[] { "com.workspaceit.entity" });
+                new String[] { "com.workspaceit.pmc.entity" });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

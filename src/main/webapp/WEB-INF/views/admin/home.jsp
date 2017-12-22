@@ -4,6 +4,7 @@
     <jsp:body>
         <div id="page-wrapper">
             <p>Hi there</p>
+            <p>${email}</p>
         </div>
     </jsp:body>
 </t:genericpage>

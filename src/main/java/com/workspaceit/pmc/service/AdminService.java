@@ -2,6 +2,8 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.entity.Admin;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminService {
     @Autowired
     AdminDao adminDao;
+
+    @Autowired
+    SessionFactory sessionFactory;
 
     @Transactional(rollbackFor = Exception.class)
     public void insert(){
@@ -33,8 +38,16 @@ public class AdminService {
         finally {
 
         }
-
-
     }
+
+    @Transactional
+    public Admin getAdminByEmail(String email){
+        return (Admin) sessionFactory.getCurrentSession()
+                .createCriteria(Admin.class)
+                .add(Restrictions.eq("email", email))
+                .uniqueResult();
+    }
+
+
 
 }

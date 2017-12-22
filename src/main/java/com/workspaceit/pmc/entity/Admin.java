@@ -1,9 +1,13 @@
 package com.workspaceit.pmc.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by anik on 12/19/17.
@@ -33,6 +37,13 @@ public class Admin {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "admin_has_roles",
+            joinColumns = {@JoinColumn(name = "admin_id")},
+            inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
+    private List<AdminRole> adminRoles = new ArrayList<AdminRole>();
 
     public int getId() {
         return id;
@@ -74,4 +85,11 @@ public class Admin {
         this.createdAt = createdAt;
     }
 
+    public List<AdminRole> getAdminRoles() {
+        return adminRoles;
+    }
+
+    public void setAdminRoles(List<AdminRole> adminRoles) {
+        this.adminRoles = adminRoles;
+    }
 }
