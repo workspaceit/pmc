@@ -1,4 +1,4 @@
-<%--
+Photographer - create, update, list, delete<%--
   Created by IntelliJ IDEA.
   User: anik
   Date: 12/15/17

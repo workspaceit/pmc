@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * Created by anik on 12/18/17.
  */
 @Configuration
-@PropertySource("classpath:local-con.properties")
+@PropertySource("classpath:local-config.properties")
 public class PropertiesWithJavaConfig {
 
     @Bean

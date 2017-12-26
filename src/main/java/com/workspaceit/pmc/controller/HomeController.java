@@ -16,7 +16,7 @@ public class HomeController {
     @RequestMapping(value = "/ss")
     public String home(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Admin admin = (Admin)auth;
+        //Admin admin = (Admin)auth;
         return "admin/home";
     }
     
