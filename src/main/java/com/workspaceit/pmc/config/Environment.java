@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
  * Created by anik on 12/18/17.
  */
 @Component
-
 public class Environment {
 
     @Value("${jdbc.user}")
@@ -22,6 +21,9 @@ public class Environment {
     private String hibernateDialect;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddl;
+    //File Path
+    @Value("${file.tmp.path}")
+    private String tmpFilePath;
 
     public String getHbm2ddl() {
         return hbm2ddl;
@@ -47,4 +49,9 @@ public class Environment {
         return hibernateDialect;
     }
 
+	public String getTmpFilePath() {
+		return tmpFilePath;
+	}
+    
+    
 }

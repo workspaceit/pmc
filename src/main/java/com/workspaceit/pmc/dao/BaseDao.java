@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,5 +20,9 @@ public class BaseDao {
         System.out.println(" ***** **** *** ** * SessionFactory Is Created * ** *** **** *****");
         this.sessionFactory = sessionFactory;
     }
+    public Session getSession() {
+    	return this.sessionFactory.getCurrentSession();
+    }
+    
 
 }
