@@ -25,6 +25,9 @@ public class Environment {
     @Value("${file.tmp.path}")
     private String tmpFilePath;
 
+    @Value("${file.photographer.profile.path}")
+    private String photographerProfilePath;
+
     public String getHbm2ddl() {
         return hbm2ddl;
     }
@@ -52,6 +55,8 @@ public class Environment {
 	public String getTmpFilePath() {
 		return tmpFilePath;
 	}
-    
-    
+
+    public String getPhotographerProfilePath() {
+        return photographerProfilePath;
+    }
 }

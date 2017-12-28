@@ -2,6 +2,7 @@ package com.workspaceit.pmc.entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ public class TempFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonIgnore
     public int getId() {
         return id;
     }
@@ -39,6 +41,7 @@ public class TempFile {
         this.token = token;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "path")
     public String getPath() {
@@ -78,5 +81,15 @@ public class TempFile {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "TempFile{" +
+                "id=" + id +
+                ", token=" + token +
+                ", path='" + path + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
     }
 }

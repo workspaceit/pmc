@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +29,7 @@ public class FileUtil {
 		public void setEnv(Environment env) {
 			this.env = env;
 		}
+
         @Autowired
         TempFileDao tempFileDao;
 
@@ -48,4 +53,22 @@ public class FileUtil {
     		} 
     		return filePath;
     	}
+
+		public boolean deleteFile(String filePath){
+			File file = new File(filePath);
+			if(file.exists()){
+				return file.delete();
+			}
+			return false;
+		}
+
+	public String copyPhotographerProfileFileFromTemp(String filePath) throws IOException {
+
+		Path source = Paths.get(filePath);
+		Path newPath = Paths.get(env.getPhotographerProfilePath());
+		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+		return newFilePath.getFileName().toString();
+	}
+
+
 }

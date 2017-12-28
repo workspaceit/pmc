@@ -24,7 +24,7 @@ public class ServiceResponse {
     public static ServiceResponse getInstance(){
         return new ServiceResponse();
     }
-    public static HashMap<String,String> getMsg(final String msg){
+    public static HashMap<String,String> getMsgInMap(String msg){
         return new HashMap<String, String>(){{put("msg",msg);}};
     }
 

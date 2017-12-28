@@ -1,0 +1,36 @@
+package com.workspaceit.pmc.dao;
+
+import com.workspaceit.pmc.entity.Photographer;
+import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
+
+/**
+ * Created by mi_rafi on 12/28/17.
+ */
+@Repository
+public class PhotographerDao extends BaseDao {
+
+    public Photographer getByEmail(String email){
+        Session session = this.openSession();
+        try{
+            return (Photographer)session.createQuery("FROM Photographer  WHERE email=:email")
+                    .setParameter("email",email)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
+    public Photographer getByUserName(String userName){
+        Session session = this.openSession();
+        try{
+            return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName")
+                    .setParameter("userName",userName)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
+
+}
