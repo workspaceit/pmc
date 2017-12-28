@@ -2,6 +2,7 @@ package com.workspaceit.pmc.service;
 import java.io.IOException;
 import java.util.Random;
 
+import com.workspaceit.pmc.helper.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,12 +33,11 @@ public class FileService {
 		String fileExtension =FileHelper.getExtension(multipartFile);
 		String filePath = this.fileUtil.saveFileInFolder(fileByte, fileExtension);
 		
-		Random rnd = new Random();
-	    int n = 1000000000 + rnd.nextInt(900000);
-	        
-	    TempFile tempFile = new TempFile();
+		int token = TokenGenerator.generateTempFileToken();
+
+		TempFile tempFile = new TempFile();
 		tempFile.setPath(filePath);
-		tempFile.setToken(n);
+		tempFile.setToken(token);
 		tempFileDao.insert(tempFile);
 		return tempFile;
 	}

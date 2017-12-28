@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 public class WebConfig implements WebMvcConfigurer {
 
+    Environment env;
+
+    @Autowired
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
+
     @Bean
     public InternalResourceViewResolver resolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -25,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
+        registry.addResourceHandler("/photographer-profile-img/**").addResourceLocations("file://"+this.env.getPhotographerProfilePath()+"/");
     }
     @Bean
     public CommonsMultipartResolver multipartResolver() {

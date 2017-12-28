@@ -125,7 +125,7 @@
                         console.log(response);
                     }
                 },success: function(data){
-                    console.log(data);
+                    window.location.href =  BASEURL+'photographer/all';
                 }
             });
             console.log(data)
