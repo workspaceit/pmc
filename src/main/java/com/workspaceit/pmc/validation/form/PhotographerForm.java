@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by mi_rafi on 12/28/17.
@@ -36,7 +37,10 @@ public class PhotographerForm
 
 
     @NotBlank(message="Confirm password required")
-    @Length(max=50,message = "Value is too large")
+    @Length.List({
+            @Length(max=50,message = "Value is too large"),
+            @Length(min=5,message = "At least 5 character required")
+    })
     private String confirmPassword;
 
     @NotBlank(message="Phone number required")

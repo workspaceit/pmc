@@ -17,15 +17,15 @@
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input id="full_name" class="form-control">
+                            <input id="fullName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input id="phone_number" class="form-control" type="Number">
+                            <input id="phoneNumber" class="form-control" type="Number">
                         </div>
                         <div class="form-group">
                             <label>User Name</label>
-                            <input id=username class="form-control">
+                            <input id=userName class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label>Confirm Password</label>
-                            <input id="confirm_password" class="form-control" type="password" placeholder="******">
+                            <input id="confirmPassword" class="form-control" type="password" placeholder="******">
                         </div>
                         <div class="imageupload panel panel-default">
                             <div class="panel-heading clearfix">
@@ -50,13 +50,7 @@
 
                                     <div class="dz-default dz-message">
                                         <span>Drop files here to upload</span>
-                                        <div class=" dz-success-mark" >
-
-                                        </div>
-
-                                        <div class="dz-error-mark" >
-
-                                        </div>
+                                        <p id="errorObj_profilePictureToken"></p>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +81,10 @@
                     <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
                     <%--<div class="dz-success-mark"><span>✔</span></div>
                     <div class="dz-error-mark"><span>✘</span></div>--%>
-                    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+                    <div class="dz-error-message">
+                        <span data-dz-errormessage></span>
+                    </div>
+
                 </div>
             </div>
 
@@ -97,12 +94,12 @@
         </div>
         <script>
         function submitPhotographerData(){
-        	var fullName = $("#full_name").val();
-        	var phoneNumber = $("#phone_number").val();
+        	var fullName = $("#fullName").val();
+        	var phoneNumber = $("#phoneNumber").val();
             var email = $("#email").val();
-            var userName = $("#username").val();
+            var userName = $("#userName").val();
             var password =  $("#password").val();
-            var confirmPassword = 	$("#confirm_password").val();
+            var confirmPassword = 	$("#confirmPassword").val();
             
             var data = {
             			"fullName":fullName,
@@ -111,7 +108,7 @@
             			"userName":userName,
             			"password":password,
             			"confirmPassword":confirmPassword,
-                        "profilePictureToken":profileImageToken
+                        "profilePictureToken":profilePictureToken
             		};
             $.ajax({
                 url: BASEURL+'api/photographer/create',
@@ -122,10 +119,12 @@
                         console.log(response);
                     },
                     422: function (response) {
+
+                        BindErrorsWithHtml("errorObj_",response.responseJSON);
                         console.log(response);
                     }
                 },success: function(data){
-                    window.location.href =  BASEURL+'photographer/all';
+                   // window.location.href =  BASEURL+'photographer/all';
                 }
             });
             console.log(data)
@@ -146,7 +145,7 @@
         <!-- dropzone -->
         <script>
             Dropzone.autoDiscover = false;
-            var profileImageToken = 0;
+            var profilePictureToken = 0;
             var otherImagesToken = [];
 
             // alternative to DOMContentLoaded
@@ -171,7 +170,7 @@
                                 removedfile:function(file){
                                     console.log(file);
                                     removeImageByToken(file.token);
-                                    profileImageToken = 0;
+                                    profilePictureToken = 0;
                                     var _ref;
                                     if(file.token == undefined){
                                         return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -187,7 +186,7 @@
                                 success:function(file,response){
 
                                     file.token = response.token;
-                                    profileImageToken = response.token;
+                                    profilePictureToken = response.token;
                                     console.log(file);
                                 }
                             }

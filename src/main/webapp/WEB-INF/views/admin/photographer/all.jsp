@@ -40,7 +40,16 @@
 
                         <tr>
                             <td class="img-clm text-center">
-                                <img src="<c:url value="/photographer-profile-img/${photographer.profilePhoto}" /> " class="img-circle" width="70">
+                                <c:set value="" var="imgSrc" />
+                                <c:choose>
+                                    <c:when test="${photographer.profilePhoto==null || photographer.profilePhoto.trim().equals('')}">
+                                        <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set value="/photographer-profile-img/${photographer.profilePhoto}" var="imgSrc" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
                             </td>
 
                             <td class="date-clm">

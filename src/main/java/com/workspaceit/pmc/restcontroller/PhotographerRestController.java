@@ -45,17 +45,22 @@ public class PhotographerRestController {
         User user =  (User)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         serviceResponse.bindValidationError(bindingResult);
+        /**
+         * Basic Validation
+         * */
         if(bindingResult.hasErrors()){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
         this.photographerValidator.validate(photographerForm,bindingResult);
-
         serviceResponse.bindValidationError(bindingResult);
-
+        /**
+         * Business logic Validation
+         * */
         if(bindingResult.hasErrors()){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
+        /** End OF Validation**/
         Photographer photographer = photographerService.create(photographerForm,user);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographer);
     }

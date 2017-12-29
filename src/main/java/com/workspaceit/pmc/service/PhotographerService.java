@@ -43,7 +43,7 @@ public class PhotographerService {
         Admin admin = this.adminDao.getByEmail(user.getUsername());
         String profilePictureName = "";
         Integer fileToken = photographerForm.getProfilePictureToken();
-        if(fileToken!=null){
+        if(fileToken!=null && fileToken>0){
             profilePictureName = fileService.copyFileToPhotographerProfilePicture(fileToken);
         }
 
