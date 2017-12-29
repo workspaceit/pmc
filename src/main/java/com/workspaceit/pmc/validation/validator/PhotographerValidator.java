@@ -31,26 +31,85 @@ public class PhotographerValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         PhotographerForm photographerForm = (PhotographerForm)obj;
 
-        /**
-         * Email unique check
-        * */
-        Photographer photographer = photographerDao.getByEmail(photographerForm.getEmail());
+        String email = photographerForm.getEmail();
+        String userName = photographerForm.getUserName();
+        String password = photographerForm.getPassword();
+        String conPassword = photographerForm.getConfirmPassword();
+
+        this.uniqueEmailCheck(email,errors);
+        this.uniqueUserNameCheck(userName,errors);
+        this.passwordMatchCheck(password,conPassword,errors);
+    }
+    public void validate(Object obj, Errors errors,String... params) {
+        PhotographerForm photographerForm = (PhotographerForm)obj;
+
+        String email = photographerForm.getEmail();
+        String userName = photographerForm.getUserName();
+        String password = photographerForm.getPassword();
+        String conPassword = photographerForm.getConfirmPassword();
+
+        for(String param : params){
+            switch(param){
+                case "email":
+                    this.uniqueEmailCheck(email,errors);
+                    break;
+                case "userName":
+                    this.uniqueUserNameCheck(userName,errors);
+                    break;
+                case "password":
+                    this.passwordMatchCheck(password,conPassword,errors);
+                    break;
+            }
+        }
+    }
+    public void validateForUpdate(int id,Object obj, Errors errors,String... params) {
+        PhotographerForm photographerForm = (PhotographerForm)obj;
+
+        String email = photographerForm.getEmail();
+        String userName = photographerForm.getUserName();
+        String password = photographerForm.getPassword();
+        String conPassword = photographerForm.getConfirmPassword();
+
+        for(String param : params){
+            switch(param){
+                case "email":
+                    this.emailUsedByOthersCheck(id,email,errors);
+                    break;
+                case "userName":
+                    this.userNameUsedByOthersCheck(id,userName,errors);
+                    break;
+                case "password":
+                    this.passwordMatchCheck(password,conPassword,errors);
+                    break;
+            }
+        }
+    }
+    private void uniqueEmailCheck(String email,Errors errors){
+        Photographer photographer = photographerDao.getByEmail(email);
         if(photographer!=null){
             errors.rejectValue("email", "Email already taken");
         }
-
-        /**
-         * Username unique check
-         * */
-        photographer = photographerDao.getByUserName(photographerForm.getUserName());
+    }
+    private void emailUsedByOthersCheck(int id,String email,Errors errors){
+        Photographer photographer = photographerDao.getByIdAndEmail(id,email);
+        if(photographer!=null){
+            errors.rejectValue("email", "Email already taken");
+        }
+    }
+    private void uniqueUserNameCheck(String userName,Errors errors){
+        Photographer photographer = photographerDao.getByUserName(userName);
         if(photographer!=null){
             errors.rejectValue("userName", "User name already taken");
         }
-
-        /**
-         * Password mathing with confirm password
-         * */
-        if(!photographerForm.getPassword().equals(photographerForm.getConfirmPassword())){
+    }
+    private void userNameUsedByOthersCheck(int id,String userName,Errors errors){
+        Photographer photographer = photographerDao.getByByIdAndUserName(id,userName);
+        if(photographer!=null){
+            errors.rejectValue("userName", "User name already taken");
+        }
+    }
+    private void passwordMatchCheck(String password,String conPassword,Errors errors){
+        if((password!=null && conPassword!=null) && !password.equals(conPassword)){
             errors.rejectValue("password", "Password does not match with confirm password");
         }
     }

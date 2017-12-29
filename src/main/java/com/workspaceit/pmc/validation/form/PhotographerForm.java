@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 public class PhotographerForm
 {
 
+
     @NotBlank(message="Full name required")
     @Length(max=50,message = "Value is too large")
     private String fullName;
@@ -23,32 +24,31 @@ public class PhotographerForm
     @Length(max=50,message = "Value is too large")
     private String userName;
 
-    @UniqueEmail
+    @NotBlank(message="Password required")
+    @Length.List({
+            @Length(min=5,message = "At least 5 character required"),
+            @Length(max=50,message = "Value is too large")
+
+    })
+    private String password;
+
     @NotBlank(message="Email required")
     @Length(max=50,message = "Value is too large")
     @Email(message = "Email is not valid")
     private String email;
 
 
-    @NotBlank(message="Password required")
-    @Length(max=50,message = "Value is too large")
-    @UniqueEmail
-    private String password;
-
-
     @NotBlank(message="Confirm password required")
-    @Length.List({
-            @Length(max=50,message = "Value is too large"),
-            @Length(min=5,message = "At least 5 character required")
-    })
+    @Length(max=50,message = "Value is too large")
     private String confirmPassword;
 
     @NotBlank(message="Phone number required")
     @Length(max=15,message = "Value is too large")
     private String phoneNumber;
 
-    @NotNull(message="Profile picture required")
     private Integer profilePictureToken;
+
+
 
     public void setFullName(String fullName) {
         this.fullName = (fullName!=null)?fullName.trim():fullName;

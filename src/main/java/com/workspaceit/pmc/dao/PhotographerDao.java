@@ -21,11 +21,34 @@ public class PhotographerDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+    public Photographer getById(int id){
+        Session session = this.openSession();
+        try{
+            return (Photographer)session.createQuery("FROM Photographer WHERE id=:id")
+                    .setParameter("id",id)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
     public Photographer getByEmail(String email){
         Session session = this.openSession();
         try{
             return (Photographer)session.createQuery("FROM Photographer WHERE email=:email")
                     .setParameter("email",email)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
+    public Photographer getByIdAndEmail(int id,String email){
+        Session session = this.openSession();
+        try{
+            return (Photographer)session.createQuery("FROM Photographer WHERE email=:email AND id !=:id")
+                    .setParameter("email",email)
+                    .setParameter("id",id)
                     .setMaxResults(1)
                     .uniqueResult();
         }finally {
@@ -43,5 +66,16 @@ public class PhotographerDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
-
+    public Photographer getByByIdAndUserName(int id,String userName){
+        Session session = this.openSession();
+        try{
+            return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName AND id!=:id")
+                    .setParameter("userName",userName)
+                    .setParameter("id",id)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
 }

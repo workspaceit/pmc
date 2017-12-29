@@ -14,8 +14,10 @@ function ErrorMessageAlias() {
     this.replacedMsg = "";
 }
 var ErrorMessageAliasList = [];
-function BindErrorsWithHtml(preFix,requestErrors){
-    UnBindErrors(preFix);
+function BindErrorsWithHtml(preFix,requestErrors,doNotUnbind){
+    if(doNotUnbind==undefined || doNotUnbind==false){
+        UnBindErrors(preFix);
+    }
     for(var i in requestErrors){
         try{
             var params = requestErrors[i].params;

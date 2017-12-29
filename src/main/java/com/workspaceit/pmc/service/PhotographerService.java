@@ -4,7 +4,7 @@ import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.dao.PhotographerDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.TempFile;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.CypherHelper;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,11 @@ public class PhotographerService {
         Admin admin = this.adminDao.getByEmail(user.getUsername());
         String profilePictureName = "";
         Integer fileToken = photographerForm.getProfilePictureToken();
+
+        boolean removeTempFileRequired = false;
         if(fileToken!=null && fileToken>0){
             profilePictureName = fileService.copyFileToPhotographerProfilePicture(fileToken);
+            removeTempFileRequired = true;
         }
 
         Photographer photographer = new Photographer();
@@ -56,8 +59,84 @@ public class PhotographerService {
         photographer.setProfilePhoto(profilePictureName);
         photographer.setCreatedBy(admin);
         photographerDao.insert(photographer);
-        fileService.removeTempFile(fileToken);
+        /**
+         * Remove temporary file after insert
+         * */
+        if(removeTempFileRequired)fileService.removeTempFile(fileToken);
+
         return photographer;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public Photographer updateBasicInfo(int id,PhotographerForm photographerForm,User user) throws EntityNotFound {
 
+        String profilePictureName = "";
+        Integer fileToken = photographerForm.getProfilePictureToken();
+        boolean removeTempFileRequired=false;
+
+        if(fileToken!=null && fileToken>0){
+            profilePictureName = fileService.copyFileToPhotographerProfilePicture(fileToken);
+            removeTempFileRequired = true;
+        }
+
+        Photographer photographer = this.getPhotographer(id);
+        photographer.setFullName(photographerForm.getFullName());
+        photographer.setUserName(photographerForm.getUserName());
+        photographer.setEmail(photographerForm.getEmail());
+        photographer.setPhoneNumber(photographerForm.getPhoneNumber());
+
+        if(profilePictureName!=null&&!profilePictureName.trim().equals(""))
+            photographer.setProfilePhoto(profilePictureName);
+
+        this.photographerDao.update(photographer);
+
+        /**
+         * Remove temporary file after update
+         * */
+        if(removeTempFileRequired)this.fileService.removeTempFile(fileToken);
+
+
+        return photographer;
+    }
+    private Photographer getPhotographer(int id)throws EntityNotFound{
+        Photographer photographer =  this.getById(id);
+        if(photographer==null){
+            throw new EntityNotFound("No photographer found");
+        }
+        return photographer;
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Photographer updateProfilePicture(int id,int token,User user)throws EntityNotFound{
+        Photographer photographer =  this.getPhotographer(id);
+        return this.updateProfilePicture(photographer,token,user);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    Photographer updateProfilePicture(Photographer photographer,int token,User user){
+        String fileName = this.fileService.copyFileToPhotographerProfilePicture(token);
+        if(fileName==null || fileName.equals("")){
+            return photographer;
+        }
+
+        photographer.setProfilePhoto(fileName);
+        this.update(photographer);
+        this.fileService.removeTempFile(token);
+        return photographer;
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Photographer updatePassword(int id,String password,User user)throws EntityNotFound{
+        Photographer photographer =  this.getPhotographer(id);
+        photographer.setPassword(CypherHelper.getbCryptPassword(password));
+        this.update(photographer);
+        photographer = this.getPhotographer(id);
+        return photographer;
+    }
+    public Photographer getById(int id){
+        return this.photographerDao.getById(id);
+    }
+    public void create(Photographer photographer){
+        this.photographerDao.insert(photographer);
+    }
+    public void update(Photographer photographer){
+        this.photographerDao.update(photographer);
+    }
 }

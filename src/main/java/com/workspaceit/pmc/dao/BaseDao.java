@@ -25,7 +25,10 @@ public class BaseDao {
     public void insert(Object obj){
         Session session = this.getCurrentSession();
         session.save(obj);
-
+    }
+    public void update(Object obj){
+        Session session = this.getCurrentSession();
+        session.update(obj);
     }
 
     protected Session getCurrentSession() {

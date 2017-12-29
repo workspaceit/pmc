@@ -5,10 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by mi on 8/1/16.
@@ -53,7 +50,32 @@ public class ServiceResponse {
             }
         }
     }
+    public void bindValidationError(BindingResult result,String... parms){
+        if(result.hasErrors()) {
+            List<String> paramList = Arrays.asList(parms);
+            for (ObjectError object : result.getAllErrors()) {
 
+
+                if(object instanceof FieldError) {
+                    FieldError fieldError = (FieldError) object;
+                    if(!paramList.contains(fieldError.getField())){
+                        continue;
+                    }
+
+                    String errorMsg = (fieldError.getDefaultMessage()==null)?fieldError.getCode():fieldError.getDefaultMessage();
+                    this.setValidationError(fieldError.getField(), errorMsg);
+                }
+
+                if(object instanceof ObjectError) {
+                    ObjectError objectError = (ObjectError) object;
+
+                    //requestError.setParams(objectError.get());
+                    //requestError.setMsg(objectError.getCode());
+                    // requestError.setParams(objectError.getCode());
+                }
+            }
+        }
+    }
     public List<Map<String, String>> getFormError() {
         return formError;
     }
@@ -64,4 +86,6 @@ public class ServiceResponse {
         errorObj.put("msg",msg);
      this.formError.add(errorObj);
     }
+
+
 }
