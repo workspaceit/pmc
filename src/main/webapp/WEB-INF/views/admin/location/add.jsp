@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:genericpage>
     <jsp:body>
         <!-- /#page-wrapper -->
@@ -61,7 +62,12 @@
                                                 <label>
                                                     <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                                                 </label>
-                                                <input id="stateId" class="form-control">
+                                                <select id="stateId" class="form-control">
+                                                    <c:forEach var="state" items="${states}">
+                                                        <option value="${state.id}" >${state.name}</option>
+                                                    </c:forEach>
+
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-xs-12">
@@ -74,7 +80,7 @@
 
                                     <div class="form-group">
                                         <label>Phone Number</label>
-                                        <input  class="form-control">
+                                        <input id="phone"  class="form-control">
                                     </div>
                                     <div class="imageupload panel panel-default">
                                         <div class="panel-heading clearfix">
@@ -91,6 +97,7 @@
                                                 <input type="file" name="image-file">
                                             </label>
                                             <button type="button" class="btn btn-danger btn-sm-new">Delete image</button>
+                                            <p id="errorObj_locationLogo"  class="text-danger"></p>
                                         </div>
                                         <div class="url-tab panel-body" style="display:none;">
                                             <div class="input-group">
@@ -130,14 +137,17 @@
                                                 <h3 style="text-align: left;color: #fff"> TRANSITIONS</h3>
                                                 <p style="text-align: left;">Duration Speed</p>
                                                 <div class="input-group" style="margin-bottom: 13px">
-                                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="">
+                                                    <input type="text" class="form-control" id="durationSpeed" placeholder="">
                                                     <div class="input-group-addon">sec</div>
                                                 </div>
+                                                <p class="text-danger" id="errorObj_durationSpeed"></p>
                                                 <p style="text-align: left;">Ad Break Time</p>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="">
+                                                    <input type="text" class="form-control" id="breakTime" placeholder="">
                                                     <div class="input-group-addon">min</div>
+
                                                 </div>
+                                                <p class="text-danger" id="errorObj_breakTime"></p>
 
                                             </div>
                                             <div class="col-md-6">
@@ -206,13 +216,16 @@
                     url: BASEURL+"api/location/create",
                     type: "POST",
                     data: data ,
-                    500: function(response) {
-                        console.log(response);
-                    }, 401: function(response) {
-                        console.log(response.responseJSON);
-                    }, 422: function(response) {
-                        console.log(response.responseJSON);
-                    }, success: function(response) {
+                    statusCode:{
+                        500: function(response) {
+                            console.log(response);
+                        }, 401: function(response) {
+                            console.log(response.responseJSON);
+                        }, 422: function(response) {
+                            BindErrorsWithHtml("errorObj_",response.responseJSON);
+                        }
+                    },
+                     success: function(response) {
                         console.log(response);
                     }
                 });

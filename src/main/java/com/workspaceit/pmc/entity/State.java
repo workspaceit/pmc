@@ -22,6 +22,9 @@ public class State {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "code")
+    private String code;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
@@ -32,9 +35,9 @@ public class State {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
-    private Admin createdBy;
+    private Admin createdBy;*/
 
     public int getId() {
         return id;
@@ -50,6 +53,14 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Date getCreatedAt() {
@@ -68,12 +79,12 @@ public class State {
         this.updatedAt = updatedAt;
     }
 
-    public Admin getCreatedBy() {
+ /*   public Admin getCreatedBy() {
         return createdBy;
     }
 
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
-    }
+    }*/
 
 }

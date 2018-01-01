@@ -2,44 +2,41 @@ package com.workspaceit.pmc.validation.location;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by mi_rafi on 1/1/18.
  */
 public class LocationForm {
-    @NotNull(message = "Name is required")
     @NotBlank(message = "Name is required")
     @Length(max = 100,message = "Value too large")
     private String name;
 
-    @NotNull(message = "Address is required")
     @NotBlank(message = "Address is required")
     @Length(max = 200,message = "Value too large")
     private String address;
 
     @NotNull(message = "State Id is required")
-   // @Length(min = 1,message = "State Id is required")
+    @Min(value = 1,message = "State Id is required")
     private Integer stateId;
 
-    @NotNull(message = "Zip is required")
     @NotBlank(message = "Zip is required")
-    @Length(max = 10,message = "Value too large")
+    @Max(value = 10,message = "Value too large")
     private String zip;
 
-    @NotNull(message = "Phone is required")
     @NotBlank(message = "Phone is required")
     @Length(max = 50,message = "Value too large")
     private String phone;
 
-    @NotNull(message = "Location Logo is required")
     @NotBlank(message = "Location Logo is required")
     private String locationLogo;
 
     @NotNull(message = "Has Slideshow is required")
     private Boolean hasSlideshow;
 
-    @NotNull(message = "Duration Speed is required")
     @NotBlank(message = "Duration Speed is required")
     private String durationSpeed;
 

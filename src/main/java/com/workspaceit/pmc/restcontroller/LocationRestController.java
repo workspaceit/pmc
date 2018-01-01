@@ -2,6 +2,7 @@ package com.workspaceit.pmc.restcontroller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import com.workspaceit.pmc.validation.location.LocationForm;
@@ -30,15 +31,22 @@ import java.util.stream.Collectors;
 @RequestMapping(ControllerUriPrefix.API+"/location")
 public class LocationRestController {
     private LocationValidator locationValidator;
+    private AdminService adminService;
 
     @Autowired
     public void setLocationValidator(LocationValidator locationValidator) {
         this.locationValidator = locationValidator;
     }
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
+
 
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid LocationForm locationForm, BindingResult bindingResult) {
-        Admin currentUser = (Admin) authentication.getPrincipal();
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 

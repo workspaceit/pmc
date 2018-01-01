@@ -2,6 +2,7 @@
 
 <!-- Navigation -->
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -53,17 +54,17 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus-circle fa-2x f-size"></i><span class="visible-xs" style="margin-left:15px;">Dashboard</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="ad.html">Add New Advertiser</a></li>
-                        <li><a href="add-new-location.html">Add New Location</a></li>
-                        <li><a href="add-new-venue.html">Add New Venue</a></li>
-                        <li><a href="add-new-photographer.html">Add New Photographer</a></li>
+                        <li><a href="#">Add New Advertiser</a></li>
+                        <li><a href="<c:url value="/location/add" />">Add New Location</a></li>
+                        <li><a href="#">Add New Venue</a></li>
+                        <li><a href="<c:url value="/photographer/add" />">Add New Photographer</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="font-size:16px;color:#fff;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span style="margin-left:15px;"> John Smith </span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="personal-details.html"><i class="fa fa-fw fa-user"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-fw fa-power-off"></i>Log Out</a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-user"></i>Profile</a></li>
+                        <li><a href="<c:url value="/logout" />"><i class="fa fa-fw fa-power-off"></i>Log Out</a></li>
                     </ul>
                 </li>
             </ul>
