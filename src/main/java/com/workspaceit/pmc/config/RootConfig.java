@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Configuration
 @ComponentScan({ "com.workspaceit.pmc.*" })
-@Import({ SecurityConfig.class })
+
 
 public class RootConfig {
 

@@ -39,7 +39,7 @@ public class AdminService {
         }
     }
 
-    @Transactional
+
     public Admin getAdminByEmail(String email){
         return adminDao.getByEmail(email);
     }

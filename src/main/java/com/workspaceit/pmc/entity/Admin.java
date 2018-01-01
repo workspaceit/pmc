@@ -5,9 +5,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by anik on 12/19/17.
@@ -43,7 +41,7 @@ public class Admin {
     @JoinTable(name = "admin_has_roles",
             joinColumns = {@JoinColumn(name = "admin_id")},
             inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
-    private List<AdminRole> adminRoles = new ArrayList<AdminRole>();
+    private Set<AdminRole> adminRoles = new HashSet<>();
 
     public int getId() {
         return id;
@@ -85,11 +83,11 @@ public class Admin {
         this.createdAt = createdAt;
     }
 
-    public List<AdminRole> getAdminRoles() {
+    public Set<AdminRole> getAdminRoles() {
         return adminRoles;
     }
 
-    public void setAdminRoles(List<AdminRole> adminRoles) {
+    public void setAdminRoles(Set<AdminRole> adminRoles) {
         this.adminRoles = adminRoles;
     }
 }

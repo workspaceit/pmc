@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 /**
  * Created by anik on 12/22/17.
@@ -30,13 +31,13 @@ public class MainController {
 
     }
 
-    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/**", method = RequestMethod.GET)
     public ModelAndView adminPage() {
         ModelAndView model = new ModelAndView();
-        Admin admin = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Admin admin = (Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addObject("title", "Spring Security Login Form - Database Authentication");
         model.addObject("message", "This page is for ROLE_ADMIN only!");
-        model.setViewName("admin");
+        model.setViewName("home2");
         return model;
 
     }
@@ -60,18 +61,15 @@ public class MainController {
 
     //for 403 access denied page
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accesssDenied() {
-
+    public ModelAndView accessDenied(Principal user) {
         ModelAndView model = new ModelAndView();
-
-        //check if user is login
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            // Admin admin = (Admin) auth.getPrincipal();
-            User admin = (User) auth.getPrincipal();
-            model.addObject("email", admin.getUsername());
-            System.out.println(admin);
-
+        System.out.println(user);
+        if (user != null) {
+            model.addObject("msg", "Hi " + user.getName()
+                    + ", you do not have permission to access this page!");
+        } else {
+            model.addObject("msg",
+                    "You do not have permission to access this page!");
         }
         model.setViewName("403");
         return model;
