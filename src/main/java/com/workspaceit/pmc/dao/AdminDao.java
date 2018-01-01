@@ -18,6 +18,7 @@ public class AdminDao extends BaseDao {
         session.save(admin);
         return admin;
     }
+
     public Admin getByEmail(String email){
         Session session = this.openSession();
         try{

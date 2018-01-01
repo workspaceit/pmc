@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class AdminService {
     @Autowired
     AdminDao adminDao;
@@ -22,7 +21,7 @@ public class AdminService {
     @Autowired
     SessionFactory sessionFactory;
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void insert(){
         try {
             Admin admin = new Admin();
@@ -42,10 +41,7 @@ public class AdminService {
 
     @Transactional
     public Admin getAdminByEmail(String email){
-        return (Admin) sessionFactory.getCurrentSession()
-                .createCriteria(Admin.class)
-                .add(Restrictions.eq("email", email))
-                .uniqueResult();
+        return adminDao.getByEmail(email);
     }
 
 
