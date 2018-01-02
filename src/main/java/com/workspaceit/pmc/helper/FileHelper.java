@@ -44,6 +44,9 @@ public class FileHelper {
 		}
 		return fileExtensions;
 	}
+	public static long getMBtoByte(int mb) {
+		return mb *(1024*1000);
+	}
 	
 	
 }

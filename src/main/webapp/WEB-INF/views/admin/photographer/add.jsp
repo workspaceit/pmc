@@ -140,14 +140,14 @@
         <!-- /#wrapper -->
 
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
-        <script src="https://rawgit.com/enyo/dropzone/master/dist/min/dropzone.min.js"></script>
+        <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
 
 
         <!-- dropzone -->
         <script>
             Dropzone.autoDiscover = false;
             var profilePictureToken = 0;
-            var otherImagesToken = [];
+            var banerImagesToken = [];
 
             // alternative to DOMContentLoaded
             document.onreadystatechange = function () {
@@ -194,14 +194,14 @@
 
                     });
                 }
-            }
+            };
 
             function removeImageByToken(token){
                 if(token == undefined){
                     return;
                 }
                 $.ajax({
-                    url: BASEURL+'file/remove/photographer-profile-image',
+                    url: BASEURL+'file/remove',
                     data:{"token":token},
                     type: 'POST',
                     statusCode: {

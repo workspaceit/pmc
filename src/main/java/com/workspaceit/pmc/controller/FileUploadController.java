@@ -4,10 +4,13 @@ import java.util.Set;
 import java.io.IOException;
 import java.util.HashSet;
 
+import com.workspaceit.pmc.constant.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,9 +51,19 @@ public class FileUploadController{
         };
 
     }
-    @RequestMapping(value="/upload/photographer-profile-image",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
-    public ResponseEntity<?> uploadPhotographerProfilePicture(@RequestParam("profileImg") MultipartFile multipartFile) {
-        long fileSizeLimit = 1 *(1024*1000); // 1 MB
+
+    @Secured({UserRole._SUPER_ADMIN})
+    @RequestMapping(value="/upload/{uploader}",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
+    public ResponseEntity<?> uploadPhotographerProfilePicture(@RequestParam("profileImg") MultipartFile multipartFile,
+															  @PathVariable("uploader") String uploader) {
+        long fileSizeLimit;
+        switch (uploader){
+            case "photographer-profile-image":
+            case "venue-logo-image":
+            case "venue-background-image":
+                default:
+                    fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+        }
 
 
     	String mimeType = FileHelper.getMimeType(multipartFile);
@@ -59,12 +72,12 @@ public class FileUploadController{
     		serviceResponse.setValidationError("profileImg"," Mime Type "+ mimeType+" not allowed");
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
     	}
-    	System.out.println(multipartFile.getSize());
+
 		if(multipartFile==null || multipartFile.getSize()==0){
 			serviceResponse.setValidationError("profileImg","No file receive");
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
 		}
-
+        System.out.println(multipartFile.getSize());
 
 		if(multipartFile.getSize()>fileSizeLimit){
 			serviceResponse.setValidationError("profileImg","File size exceeds. Max size 1 MB");
@@ -84,7 +97,7 @@ public class FileUploadController{
     	
     	return ResponseEntity.status(HttpStatus.ACCEPTED).body(tempfile);
     }
-	@RequestMapping(value="/remove/photographer-profile-image",method=RequestMethod.POST)
+	@RequestMapping(value="/remove",method=RequestMethod.POST)
 	public ResponseEntity<?> uploadPhotographerProfilePicture(@RequestParam("token") Integer token) {
 
 
@@ -94,7 +107,9 @@ public class FileUploadController{
 			ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
 		}
 		this.fileService.removeTempFile(token);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Successfully removed"));
+        serviceResponse.setMsg("token",token);
+        serviceResponse.setMsg("msg","Successfully removed");
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getMsg());
 	}
     
 }

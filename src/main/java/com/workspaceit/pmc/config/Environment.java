@@ -25,6 +25,9 @@ public class Environment {
     @Value("${file.tmp.path}")
     private String tmpFilePath;
 
+    @Value("${file.common.path}")
+    private String commonFilePath;
+
     @Value("${file.photographer.profile.path}")
     private String photographerProfilePath;
 
@@ -58,5 +61,13 @@ public class Environment {
 
     public String getPhotographerProfilePath() {
         return photographerProfilePath;
+    }
+
+    public String getCommonFilePath() {
+        return commonFilePath;
+    }
+
+    public void setCommonFilePath(String commonFilePath) {
+        this.commonFilePath = commonFilePath;
     }
 }

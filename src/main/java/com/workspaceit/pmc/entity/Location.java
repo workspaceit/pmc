@@ -44,7 +44,7 @@ public class Location {
     private Boolean hasSlideshow;
 
     @Column(name = "duration_speed")
-    private String durationSpeed;
+    private Double durationSpeed;
 
     @Column(name = "break_time")
     private Double breakTime;
@@ -137,11 +137,11 @@ public class Location {
         this.hasSlideshow = hasSlideshow;
     }
 
-    public String getDurationSpeed() {
+    public Double getDurationSpeed() {
         return durationSpeed;
     }
 
-    public void setDurationSpeed(String durationSpeed) {
+    public void setDurationSpeed(Double durationSpeed) {
         this.durationSpeed = durationSpeed;
     }
 

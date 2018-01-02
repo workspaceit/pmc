@@ -2,7 +2,7 @@
  * Created by mi on 8/5/16.
  */
 var ErrorManager = {};
-ErrorManager.htmlComponent={tag:"p",cls:"error"};
+ErrorManager.htmlComponent={tag:"p",cls:"text-danger"};
 function makeHtmlErrorElement(id,val){
     var tag = ErrorManager.htmlComponent.tag;
     var cls = ErrorManager.htmlComponent.cls;
