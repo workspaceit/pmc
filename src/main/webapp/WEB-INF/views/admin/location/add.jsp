@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <!-- /#page-wrapper -->
@@ -140,12 +141,12 @@
                                     <div class="imageupload panel panel-default">
                                         <div class="panel-heading clearfix">
                                             <h4 class="panel-title pull-left ">Slideshow Settings</h4>
-                                            <div class="btn-group pull-right">
-                                                <button type="button" class="btn btn-default active">On</button>
-                                                <button type="button" class="btn btn-default">Off</button>
+                                            <div  id="slideShowSettingsBtnDiv" class="btn-group pull-right">
+                                                <button type="button" data-val="1" class="btn btn-default active">On</button>
+                                                <button type="button" data-val="0" class="btn btn-default">Off</button>
                                             </div>
                                         </div>
-                                        <div class="file-tab panel-body">
+                                        <div  id="slideShowSettings" class="file-tab panel-body">
                                             <div class="col-md-6">
                                                 <h3 style="text-align: left;color: #fff"> TRANSITIONS</h3>
                                                 <p style="text-align: left;">Duration Speed</p>
@@ -167,17 +168,19 @@
                                                 <h3 style="text-align: left;"> TRANSITIONS</h3>
                                                 <p style="text-align: left">Fade In</p>
                                                 <select id="fadeInTime" class="form-control" style="margin-bottom: 13px">
-                                                    <option value="1">1s</option>
-                                                    <option value="2">2s</option>
-                                                    <option value="3">3s</option>
-                                                    <option value="4">4s</option>
+                                                    <c:forEach var="fadeIn" items="${fadeInList}">
+                                                        <fmt:parseNumber var = "fadeInVal" integerOnly = "true"
+                                                                         type = "number" value = "${fadeIn}" />
+                                                        <option value="${fadeInVal}" >${fadeInVal}s</option>
+                                                    </c:forEach>
                                                 </select>
                                                 <p style="text-align: left">Fade Out</p>
                                                 <select id="fadeOutTime" class="form-control" style="margin-bottom: 13px">
-                                                    <option value="1">1s</option>
-                                                    <option value="2">2s</option>
-                                                    <option value="3">3s</option>
-                                                    <option value="4">4s</option>
+                                                    <c:forEach var="fadeOut" items="${fadeOutList}">
+                                                        <fmt:parseNumber var = "fadeOutVal" integerOnly = "true"
+                                                                         type = "number" value ="${fadeOut}" />
+                                                        <option value="${fadeOutVal}" >${fadeOutVal}s</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
 
@@ -235,7 +238,7 @@
                 var fadeOutTime = $('#fadeOutTime').val();
                 var logoImgToken = getVenueLogoToken();
                 var bgTokens = getVenueBgImgTokens();
-                var hasSlideshow = true;
+                var hasSlideshow = getSlideShowSettings();
                 var data = {
                     name: name,
                     address: address,
@@ -450,6 +453,33 @@
                         fn(data);
                     }
                 });
+            }
+
+           // $("#slideShowSettingsBtnDiv .")
+            $(document).ready(function(){
+                $("#slideShowSettingsBtnDiv .btn").click(function(){
+                    $("#slideShowSettingsBtnDiv .active").removeClass("active");
+                    $(this).addClass("active");
+                    var onOfVal = parseInt($(this).data("val"));
+                    if(isNaN(onOfVal)){
+                        onOfVal = 0;
+                    }
+                    if(onOfVal==1){
+                        $("#slideShowSettings").show();
+                    }else{
+                        $("#slideShowSettings").hide();
+                    }
+
+                })
+            });
+
+            function getSlideShowSettings(){
+                var onOfVal = $("#slideShowSettingsBtnDiv .active").first().data("val");
+                parseInt(onOfVal);
+                if(isNaN(onOfVal)){
+                    onOfVal = 0;
+                }
+                return (onOfVal==1)?true:false;
             }
         </script>
     </jsp:body>

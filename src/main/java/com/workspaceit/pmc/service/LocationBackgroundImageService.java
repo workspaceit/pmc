@@ -38,7 +38,7 @@ public class LocationBackgroundImageService {
 
             LocationBackgroundImage locationBackgroundImage = new LocationBackgroundImage();
             locationBackgroundImage.setImage(bgImg);
-            locationBackgroundImage.setLocation(location);
+            locationBackgroundImage.setLocationId(location.getId());
 
             this.create(locationBackgroundImage);
         }

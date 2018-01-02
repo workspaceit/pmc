@@ -44,6 +44,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException {
 
         Admin admin = adminService.getAdminByEmail(s);
+        if(admin==null){
+            throw new UsernameNotFoundException("User not found");
+        }
+
         Set<AdminRole> roles = admin.getAdminRoles();
 //        for(AdminRole adminRole: roles){
 //            System.out.println(adminRole.toString());

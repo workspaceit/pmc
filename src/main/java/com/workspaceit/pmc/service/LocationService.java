@@ -57,6 +57,12 @@ public class LocationService {
     @Transactional(rollbackFor = Exception.class)
     public Location create(LocationForm locationForm){
         Location location = new Location();
+        Double breakTime = 0d;
+        Double durationSpeed = 0d;
+        Double fadeInTime = 0d;
+        Double fadeOutTime = 0d;
+
+
         location.setName(locationForm.getName());
         location.setAddress(locationForm.getAddress());
 
@@ -66,14 +72,25 @@ public class LocationService {
         location.setZip(locationForm.getZip());
         location.setPhone(locationForm.getPhone());
         location.setHasSlideshow(locationForm.getHasSlideshow());
-        location.setBreakTime(locationForm.getBreakTime());
-        location.setDurationSpeed(locationForm.getDurationSpeed());
-        location.setFadeInTime(locationForm.getFadeInTime());
-        location.setFadeOutTime(locationForm.getFadeOutTime());
+
+
+        if(locationForm.getHasSlideshow()){
+            breakTime = locationForm.getBreakTime();
+            durationSpeed =  locationForm.getDurationSpeed();
+            fadeInTime = locationForm.getFadeInTime();
+            fadeOutTime = locationForm.getFadeOutTime();
+        }
+
+        location.setBreakTime(breakTime);
+        location.setDurationSpeed(durationSpeed);
+        location.setFadeInTime(fadeInTime);
+        location.setFadeOutTime(fadeOutTime);
+
         int logoImgToken = locationForm.getLogoImgToken();
+
         int[] bgTokens = locationForm.getBgTokens();
 
-        String logoImgName = this.fileService.copyFileToPhotographerProfilePicture(logoImgToken);
+        String logoImgName = this.fileService.copyFile(logoImgToken);
         location.setLocationLogo(logoImgName);
         this.create(location);
 

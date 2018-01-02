@@ -15,6 +15,8 @@
                             <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
                             <button class="btn btn-action-top">Cancel</button>
+                            <br>
+                            <span id="successMsg"></span>
                         </div>
 
 
@@ -111,9 +113,11 @@
         </div>
         <script>
             var updateCount = 0;
-            function notifyUpdateStatus(uCount){
+            function notifyUpdateStatus(){
+                $("#successMsg").html("Success fully updated").fadeIn(500).delay( 1000 ).fadeIn(500,function(){
+                    location.reload();
+                });
 
-                location.reload();
             }
             function initUpdate(){
                 UnBindErrors("errorObj_");

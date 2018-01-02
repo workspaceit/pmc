@@ -35,16 +35,13 @@ public class LocationForm {
     @NotNull(message = "Has Slideshow is required")
     private Boolean hasSlideshow;
 
-    @NotNull(message = "Duration Speed is required")
+
     private Double durationSpeed;
 
-    @NotNull(message = "Break Time is required")
     private Double breakTime;
 
-    @NotNull(message = "Fade In Time is required")
     private Double fadeInTime;
 
-    @NotNull(message = "Fade Out Time is required")
     private Double fadeOutTime;
 
     private int[] bgTokens;

@@ -21,9 +21,9 @@ public class LocationBackgroundImage {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    private Location location;
+
+    @Column(name = "location_id")
+    private Integer locationId;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,12 +50,12 @@ public class LocationBackgroundImage {
         this.image = image;
     }
 
-    public Location getLocation() {
-        return location;
+    public Integer getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     public Date getCreatedAt() {
@@ -74,4 +74,22 @@ public class LocationBackgroundImage {
         this.createdBy = createdBy;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocationBackgroundImage that = (LocationBackgroundImage) o;
+
+        if (id != that.id) return false;
+        if (image != null ? !image.equals(that.image) : that.image != null) return false;
+        if (locationId != null ? !locationId.equals(that.locationId) : that.locationId != null) return false;
+        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
+        return createdBy != null ? createdBy.equals(that.createdBy) : that.createdBy == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

@@ -69,9 +69,9 @@ public class Location {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", targetEntity = LocationBackgroundImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    Set<LocationBackgroundImage> locationBackgroundImages = new HashSet<LocationBackgroundImage>();
+    @OneToMany( fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id",referencedColumnName ="id")
+    Set<LocationBackgroundImage> locationBackgroundImages;
 
     public int getId() {
         return id;
@@ -193,4 +193,67 @@ public class Location {
         this.createdBy = createdBy;
     }
 
+    public Set<LocationBackgroundImage> getLocationBackgroundImages() {
+        return locationBackgroundImages;
+    }
+
+    public void setLocationBackgroundImages(Set<LocationBackgroundImage> locationBackgroundImages) {
+        this.locationBackgroundImages = locationBackgroundImages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (id != location.id) return false;
+        if (name != null ? !name.equals(location.name) : location.name != null) return false;
+        if (address != null ? !address.equals(location.address) : location.address != null) return false;
+        if (state != null ? !state.equals(location.state) : location.state != null) return false;
+        if (zip != null ? !zip.equals(location.zip) : location.zip != null) return false;
+        if (phone != null ? !phone.equals(location.phone) : location.phone != null) return false;
+        if (locationLogo != null ? !locationLogo.equals(location.locationLogo) : location.locationLogo != null)
+            return false;
+        if (hasSlideshow != null ? !hasSlideshow.equals(location.hasSlideshow) : location.hasSlideshow != null)
+            return false;
+        if (durationSpeed != null ? !durationSpeed.equals(location.durationSpeed) : location.durationSpeed != null)
+            return false;
+        if (breakTime != null ? !breakTime.equals(location.breakTime) : location.breakTime != null) return false;
+        if (fadeInTime != null ? !fadeInTime.equals(location.fadeInTime) : location.fadeInTime != null) return false;
+        if (fadeOutTime != null ? !fadeOutTime.equals(location.fadeOutTime) : location.fadeOutTime != null)
+            return false;
+        if (createdAt != null ? !createdAt.equals(location.createdAt) : location.createdAt != null) return false;
+        if (updatedAt != null ? !updatedAt.equals(location.updatedAt) : location.updatedAt != null) return false;
+        if (createdBy != null ? !createdBy.equals(location.createdBy) : location.createdBy != null) return false;
+        return locationBackgroundImages != null ? locationBackgroundImages.equals(location.locationBackgroundImages) : location.locationBackgroundImages == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", state=" + state +
+                ", zip='" + zip + '\'' +
+                ", phone='" + phone + '\'' +
+                ", locationLogo='" + locationLogo + '\'' +
+                ", hasSlideshow=" + hasSlideshow +
+                ", durationSpeed=" + durationSpeed +
+                ", breakTime=" + breakTime +
+                ", fadeInTime=" + fadeInTime +
+                ", fadeOutTime=" + fadeOutTime +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdBy=" + createdBy +
+                ", locationBackgroundImages=" + locationBackgroundImages +
+                '}';
+    }
 }

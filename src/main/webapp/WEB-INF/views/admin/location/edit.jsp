@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <!-- /#page-wrapper -->
@@ -24,12 +25,12 @@
 
                                     <div class="form-group">
                                         <label>Event Location</label>
-                                        <input id="name"  class="form-control">
+                                        <input id="name"  class="form-control" value="${location.name}">
                                     </div>
 
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <input id="address" class="form-control">
+                                        <input id="address" class="form-control" value="${location.address}">
                                     </div>
 
                                     <div class="row clearfix">
@@ -65,7 +66,11 @@
                                                 </label>
                                                 <select id="stateId" class="form-control">
                                                     <c:forEach var="state" items="${states}">
-                                                        <option value="${state.id}" >${state.name}</option>
+                                                        <c:set var="stateOption" value="" />
+                                                        <c:if test="${location.state.id == state.id }">
+                                                            <c:set var="stateOption" value="selected='selected'" />
+                                                        </c:if>
+                                                        <option ${stateOption} value="${state.id}" >${state.name}</option>
                                                     </c:forEach>
 
                                                 </select>
@@ -74,14 +79,14 @@
                                         <div class="col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <label>Zip</label>
-                                                <input id="zip" class="form-control">
+                                                <input id="zip" class="form-control" value="${location.zip}">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Phone Number</label>
-                                        <input id="phone"  class="form-control">
+                                        <input id="phone"  class="form-control" value="${location.phone}" >
                                     </div>
                                     <div class="imageupload panel panel-default">
                                         <div class="panel-heading clearfix">
@@ -102,10 +107,21 @@
                                             <div id="venueLogoImg" >
 
                                                 <div class="dz-default dz-message">
-                                                    <span>Drop files here to upload</span>
+                                                    <span>Change logo</span>
                                                     <p id="errorObj_profilePictureToken"></p>
                                                 </div>
                                             </div>
+                                            <c:set value="" var="logoImgSrc" />
+                                            <c:choose>
+                                                <c:when test="${location.locationLogo==null ||location.locationLogo.trim().equals('')}">
+                                                    <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:set value="/common/${location.locationLogo}" var="logoImgSrc" />
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+
 
                                             <p id="errorObj_locationLogo"  class="text-danger"></p>
                                         </div>
@@ -131,10 +147,25 @@
                                         <div id="venueBgImg" >
 
                                             <div class="dz-default dz-message">
-                                                <span>Drop files here to upload</span>
-                                                <p id="errorObj_profilePictureToken"></p>
+                                                <span>Add background image</span>
+                                                <p id="errorObj_bgTokens"></p>
                                             </div>
+                                            <c:forEach var="bgImg" items="${location.locationBackgroundImages}">
+                                                <c:set value="" var="logoImgSrc" />
+                                                <c:choose>
+                                                    <c:when test="${bgImg.image==null || bgImg.image.trim().equals('')}">
+                                                        <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set value="/common/${bgImg.image}" var="logoImgSrc" />
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <img id="bgImg_${bgImg.id}" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+                                            </c:forEach>
+
+
                                         </div>
+
 
                                     </div>
                                     <div class="imageupload panel panel-default">
@@ -150,13 +181,13 @@
                                                 <h3 style="text-align: left;color: #fff"> TRANSITIONS</h3>
                                                 <p style="text-align: left;">Duration Speed</p>
                                                 <div class="input-group" style="margin-bottom: 13px">
-                                                    <input type="text" class="form-control" id="durationSpeed" placeholder="">
+                                                    <input type="text" class="form-control" id="durationSpeed" placeholder=""  value="${location.durationSpeed}">
                                                     <div class="input-group-addon">sec</div>
                                                 </div>
                                                 <p class="text-danger" id="errorObj_durationSpeed"></p>
                                                 <p style="text-align: left;">Ad Break Time</p>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="breakTime" placeholder="">
+                                                    <input type="text" class="form-control" id="breakTime" placeholder="" value="${location.breakTime}" >
                                                     <div class="input-group-addon">min</div>
 
                                                 </div>
@@ -167,17 +198,27 @@
                                                 <h3 style="text-align: left;"> TRANSITIONS</h3>
                                                 <p style="text-align: left">Fade In</p>
                                                 <select id="fadeInTime" class="form-control" style="margin-bottom: 13px">
-                                                    <option value="1">1s</option>
-                                                    <option value="2">2s</option>
-                                                    <option value="3">3s</option>
-                                                    <option value="4">4s</option>
+                                                    <c:forEach var="fadeIn" items="${fadeInList}">
+                                                        <c:set var="fadeInOption" value="" />
+                                                        <c:if test="${location.fadeInTime == fadeIn }">
+                                                            <c:set var="fadeInOption" value="selected='selected'" />
+                                                        </c:if>
+                                                        <fmt:parseNumber var = "fadeInVal" integerOnly = "true"
+                                                                         type = "number" value = "${fadeIn}" />
+                                                        <option value="${fadeInVal}" ${fadeInOption}>${fadeInVal}s</option>
+                                                    </c:forEach>
                                                 </select>
                                                 <p style="text-align: left">Fade Out</p>
                                                 <select id="fadeOutTime" class="form-control" style="margin-bottom: 13px">
-                                                    <option value="1">1s</option>
-                                                    <option value="2">2s</option>
-                                                    <option value="3">3s</option>
-                                                    <option value="4">4s</option>
+                                                    <c:forEach var="fadeOut" items="${fadeOutList}">
+                                                        <c:set var="fadeOutOption" value="" />
+                                                        <c:if test="${location.fadeOutTime == fadeOut }">
+                                                            <c:set var="fadeOutOption" value="selected='selected'" />
+                                                        </c:if>
+                                                        <fmt:parseNumber var = "fadeOutVal" integerOnly = "true"
+                                                                         type = "number" value ="${fadeOut}" />
+                                                        <option value="${fadeOutVal}" ${fadeOutOption}>${fadeOutVal}s</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
 
@@ -249,8 +290,7 @@
                     fadeInTime: fadeInTime,
                     fadeOutTime: fadeOutTime,
                     logoImgToken:logoImgToken,
-                    bgTokens:bgTokens,
-                    hasSlideshow:hasSlideshow
+                    bgTokens:bgTokens
                 };
                 console.log(data);
                 $.ajax({

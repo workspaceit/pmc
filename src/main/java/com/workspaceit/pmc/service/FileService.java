@@ -84,7 +84,7 @@ public class FileService {
 			return fileName;
 		}
 		try {
-			fileName = this.fileUtil.copyFileFromTemp(env.getPhotographerProfilePath(),tempFile.getPath());
+			fileName = this.fileUtil.copyFileFromTemp(env.getCommonFilePath(),tempFile.getPath());
 		} catch (IOException e) {
 			return fileName;
 		}
