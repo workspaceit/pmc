@@ -15,8 +15,10 @@ import java.util.*;
 public class ServiceResponse {
 
     private List<Map<String,String>> formError;
+    private Map<String,Object> msgMap;
     private ServiceResponse() {
         formError = new ArrayList<>();
+        msgMap = new HashMap<>();
     }
     public static ServiceResponse getInstance(){
         return new ServiceResponse();
@@ -24,7 +26,12 @@ public class ServiceResponse {
     public static HashMap<String,String> getMsgInMap(String msg){
         return new HashMap<String, String>(){{put("msg",msg);}};
     }
-
+    public Map<String,Object> getMsg(){
+        return this.msgMap;
+    }
+    public void setMsg(String param,Object val){
+        this.msgMap.put(param,val);
+    }
     public boolean hasErrors(){
         return this.formError.size()>0;
     }

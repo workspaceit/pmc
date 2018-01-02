@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
 /**
  * Created by mi_rafi on 1/1/18.
@@ -24,21 +25,18 @@ public class LocationForm {
     private Integer stateId;
 
     @NotBlank(message = "Zip is required")
-    @Max(value = 10,message = "Value too large")
+    @Length(max = 10,message = "Value too large")
     private String zip;
 
     @NotBlank(message = "Phone is required")
     @Length(max = 50,message = "Value too large")
     private String phone;
 
-    @NotBlank(message = "Location Logo is required")
-    private String locationLogo;
-
     @NotNull(message = "Has Slideshow is required")
     private Boolean hasSlideshow;
 
-    @NotBlank(message = "Duration Speed is required")
-    private String durationSpeed;
+    @NotNull(message = "Duration Speed is required")
+    private Double durationSpeed;
 
     @NotNull(message = "Break Time is required")
     private Double breakTime;
@@ -48,6 +46,10 @@ public class LocationForm {
 
     @NotNull(message = "Fade Out Time is required")
     private Double fadeOutTime;
+
+    private int[] bgTokens;
+
+    private Integer logoImgToken;
 
     public String getName() {
         return name;
@@ -89,13 +91,8 @@ public class LocationForm {
         this.phone = phone;
     }
 
-    public String getLocationLogo() {
-        return locationLogo;
-    }
 
-    public void setLocationLogo(String locationLogo) {
-        this.locationLogo = locationLogo;
-    }
+
 
     public Boolean getHasSlideshow() {
         return hasSlideshow;
@@ -105,11 +102,11 @@ public class LocationForm {
         this.hasSlideshow = hasSlideshow;
     }
 
-    public String getDurationSpeed() {
+    public Double getDurationSpeed() {
         return durationSpeed;
     }
 
-    public void setDurationSpeed(String durationSpeed) {
+    public void setDurationSpeed(Double durationSpeed) {
         this.durationSpeed = durationSpeed;
     }
 
@@ -137,6 +134,22 @@ public class LocationForm {
         this.fadeOutTime = fadeOutTime;
     }
 
+    public int[] getBgTokens() {
+        return bgTokens;
+    }
+
+    public void setBgTokens(int[] bgTokens) {
+        this.bgTokens = bgTokens;
+    }
+
+    public Integer getLogoImgToken() {
+        return logoImgToken;
+    }
+
+    public void setLogoImgToken(Integer logoImgToken) {
+        this.logoImgToken = logoImgToken;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,13 +162,14 @@ public class LocationForm {
         if (stateId != null ? !stateId.equals(that.stateId) : that.stateId != null) return false;
         if (zip != null ? !zip.equals(that.zip) : that.zip != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (locationLogo != null ? !locationLogo.equals(that.locationLogo) : that.locationLogo != null) return false;
         if (hasSlideshow != null ? !hasSlideshow.equals(that.hasSlideshow) : that.hasSlideshow != null) return false;
         if (durationSpeed != null ? !durationSpeed.equals(that.durationSpeed) : that.durationSpeed != null)
             return false;
         if (breakTime != null ? !breakTime.equals(that.breakTime) : that.breakTime != null) return false;
         if (fadeInTime != null ? !fadeInTime.equals(that.fadeInTime) : that.fadeInTime != null) return false;
-        return fadeOutTime != null ? fadeOutTime.equals(that.fadeOutTime) : that.fadeOutTime == null;
+        if (fadeOutTime != null ? !fadeOutTime.equals(that.fadeOutTime) : that.fadeOutTime != null) return false;
+        if (!Arrays.equals(bgTokens, that.bgTokens)) return false;
+        return logoImgToken != null ? logoImgToken.equals(that.logoImgToken) : that.logoImgToken == null;
     }
 
     @Override
@@ -165,12 +179,13 @@ public class LocationForm {
         result = 31 * result + (stateId != null ? stateId.hashCode() : 0);
         result = 31 * result + (zip != null ? zip.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (locationLogo != null ? locationLogo.hashCode() : 0);
         result = 31 * result + (hasSlideshow != null ? hasSlideshow.hashCode() : 0);
         result = 31 * result + (durationSpeed != null ? durationSpeed.hashCode() : 0);
         result = 31 * result + (breakTime != null ? breakTime.hashCode() : 0);
         result = 31 * result + (fadeInTime != null ? fadeInTime.hashCode() : 0);
         result = 31 * result + (fadeOutTime != null ? fadeOutTime.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(bgTokens);
+        result = 31 * result + (logoImgToken != null ? logoImgToken.hashCode() : 0);
         return result;
     }
 
@@ -182,12 +197,13 @@ public class LocationForm {
                 ", stateId=" + stateId +
                 ", zip='" + zip + '\'' +
                 ", phone='" + phone + '\'' +
-                ", locationLogo='" + locationLogo + '\'' +
                 ", hasSlideshow=" + hasSlideshow +
-                ", durationSpeed='" + durationSpeed + '\'' +
+                ", durationSpeed=" + durationSpeed +
                 ", breakTime=" + breakTime +
                 ", fadeInTime=" + fadeInTime +
                 ", fadeOutTime=" + fadeOutTime +
+                ", bgTokens=" + Arrays.toString(bgTokens) +
+                ", logoImgToken=" + logoImgToken +
                 '}';
     }
 }

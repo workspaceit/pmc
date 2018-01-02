@@ -8,7 +8,4 @@
     </div>
 </footer>
 
-<script src="<s:url value="/resources/js/jquery.js"/>"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
-<script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
+

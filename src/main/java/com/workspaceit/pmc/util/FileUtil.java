@@ -23,17 +23,22 @@ import com.workspaceit.pmc.dao.TempFileDao;
  */
 @Component
 public class FileUtil {
-		@Autowired
-		Environment env;
-		
-		public void setEnv(Environment env) {
+
+	Environment env;
+	TempFileDao tempFileDao;
+
+
+	@Autowired
+	public void setEnv(Environment env) {
 			this.env = env;
 		}
 
-        @Autowired
-        TempFileDao tempFileDao;
+	@Autowired
+	public void setTempFileDao(TempFileDao tempFileDao) {
+		this.tempFileDao = tempFileDao;
+	}
 
-        public String saveFileInFolder(byte[] fileByte,String fileExtention) throws IOException{
+	public String saveFileInFolder(byte[] fileByte, String fileExtention) throws IOException{
     		String fileName = System.nanoTime()+"."+fileExtention;
     		String filePath = this.env.getTmpFilePath()+"/"+fileName;
     		FileOutputStream fileOutPutStream = null;
@@ -69,6 +74,12 @@ public class FileUtil {
 		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 		return newFilePath.getFileName().toString();
 	}
+	public String copyFileFromTemp(String destinationPath,String filePath) throws IOException {
 
+		Path source = Paths.get(filePath);
+		Path newPath = Paths.get(destinationPath);
+		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+		return newFilePath.getFileName().toString();
+	}
 
 }

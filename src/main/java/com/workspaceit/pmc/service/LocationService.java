@@ -2,6 +2,7 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.LocationDao;
 import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.entity.LocationBackgroundImage;
 import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.validation.location.LocationForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocationService {
     private LocationDao locationDao;
     private StateService stateService;
+    private FileService fileService;
+    private  LocationBackgroundImageService locationBackgroundImageService;
 
     @Autowired
     public void setLocationDao(LocationDao locationDao) {
@@ -27,10 +30,21 @@ public class LocationService {
         this.stateService = stateService;
     }
 
+    @Autowired
+    public void setFileService(FileService fileService) {
+        this.fileService = fileService;
+    }
+
+    @Autowired
+    public void setLocationBackgroundImageService(LocationBackgroundImageService locationBackgroundImageService) {
+        this.locationBackgroundImageService = locationBackgroundImageService;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void insert(Location location){
         this.locationDao.insert(location);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public Location create(LocationForm locationForm){
         Location location = new Location();
@@ -42,17 +56,29 @@ public class LocationService {
 
         location.setZip(locationForm.getZip());
         location.setPhone(locationForm.getPhone());
-
-        location.setLocationLogo(locationForm.getLocationLogo());
-
         location.setHasSlideshow(locationForm.getHasSlideshow());
         location.setBreakTime(locationForm.getBreakTime());
         location.setDurationSpeed(locationForm.getDurationSpeed());
         location.setFadeInTime(locationForm.getFadeInTime());
         location.setFadeOutTime(locationForm.getFadeOutTime());
+        int logoImgToken = locationForm.getLogoImgToken();
+        int[] bgTokens = locationForm.getBgTokens();
 
-        this.locationDao.insert(location);
+        String logoImgName = this.fileService.copyFileToPhotographerProfilePicture(logoImgToken);
+        location.setLocationLogo(logoImgName);
+        this.create(location);
+
+        try{
+            this.locationBackgroundImageService.createFromToken(location,bgTokens);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
         return location;
+    }
+    public void create(Location location){
+        this.locationDao.insert(location);
     }
 
 }

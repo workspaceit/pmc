@@ -30,6 +30,10 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script src="<s:url value="/resources/js/jquery.js"/>"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
         <script>
             var BASEURL = "<c:url value="/" />";
             try{
