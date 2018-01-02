@@ -6,3 +6,4 @@ src/main/resources/local-config.properties
 .classpath
 .settings/
 
+/src/main/resources/local-config.properties
