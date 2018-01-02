@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by mi_rafi on 12/28/17.
  */
@@ -36,6 +38,27 @@ public class PhotographerService {
     @Autowired
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
+    }
+
+    public Photographer getByEmail(String email){
+        return this.photographerDao.getByEmail(email);
+    }
+    public Photographer getByIdAndEmail(int id,String email){
+        return this.photographerDao.getByIdAndEmail(id,email);
+    }
+    public Photographer getByUserName(String userName){
+        return this.photographerDao.getByUserName(userName);
+    }
+    public Photographer getByIdAndUserName(int id,String userName){
+        return this.photographerDao.getByIdAndUserName(id,userName);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Photographer getById(int id){
+        return this.photographerDao.getById(id);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public List<Photographer> getAll(){
+        return this.photographerDao.getAll();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -130,9 +153,7 @@ public class PhotographerService {
         photographer = this.getPhotographer(id);
         return photographer;
     }
-    public Photographer getById(int id){
-        return this.photographerDao.getById(id);
-    }
+
     public void create(Photographer photographer){
         this.photographerDao.insert(photographer);
     }

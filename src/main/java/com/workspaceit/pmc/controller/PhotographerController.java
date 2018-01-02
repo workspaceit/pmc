@@ -1,7 +1,9 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.dao.PhotographerDao;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.service.PhotographerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -18,20 +20,21 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value = "/photographer")
+@RequestMapping(value = ControllerUriPrefix.ADMIN+"/photographer")
 public class PhotographerController {
-    PhotographerDao photographerDao;
+    PhotographerService photographerService;
 
     @Autowired
-    public void setPhotographerDao(PhotographerDao photographerDao) {
-        this.photographerDao = photographerDao;
+    public void setPhotographerService(PhotographerService photographerService) {
+        this.photographerService = photographerService;
     }
-    //@Secured("ROLE_ADMIN")
+
+
 
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     public ModelAndView allPhotographer(Authentication authentication){
-        List<Photographer> photographers = photographerDao.getAll();
+        List<Photographer> photographers = this.photographerService.getAll();
         ModelAndView model = new ModelAndView("admin/photographer/all");
         model.addObject("photographers",photographers);
         return model;
@@ -44,9 +47,9 @@ public class PhotographerController {
 
     @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
     public ModelAndView updatePhotographer(Authentication authentication, @PathVariable("id")Integer id){
-        Photographer photographer = photographerDao.getById(id);
+        Photographer photographer = this.photographerService.getById(id);
         if(photographer==null){
-            return new ModelAndView("redirect:"+"/photographer/add");
+            return new ModelAndView("redirect:"+"/admin/photographer/add");
         }
         ModelAndView model = new ModelAndView("admin/photographer/edit");
         model.addObject("photographer",photographer);

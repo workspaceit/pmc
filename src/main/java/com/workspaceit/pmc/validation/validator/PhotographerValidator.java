@@ -2,6 +2,7 @@ package com.workspaceit.pmc.validation.validator;
 
 import com.workspaceit.pmc.dao.PhotographerDao;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.service.PhotographerService;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,11 @@ import org.springframework.validation.Validator;
 @Component
 public class PhotographerValidator implements Validator {
 
-    private PhotographerDao photographerDao;
+    private PhotographerService photographerService;
 
     @Autowired
-    public void setPhotographerDao(PhotographerDao photographerDao) {
-        this.photographerDao = photographerDao;
+    public void setPhotographerService(PhotographerService photographerService) {
+        this.photographerService = photographerService;
     }
 
     @Override
@@ -85,25 +86,25 @@ public class PhotographerValidator implements Validator {
         }
     }
     private void uniqueEmailCheck(String email,Errors errors){
-        Photographer photographer = photographerDao.getByEmail(email);
+        Photographer photographer = this.photographerService.getByEmail(email);
         if(photographer!=null){
             errors.rejectValue("email", "Email already taken");
         }
     }
     private void emailUsedByOthersCheck(int id,String email,Errors errors){
-        Photographer photographer = photographerDao.getByIdAndEmail(id,email);
+        Photographer photographer = this.photographerService.getByIdAndEmail(id,email);
         if(photographer!=null){
             errors.rejectValue("email", "Email already taken");
         }
     }
     private void uniqueUserNameCheck(String userName,Errors errors){
-        Photographer photographer = photographerDao.getByUserName(userName);
+        Photographer photographer = this.photographerService.getByUserName(userName);
         if(photographer!=null){
             errors.rejectValue("userName", "User name already taken");
         }
     }
     private void userNameUsedByOthersCheck(int id,String userName,Errors errors){
-        Photographer photographer = photographerDao.getByByIdAndUserName(id,userName);
+        Photographer photographer = this.photographerService.getByIdAndUserName(id,userName);
         if(photographer!=null){
             errors.rejectValue("userName", "User name already taken");
         }

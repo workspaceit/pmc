@@ -1,3 +1,4 @@
+<%@ page import="com.workspaceit.pmc.entity.Location" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
@@ -14,20 +15,20 @@
                         <thead>
                         <tr>
                             <th class="cstm-table-header">
-                                Image
+                                Logo
                             </th>
 
                             <th class="cstm-table-header">
-                                Username
+                                Event location
                             </th>
                             <th class="cstm-table-header">
-                                Email
-                            </th>
-                            <th class="cstm-table-header">
-                                Full Name
+                                Address
                             </th>
                             <th class="cstm-table-header">
                                 Phone
+                            </th>
+                            <th class="cstm-table-header">
+                                State
                             </th>
                             <th class="cstm-table-header">
                                 Action
@@ -35,37 +36,37 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <d:forEach var="photographer" items="${photographers}" >
+                        <d:forEach var="location" items="${locations}" >
 
 
                         <tr>
                             <td class="img-clm text-center">
                                 <c:set value="" var="imgSrc" />
                                 <c:choose>
-                                    <c:when test="${photographer.profilePhoto==null || photographer.profilePhoto.trim().equals('')}">
+                                    <c:when test="${location.locationLogo==null || location.locationLogo.trim().equals('')}">
                                         <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
                                     </c:when>
                                     <c:otherwise>
-                                        <c:set value="/photographer-profile-img/${photographer.profilePhoto}" var="imgSrc" />
+                                        <c:set value="/common/${location.locationLogo}" var="imgSrc" />
                                     </c:otherwise>
                                 </c:choose>
                                 <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
                             </td>
+                            <td class="des-clm">
+                                <p class="text-left">${location.name}</p>
+                            </td>
+                            <td class="date-clm">
+                                <span class="cstm-date-txt">${location.address}</span>
+                            </td>
+                            <td class="date-clm">
+                                <span class="cstm-date-txt">${location.phone}</span>
+                            </td>
 
                             <td class="date-clm">
-                                <span class="cstm-date-txt">${photographer.userName}</span>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${photographer.email}</span>
-                            </td>
-                            <td class="des-clm">
-                                <p class="text-left">${photographer.fullName}</p>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${photographer.phoneNumber}</span>
+                                <span class="cstm-date-txt">${location.state.name}</span>
                             </td>
                             <td class="action-clm text-center">
-                                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                                <a href="<c:url value="/admin/location/update/${location.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>

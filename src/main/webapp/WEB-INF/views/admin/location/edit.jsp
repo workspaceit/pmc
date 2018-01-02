@@ -8,7 +8,7 @@
         <div id="page-wrapper">
 
             <div class="container">
-                <h3 class="uni-header"><span>Add New Location</span></h3>
+                <h3 class="uni-header"><span>Edit Location</span></h3>
 
                 <div class="col-md-12">
                     <div class="row">
@@ -150,13 +150,13 @@
                                                 <h3 style="text-align: left;color: #fff"> TRANSITIONS</h3>
                                                 <p style="text-align: left;">Duration Speed</p>
                                                 <div class="input-group" style="margin-bottom: 13px">
-                                                    <input type="number" class="form-control" id="durationSpeed" placeholder="">
+                                                    <input type="text" class="form-control" id="durationSpeed" placeholder="">
                                                     <div class="input-group-addon">sec</div>
                                                 </div>
                                                 <p class="text-danger" id="errorObj_durationSpeed"></p>
                                                 <p style="text-align: left;">Ad Break Time</p>
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="breakTime" placeholder="">
+                                                    <input type="text" class="form-control" id="breakTime" placeholder="">
                                                     <div class="input-group-addon">min</div>
 
                                                 </div>
@@ -249,7 +249,8 @@
                     fadeInTime: fadeInTime,
                     fadeOutTime: fadeOutTime,
                     logoImgToken:logoImgToken,
-                    bgTokens:bgTokens
+                    bgTokens:bgTokens,
+                    hasSlideshow:hasSlideshow
                 };
                 console.log(data);
                 $.ajax({
@@ -267,7 +268,7 @@
                         }
                     },
                      success: function(response) {
-                        window.location = BASEURL+"admin/location/all";
+                        console.log(response);
                     }
                 });
             }

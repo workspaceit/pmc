@@ -55,9 +55,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus-circle fa-2x f-size"></i><span class="visible-xs" style="margin-left:15px;">Dashboard</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Add New Advertiser</a></li>
-                        <li><a href="<c:url value="/location/add" />">Add New Location</a></li>
+                        <li><a href="<c:url value="/admin/location/add" />">Add New Location</a></li>
                         <li><a href="#">Add New Venue</a></li>
-                        <li><a href="<c:url value="/photographer/add" />">Add New Photographer</a></li>
+                        <li><a href="<c:url value="/admin/photographer/add" />">Add New Photographer</a></li>
+                        <li><a href="<c:url value="/admin/photographer/all" />">Photographers</a></li>
+                        <li><a href="<c:url value="/admin/location/all" />">Locations</a></li>
+
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -13,69 +13,45 @@ import java.util.List;
 public class PhotographerDao extends BaseDao {
 
     public List<Photographer> getAll(){
-        Session session = this.openSession();
-        try{
-            return session.createQuery("FROM Photographer ORDER BY id DESC")
-                    .list();
-        }finally {
-            if(session!=null)session.close();
-        }
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Photographer ORDER BY id DESC")
+                .list();
     }
     public Photographer getById(int id){
-        Session session = this.openSession();
-        try{
-            return (Photographer)session.createQuery("FROM Photographer WHERE id=:id")
-                    .setParameter("id",id)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer WHERE id=:id")
+                .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
     }
     public Photographer getByEmail(String email){
-        Session session = this.openSession();
-        try{
-            return (Photographer)session.createQuery("FROM Photographer WHERE email=:email")
-                    .setParameter("email",email)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer WHERE email=:email")
+                .setParameter("email",email)
+                .setMaxResults(1)
+                .uniqueResult();
     }
     public Photographer getByIdAndEmail(int id,String email){
-        Session session = this.openSession();
-        try{
-            return (Photographer)session.createQuery("FROM Photographer WHERE email=:email AND id !=:id")
-                    .setParameter("email",email)
-                    .setParameter("id",id)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer WHERE email=:email AND id !=:id")
+                .setParameter("email",email)
+                .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
     }
     public Photographer getByUserName(String userName){
-        Session session = this.openSession();
-        try{
-            return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName")
-                    .setParameter("userName",userName)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName")
+                .setParameter("userName",userName)
+                .setMaxResults(1)
+                .uniqueResult();
     }
-    public Photographer getByByIdAndUserName(int id,String userName){
-        Session session = this.openSession();
-        try{
-            return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName AND id!=:id")
-                    .setParameter("userName",userName)
-                    .setParameter("id",id)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
+    public Photographer getByIdAndUserName(int id,String userName){
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer  WHERE user_name=:userName AND id!=:id")
+                .setParameter("userName",userName)
+                .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
     }
 }
