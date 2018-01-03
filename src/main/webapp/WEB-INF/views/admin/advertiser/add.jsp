@@ -672,6 +672,7 @@
                                         removeBgImgTokens(data.token);
                                     });*/
                                     profilePictureToken = 0;
+
                                     var _ref;
                                     advImgDropZone.removeFile(file);
                                 });
