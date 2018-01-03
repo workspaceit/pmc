@@ -30,6 +30,10 @@ public class BaseDao {
         Session session = this.getCurrentSession();
         session.update(obj);
     }
+    public void delete(Object obj){
+        Session session = this.getCurrentSession();
+        session.delete(obj);
+    }
 
     protected Session getCurrentSession() {
     	return this.sessionFactory.getCurrentSession();

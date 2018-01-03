@@ -59,14 +59,21 @@ public class FileUtil {
     		return filePath;
     	}
 
-		public boolean deleteFile(String filePath){
-			File file = new File(filePath);
-			if(file.exists()){
-				return file.delete();
-			}
-			return false;
+	public boolean deleteFile(String filePath){
+		File file = new File(filePath);
+		if(file.exists()){
+			return file.delete();
 		}
-
+		return false;
+	}
+	public boolean deleteFileInCommonFolder(String fileName){
+		String filePath = env.getCommonFilePath()+"/"+fileName;
+		File file = new File(filePath);
+		if(file.exists()){
+			return file.delete();
+		}
+		return false;
+	}
 	public String copyPhotographerProfileFileFromTemp(String filePath) throws IOException {
 
 		Path source = Paths.get(filePath);

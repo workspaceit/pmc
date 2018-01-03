@@ -7,6 +7,7 @@ import java.util.HashSet;
 import com.workspaceit.pmc.constant.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -31,11 +32,11 @@ public class FileUploadController{
 		this.fileService = fileService;
 	}
 	
-	private Set<String> photographerImgContentType;
+	private Set<String> imgContentType;
 	   
 
     public FileUploadController(){
-    	photographerImgContentType = new HashSet<String>(){
+    	imgContentType = new HashSet<String>(){
             /**
 			 * 
 			 */
@@ -54,51 +55,79 @@ public class FileUploadController{
 
     @Secured({UserRole._SUPER_ADMIN})
     @RequestMapping(value="/upload/{uploader}",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
-    public ResponseEntity<?> uploadPhotographerProfilePicture(@RequestParam("profileImg") MultipartFile multipartFile,
-															  @PathVariable("uploader") String uploader) {
+    public ResponseEntity<?> uploadPicture(@RequestParam("profileImg") MultipartFile multipartFile,
+                                           @PathVariable("uploader") String uploader) {
         long fileSizeLimit;
+        Set<String> imgContentType;
         switch (uploader){
             case "photographer-profile-image":
             case "venue-logo-image":
             case "venue-background-image":
                 default:
                     fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                    imgContentType = this.imgContentType;
         }
 
 
-    	String mimeType = FileHelper.getMimeType(multipartFile);
-    	ServiceResponse serviceResponse = ServiceResponse.getInstance();
-    	if(!this.photographerImgContentType.contains(mimeType)) {
-    		serviceResponse.setValidationError("profileImg"," Mime Type "+ mimeType+" not allowed");
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
-    	}
+        return validateAndProcessMultiPart(  "profileImg",fileSizeLimit,multipartFile,imgContentType);
+    }
 
-		if(multipartFile==null || multipartFile.getSize()==0){
-			serviceResponse.setValidationError("profileImg","No file receive");
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
-		}
+
+    @Secured({UserRole._SUPER_ADMIN})
+    @RequestMapping(value="/upload/adv/{uploader}",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
+    public ResponseEntity<?> uploadAdvertisePicture(@RequestParam("advImg") MultipartFile multipartFile,
+                                           @PathVariable("uploader") String uploader) {
+        long fileSizeLimit;
+        Set<String> imgContentType;
+        switch (uploader){
+
+            default:
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                imgContentType = this.imgContentType;
+        }
+
+        return validateAndProcessMultiPart(  "advImg",fileSizeLimit,multipartFile,imgContentType);
+
+    }
+    private ResponseEntity<?> validateAndProcessMultiPart(  String param,
+                                                            long fileSizeLimit,
+                                                            MultipartFile multipartFile,
+                                                            Set<String> imgContentType
+                                                         ){
+        String mimeType = FileHelper.getMimeType(multipartFile);
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        if(!imgContentType.contains(mimeType)) {
+            serviceResponse.setValidationError(param," Mime Type "+ mimeType+" not allowed");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        if(multipartFile==null || multipartFile.getSize()==0){
+            serviceResponse.setValidationError(param,"No file receive");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
         System.out.println(multipartFile.getSize());
 
-		if(multipartFile.getSize()>fileSizeLimit){
-			serviceResponse.setValidationError("profileImg","File size exceeds. Max size 1 MB");
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
-		}
+        if(multipartFile.getSize()>fileSizeLimit){
+            serviceResponse.setValidationError(param,"File size exceeds. Max size "+FileHelper.getByteToMb(fileSizeLimit));
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
 
-		TempFile tempfile;
-		try {
-			tempfile  = fileService.saveTempFile(multipartFile);
+        TempFile tempfile;
+        try {
+            tempfile  = fileService.saveTempFile(multipartFile);
 
-		} catch(IOException e) {
-			// TODO Auto-generated catch block
-			serviceResponse.setValidationError("profileImg","Internal server error : "+e.getMessage());
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
-		}
-    	
-    	
-    	return ResponseEntity.status(HttpStatus.ACCEPTED).body(tempfile);
+        } catch(IOException e) {
+            // TODO Auto-generated catch block
+            serviceResponse.setValidationError(param,"Internal server error : "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(tempfile);
     }
-	@RequestMapping(value="/remove",method=RequestMethod.POST)
-	public ResponseEntity<?> uploadPhotographerProfilePicture(@RequestParam("token") Integer token) {
+
+    @RequestMapping(value="/remove",method=RequestMethod.POST)
+	public ResponseEntity<?> removePicture(@RequestParam("token") Integer token) {
 
 
 		ServiceResponse serviceResponse = ServiceResponse.getInstance();
