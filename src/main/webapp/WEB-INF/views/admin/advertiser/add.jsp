@@ -9,7 +9,7 @@
                 <h3 class="uni-header"><span>Create Advertiser</span></h3>
                 <!-- <h3 class="title-top text-uppercase"><span>Create Advertiser</span></h3> -->
                 <div class="btn-container-top">
-                    <button class="btn btn-action-top">Save</button>
+                    <button class="btn btn-action-top" onclick="initSubmit()">Save</button>
                     <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
                     <button class="btn btn-action-top">Cancel</button>
@@ -20,7 +20,7 @@
                         <ul class="nav nav-tabs ">
                             <li class="active">
                                 <a href="#tab_default_1" data-toggle="tab">
-                                    Advertiser Info</a>
+                                    Advertiser Info<span id="advertiserInfoErrorCount"></span></a>
                             </li>
                             <li>
                                 <a href="#tab_default_2" data-toggle="tab">
@@ -42,11 +42,11 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label>Name</label>
-                                                <input class="form-control">
+                                                <input id="name" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input class="form-control">
+                                                <input id="address" class="form-control">
                                             </div>
                                             <div class="row clearfix">
                                                 <div class="col-md-4 col-xs-12">
@@ -55,7 +55,7 @@
                                                             <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
                                                         </label>
                                                         <div>
-                                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+                                                            <select id="cityId" class="form-control">
                                                                 <c:forEach var="city" items="${cities}">
                                                                     <option value="${city.id}">${city.name}</option>
                                                                 </c:forEach>
@@ -81,7 +81,7 @@
                                                     <div class="form-group">
                                                         <label style="width:100%;">
                                                             <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
-                                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+                                                            <select id="stateId" class="form-control" >
                                                                 <c:forEach var="state" items="${states}" >
                                                                     <option value="${state.id}">${state.name}</option>
                                                                 </c:forEach>
@@ -92,17 +92,17 @@
                                                 <div class="col-md-4 col-xs-12">
                                                     <div class="form-group">
                                                         <label>Zip</label>
-                                                        <input class="form-control">
+                                                        <input id="zip" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Phone Number</label>
-                                                <input class="form-control">
+                                                <input id="phone" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Website URL</label>
-                                                <input class="form-control">
+                                                <input id="website" class="form-control">
                                             </div>
 
                                             <div class="imageupload panel panel-default">
@@ -113,8 +113,11 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="file-tab panel-body">
-                                                    <form action="/upload-target" class="dropzone dz-clickable"><div class="dz-default dz-message"><span>Drop files here to upload</span></div></form>
+                                                <div id="advertiserOtherImages"  class="panel-body" >
+                                                    <div class="dz-default dz-message">
+                                                        <span>Click here to upload</span>
+                                                        <p id="errorObj_"></p>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -134,13 +137,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input name="startdate" id="startDate" class="form-control">
+                                                    <input name="runtimeStarts" id="runtimeStarts" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input name="enddate" id="endDate" class="form-control">
+                                                    <input name="runtimeEnds" id="runtimeEnds" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -150,9 +153,12 @@
                                                     <h4 class="panel-title">Choose Location</h4>
                                                 </div>
                                                 <div class="panel-body">
+                                                    <div>
+                                                        <input id="allLocationSelection" type="checkbox" value="1"  />All Location
+                                                    </div>
                                                     <div style="width: 100%">
-                                                        <select class="form-control">
-                                                            <option value="0">All Locations</option>
+                                                        <select id="locationIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+
                                                             <c:forEach var="location" items="${locations}" >
                                                                 <option value="${location.id}">${location.name}</option>
 
@@ -170,13 +176,18 @@
                                                 </div>
                                                 <div class="panel-body">
                                                     <div style="width: 100%">
-                                                        <select class="form-control">
-                                                            <option value="0">All Event</option>
-                                                            <c:forEach var="event" items="${events}" >
-                                                                <option value="${event.id}">${event.name}</option>
-                                                            </c:forEach>
+                                                        <div>
+                                                            <input id="allEventSelection" type="checkbox" value="1"  />All Event
+                                                        </div>
+                                                        <div>
+                                                            <select id="eventIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+                                                                <c:forEach var="event" items="${events}" >
+                                                                    <option value="${event.id}">${event.name}</option>
+                                                                </c:forEach>
 
-                                                        </select>
+                                                            </select>
+                                                        </div>
+
                                                     </div>
                                                     <!-- <button type="button" class="btn btn-primary btn-sm-new"  data-toggle="modal" data-target="#addEvent" style="margin-top: 15px;"><i class="fa fa-plus" aria-hidden="true"></i>  Add Event</button> -->
                                                 </div>
@@ -204,7 +215,7 @@
                                             <div id="advLogo"  class="panel-body" >
                                                 <div class="dz-default dz-message">
                                                     <span>Click here to upload</span>
-                                                    <p id="errorObj_profilePictureToken"></p>
+                                                    <p id="errorObj_"></p>
                                                 </div>
                                             </div>
                                             <div class="url-tab panel-body" style="display:none;">
@@ -264,6 +275,7 @@
                                                 </div>
                                                 <div class="btn-group pull-right">
 
+                return data;
                                                 </div>
                                             </div>
                                             <div id="advTopBannerImage"  class="panel-body" >
@@ -639,9 +651,85 @@
 
 
         <script>
+            function notifyUser(id,response,errorFound){
+                if(errorFound){
+                    $("#"+id).html("( "+response.responseJSON.length+" )");
+                }
+            }
+            function submit(marker){
+                validateAdvertiser();
+            }
+            function initSubmit(){
+                UnBindErrors("errorObj_");
+                submit(0);
+            }
+            function getAdvertiserInfoData(){
+                var name = $('#name').val();
+                var address = $('#address').val();
+                var cityId = $('#cityId').val();
+                var eventIds = $('#eventIds').val();
+                var stateId = $('#stateId').val();
+                var zip = $('#zip').val();
+                var phone = $('#phone').val();
+                var website = $('#website').val();
+                var otherImage = $('#otherImage').val();
+                var runtimeStarts = $('#runtimeStarts').val();
+                var runtimeEnds = $('#runtimeEnds').val();
+                var locationIds = $('#locationIds').val();
+                var createdAt = $('#createdAt').val();
+                var updatedAt = $('#updatedAt').val();
+                var createdBy = $('#createdBy').val();
+                var allLocationSelected = hasAllLocationSelected();
+                var allEventSelected = hasAllEventSelected();
 
+                return  {
+                            name: name,
+                            address: address,
+                            cityId: cityId,
+                            eventIds: eventIds,
+                            stateId: stateId,
+                            zip: zip,
+                            phone: phone,
+                            website: website,
+                            otherImage: otherImage,
+                            runtimeStarts: runtimeStarts,
+                            runtimeEnds: runtimeEnds,
+                            locationIds: locationIds,
+                            isAllLocationSelected:allLocationSelected,
+                            isAllEventSelected:allEventSelected
+                        };
+            }
+            function validateAdvertiser(){
+                var data = getAdvertiserInfoData();
+                console.log(data);
+                $.ajax({
+                    url: BASEURL+"api/pmc-adv/validate-create",
+                    type: "POST",
+                    data: data,
+                    statusCode: {
+                        500: function(response) {
+                            console.log(response);
+                        },
+                        401: function(response) {
+                            console.log(response.responseJSON);
+                        },
+                        422: function(response) {
+                            console.log(response.responseJSON);
+                            BindErrorsWithHtml("errorObj_",response.responseJSON,true);
+                            notifyUser("advertiserInfoErrorCount",response,true);
+                        }
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+            }
             $(document).ready(function(){
-
+                var advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._LOGO_TOKEN);
+                });
                 var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1,function(response){
                     storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
                 },function(){
@@ -711,10 +799,6 @@
                                 file._removeLink.addEventListener("click", function() {
                                     console.log(file);
                                     removeImageByToken(file.token,fnError);
-                                   /* */
-                                    profilePictureToken = 0;
-
-                                    var _ref;
                                     advImgDropZone.removeFile(file);
                                 });
                             });
@@ -737,23 +821,23 @@
 
 
             $(function() {
-                $('input[name="startdate"]').daterangepicker({
+                $('#runtimeStarts').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true
                     },
 
                     function(start, end, label) {
-                        var years = moment().diff(start, 'years');
+                        //var years = moment().diff(start, 'years');
                         // alert("You are " + years + " years old.");
                     });
-                $('input[name="enddate"]').daterangepicker({
+                $('#runtimeEnds').daterangepicker({
                         singleDatePicker: true,
                         showDropdowns: true
                     },
 
                     function(start, end, label) {
-                        var years = moment().diff(start, 'years');
-                        alert("You are " + years + " years old.");
+                        /*var years = moment().diff(start, 'years');
+                        alert("You are " + years + " years old.");*/
                     });
 
                 $('input[name="starttime"]').timepicker({
@@ -764,8 +848,34 @@
                     placeholder: "",
                     allowClear: true
                 });
-            });
 
+                $("#allLocationSelection").click(function(){
+                    var isChecked = $("#allLocationSelection:checked").length;
+                    if(isChecked){
+                        $("#locationIds").parent().hide();
+                    }else{
+                        $("#locationIds").parent().show();
+                    }
+                });
+                $("#allEventSelection").click(function(){
+                    var isChecked = $("#allEventSelection:checked").length;
+                    if(isChecked){
+                        $("#eventIds").parent().hide();
+                    }else{
+                        $("#eventIds").parent().show();
+                    }
+                });
+
+
+            });
+            function hasAllLocationSelected(){
+                var isChecked = $("#allLocationSelection:checked").length;
+                return (isChecked==1)?true:false;
+            }
+            function hasAllEventSelected(){
+                var isChecked = $("#allEventSelection:checked").length;
+                return (isChecked==1)?true:false;
+            }
         </script>
 
     </jsp:body>

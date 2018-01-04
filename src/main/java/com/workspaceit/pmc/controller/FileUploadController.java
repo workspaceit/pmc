@@ -85,6 +85,9 @@ public class FileUploadController{
          
 
         switch (uploader){
+            case "other-images":
+                fileSizeLimit = FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
             case "logo-image":
                 fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
                 break;

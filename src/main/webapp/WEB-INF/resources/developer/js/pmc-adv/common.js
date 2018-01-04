@@ -6,6 +6,7 @@ $(document).ready(function(){
 });
 
 var ADV_IMG_TYPE = {
+    _ADVERTISER_OTHER_IMAGES_TOKEN:"otherImagesToken",
     _LOGO_TOKEN :"logoToken",
     _BACKGROUND_IMAGE:"backgroundImageToken",
     _TOP_BANNER_TOKEN:"topBannerToken",

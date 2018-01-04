@@ -17,4 +17,12 @@ public class CityDao extends BaseDao {
         return session.createQuery("FROM City ORDER BY name asc")
                 .list();
     }
+
+    public City getById(int id){
+        Session session = this.getCurrentSession();
+        return (City)session.createQuery("FROM City where id=:id")
+                .setMaxResults(1)
+                .setParameter("id",id)
+                .list();
+    }
 }

@@ -21,6 +21,9 @@ public class EventService {
         this.eventDao = eventDao;
     }
 
+    public Event getById(int id){
+        return this.eventDao.getById(id);
+    }
     public List<Event> getAll(){
         return this.eventDao.getAll();
     }
