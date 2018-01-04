@@ -7,7 +7,6 @@ import java.util.HashSet;
 import com.workspaceit.pmc.constant.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -32,25 +31,28 @@ public class FileUploadController{
 		this.fileService = fileService;
 	}
 	
-	private Set<String> imgContentType;
-	   
+	private Set<String> imgAllowedMimeType;
+    private Set<String> videoAllowedMimeType;
 
     public FileUploadController(){
-    	imgContentType = new HashSet<String>(){
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+    	imgAllowedMimeType = new HashSet<>();
+        videoAllowedMimeType = new HashSet<>();
 
-			{
-                add("image/jpeg");
-                add("image/pjpeg");
-                add("image/jpeg");
-                add("image/png");
+        /**
+         * Image mime type
+         * */
+        imgAllowedMimeType.add("image/jpeg");
+        imgAllowedMimeType.add("image/pjpeg");
+        imgAllowedMimeType.add("image/jpeg");
+        imgAllowedMimeType.add("image/png");
 
-            }
-        };
-
+        /**
+         * Video mime type
+         * */
+        videoAllowedMimeType.add("video/3gpp");
+        videoAllowedMimeType.add("video/x-matroska");
+        videoAllowedMimeType.add("video/x-flv");
+        videoAllowedMimeType.add("video/mp4");
     }
 
     @Secured({UserRole._SUPER_ADMIN})
@@ -65,7 +67,7 @@ public class FileUploadController{
             case "venue-background-image":
                 default:
                     fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
-                    imgContentType = this.imgContentType;
+                    imgContentType = this.imgAllowedMimeType;
         }
 
 
@@ -77,13 +79,41 @@ public class FileUploadController{
     @RequestMapping(value="/upload/adv/{uploader}",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
     public ResponseEntity<?> uploadAdvertisePicture(@RequestParam("advImg") MultipartFile multipartFile,
                                            @PathVariable("uploader") String uploader) {
-        long fileSizeLimit;
-        Set<String> imgContentType;
-        switch (uploader){
+        long fileSizeLimit=0;
+        Set<String> imgContentType=this.imgAllowedMimeType;
 
+         
+
+        switch (uploader){
+            case "logo-image":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
+            case "background-image":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
+            case "top-banner":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
+            case "bottom-banner":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
+            case "slide-show-banner":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                break;
+            case "slide-show-video":
+                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
+                imgContentType = this.videoAllowedMimeType;
+                break;
+            case "email-popup-video":
+                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
+                imgContentType = this.videoAllowedMimeType;
+                break;
+            case "sms-popup-video":
+                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
+                imgContentType = this.videoAllowedMimeType;
+                break;
             default:
                 fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
-                imgContentType = this.imgContentType;
         }
 
         return validateAndProcessMultiPart(  "advImg",fileSizeLimit,multipartFile,imgContentType);
@@ -95,6 +125,7 @@ public class FileUploadController{
                                                             Set<String> imgContentType
                                                          ){
         String mimeType = FileHelper.getMimeType(multipartFile);
+        System.out.println("mimeType "+mimeType);
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         if(!imgContentType.contains(mimeType)) {
             serviceResponse.setValidationError(param," Mime Type "+ mimeType+" not allowed");

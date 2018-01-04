@@ -634,22 +634,27 @@
 
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
+
 
         <script>
+
             $(document).ready(function(){
-                var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","",10,10);
-                var backgroundImage = configAdvertBdImgDropZone("advBackgroundImage","",1,1);
-                var topBanner = configAdvertBdImgDropZone("advTopBannerImage","",1,1);
-                var bottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","",1,1);
 
-                var slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","",1,1);
-                var slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","",1,1);
+                var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1);
+                var backgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",1,1);
+                var topBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",1,1);
+                var bottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",1,1);
 
-                var emailPopUpVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","",1,1);
-                var smsPopUpVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","",1,1);
+                var slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",1,1);
+                var slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3);
+
+                var emailPopUpVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3);
+                var smsPopUpVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3);
 
             });
-            function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize){
+            function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess,fnError){
                 var advImgDropZone = new Dropzone("#"+elementId,
                     {
                         url: BASEURL+"file/upload/adv/"+param,
@@ -668,9 +673,8 @@
                             this.on("addedfile", function(file) {
                                 file._removeLink.addEventListener("click", function() {
                                     console.log(file);
-                                   /* removeImageByToken(file.token,function(data){
-                                        removeBgImgTokens(data.token);
-                                    });*/
+                                    removeImageByToken(file.token,fnError(response));
+                                   /* */
                                     profilePictureToken = 0;
 
                                     var _ref;
@@ -687,6 +691,7 @@
 
                             file.token = response.token;
                             console.log(file);
+                            fnSuccess(file,response);
                         }
                     }
                 );
