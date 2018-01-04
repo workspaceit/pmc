@@ -642,16 +642,53 @@
 
             $(document).ready(function(){
 
-                var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1);
-                var backgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",1,1);
-                var topBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",1,1);
-                var bottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",1,1);
+                var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._LOGO_TOKEN);
+                });
 
-                var slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",1,1);
-                var slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3);
+                var backgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE);
+                });
 
-                var emailPopUpVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3);
-                var smsPopUpVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3);
+                var topBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN);
+                });
+
+                var bottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN);
+                });
+
+                var slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",1,1,function(response){
+                    storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
+                });
+
+                var slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3,function(response){
+                    storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
+                });
+
+                var emailPopUpVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3,function(response){
+                    storeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
+                });
+
+                var smsPopUpVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3,function(response){
+                    storeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
+                },function(){
+                    removeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
+                });
 
             });
             function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess,fnError){
@@ -673,7 +710,7 @@
                             this.on("addedfile", function(file) {
                                 file._removeLink.addEventListener("click", function() {
                                     console.log(file);
-                                    removeImageByToken(file.token,fnError(response));
+                                    removeImageByToken(file.token,fnError);
                                    /* */
                                     profilePictureToken = 0;
 
@@ -691,7 +728,7 @@
 
                             file.token = response.token;
                             console.log(file);
-                            fnSuccess(file,response);
+                            fnSuccess(response);
                         }
                     }
                 );

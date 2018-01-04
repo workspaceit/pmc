@@ -21,11 +21,11 @@ function injectHiddenTokenFields(){
         $("body").append(tokenElem);
     }
 }
-function getVenueBgImgTokens(elemId){
+function getToken(elemId){
     var tokens=[];
     try{
-        var venueLogoTokenStr =  $("#"+elemId).val().trim();
-        tokens = JSON.parse(venueLogoTokenStr==""?"[]":venueLogoTokenStr);
+        var tokenStr =  $("#"+elemId).val().trim();
+        tokens = JSON.parse(tokenStr==""?"[]":tokenStr);
 
     }catch(ex) {
         console.log(ex);
@@ -33,15 +33,15 @@ function getVenueBgImgTokens(elemId){
     }
     return tokens;
 }
-function storeVenueBgImgToken(elemId,token){
-    var tokens = getVenueBgImgTokens(elemId);
+function storeToken(elemId,token){
+    var tokens = getToken(elemId);
     if(tokens.indexOf(token)<0){
         tokens.push(token);
     }
     $("#"+elemId).val(JSON.stringify(tokens));
 }
-function removeBgImgTokens(elemId,token){
-    var tokens=getVenueBgImgTokens(elemId);
+function removeToken(elemId,token){
+    var tokens=getToken(elemId);
     var index = tokens.indexOf(token);
     if(index>0){
         tokens.splice(index,1);
