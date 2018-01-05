@@ -52,6 +52,7 @@ public class AdvertiserValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         AdvertiserForm advertiserForm = (AdvertiserForm)obj;
 
+
         this.checkCityExistence(advertiserForm.getCityId(),errors);
         this.checkStateExistence(advertiserForm.getStateId(),errors);
 
@@ -62,6 +63,18 @@ public class AdvertiserValidator implements Validator {
             this.checkEventExistence(advertiserForm.getEventIds(),errors);
         }
 
+    }
+
+    public void basicFormValidate(Object obj, Errors errors) {
+        AdvertiserForm advertiserForm = (AdvertiserForm)obj;
+
+        if(!advertiserForm.getIsAllLocationSelected()){
+            this.checkMinLocationSelected(advertiserForm.getLocationIds(),errors);
+        }
+        System.out.println("advertiserForm.getIsAllEventSelected() "+advertiserForm.getIsAllEventSelected());
+        if(!advertiserForm.getIsAllEventSelected()){
+            this.checkMinEventSelected(advertiserForm.getEventIds(),errors);
+        }
     }
     private void checkCityExistence(Integer cityId, Errors errors){
         if(cityId==null || cityId==-1){ // -1 Represents All
@@ -74,7 +87,7 @@ public class AdvertiserValidator implements Validator {
         }
     }
     private void checkStateExistence(Integer stateId, Errors errors){
-        if(stateId==null || stateId==-1){
+        if(stateId==null){
             return;
         }
 
@@ -84,9 +97,7 @@ public class AdvertiserValidator implements Validator {
         }
     }
     private void checkLocationExistence(Integer[] locationIds, Errors errors){
-        if(locationIds==null){
-            return;
-        }
+
         for(int locationId:locationIds){
             State state =  this.stateService.getById(locationId);
             if( state == null ){
@@ -98,9 +109,7 @@ public class AdvertiserValidator implements Validator {
 
     }
     private void checkEventExistence(Integer[] eventIds, Errors errors){
-        if(eventIds==null){
-            return;
-        }
+
         for(int eventId:eventIds){
             Event event =  this.eventService.getById(eventId);
             if( event == null ){
@@ -110,5 +119,15 @@ public class AdvertiserValidator implements Validator {
 
         }
 
+    }
+    private void checkMinLocationSelected(Integer[] locationIds, Errors errors){
+        if(locationIds==null || locationIds.length==0){
+            errors.rejectValue("locationIds","Location required");
+        }
+    }
+    private void checkMinEventSelected(Integer[] eventIds, Errors errors){
+        if(eventIds==null || eventIds.length==0){
+            errors.rejectValue("eventIds","Event required");
+        }
     }
 }

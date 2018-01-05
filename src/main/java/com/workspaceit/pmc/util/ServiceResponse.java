@@ -57,9 +57,9 @@ public class ServiceResponse {
             }
         }
     }
-    public void bindValidationError(BindingResult result,String... parms){
+    public void bindValidationError(BindingResult result,String... params){
         if(result.hasErrors()) {
-            List<String> paramList = Arrays.asList(parms);
+            List<String> paramList = Arrays.asList(params);
             for (ObjectError object : result.getAllErrors()) {
 
 

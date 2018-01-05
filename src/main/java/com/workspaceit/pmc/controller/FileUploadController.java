@@ -21,6 +21,8 @@ import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.FileService;
 import com.workspaceit.pmc.util.ServiceResponse;
 
+import javax.annotation.PostConstruct;
+
 @Controller
 @RequestMapping(value="/file")
 public class FileUploadController{
@@ -34,8 +36,10 @@ public class FileUploadController{
 	private Set<String> imgAllowedMimeType;
     private Set<String> videoAllowedMimeType;
 
-    public FileUploadController(){
-    	imgAllowedMimeType = new HashSet<>();
+
+    @PostConstruct
+    private void initConfiguration(){
+        imgAllowedMimeType = new HashSet<>();
         videoAllowedMimeType = new HashSet<>();
 
         /**
@@ -54,6 +58,8 @@ public class FileUploadController{
         videoAllowedMimeType.add("video/x-flv");
         videoAllowedMimeType.add("video/mp4");
     }
+
+    public FileUploadController(){}
 
     @Secured({UserRole._SUPER_ADMIN})
     @RequestMapping(value="/upload/{uploader}",headers="Content-Type=multipart/form-data",method=RequestMethod.POST)
@@ -107,9 +113,17 @@ public class FileUploadController{
                 fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
                 imgContentType = this.videoAllowedMimeType;
                 break;
+            case "email-popup-banner":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                imgContentType = this.imgAllowedMimeType;
+                break;
             case "email-popup-video":
                 fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
                 imgContentType = this.videoAllowedMimeType;
+                break;
+            case "sms-popup-banner":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                imgContentType = this.imgAllowedMimeType;
                 break;
             case "sms-popup-video":
                 fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB

@@ -35,10 +35,6 @@ public class Advertiser {
     @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = false)
-    private Venue venue;
-
     @Column(name = "zip")
     private String zip;
 
@@ -57,9 +53,6 @@ public class Advertiser {
     @Column(name = "runtime_ends")
     private Date runtimeEnds;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    private Location location;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -118,14 +111,6 @@ public class Advertiser {
         this.city = city;
     }
 
-    public Venue getVenue() {
-        return venue;
-    }
-
-    public void setVenue(Venue venue) {
-        this.venue = venue;
-    }
-
     public String getZip() {
         return zip;
     }
@@ -172,14 +157,6 @@ public class Advertiser {
 
     public void setRuntimeEnds(Date runtimeEnds) {
         this.runtimeEnds = runtimeEnds;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public Date getCreatedAt() {

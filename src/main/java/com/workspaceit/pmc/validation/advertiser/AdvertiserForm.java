@@ -4,7 +4,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -47,14 +49,12 @@ public class AdvertiserForm {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date runtimeEnds;
 
-    @NotNull(message = "Location required")
-    private Integer[] locationIds;
 
-    @NotNull(message = "Event required")
+    private Integer[] locationIds;
     private Integer[] eventIds;
 
-    private Boolean isAllLocationSelected;
-    private Boolean isAllEventSelected;
+    private Boolean isAllLocationSelected =false;
+    private Boolean isAllEventSelected =false;
 
     public String getName() {
         return name;
@@ -164,7 +164,7 @@ public class AdvertiserForm {
         return isAllEventSelected;
     }
 
-    public void setAllEventSelected(Boolean allEventSelected) {
+    public void setIsAllEventSelected(Boolean allEventSelected) {
         isAllEventSelected = allEventSelected;
     }
 }

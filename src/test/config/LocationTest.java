@@ -1,16 +1,10 @@
 package config;
 
-import com.workspaceit.pmc.config.PersistenceConfig;
-import com.workspaceit.pmc.config.PropertiesWithJavaConfig;
 import com.workspaceit.pmc.config.WebConfig;
-import com.workspaceit.pmc.config.WebInit;
 import com.workspaceit.pmc.service.LocationService;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
@@ -18,23 +12,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class,
-        PersistenceConfig.class,
-        PropertiesWithJavaConfig.class,
-        WebInit.class},loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = {WebConfig.class})
 public class LocationTest {
 
 
-    LocationService locationService;
+   // LocationService locationService;
 
-    @Autowired
+  //  @Autowired
     public void setLocationService(LocationService locationService) {
-        this.locationService = locationService;
+       // this.locationService = locationService;
     }
 
     //@Test
     public void test() {
-        System.out.println(locationService.getAll());
+      //  System.out.println(locationService.getAll());
 
     }
 }

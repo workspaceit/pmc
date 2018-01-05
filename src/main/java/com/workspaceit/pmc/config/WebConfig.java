@@ -18,7 +18,6 @@ import java.util.List;
 @EnableWebMvc
 @ComponentScan("com.workspaceit.pmc")
 @Import({ SecurityConfig.class })
-
 public class WebConfig implements WebMvcConfigurer {
 
     Environment env;

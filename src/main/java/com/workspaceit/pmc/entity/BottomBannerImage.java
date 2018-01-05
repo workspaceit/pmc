@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

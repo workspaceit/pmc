@@ -23,6 +23,6 @@ public class CityDao extends BaseDao {
         return (City)session.createQuery("FROM City where id=:id")
                 .setMaxResults(1)
                 .setParameter("id",id)
-                .list();
+                .uniqueResult();
     }
 }
