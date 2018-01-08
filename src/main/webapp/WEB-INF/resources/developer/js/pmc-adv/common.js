@@ -26,8 +26,7 @@ function injectHiddenTokenFields(){
 }
 
 $(document).ready(function(){
-    var advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",1,1,function(response){
-        emptyToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN);
+    var advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",6,1,function(response){
         storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);

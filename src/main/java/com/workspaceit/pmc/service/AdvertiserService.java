@@ -19,6 +19,7 @@ import java.util.List;
 public class AdvertiserService {
     private AdvertiserDao advertiserDao;
 
+    private AdvertisersOtherImageService advertisersOtherImageService;
     private StateService stateService;
     private CityService cityService;
 
@@ -26,6 +27,12 @@ public class AdvertiserService {
     public void setAdvertiserDao(AdvertiserDao advertiserDao) {
         this.advertiserDao = advertiserDao;
     }
+
+    @Autowired
+    public void setAdvertisersOtherImageService(AdvertisersOtherImageService advertisersOtherImageService) {
+        this.advertisersOtherImageService = advertisersOtherImageService;
+    }
+
     @Autowired
     public void setStateService(StateService stateService) {
         this.stateService = stateService;
@@ -54,6 +61,7 @@ public class AdvertiserService {
 
         this.create(advertiser);
 
+        this.advertisersOtherImageService.create(advertiser,advertiserForm.getOtherImage(),admin);
         return advertiser;
     }
     @Transactional(readOnly = true)

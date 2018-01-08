@@ -20,7 +20,7 @@ public class AdvertiserDao extends BaseDao {
     }
     public List<Advertiser> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Advertiser")
+        return session.createQuery("FROM Advertiser ORDER BY id desc")
                 .list();
     }
 }
