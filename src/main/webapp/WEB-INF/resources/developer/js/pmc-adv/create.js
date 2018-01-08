@@ -201,7 +201,6 @@ function validateGalleryAdds(){
         },
         success: function(response) {
             notifyUser("galleryAdsErrorCount",response,false);
-            errorFound = true;
             submit(3);
         }
     });

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by mi_rafi on 1/4/18.
  */
@@ -54,10 +56,16 @@ public class AdvertiserService {
 
         return advertiser;
     }
+    @Transactional(readOnly = true)
     public Advertiser getById(int id){
         return this.advertiserDao.getById(id);
     }
+    @Transactional(rollbackFor = Exception.class)
     public void create(Advertiser advertiser){
         this.advertiserDao.insert(advertiser);
+    }
+    @Transactional(readOnly = true)
+    public List<Advertiser> getAll(){
+        return this.advertiserDao.getAll();
     }
 }
