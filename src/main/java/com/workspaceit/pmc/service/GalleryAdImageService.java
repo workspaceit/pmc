@@ -32,54 +32,41 @@ public class GalleryAdImageService {
     }
 
     public void create(GalleryAdsForm galleryAdsForm, GalleryAd galleryAd,Admin admin){
-        List<GalleryAdsImage> galleryAdsImageList = new ArrayList<>();
+        List<Object> galleryAdsImageList = new ArrayList<>();
 
-        Integer logoToken = galleryAdsForm.getLogoToken();
-        Integer bgImgTokens = galleryAdsForm.getBgImgTokens();
         Integer[] topBannerImgTokens = galleryAdsForm.getTopBannerImgTokens();
         Integer[] bottomBannerImgTokens = galleryAdsForm.getBottomBannerImgTokens();
 
-        String logoFileName = this.fileService.copyFile(logoToken);
-        String bgFileName = this.fileService.copyFile(bgImgTokens);
 
-        GalleryAdsLogo galleryAdsLogo = new GalleryAdsLogo();
-        GalleryAdsBackground galleryAdsBackground = new GalleryAdsBackground();
 
-        galleryAdsLogo.setImageName(logoFileName);
-        galleryAdsLogo.setGalleryAdId(galleryAd.getId());
 
-        galleryAdsBackground.setImageName(bgFileName);
-        galleryAdsBackground.setGalleryAdId(galleryAd.getId());
-
-        galleryAdsImageList.add(galleryAdsLogo);
-        galleryAdsImageList.add(galleryAdsBackground);
 
         for(Integer topBannerImgToken : topBannerImgTokens){
             String fileName = this.fileService.copyFile(topBannerImgToken);
 
-            GalleryAdsTopBanner galleryAdsTopBanner = new GalleryAdsTopBanner();
-            galleryAdsTopBanner.setImageName(fileName);
-            galleryAdsTopBanner.setGalleryAdId(galleryAd.getId());
+            GalleryAdsTopBannerImage galleryAdsTopBanner = new GalleryAdsTopBannerImage();
+            galleryAdsTopBanner.setImage(fileName);
+            galleryAdsTopBanner.setGalleryAd(galleryAd.getId());
             galleryAdsImageList.add(galleryAdsTopBanner);
         }
         for(Integer bottomBannerImgToken : bottomBannerImgTokens){
             String fileName = this.fileService.copyFile(bottomBannerImgToken);
 
-            GalleryAdsBottomBanner galleryAdsBottomBanner = new GalleryAdsBottomBanner();
-            galleryAdsBottomBanner.setImageName(fileName);
-            galleryAdsBottomBanner.setGalleryAdId(galleryAd.getId());
-            galleryAdsImageList.add(galleryAdsBottomBanner);
+            GalleryAdsBottomBannerImage galleryBottomBannerImage = new GalleryAdsBottomBannerImage();
+            galleryBottomBannerImage.setImage(fileName);
+            galleryBottomBannerImage.setGalleryAdId(galleryAd.getId());
+            galleryAdsImageList.add(galleryBottomBannerImage);
         }
 
         this.create(galleryAdsImageList);
 
     }
 
-    public void create(GalleryAdsImage galleryAdsImage){
+    public void create(Object galleryAdsImage){
         this.galleryImageDao.insert(galleryAdsImage);
     }
-    public void create(List<GalleryAdsImage> galleryAdsImages){
-        for(GalleryAdsImage galleryAdsImage :galleryAdsImages){
+    public void create(List<Object> galleryAdsImages){
+        for(Object galleryAdsImage :galleryAdsImages){
             this.galleryImageDao.insert(galleryAdsImage);
         }
     }

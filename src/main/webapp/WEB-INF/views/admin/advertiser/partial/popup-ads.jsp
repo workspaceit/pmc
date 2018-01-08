@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_4">
     <div class="imageupload panel panel-default">
         <div class="panel-heading clearfix">
@@ -23,7 +24,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="smsExpiryDate" type="text" class="form-control" name="startdate" />
                     <i class="fa fa-calendar"></i>
                 </div>
 
@@ -59,17 +60,11 @@
         <p class="text-danger" id="errorObj_smsPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select class="form-control" style="display:inline;width:100px;height:35px;" >
-                            <option>
-                              2s
-                            </option>
-                            <option>
-                              3s
-                            </option>
-                            <option>
-                              4s
-                            </option>
-                          </select>
+                            <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                                    <c:forEach var="duration" items="${durations}" >
+                                        <option value="${duration}">${duration}s</option>
+                                    </c:forEach>
+                              </select>
                           </span>
             <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
         </div>
@@ -98,7 +93,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="emailExpiryDate" type="text" class="form-control" name="" />
                     <i class="fa fa-calendar"></i>
                 </div>
                 <!-- <div class="" style="margin-left: auto;float:right;margin-right:5px;">
@@ -130,16 +125,10 @@
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select class="form-control" style="display:inline;width:100px;height:35px;" >
-                            <option>
-                              2s
-                            </option>
-                            <option>
-                              3s
-                            </option>
-                            <option>
-                              4s
-                            </option>
+                            <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                                <c:forEach var="duration" items="${durations}" >
+                                    <option value="${duration}">${duration}s</option>
+                                </c:forEach>
                           </select>
                           </span>
             <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>

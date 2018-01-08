@@ -2,9 +2,8 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
-import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsImage;
-import com.workspaceit.pmc.helper.DateHelper;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ import java.util.Date;
 public class GalleryAdService {
     GalleryAdDao galleryAdDao;
     GalleryAdImageService galleryAdService;
+    FileService fileService;
 
     @Autowired
     public void setGalleryAdDao(GalleryAdDao galleryAdDao) {
@@ -29,13 +29,23 @@ public class GalleryAdService {
     public void setGalleryAdService(GalleryAdImageService galleryAdService) {
         this.galleryAdService = galleryAdService;
     }
+    @Autowired
+    public void setFileService(FileService fileService) {
+        this.fileService = fileService;
+    }
 
-    public GalleryAd create(GalleryAdsForm galleryAdsForm, Admin admin){
-        GalleryAd galleryAd = new GalleryAd();
-
+    public GalleryAd create(Advertiser advertiser,GalleryAdsForm galleryAdsForm, Admin admin){
+        Integer logoToken = galleryAdsForm.getLogoToken();
+        Integer bgImgTokens = galleryAdsForm.getBgImgTokens();
+        String logoFileName = this.fileService.copyFile(logoToken);
+        String bgFileName = this.fileService.copyFile(bgImgTokens);
         Date topBannerExpiryDate =   galleryAdsForm.getTopBannerExpiryDate();
         Date bottomBannerExpiryDate = galleryAdsForm.getBottomBannerExpiryDate();
 
+        GalleryAd galleryAd = new GalleryAd();
+        galleryAd.setAdvertiserId(advertiser.getId());
+        galleryAd.setLogo(logoFileName);
+        galleryAd.setBackgroundImage(bgFileName);
         galleryAd.setTopBannerExpiryDate( topBannerExpiryDate);
         galleryAd.setBottomBannerExpiryDate(bottomBannerExpiryDate);
         galleryAd.setCreatedBy(admin);
@@ -45,7 +55,7 @@ public class GalleryAdService {
         try{
             this.galleryAdService.create(galleryAdsForm,galleryAd,admin);
         }catch (Exception ex){
-
+            ex.printStackTrace();
         }
         return galleryAd;
     }

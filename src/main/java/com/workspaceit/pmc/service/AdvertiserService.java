@@ -33,7 +33,7 @@ public class AdvertiserService {
         this.cityService = cityService;
     }
     @Transactional(rollbackFor = Exception.class)
-    public void create(AdvertiserForm advertiserForm, Admin admin){
+    public Advertiser create(AdvertiserForm advertiserForm, Admin admin){
         City city = this.cityService.getById(advertiserForm.getCityId());
         State state = this.stateService.getById(advertiserForm.getStateId());
 
@@ -51,6 +51,8 @@ public class AdvertiserService {
         advertiser.setCreatedBy(admin);
 
         this.create(advertiser);
+
+        return advertiser;
     }
     public Advertiser getById(int id){
         return this.advertiserDao.getById(id);

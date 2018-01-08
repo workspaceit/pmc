@@ -48,7 +48,6 @@
                             <jsp:include page="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"/>
                             <jsp:include page="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"/>
                             <jsp:include page="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"/>
-
                         </div>
                     </div>
                 </div>

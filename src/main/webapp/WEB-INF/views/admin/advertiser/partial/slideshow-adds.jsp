@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
     <div class="imageupload panel panel-default">
         <div class="panel-heading clearfix">
@@ -51,16 +52,10 @@
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
-                                <select class="form-control" style="display:inline;width:100px;height:35px;" >
-                                <option>
-                                  2s
-                                </option>
-                                <option>
-                                  3s
-                                </option>
-                                <option>
-                                  4s
-                                </option>
+                                <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                                    <c:forEach var="duration" items="${durations}" >
+                                         <option value="${duration}">${duration}s</option>
+                                    </c:forEach>
                               </select>
                               </span>
             <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
@@ -118,16 +113,10 @@
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
-                                <select class="form-control" style="display:inline;width:100px;height:35px;" >
-                                <option>
-                                  2s
-                                </option>
-                                <option>
-                                  3s
-                                </option>
-                                <option>
-                                  4s
-                                </option>
+                               <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                                    <c:forEach var="duration" items="${durations}" >
+                                        <option value="${duration}">${duration}s</option>
+                                    </c:forEach>
                               </select>
                               </span>
             <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>

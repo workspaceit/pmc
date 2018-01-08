@@ -1,7 +1,7 @@
 /**
  * Created by mi_rafi on 1/5/18.
  */
-
+var errorFound = false;
 function notifyUser(id,response,errorFound){
     if(errorFound){
         $("#"+id).html(response.responseJSON.length).show();
@@ -10,6 +10,27 @@ function notifyUser(id,response,errorFound){
     }
 }
 function submit(marker){
+    switch (marker){
+        case 1:
+            validateAdvertiser();
+            break;
+        case 2:
+            validateGalleryAdds();
+            break;
+        case 3:
+            validateSlideShowAds();
+            break;
+        case 4:
+            validatePopUpAdsData();
+            break;
+        case 5:
+            if(!errorFound)
+                createAdvertiser();
+            break;
+    }
+}
+function validateAll(){
+
     validateAdvertiser();
     validateGalleryAdds();
     validateSlideShowAds();
@@ -17,9 +38,15 @@ function submit(marker){
 }
 function initSubmit(){
     UnBindErrors("errorObj_");
-    submit(0);
+    errorFound = false;
+    submit(1);
 }
-function getAdvertiserInfoData(){
+function getAdvertiserInfoData(prefix){
+    if(prefix==undefined){
+        prefix = "";
+    }else{
+        prefix += "."
+    }
     var name = $('#name').val();
     var address = $('#address').val();
     var cityId = $('#cityId').val();
@@ -37,23 +64,24 @@ function getAdvertiserInfoData(){
     var createdBy = $('#createdBy').val();
     var allLocationSelected = hasAllLocationSelected();
     var allEventSelected = hasAllEventSelected();
-
-    return  {
-        name: name,
-        address: address,
-        cityId: cityId,
-        eventIds: eventIds,
-        stateId: stateId,
-        zip: zip,
-        phone: phone,
-        website: website,
-        otherImage: otherImage,
-        runtimeStarts: runtimeStarts,
-        runtimeEnds: runtimeEnds,
-        locationIds: locationIds,
-        isAllLocationSelected:allLocationSelected,
-        isAllEventSelected:allEventSelected
-    };
+    var data={};
+    data[prefix+"name"]= name;
+    data[prefix+"address"]= address;
+    data[prefix+"cityId"]= cityId;
+    data[prefix+"eventIds"]= eventIds;
+    data[prefix+"stateId"]= stateId;
+    data[prefix+"zip"]= zip;
+    data[prefix+"phone"]= phone;
+    data[prefix+"website"]= website;
+    data[prefix+"otherImage"]= otherImage;
+    data[prefix+"runtimeStarts"]= runtimeStarts;
+    data[prefix+"runtimeEnds"]= runtimeEnds;
+    data[prefix+"locationIds"]= locationIds;
+    data[prefix+"isAllLocationSelected"]=allLocationSelected;
+    data[prefix+"isAllEventSelected"]=allEventSelected;
+    
+    
+    return data;
 }
 function validateAdvertiser(){
     var data = getAdvertiserInfoData();
@@ -74,18 +102,30 @@ function validateAdvertiser(){
                 console.log(response.responseJSON);
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("advertiserInfoErrorCount",response,true);
+                errorFound = true;
+                submit(2);
             }
         },
         success: function(response) {
             notifyUser("advertiserInfoErrorCount",response,false);
+            submit(2);
         }
     });
 }
 function createAdvertiser(){
-    var data = getAdvertiserInfoData();
+    var data = {};
+    var advertiserData = getAdvertiserInfoData("advertiser");
+    var galleryAdsData =getGalleryAddsData("galleryAds");
+    var popupAdsData =getPopUpAdsData("popupAds");
+    var slideShowAdsData =getSlideShowAdsData("slideShowAds");
+    data = $.extend({}, data, advertiserData);
+    data = $.extend({}, data,galleryAdsData);
+    data = $.extend({}, data,popupAdsData);
+    data = $.extend({}, data, slideShowAdsData);
+
     console.log(data);
     $.ajax({
-        url: BASEURL+"api/pmc-advsr/create",
+        url: BASEURL+"api/pmc-advsr/create-all",
         type: "POST",
         data: data,
         traditional:true,
@@ -97,9 +137,9 @@ function createAdvertiser(){
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                console.log(response.responseJSON);
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("advertiserInfoErrorCount",response,true);
+                console.log("Error from Create");
+                console.log(response);
+                validateAll();
             }
         },
         success: function(response) {
@@ -108,7 +148,12 @@ function createAdvertiser(){
     });
 }
 
-function getGalleryAddsData(){
+function getGalleryAddsData(prefix){
+    if(prefix==undefined){
+        prefix = "";
+    }else{
+        prefix += "."
+    }
     var advertiserId = $('#advertiserId').val();
     var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
 
@@ -118,15 +163,19 @@ function getGalleryAddsData(){
 
     var topBannerExpiryDate = $('#topBannerExpiryDate').val();
     var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').val();
-    return {
-        advertiserId: advertiserId,
-        logoToken: logoToken,
-        bgImgTokens: bgImgTokens,
-        topBannerImgTokens:topBannerImgTokens,
-        bottomBannerImgTokens:bottomBannerImgTokens,
-        topBannerExpiryDate: topBannerExpiryDate,
-        bottomBannerExpiryDate: bottomBannerExpiryDate
-    };
+    var slideShowVideoDuration = $('#slideShowVideoDuration').val();
+
+    var data={};
+
+    data[prefix+"advertiserId"]= advertiserId;
+    data[prefix+"logoToken"]= logoToken;
+    data[prefix+"bgImgTokens"]= bgImgTokens;
+    data[prefix+"topBannerImgTokens"]=topBannerImgTokens;
+    data[prefix+"bottomBannerImgTokens"]=bottomBannerImgTokens;
+    data[prefix+"topBannerExpiryDate"]= topBannerExpiryDate;
+    data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
+    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    return data;
 }
 function validateGalleryAdds(){
     var data = getGalleryAddsData();
@@ -145,10 +194,15 @@ function validateGalleryAdds(){
             422: function(response) {
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("galleryAdsErrorCount",response,true);
+
+                errorFound = true;
+                submit(3);
             }
         },
         success: function(response) {
             notifyUser("galleryAdsErrorCount",response,false);
+            errorFound = true;
+            submit(3);
         }
     });
 }
@@ -179,13 +233,24 @@ function createGalleryAdds(){
 
 
 
-function getSlideShowAdsData(){
+function getSlideShowAdsData(prefix){
+    if(prefix==undefined){
+        prefix="";
+    }else{
+        prefix += "."
+    }
+
     var slideShowAdsBannerTokens = getToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
     var slideShowAdsVideoToken = getToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
-    return {
-        slideShowAdsBannerTokens: slideShowAdsBannerTokens,
-        slideShowAdsVideoToken: slideShowAdsVideoToken
-    };
+    var slideShowBannerDuration = $("#slideShowBannerDuration").val();
+    var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
+
+    var data = {};
+    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
+    data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
+    data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
+    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    return data;
 }
 function validateSlideShowAds(){
     var data = getSlideShowAdsData();
@@ -204,26 +269,45 @@ function validateSlideShowAds(){
             422: function(response) {
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("slideShowAdsErrorCount",response,true);
+                errorFound = true;
+                submit(4);
             }
         },
         success: function(response) {
             console.log(response);
+            notifyUser("slideShowAdsErrorCount",response,false);
+            submit(4);
         }
     });
 }
 
 
-function getPopUpAdsData(){
+function getPopUpAdsData(prefix){
+    if(prefix==undefined){
+        prefix="";
+    }else{
+        prefix += "."
+    }
     var smsPopupBanner = getToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN);
     var smsPopupVideo = getToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
     var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
     var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
-    return {
-        smsPopupBanner: smsPopupBanner,
-        smsPopupVideo: smsPopupVideo,
-        emailPopupBanner: emailPopupBanner,
-        emailPopupVideo: emailPopupVideo
-    };
+    var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
+    var smsPopupVideoDuration = $("#smsPopupVideoDuration").val();
+    var smsExpiryDate = $("#smsExpiryDate").val();
+    var emailExpiryDate = $("#emailExpiryDate").val();
+
+    var data = {};
+    data[prefix+"smsPopupBanner"]=smsPopupBanner;
+    data[prefix+"smsPopupVideo"]= smsPopupVideo;
+    data[prefix+"emailPopupBanner"]= emailPopupBanner;
+    data[prefix+"emailPopupVideo"]= emailPopupVideo;
+    data[prefix+"emailPopupVideoDuration"]= emailPopupVideoDuration;
+    data[prefix+"smsPopupVideoDuration"]= smsPopupVideoDuration;
+
+    data[prefix+"smsExpiryDate"]= smsExpiryDate;
+    data[prefix+"emailExpiryDate"]= emailExpiryDate;
+    return data;
 }
 function validatePopUpAdsData() {
     var data = getPopUpAdsData();
@@ -242,10 +326,13 @@ function validatePopUpAdsData() {
             422: function(response) {
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("popUpAdsErrorCount",response,true);
+                errorFound = true;
+                submit(5);
             }
         },
         success: function(response) {
-            console.log(response);
+            notifyUser("popUpAdsErrorCount",response,false);
+            submit(5);
         }
     });
 }
@@ -279,6 +366,21 @@ $(function() {
          alert("You are " + years + " years old.");*/
     });
     $('#bottomBannerExpiryDate').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    },function(start, end, label) {
+        /*var years = moment().diff(start, 'years');
+         alert("You are " + years + " years old.");*/
+    });
+    /*Popup ads*/
+    $('#smsExpiryDate').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    },function(start, end, label) {
+        /*var years = moment().diff(start, 'years');
+         alert("You are " + years + " years old.");*/
+    });
+    $('#emailExpiryDate').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true
     },function(start, end, label) {

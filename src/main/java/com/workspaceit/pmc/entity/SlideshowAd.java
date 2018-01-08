@@ -23,9 +23,8 @@ public class SlideshowAd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "advertiser_id", referencedColumnName = "id", nullable = false)
-    private Advertiser advertiser;
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
 
     @Column(name = "video")
     private String video;
@@ -56,9 +55,9 @@ public class SlideshowAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "slideshowAd", targetEntity = SlideshowBannerImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    Set<SlideshowBannerImage> slideshowBannerImages = new HashSet<SlideshowBannerImage>();
+    @OneToMany
+    @JoinColumn(name = "slideshow_ad_id", referencedColumnName = "id")
+    Set<SlideshowBannerImage> slideshowBannerImages = new HashSet<>();
 
 
     public int getId() {
@@ -69,12 +68,12 @@ public class SlideshowAd {
         this.id = id;
     }
 
-    public Advertiser getAdvertiser() {
-        return advertiser;
+    public Integer getAdvertiserId() {
+        return advertiserId;
     }
 
-    public void setAdvertiser(Advertiser advertiser) {
-        this.advertiser = advertiser;
+    public void setAdvertiserId(Integer advertiserId) {
+        this.advertiserId = advertiserId;
     }
 
     public String getVideo() {
@@ -148,5 +147,4 @@ public class SlideshowAd {
     public void setSlideshowBannerImages(Set<SlideshowBannerImage> slideshowBannerImages) {
         this.slideshowBannerImages = slideshowBannerImages;
     }
-
 }

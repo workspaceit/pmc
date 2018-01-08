@@ -14,7 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mi_rafi on 1/3/18.
@@ -26,6 +29,17 @@ public class AdvertiserController {
     private StateService stateService;
     private CityService cityService;
     private EventService eventService;
+
+    private Set<Integer> durations;
+
+    @PostConstruct
+    private void initConfig(){
+        durations = new HashSet<>();
+        for(int i=1;i<=5;i++){
+            durations.add(i);
+        }
+
+    }
 
     @Autowired
     public void setLocationService(LocationService locationService) {
@@ -60,6 +74,7 @@ public class AdvertiserController {
         model.addObject("locations",locations);
         model.addObject("states",states);
         model.addObject("cities",cities);
+        model.addObject("durations",durations);
 
         return model;
     }

@@ -1,20 +1,19 @@
 package com.workspaceit.pmc.entity.advertisement.galleryads.images;
 
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by mi_rafi on 1/5/18.
+ * Created by anik on 12/20/17.
  */
+
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="image_type",discriminatorType = DiscriminatorType.STRING)
-@Table(name = "gallery_banner_images")
-public class GalleryAdsImage {
+@Table(name = "gallery_ads_bottom_banner_image")
+public class GalleryAdsBottomBannerImage {
 
     @Id
     @Column(name = "id")
@@ -22,20 +21,15 @@ public class GalleryAdsImage {
     private int id;
 
     @Column(name = "image")
-    String imageName;
+    private String image;
 
     @Column(name = "gallery_ad_id")
-    Integer galleryAdId;
+    private Integer galleryAdId;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
-
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    private Date updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
@@ -49,12 +43,12 @@ public class GalleryAdsImage {
         this.id = id;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getGalleryAdId() {
@@ -63,5 +57,21 @@ public class GalleryAdsImage {
 
     public void setGalleryAdId(Integer galleryAdId) {
         this.galleryAdId = galleryAdId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
     }
 }

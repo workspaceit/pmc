@@ -2,20 +2,14 @@ package com.workspaceit.pmc.entity.advertisement.galleryads;
 
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.BottomBannerImage;
-import com.workspaceit.pmc.entity.TopBannerImage;
-import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBanner;
-import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsTopBanner;
+import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBannerImage;
+import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsTopBannerImage;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -31,9 +25,24 @@ public class GalleryAd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "advertiser_id", referencedColumnName = "id", nullable = false)
-    private Advertiser advertiser;
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
+
+    @Column(name = "logo")
+    private String logo;
+
+    @Column(name = "background_image")
+    private String backgroundImage;
+
+
+    @OneToMany
+    @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
+    private List<GalleryAdsBottomBannerImage> bottomBanners;
+
+    @OneToMany
+    @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
+    private List<GalleryAdsTopBannerImage> adsTopBanners;
+
 
     @Column(name = "top_banner_expiry_date")
     private Date topBannerExpiryDate;
@@ -55,11 +64,6 @@ public class GalleryAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany( fetch = FetchType.EAGER)
-    @JoinColumn(name = "gallery_ad_id",referencedColumnName ="id")
-    List<GalleryAdsBottomBanner> bottomBanners;
-
-
 
     public int getId() {
         return id;
@@ -69,12 +73,44 @@ public class GalleryAd {
         this.id = id;
     }
 
-    public Advertiser getAdvertiser() {
-        return advertiser;
+    public Integer getAdvertiserId() {
+        return advertiserId;
     }
 
-    public void setAdvertiser(Advertiser advertiser) {
-        this.advertiser = advertiser;
+    public void setAdvertiserId(Integer advertiserId) {
+        this.advertiserId = advertiserId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public List<GalleryAdsBottomBannerImage> getBottomBanners() {
+        return bottomBanners;
+    }
+
+    public void setBottomBanners(List<GalleryAdsBottomBannerImage> bottomBanners) {
+        this.bottomBanners = bottomBanners;
+    }
+
+    public List<GalleryAdsTopBannerImage> getAdsTopBanners() {
+        return adsTopBanners;
+    }
+
+    public void setAdsTopBanners(List<GalleryAdsTopBannerImage> adsTopBanners) {
+        this.adsTopBanners = adsTopBanners;
     }
 
     public Date getTopBannerExpiryDate() {
@@ -116,14 +152,4 @@ public class GalleryAd {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
-
-    public List<GalleryAdsBottomBanner> getBottomBanners() {
-        return bottomBanners;
-    }
-
-    public void setBottomBanners(List<GalleryAdsBottomBanner> bottomBanners) {
-        this.bottomBanners = bottomBanners;
-    }
-
-
 }

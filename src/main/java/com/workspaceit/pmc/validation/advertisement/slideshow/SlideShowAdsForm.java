@@ -13,7 +13,13 @@ public class SlideShowAdsForm {
     private Integer[] slideShowAdsBannerTokens;
 
     @NotNull(message = "Slide Show Ads Video required")
-    private Integer[] slideShowAdsVideoToken;
+    private Integer slideShowAdsVideoToken;
+
+    @NotNull(message = "Video Duration required")
+    private Integer slideShowVideoDuration;
+
+    @NotNull(message = "Banner Duration required")
+    private Integer slideShowBannerDuration;
 
     public Integer getAdvertiserId() {
         return advertiserId;
@@ -31,11 +37,27 @@ public class SlideShowAdsForm {
         this.slideShowAdsBannerTokens = slideShowAdsBannerTokens;
     }
 
-    public Integer[] getSlideShowAdsVideoToken() {
+    public Integer getSlideShowAdsVideoToken() {
         return slideShowAdsVideoToken;
     }
 
-    public void setSlideShowAdsVideoToken(Integer[] slideShowAdsVideoToken) {
+    public void setSlideShowAdsVideoToken(Integer slideShowAdsVideoToken) {
         this.slideShowAdsVideoToken = slideShowAdsVideoToken;
+    }
+
+    public Integer getSlideShowVideoDuration() {
+        return slideShowVideoDuration;
+    }
+
+    public void setSlideShowVideoDuration(Integer slideShowVideoDuration) {
+        this.slideShowVideoDuration = slideShowVideoDuration;
+    }
+
+    public Integer getSlideShowBannerDuration() {
+        return slideShowBannerDuration;
+    }
+
+    public void setSlideShowBannerDuration(Integer slideShowBannerDuration) {
+        this.slideShowBannerDuration = slideShowBannerDuration;
     }
 }

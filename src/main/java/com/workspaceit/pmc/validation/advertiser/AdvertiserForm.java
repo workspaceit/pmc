@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -166,5 +167,25 @@ public class AdvertiserForm {
 
     public void setIsAllEventSelected(Boolean allEventSelected) {
         isAllEventSelected = allEventSelected;
+    }
+
+    @Override
+    public String toString() {
+        return "AdvertiserForm{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", cityId=" + cityId +
+                ", stateId=" + stateId +
+                ", zip='" + zip + '\'' +
+                ", phone='" + phone + '\'' +
+                ", website='" + website + '\'' +
+                ", otherImage=" + Arrays.toString(otherImage) +
+                ", runtimeStarts=" + runtimeStarts +
+                ", runtimeEnds=" + runtimeEnds +
+                ", locationIds=" + Arrays.toString(locationIds) +
+                ", eventIds=" + Arrays.toString(eventIds) +
+                ", isAllLocationSelected=" + isAllLocationSelected +
+                ", isAllEventSelected=" + isAllEventSelected +
+                '}';
     }
 }
