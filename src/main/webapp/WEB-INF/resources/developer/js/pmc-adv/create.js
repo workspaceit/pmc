@@ -41,6 +41,7 @@ function initSubmit(){
     errorFound = false;
     submit(1);
 }
+/*Advertiser */
 function getAdvertiserInfoData(prefix){
     if(prefix==undefined){
         prefix = "";
@@ -64,6 +65,7 @@ function getAdvertiserInfoData(prefix){
     var createdBy = $('#createdBy').val();
     var allLocationSelected = hasAllLocationSelected();
     var allEventSelected = hasAllEventSelected();
+    var otherImage = getToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN);
     var data={};
     data[prefix+"name"]= name;
     data[prefix+"address"]= address;
@@ -79,7 +81,8 @@ function getAdvertiserInfoData(prefix){
     data[prefix+"locationIds"]= locationIds;
     data[prefix+"isAllLocationSelected"]=allLocationSelected;
     data[prefix+"isAllEventSelected"]=allEventSelected;
-    
+    data[prefix+"otherImage"]=otherImage;
+
     
     return data;
 }
@@ -112,42 +115,7 @@ function validateAdvertiser(){
         }
     });
 }
-function createAdvertiser(){
-    var data = {};
-    var advertiserData = getAdvertiserInfoData("advertiser");
-    var galleryAdsData =getGalleryAddsData("galleryAds");
-    var popupAdsData =getPopUpAdsData("popupAds");
-    var slideShowAdsData =getSlideShowAdsData("slideShowAds");
-    data = $.extend({}, data, advertiserData);
-    data = $.extend({}, data,galleryAdsData);
-    data = $.extend({}, data,popupAdsData);
-    data = $.extend({}, data, slideShowAdsData);
-
-    console.log(data);
-    $.ajax({
-        url: BASEURL+"api/pmc-advsr/create-all",
-        type: "POST",
-        data: data,
-        traditional:true,
-        statusCode: {
-            500: function(response) {
-                console.log(response);
-            },
-            401: function(response) {
-                console.log(response.responseJSON);
-            },
-            422: function(response) {
-                console.log("Error from Create");
-                console.log(response);
-                validateAll();
-            }
-        },
-        success: function(response) {
-            notifyUser("advertiserInfoErrorCount",response,false);
-        }
-    });
-}
-
+/*Gallery Ads */
 function getGalleryAddsData(prefix){
     if(prefix==undefined){
         prefix = "";
@@ -201,38 +169,11 @@ function validateGalleryAdds(){
         },
         success: function(response) {
             notifyUser("galleryAdsErrorCount",response,false);
-            errorFound = true;
             submit(3);
         }
     });
 }
-function createGalleryAdds(){
-    var data = getGalleryAddsData();
-    $.ajax({
-        url: BASEURL+"api/pmc-adv/gallery-create",
-        type: "POST",
-        data: data,
-        traditional:true,
-        statusCode: {
-            500: function(response) {
-                console.log(response);
-            },
-            401: function(response) {
-                console.log(response.responseJSON);
-            },
-            422: function(response) {
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("galleryAdsErrorCount",response,true);
-            }
-        },
-        success: function(response) {
-            notifyUser("galleryAdsErrorCount",response,false);
-        }
-    });
-}
-
-
-
+/*Slideshow Ads */
 function getSlideShowAdsData(prefix){
     if(prefix==undefined){
         prefix="";
@@ -280,8 +221,7 @@ function validateSlideShowAds(){
         }
     });
 }
-
-
+/*PopUp Ads */
 function getPopUpAdsData(prefix){
     if(prefix==undefined){
         prefix="";
@@ -333,6 +273,44 @@ function validatePopUpAdsData() {
         success: function(response) {
             notifyUser("popUpAdsErrorCount",response,false);
             submit(5);
+        }
+    });
+}
+
+/*Create advertiser and other adds */
+function createAdvertiser(){
+    var data = {};
+    var advertiserData = getAdvertiserInfoData("advertiser");
+    var galleryAdsData =getGalleryAddsData("galleryAds");
+    var popupAdsData =getPopUpAdsData("popupAds");
+    var slideShowAdsData =getSlideShowAdsData("slideShowAds");
+    data = $.extend({}, data, advertiserData);
+    data = $.extend({}, data,galleryAdsData);
+    data = $.extend({}, data,popupAdsData);
+    data = $.extend({}, data, slideShowAdsData);
+
+    console.log(data);
+    $.ajax({
+        url: BASEURL+"api/pmc-advsr/create-all",
+        type: "POST",
+        data: data,
+        traditional:true,
+        statusCode: {
+            500: function(response) {
+                console.log(response);
+            },
+            401: function(response) {
+                console.log(response.responseJSON);
+            },
+            422: function(response) {
+                console.log("Error from Create");
+                console.log(response);
+                validateAll();
+            }
+        },
+        success: function(response) {
+            notifyUser("advertiserInfoErrorCount",response,false);
+            window.location=BASEURL+"admin/advertiser/all";
         }
     });
 }

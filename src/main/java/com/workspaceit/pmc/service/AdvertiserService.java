@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by mi_rafi on 1/4/18.
  */
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdvertiserService {
     private AdvertiserDao advertiserDao;
 
+    private AdvertisersOtherImageService advertisersOtherImageService;
     private StateService stateService;
     private CityService cityService;
 
@@ -24,6 +27,12 @@ public class AdvertiserService {
     public void setAdvertiserDao(AdvertiserDao advertiserDao) {
         this.advertiserDao = advertiserDao;
     }
+
+    @Autowired
+    public void setAdvertisersOtherImageService(AdvertisersOtherImageService advertisersOtherImageService) {
+        this.advertisersOtherImageService = advertisersOtherImageService;
+    }
+
     @Autowired
     public void setStateService(StateService stateService) {
         this.stateService = stateService;
@@ -52,12 +61,19 @@ public class AdvertiserService {
 
         this.create(advertiser);
 
+        this.advertisersOtherImageService.create(advertiser,advertiserForm.getOtherImage(),admin);
         return advertiser;
     }
+    @Transactional(readOnly = true)
     public Advertiser getById(int id){
         return this.advertiserDao.getById(id);
     }
+    @Transactional(rollbackFor = Exception.class)
     public void create(Advertiser advertiser){
         this.advertiserDao.insert(advertiser);
+    }
+    @Transactional(readOnly = true)
+    public List<Advertiser> getAll(){
+        return this.advertiserDao.getAll();
     }
 }

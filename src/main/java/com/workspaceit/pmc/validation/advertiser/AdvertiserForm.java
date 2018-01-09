@@ -40,7 +40,7 @@ public class AdvertiserForm {
     @Length(max = 100,message = "Value too large")
     private String website;
 
-    private int[] otherImage;
+    private Integer[] otherImage;
 
     @NotNull(message = "Start date is required")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
@@ -113,11 +113,11 @@ public class AdvertiserForm {
         this.website = website;
     }
 
-    public int[] getOtherImage() {
+    public Integer[] getOtherImage() {
         return otherImage;
     }
 
-    public void setOtherImage(int[] otherImage) {
+    public void setOtherImage(Integer[] otherImage) {
         this.otherImage = otherImage;
     }
 

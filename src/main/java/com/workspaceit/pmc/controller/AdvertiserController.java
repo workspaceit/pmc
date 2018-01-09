@@ -1,16 +1,11 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.entity.City;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.State;
-import com.workspaceit.pmc.service.CityService;
-import com.workspaceit.pmc.service.EventService;
-import com.workspaceit.pmc.service.LocationService;
-import com.workspaceit.pmc.service.StateService;
+import com.workspaceit.pmc.entity.*;
+import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +20,7 @@ import java.util.Set;
 @Controller
 @RequestMapping(ControllerUriPrefix.ADMIN+"/advertiser")
 public class AdvertiserController {
+    private AdvertiserService advertiserService;
     private LocationService locationService;
     private StateService stateService;
     private CityService cityService;
@@ -39,6 +35,11 @@ public class AdvertiserController {
             durations.add(i);
         }
 
+    }
+
+    @Autowired
+    public void setAdvertiserService(AdvertiserService advertiserService) {
+        this.advertiserService = advertiserService;
     }
 
     @Autowired
@@ -78,5 +79,25 @@ public class AdvertiserController {
 
         return model;
     }
+    @RequestMapping("/all")
+    public ModelAndView all(){
 
+       List<Advertiser> advertisers =  this.advertiserService.getAll();
+       ModelAndView model = new ModelAndView("admin/advertiser/all");
+
+
+        model.addObject("advertisers",advertisers);
+
+        return model;
+    }
+    @RequestMapping("/update/{id}")
+    public ModelAndView update(@PathVariable("id") int id){
+
+        Advertiser advertiser =  this.advertiserService.getById(id);
+        ModelAndView model = new ModelAndView("admin/advertiser/edit");
+
+        model.addObject("advertiser",advertiser);
+
+        return model;
+    }
 }
