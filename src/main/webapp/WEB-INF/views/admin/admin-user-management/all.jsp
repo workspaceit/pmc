@@ -46,10 +46,10 @@
                                         <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
                                     </c:when>
                                     <c:otherwise>
-                                        <c:set value="/admin-profile-img/${admin.image}" var="imgSrc" />
+                                        <c:set value="/common/${admin.image}" var="imgSrc" />
                                     </c:otherwise>
                                 </c:choose>
-                                <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
+                                <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}"/>"class="img-circle" width="70">
                             </td>
 
                             <td class="date-clm">

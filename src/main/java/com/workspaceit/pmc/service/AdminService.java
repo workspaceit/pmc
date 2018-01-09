@@ -3,6 +3,7 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.helper.CypherHelper;
+import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.admin.AdminForm;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -19,10 +20,20 @@ import java.util.List;
 
 @Service
 public class AdminService {
+
     private FileService fileService;
+    private FileUtil fileUtil;
     @Autowired
     AdminDao adminDao;
 
+    @Autowired
+    protected void setFileService(FileService fileService) {
+        this.fileService = fileService;
+    }
+    @Autowired
+    public void setFileUtil(FileUtil fileUtil) {
+        this.fileUtil = fileUtil;
+    }
     @Autowired
     SessionFactory sessionFactory;
 
@@ -55,7 +66,7 @@ public class AdminService {
         this.adminDao.insert(admin);
     }
     @Transactional(rollbackFor = Exception.class)
-    public Admin create(AdminForm adminForm){
+    public Admin create(AdminForm adminForm ){
         Admin admin = getAdminFromAdminForm(adminForm);
         Integer profilePictureToken = adminForm.getProfilePictureToken();
 
@@ -75,16 +86,11 @@ public class AdminService {
 
         Admin admin = new Admin();
 
-
-
-
         admin.setName(adminForm.getFullName());
         admin.setPhoneNumber(adminForm.getPhoneNumber());
         admin.setUserName(adminForm.getUserName());
         admin.setEmail(adminForm.getEmail());
-        admin.setPassword(adminForm.getPassword());
-
-
+        admin.setPassword(CypherHelper.getbCryptPassword(adminForm.getPassword()));
 
         return admin;
     }

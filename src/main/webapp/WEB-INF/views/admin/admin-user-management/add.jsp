@@ -52,7 +52,22 @@
                                 </div>
                             </div>
                             <div class="file-tab panel-body">
-                                <form action="/upload-target" class="dropzone"></form>
+                                    <%--<label class="btn btn-primary btn-file btn-sm-new">
+                                        <span>Browse</span>
+                                        <!-- The file is stored here. -->
+                                        <input type="file" name="image-file">
+                                    </label>
+                                    <button type="button" class="btn btn-danger btn-sm-new">Delete image</button>
+--%>
+                                <div id="profilePicImg" >
+
+                                    <div class="dz-default dz-message">
+                                        <span>Drop files here to upload</span>
+                                        <p id="errorObj_profilePictureToken"></p>
+                                    </div>
+                                </div>
+
+                                <p id="errorObj_locationLogo"  class="text-danger"></p>
                             </div>
                         </div>
                         <!-- <div class="form-group">
@@ -73,9 +88,24 @@
 
 
         </div>
+        <div id="dropZonePreview" style="display: none">
+            <div class="dz-preview dz-file-preview">
+                <div class="dz-details">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>
+                    <img data-dz-thumbnail />
+                </div>
+                <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                    <%--<div class="dz-success-mark"><span>✔</span></div>
+                    <div class="dz-error-mark"><span>✘</span></div>--%>
+                <div class="dz-error-message">
+                    <span data-dz-errormessage></span>
+                </div>
 
+            </div>
+        </div>
         <%--Developer Hidden Field--%>
-        <%--<input type="hidden" id="venueLogoToken" value="" />
+        <%--<input type="hidden" id="profilePicToken" value="" />
         <input type="hidden" id="venueBgImgTokens" value="" />--%>
 
 
@@ -96,8 +126,8 @@
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
         <!-- image uploader script -->
         <!-- dropzone -->
-        <script src="https://rawgit.com/enyo/dropzone/master/dist/min/dropzone.min.js"></script>
-        <!-- dropzone -->
+        <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
+        <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script><!-- dropzone -->
 
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/admin-user/common.js"/>"></script>

@@ -38,6 +38,8 @@ public class Admin {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "created_by")
+    private String createdBy;
 
 
     @CreationTimestamp
@@ -109,6 +111,14 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getCreatedAt() {
