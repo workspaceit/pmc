@@ -8,6 +8,7 @@ function submitAdminUserData(){
     var email = $('#email').val();
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
+    var profilePictureToken=  getVenueLogoToken();
 
 
     var data = {
@@ -16,7 +17,8 @@ function submitAdminUserData(){
         userName: userName,
         email: email,
         password: password,
-        confirmPassword: confirmPassword
+        confirmPassword: confirmPassword,
+        profilePictureToken: profilePictureToken
     };
     console.log(data);
     $.ajax({
