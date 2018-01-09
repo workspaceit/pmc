@@ -21,9 +21,8 @@ public class SlideshowBannerImage {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "slideshow_ad_id", referencedColumnName = "id", nullable = false)
-    private SlideshowAd slideshowAd;
+    @Column(name = "slideshow_ad_id")
+    private Integer slideshowAdId;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,12 +49,12 @@ public class SlideshowBannerImage {
         this.image = image;
     }
 
-    public SlideshowAd getSlideshowAd() {
-        return slideshowAd;
+    public Integer getSlideshowAdId() {
+        return slideshowAdId;
     }
 
-    public void setSlideshowAd(SlideshowAd slideshowAd) {
-        this.slideshowAd = slideshowAd;
+    public void setSlideshowAdId(Integer slideshowAdId) {
+        this.slideshowAdId = slideshowAdId;
     }
 
     public Date getCreatedAt() {
@@ -73,5 +72,4 @@ public class SlideshowBannerImage {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
-
 }

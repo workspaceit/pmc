@@ -35,21 +35,24 @@ public class LocationForm {
     @NotNull(message = "Has Slideshow is required")
     private Boolean hasSlideshow;
 
-    @NotNull(message = "Duration Speed is required")
+
     private Double durationSpeed;
 
-    @NotNull(message = "Break Time is required")
     private Double breakTime;
 
-    @NotNull(message = "Fade In Time is required")
     private Double fadeInTime;
 
-    @NotNull(message = "Fade Out Time is required")
     private Double fadeOutTime;
 
     private int[] bgTokens;
 
     private Integer logoImgToken;
+
+    /**
+     * For Update only
+     * */
+
+    private Integer[] removeBgIds;
 
     public String getName() {
         return name;
@@ -150,6 +153,15 @@ public class LocationForm {
         this.logoImgToken = logoImgToken;
     }
 
+
+    public Integer[] getRemoveBgIds() {
+        return removeBgIds;
+    }
+
+    public void setRemoveBgIds(Integer[] removeBgIds) {
+        this.removeBgIds = removeBgIds;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -169,7 +181,8 @@ public class LocationForm {
         if (fadeInTime != null ? !fadeInTime.equals(that.fadeInTime) : that.fadeInTime != null) return false;
         if (fadeOutTime != null ? !fadeOutTime.equals(that.fadeOutTime) : that.fadeOutTime != null) return false;
         if (!Arrays.equals(bgTokens, that.bgTokens)) return false;
-        return logoImgToken != null ? logoImgToken.equals(that.logoImgToken) : that.logoImgToken == null;
+        if (logoImgToken != null ? !logoImgToken.equals(that.logoImgToken) : that.logoImgToken != null) return false;
+        return Arrays.equals(removeBgIds, that.removeBgIds);
     }
 
     @Override
@@ -186,6 +199,7 @@ public class LocationForm {
         result = 31 * result + (fadeOutTime != null ? fadeOutTime.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(bgTokens);
         result = 31 * result + (logoImgToken != null ? logoImgToken.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(removeBgIds);
         return result;
     }
 
@@ -204,6 +218,7 @@ public class LocationForm {
                 ", fadeOutTime=" + fadeOutTime +
                 ", bgTokens=" + Arrays.toString(bgTokens) +
                 ", logoImgToken=" + logoImgToken +
+                ", removeBgIds=" + Arrays.toString(removeBgIds) +
                 '}';
     }
 }

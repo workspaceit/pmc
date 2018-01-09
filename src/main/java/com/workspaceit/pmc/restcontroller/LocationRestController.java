@@ -3,6 +3,7 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.util.ServiceResponse;
@@ -15,6 +16,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,5 +76,45 @@ public class LocationRestController {
         this.locationService.create(locationForm);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+    }
+
+    @Secured(UserRole._SUPER_ADMIN)
+    @RequestMapping(value = "/update/{id}")
+    public ResponseEntity<?> update(Authentication authentication,
+                                    @PathVariable("id") int id,
+                                    @Valid LocationForm locationForm, BindingResult bindingResult){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        /**
+         * Basic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        this.locationValidator.validate(locationForm, bindingResult);
+        serviceResponse.bindValidationError(bindingResult);
+
+        /**
+         * Business logic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        try {
+            this.locationService.update(id,locationForm,currentUser);
+        } catch (EntityNotFound entityNotFound) {
+            serviceResponse.setValidationError("id",entityNotFound.getMessage());
+        }
+
+        if(serviceResponse.hasErrors()){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Location updated"));
     }
 }

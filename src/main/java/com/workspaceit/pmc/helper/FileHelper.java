@@ -47,6 +47,7 @@ public class FileHelper {
 	public static long getMBtoByte(int mb) {
 		return mb *(1024*1000);
 	}
-	
-	
+	public static long getByteToMb(long bytes) {
+		return bytes / (long)(1024*1000);
+	}
 }

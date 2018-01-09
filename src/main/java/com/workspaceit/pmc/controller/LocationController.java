@@ -2,6 +2,7 @@ package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 public class LocationController {
     private StateService stateService;
     private LocationService locationService;
+    private List<Double> fadeInList;
+    private List<Double>fadeOutList;
 
     @Autowired
     public void setStateService(StateService stateService) {
@@ -32,10 +35,22 @@ public class LocationController {
         this.locationService = locationService;
     }
 
+    @Autowired
+    public void setFadeInList(List<Double> fadeInList) {
+        this.fadeInList = fadeInList;
+    }
+    @Autowired
+    public void setFadeOutList(List<Double> fadeOutList) {
+        this.fadeOutList = fadeOutList;
+    }
+
     @RequestMapping(value = "/add")
     public ModelAndView add(){
+        List<State> states = this.stateService.getAll();
         ModelAndView model = new ModelAndView("admin/location/add");
-        model.addObject("states",this.stateService.getAll());
+        model.addObject("states",states);
+        model.addObject("fadeInList",this.fadeInList);
+        model.addObject("fadeOutList",this.fadeOutList);
         return model;
     }
     @RequestMapping(value = "/all")
@@ -49,11 +64,16 @@ public class LocationController {
     @RequestMapping(value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") int id){
         Location location = this.locationService.getById(id);
+        List<State> states = this.stateService.getAll();
+
         if(location==null){
             return new ModelAndView("redirect:"+"/admin/location/all");
         }
         ModelAndView model = new ModelAndView("admin/location/edit");
+        model.addObject("states",states);
         model.addObject("location",location);
+        model.addObject("fadeInList",this.fadeInList);
+        model.addObject("fadeOutList",this.fadeOutList);
         return model;
     }
 

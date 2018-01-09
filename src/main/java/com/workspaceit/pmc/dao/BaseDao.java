@@ -1,6 +1,5 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.TempFile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,10 @@ public class BaseDao {
     public void update(Object obj){
         Session session = this.getCurrentSession();
         session.update(obj);
+    }
+    public void delete(Object obj){
+        Session session = this.getCurrentSession();
+        session.delete(obj);
     }
 
     protected Session getCurrentSession() {
