@@ -5,6 +5,6 @@ src/main/resources/local-config.properties
 .settings
 .classpath
 .settings/
-pmc.iml
-
+*.iml
 /src/main/resources/local-config.properties
+

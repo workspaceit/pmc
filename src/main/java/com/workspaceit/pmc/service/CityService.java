@@ -24,4 +24,7 @@ public class CityService {
     public List<City> getAllNameAcs(){
         return this.cityDao.getAllNameAcs();
     }
+    public City getById(int id){
+        return this.cityDao.getById(id);
+    }
 }

@@ -1,6 +1,8 @@
 package com.workspaceit.pmc.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -22,8 +24,9 @@ public class Venue {
     @Column(name = "name")
     private String name;
 
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
     @CreationTimestamp

@@ -1,6 +1,5 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.TempFile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

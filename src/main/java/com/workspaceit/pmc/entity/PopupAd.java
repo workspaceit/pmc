@@ -1,8 +1,8 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.AdType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -23,11 +23,13 @@ public class PopupAd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Enumerated(EnumType.STRING)
-    private PopupAdType type;
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
 
     @Enumerated(EnumType.STRING)
-    private AdType adType;
+    @Column(name = "type")
+    private PopupAdType type;
+
 
     @Column(name = "duration")
     private int duration;
@@ -52,8 +54,8 @@ public class PopupAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "popupAd", targetEntity = PopupBannerImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany
+    @JoinColumn(name = "popup_ad_id", referencedColumnName = "id", nullable = true)
     Set<PopupBannerImage> popupBannerImages = new HashSet<PopupBannerImage>();
 
     public int getId() {
@@ -64,6 +66,14 @@ public class PopupAd {
         this.id = id;
     }
 
+    public Integer getAdvertiserId() {
+        return advertiserId;
+    }
+
+    public void setAdvertiserId(Integer advertiserId) {
+        this.advertiserId = advertiserId;
+    }
+
     public PopupAdType getType() {
         return type;
     }
@@ -72,13 +82,7 @@ public class PopupAd {
         this.type = type;
     }
 
-    public AdType getAdType() {
-        return adType;
-    }
 
-    public void setAdType(AdType adType) {
-        this.adType = adType;
-    }
 
     public int getDuration() {
         return duration;
@@ -102,6 +106,14 @@ public class PopupAd {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public Set<PopupBannerImage> getPopupBannerImages() {
+        return popupBannerImages;
+    }
+
+    public void setPopupBannerImages(Set<PopupBannerImage> popupBannerImages) {
+        this.popupBannerImages = popupBannerImages;
     }
 
     public Date getCreatedAt() {
@@ -129,6 +141,3 @@ public class PopupAd {
     }
 
 }
-
-enum PopupAdType { sms, email }
-enum AdType { banner, video }

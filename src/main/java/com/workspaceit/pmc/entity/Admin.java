@@ -26,9 +26,20 @@ public class Admin {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "password")
     private String password;
 
+    @Column(name = "created_by")
+    private String createdBy;
 
 
     @CreationTimestamp
@@ -41,6 +52,9 @@ public class Admin {
     @JoinTable(name = "admin_has_roles",
             joinColumns = {@JoinColumn(name = "admin_id")},
             inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
+
+
+
     private Set<AdminRole> adminRoles = new HashSet<>();
 
     public int getId() {
@@ -67,12 +81,44 @@ public class Admin {
         this.email = email;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getCreatedAt() {
@@ -82,6 +128,8 @@ public class Admin {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+
 
     public Set<AdminRole> getAdminRoles() {
         return adminRoles;

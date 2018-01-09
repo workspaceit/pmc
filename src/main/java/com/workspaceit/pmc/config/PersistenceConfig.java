@@ -20,7 +20,6 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-
 @ComponentScan({ "com.workspaceit.pmc" })
 public class PersistenceConfig {
 
@@ -65,8 +64,10 @@ public class PersistenceConfig {
 //                setProperty("hibernate.hbm2ddl.auto",
 //                        env.getHbm2ddl());
                 setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-                setProperty("hibernate.globally_quoted_identifiers",
-                        "true");
+                setProperty("hibernate.globally_quoted_identifiers","true");
+                /*setProperty("hibernate.show_sql","true");
+                setProperty("hibernate.format_sql","true");
+                setProperty("hibernate.use_sql_comments","true");*/
             }
         };
     }

@@ -1,11 +1,15 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,17 +31,13 @@ public class Advertiser {
     @Column(name = "address")
     private String address;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = false)
     private State state;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
     private City city;
-
-    @ManyToOne
-    @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = false)
-    private Venue venue;
 
     @Column(name = "zip")
     private String zip;
@@ -57,9 +57,6 @@ public class Advertiser {
     @Column(name = "runtime_ends")
     private Date runtimeEnds;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    private Location location;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -71,12 +68,11 @@ public class Advertiser {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @ManyToMany(mappedBy = "advertisers")
-    private Set<Event> events = new HashSet<Event>();
 
     public int getId() {
         return id;
@@ -116,14 +112,6 @@ public class Advertiser {
 
     public void setCity(City city) {
         this.city = city;
-    }
-
-    public Venue getVenue() {
-        return venue;
-    }
-
-    public void setVenue(Venue venue) {
-        this.venue = venue;
     }
 
     public String getZip() {
@@ -174,14 +162,6 @@ public class Advertiser {
         this.runtimeEnds = runtimeEnds;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -206,11 +186,5 @@ public class Advertiser {
         this.createdBy = createdBy;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
 
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
 }
