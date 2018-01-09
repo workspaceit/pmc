@@ -99,7 +99,7 @@ function configVenueLogoDropZone(){
                 this.on("addedfile", function(file) {
                     file._removeLink.addEventListener("click", function() {
                         console.log(file);
-                        removeImageByToken(file.token,function (data) {
+                        removeFileByToken(file.token,function (data) {
                             removeVenueLogoToken(data.token);
                         });
                         profilePictureToken = 0;
@@ -141,7 +141,7 @@ function configVenueBdImgDropZone(){
                 this.on("addedfile", function(file) {
                     file._removeLink.addEventListener("click", function() {
                         console.log(file);
-                        removeImageByToken(file.token,function(data){
+                        removeFileByToken(file.token,function(data){
                             removeBgImgTokens(data.token);
                         });
                         profilePictureToken = 0;

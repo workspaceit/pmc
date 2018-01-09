@@ -21,9 +21,8 @@ public class PopupBannerImage {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "popup_ad_id", referencedColumnName = "id", nullable = false)
-    private PopupAd popupAd;
+    @Column(name = "popup_ad_id")
+    private Integer popupAdId;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,12 +49,12 @@ public class PopupBannerImage {
         this.image = image;
     }
 
-    public PopupAd getPopupAd() {
-        return popupAd;
+    public Integer getPopupAdId() {
+        return popupAdId;
     }
 
-    public void setPopupAd(PopupAd popupAd) {
-        this.popupAd = popupAd;
+    public void setPopupAdId(Integer popupAdId) {
+        this.popupAdId = popupAdId;
     }
 
     public Date getCreatedAt() {
@@ -73,5 +72,4 @@ public class PopupBannerImage {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
-
 }
