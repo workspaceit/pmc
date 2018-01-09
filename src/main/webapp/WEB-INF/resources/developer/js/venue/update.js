@@ -1,7 +1,7 @@
 /**
  * Created by Tomal on 1/8/2018.
  */
-function submitData(){
+function submitData(state){
     var name = $('#name').val();
     var location = $('#location').val();
     var venueId = $('#venueId').val();
@@ -25,7 +25,16 @@ function submitData(){
             }
         },
         success: function(response) {
-            window.location = BASEURL+"admin/venue/all";
+            if(state=="save")
+                window.location = BASEURL+"admin/venue/all";
+            else if(state=="saveClose")
+                window.location = BASEURL+"admin/venue/all";
+            else if(state=="saveNew")
+                window.location = BASEURL+"admin/venue/add";
         }
     });
+}
+
+function cancel(){
+    window.location = BASEURL+"admin/venue/all";
 }
