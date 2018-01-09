@@ -1,6 +1,6 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%--<%@attribute name="header" fragment="true" %>--%>
-<%--<%@attribute name="footer" fragment="true" %>--%>
+<%@attribute name="footer" fragment="true" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
@@ -50,5 +50,8 @@
             <jsp:doBody/>
         </div>
         <jsp:include page="/WEB-INF/views/admin/layout/footer.jsp"/>
+        <div id="pagefooter">
+            <jsp:invoke fragment="footer"/>
+        </div>
     </body>
 </html>

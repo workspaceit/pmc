@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <t:genericpage>
+    <jsp:attribute name="footer">
+      <p id="copyright">Copyright 1927, Future Bits When There Be Bits Inc.</p>
+    </jsp:attribute>
     <jsp:body>
         <!-- /#page-wrapper -->
         <div id="page-wrapper">
@@ -453,4 +456,5 @@
             }
         </script>
     </jsp:body>
+
 </t:genericpage>
