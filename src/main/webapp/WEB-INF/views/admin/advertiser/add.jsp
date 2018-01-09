@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper">
@@ -44,16 +45,38 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"/>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp" %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"  %>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- /.container-fluid -->
+        <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addLocation">Add Location</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-container-top">
+                            <button class="btn btn-action-top" onclick="submitLocationDataFromModal()">Save</button>
+                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
+                            <button class="btn btn-action-top">Cancel</button>
+                        </div>
+                        <div class="form-group">
+                            <%@  include file="/WEB-INF/views/admin/location/pertial/form-body-for-modal.jsp" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
                 <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
@@ -73,6 +96,8 @@
                 </div>
             </div>
         </div>
+
+
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <!-- select2 js -->
         <!-- Select2 css -->
@@ -86,11 +111,14 @@
 
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
+
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
+
         <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/create.js"/>"></script>
 
-
+        <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
 
 
     </jsp:body>

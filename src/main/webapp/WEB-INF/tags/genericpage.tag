@@ -1,6 +1,7 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%--<%@attribute name="header" fragment="true" %>--%>
 <%@attribute name="footer" fragment="true" %>
+<%@attribute name="scripts" fragment="true" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
@@ -34,6 +35,7 @@
         <!-- Bootstrap Core JavaScript -->
         <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
+        <jsp:invoke fragment="scripts"/>
         <script>
             var BASEURL = "<c:url value="/" />";
             try{

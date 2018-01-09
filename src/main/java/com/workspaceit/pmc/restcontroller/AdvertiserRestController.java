@@ -19,6 +19,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -110,6 +111,10 @@ public class AdvertiserRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
+    @RequestMapping(value = "/get/{id}")
+    public ResponseEntity<?> getById(Authentication authentication, @PathVariable("id") int id ){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.advertiserService.getById(id));
+    }
     @Secured(UserRole._SUPER_ADMIN)
     @RequestMapping(value = "/validate-create")
     public ResponseEntity<?> validateCreate(Authentication authentication, @Valid AdvertiserForm advertiserForm, BindingResult bindingResult){

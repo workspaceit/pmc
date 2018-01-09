@@ -14,23 +14,31 @@ function ErrorMessageAlias() {
     this.replacedMsg = "";
 }
 var ErrorMessageAliasList = [];
-function BindErrorsWithHtml(preFix,requestErrors,doNotUnbind){
+function BindErrorsWithHtml(preFix,requestErrors,doNotUnbind,contentParent){
     if(doNotUnbind==undefined || doNotUnbind==false){
         UnBindErrors(preFix);
+    }
+
+    if(contentParent==undefined){
+        contentParent = "";
+    }else{
+        contentParent+=" ";
     }
     for(var i in requestErrors){
         try{
             var params = requestErrors[i].params;
             var msg = requestErrors[i].msg;
             var aliasMessage = getAliasMessage(params,msg);
+
             if(aliasMessage!=null){
                 msg = aliasMessage;
             }
             if($("#"+preFix+params).length==0){
-                $("#"+params).after(function(){
+                $(contentParent+"#"+params).after(function(){
                     return makeHtmlErrorElement(preFix+params,msg);
                 });
             }
+
             $("#"+preFix+params).show();
             $("#"+preFix+params).html(msg);
         }catch(err){

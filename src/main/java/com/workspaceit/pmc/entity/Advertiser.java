@@ -1,11 +1,15 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,11 +31,11 @@ public class Advertiser {
     @Column(name = "address")
     private String address;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = false)
     private State state;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = false)
     private City city;
 
@@ -64,12 +68,11 @@ public class Advertiser {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @ManyToMany(mappedBy = "advertisers")
-    private Set<Event> events = new HashSet<Event>();
 
     public int getId() {
         return id;
@@ -183,11 +186,5 @@ public class Advertiser {
         this.createdBy = createdBy;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
 
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
 }

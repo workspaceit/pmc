@@ -13,7 +13,7 @@ $(document).ready(function(){
 
     //Injecting necessary hidden elements
     // to store uploaded file token
-    injectHiddenTokenFields();
+    injectHiddenTokenFieldsForLocation();
 });
 function notifyUpdateStatus(){
     $("#successMsg").html("Successfully updated").fadeIn(500).delay( 1000 ).fadeIn(500,function(){
@@ -21,7 +21,7 @@ function notifyUpdateStatus(){
     });
 
 }
-function injectHiddenTokenFields(){
+function injectHiddenTokenFieldsForLocation(){
     var venueLogoTokenElement = $("<input>", {type:"hidden",id: "venueLogoToken", "value": ""});
     var venueBgImgTokensElement = $("<input>", {type:"hidden",id: "venueBgImgTokens", "value": ""});
 
@@ -51,6 +51,15 @@ function removeVenueLogoToken(token){
     }
 
 }
+function emptyVenueLogoToken(){
+
+    try{
+        $("#venueLogoToken").val("");
+    }catch(ex) {
+        console.log(ex);
+
+    }
+}
 
 function getVenueBgImgTokens(){
     var tokens=[];
@@ -78,7 +87,9 @@ function removeBgImgTokens(token){
         tokens.splice(index,1);
     }
 }
-
+function emptyBgImgTokens(){
+    $("#venueBgImgTokens").val("");
+}
 
 function configVenueLogoDropZone(){
     var venueLogoImgDropZone = new Dropzone("div#venueLogoImg",

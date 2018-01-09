@@ -30,9 +30,6 @@ public class PopupAd {
     @Column(name = "type")
     private PopupAdType type;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ad_type")
-    private AdType adType;
 
     @Column(name = "duration")
     private int duration;
@@ -85,13 +82,7 @@ public class PopupAd {
         this.type = type;
     }
 
-    public AdType getAdType() {
-        return adType;
-    }
 
-    public void setAdType(AdType adType) {
-        this.adType = adType;
-    }
 
     public int getDuration() {
         return duration;

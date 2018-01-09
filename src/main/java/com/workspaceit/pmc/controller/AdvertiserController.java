@@ -26,6 +26,10 @@ public class AdvertiserController {
     private CityService cityService;
     private EventService eventService;
 
+    private List<Double> fadeInList;
+    private List<Double>fadeOutList;
+
+
     private Set<Integer> durations;
 
     @PostConstruct
@@ -62,6 +66,16 @@ public class AdvertiserController {
         this.eventService = eventService;
     }
 
+    @Autowired
+    public void setFadeInList(List<Double> fadeInList) {
+        this.fadeInList = fadeInList;
+    }
+
+    @Autowired
+    public void setFadeOutList(List<Double> fadeOutList) {
+        this.fadeOutList = fadeOutList;
+    }
+
     @RequestMapping("/add")
     public ModelAndView add(){
         List<Location> locations = this.locationService.getAll();
@@ -77,6 +91,9 @@ public class AdvertiserController {
         model.addObject("cities",cities);
         model.addObject("durations",durations);
 
+        /*For location Modal Page*/
+        model.addObject("fadeInList",this.fadeInList);
+        model.addObject("fadeOutList",this.fadeOutList);
         return model;
     }
     @RequestMapping("/all")

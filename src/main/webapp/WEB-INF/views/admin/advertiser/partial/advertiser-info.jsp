@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="tab-pane active" id="tab_default_1">
     <div class="row clearfix">
         <div class="col-md-6">

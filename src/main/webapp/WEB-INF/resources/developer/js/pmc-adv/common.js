@@ -2,7 +2,7 @@
  * Created by mi_rafi on 1/4/18.
  */
 $(document).ready(function(){
-    injectHiddenTokenFields();
+    injectHiddenTokenFieldsForAdvertiser();
 });
 
 var ADV_IMG_TYPE = {
@@ -18,7 +18,7 @@ var ADV_IMG_TYPE = {
     _SMS_POPUP_BANNER_TOKEN:"smsPopUpBanner",
     _SMS_POPUP_VIDEO_TOKEN:"smsPopUpVideo"
 };
-function injectHiddenTokenFields(){
+function injectHiddenTokenFieldsForAdvertiser(){
     for(var index in ADV_IMG_TYPE){
         var tokenElem = $("<input>", {type:"hidden",id: ADV_IMG_TYPE[index], "value": ""});
         $("body").append(tokenElem);
