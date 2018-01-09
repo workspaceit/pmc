@@ -26,6 +26,9 @@ public class Admin {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "user_name")
+    private String userName;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -47,6 +50,9 @@ public class Admin {
     @JoinTable(name = "admin_has_roles",
             joinColumns = {@JoinColumn(name = "admin_id")},
             inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
+
+
+
     private Set<AdminRole> adminRoles = new HashSet<>();
 
     public int getId() {
@@ -71,6 +77,14 @@ public class Admin {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPhoneNumber() {
@@ -104,6 +118,8 @@ public class Admin {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+
 
     public Set<AdminRole> getAdminRoles() {
         return adminRoles;

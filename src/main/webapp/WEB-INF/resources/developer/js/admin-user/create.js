@@ -9,6 +9,7 @@ function submitAdminUserData(){
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
 
+
     var data = {
         fullName: fullName,
         phoneNumber: phoneNumber,
@@ -33,7 +34,7 @@ function submitAdminUserData(){
             }
         },
         success: function(response) {
-            window.location = BASEURL+"admin/admin-user-management/all";
+            window.location = BASEURL+"admin/user/all";
         }
     });
 }

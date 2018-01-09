@@ -99,6 +99,7 @@
         <script src="https://rawgit.com/enyo/dropzone/master/dist/min/dropzone.min.js"></script>
         <!-- dropzone -->
 
+        <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/admin-user/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/admin-user/create.js"/>"></script>
 

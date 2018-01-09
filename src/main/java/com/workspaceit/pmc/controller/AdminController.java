@@ -1,9 +1,9 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.service.PhotographerService;
+import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,11 +21,21 @@ import java.util.List;
 @Controller
 @RequestMapping(value = ControllerUriPrefix.ADMIN+"/user")
 public class AdminController {
+    @Autowired
+    private AdminService adminService;
+
     @RequestMapping(value = "/add")
-    public ModelAndView all(){
+    public ModelAndView add(){
         ModelAndView model = new ModelAndView("admin/admin-user-management/add");
         return model;
     }
 
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    public ModelAndView allAdmin(Authentication authentication){
+        List<Admin> admins = this.adminService.getAll();
+        ModelAndView model= new ModelAndView("admin/admin-user-management/all");
+        model.addObject("admins",admins);
+        return model;
+    }
 
 }

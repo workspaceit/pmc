@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 /**
  * Created by anik on 12/19/17.
@@ -42,40 +44,53 @@ public class AdminService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public Admin create(AdminForm photographerForm, Admin user){
-        Admin admin = this.adminDao.getByEmail(user.getName());
-        String profilePictureName = "";
-        Integer fileToken = photographerForm.getProfilePictureToken();
-
-        boolean removeTempFileRequired = false;
-        if(fileToken!=null && fileToken>0){
-            profilePictureName = fileService.copyFileToPhotographerProfilePicture(fileToken);
-            removeTempFileRequired = true;
-        }
-
-        Admin admin1 = new Admin();
-        photographer.setFullName(photographerForm.getFullName());
-        photographer.setUserName(photographerForm.getUserName());
-        photographer.setEmail(photographerForm.getEmail());
-        photographer.setPassword(CypherHelper.getbCryptPassword(photographerForm.getPassword()));
-        photographer.setPhoneNumber(photographerForm.getPhoneNumber());
-        photographer.setProfilePhoto(profilePictureName);
-        photographer.setCreatedBy(admin);
-        adminDao.insert(photographer);
-        /**
-         * Remove temporary file after insert
-         * */
-        if(removeTempFileRequired)fileService.removeTempFile(fileToken);
-
-        return photographer;
-    }
+    
     public Admin getAdminByEmail(String email){
         return adminDao.getByEmail(email);
+    }
+    public Admin getByUserName(String userName){
+        return this.adminDao.getByUserName(userName);
     }
     public void create(Admin admin){
         this.adminDao.insert(admin);
     }
+    @Transactional(rollbackFor = Exception.class)
+    public Admin create(AdminForm adminForm){
+        Admin admin = getAdminFromAdminForm(adminForm);
+        Integer profilePictureToken = adminForm.getProfilePictureToken();
 
+
+        String profileImageName = "";
+        if(profilePictureToken!=null && profilePictureToken>0){
+            profileImageName = this.fileService.copyFile(profilePictureToken);
+        }
+
+        admin.setImage(profileImageName);
+        this.create(admin);
+
+
+        return admin;
+    }
+    private Admin getAdminFromAdminForm(AdminForm adminForm){
+
+        Admin admin = new Admin();
+
+
+
+
+        admin.setName(adminForm.getFullName());
+        admin.setPhoneNumber(adminForm.getPhoneNumber());
+        admin.setUserName(adminForm.getUserName());
+        admin.setEmail(adminForm.getEmail());
+        admin.setPassword(adminForm.getPassword());
+
+
+
+        return admin;
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public List<Admin> getAll(){
+        return this.adminDao.getAll();
+    }
 
 }

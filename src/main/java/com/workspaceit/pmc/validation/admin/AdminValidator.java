@@ -1,8 +1,7 @@
 package com.workspaceit.pmc.validation.admin;
 
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.service.PhotographerService;
-import com.workspaceit.pmc.validation.form.PhotographerForm;
+import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -15,96 +14,23 @@ import org.springframework.validation.Validator;
 @Component
 public class AdminValidator implements Validator {
 
-    private PhotographerService photographerService;
+    private AdminService adminService;
 
     @Autowired
-    public void setPhotographerService(PhotographerService photographerService) {
-        this.photographerService = photographerService;
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
     }
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return PhotographerForm.class.equals(aClass);
-    }
-
-    @Override
-    public void validate(Object obj, Errors errors) {
-        PhotographerForm photographerForm = (PhotographerForm)obj;
-
-        String email = photographerForm.getEmail();
-        String userName = photographerForm.getUserName();
-        String password = photographerForm.getPassword();
-        String conPassword = photographerForm.getConfirmPassword();
-
-        this.uniqueEmailCheck(email,errors);
-        this.uniqueUserNameCheck(userName,errors);
-        this.passwordMatchCheck(password,conPassword,errors);
-    }
-    public void validate(Object obj, Errors errors,String... params) {
-        PhotographerForm photographerForm = (PhotographerForm)obj;
-
-        String email = photographerForm.getEmail();
-        String userName = photographerForm.getUserName();
-        String password = photographerForm.getPassword();
-        String conPassword = photographerForm.getConfirmPassword();
-
-        for(String param : params){
-            switch(param){
-                case "email":
-                    this.uniqueEmailCheck(email,errors);
-                    break;
-                case "userName":
-                    this.uniqueUserNameCheck(userName,errors);
-                    break;
-                case "password":
-                    this.passwordMatchCheck(password,conPassword,errors);
-                    break;
-            }
-        }
-    }
-    public void validateForUpdate(int id,Object obj, Errors errors,String... params) {
-        PhotographerForm photographerForm = (PhotographerForm)obj;
-
-        String email = photographerForm.getEmail();
-        String userName = photographerForm.getUserName();
-        String password = photographerForm.getPassword();
-        String conPassword = photographerForm.getConfirmPassword();
-
-        for(String param : params){
-            switch(param){
-                case "email":
-                    this.emailUsedByOthersCheck(id,email,errors);
-                    break;
-                case "userName":
-                    this.userNameUsedByOthersCheck(id,userName,errors);
-                    break;
-                case "password":
-                    this.passwordMatchCheck(password,conPassword,errors);
-                    break;
-            }
-        }
-    }
     private void uniqueEmailCheck(String email,Errors errors){
-        Photographer photographer = this.photographerService.getByEmail(email);
-        if(photographer!=null){
+        Admin admin = this.adminService.getAdminByEmail(email);
+        if(admin!=null){
             errors.rejectValue("email", "Email already taken");
         }
     }
-    private void emailUsedByOthersCheck(int id,String email,Errors errors){
-        Photographer photographer = this.photographerService.getByIdAndEmail(id,email);
-        if(photographer!=null){
-            errors.rejectValue("email", "Email already taken");
-        }
-    }
+
     private void uniqueUserNameCheck(String userName,Errors errors){
-        Photographer photographer = this.photographerService.getByUserName(userName);
-        if(photographer!=null){
-            errors.rejectValue("userName", "User name already taken");
-        }
-    }
-    private void userNameUsedByOthersCheck(int id,String userName,Errors errors){
-        Photographer photographer = this.photographerService.getByIdAndUserName(id,userName);
-        if(photographer!=null){
+        Admin admin = this.adminService.getByUserName(userName);
+        if(admin!=null){
             errors.rejectValue("userName", "User name already taken");
         }
     }
@@ -113,4 +39,24 @@ public class AdminValidator implements Validator {
             errors.rejectValue("password", "Password does not match with confirm password");
         }
     }
+    
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return AdminForm.class.equals(aClass);
+    }
+    @Override
+    public void validate(Object obj, Errors errors) {
+        AdminForm adminrForm = (AdminForm)obj;
+
+        String email = adminrForm.getEmail();
+        String userName = adminrForm.getUserName();
+        String password = adminrForm.getPassword();
+        String conPassword = adminrForm.getConfirmPassword();
+
+        this.uniqueEmailCheck(email,errors);
+        this.uniqueUserNameCheck(userName,errors);
+        this.passwordMatchCheck(password,conPassword,errors);
+    }
+
+    
 }

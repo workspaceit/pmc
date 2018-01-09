@@ -1,14 +1,15 @@
-package com.workspaceit.pmc.entity;
+package com.workspaceit.pmc.entity.advertisement.galleryads;
 
+import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBannerImage;
+import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsTopBannerImage;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -24,15 +25,24 @@ public class GalleryAd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "advertiser_id", referencedColumnName = "id", nullable = false)
-    private Advertiser advertiser;
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
 
     @Column(name = "logo")
     private String logo;
 
     @Column(name = "background_image")
     private String backgroundImage;
+
+
+    @OneToMany
+    @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
+    private List<GalleryAdsBottomBannerImage> bottomBanners;
+
+    @OneToMany
+    @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
+    private List<GalleryAdsTopBannerImage> adsTopBanners;
+
 
     @Column(name = "top_banner_expiry_date")
     private Date topBannerExpiryDate;
@@ -54,14 +64,6 @@ public class GalleryAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "galleryAd", targetEntity = BottomBannerImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    Set<BottomBannerImage> bottomBannerImages = new HashSet<BottomBannerImage>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "galleryAd", targetEntity = TopBannerImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    Set<TopBannerImage> topBannerImages = new HashSet<TopBannerImage>();
-
 
     public int getId() {
         return id;
@@ -71,12 +73,12 @@ public class GalleryAd {
         this.id = id;
     }
 
-    public Advertiser getAdvertiser() {
-        return advertiser;
+    public Integer getAdvertiserId() {
+        return advertiserId;
     }
 
-    public void setAdvertiser(Advertiser advertiser) {
-        this.advertiser = advertiser;
+    public void setAdvertiserId(Integer advertiserId) {
+        this.advertiserId = advertiserId;
     }
 
     public String getLogo() {
@@ -93,6 +95,22 @@ public class GalleryAd {
 
     public void setBackgroundImage(String backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    public List<GalleryAdsBottomBannerImage> getBottomBanners() {
+        return bottomBanners;
+    }
+
+    public void setBottomBanners(List<GalleryAdsBottomBannerImage> bottomBanners) {
+        this.bottomBanners = bottomBanners;
+    }
+
+    public List<GalleryAdsTopBannerImage> getAdsTopBanners() {
+        return adsTopBanners;
+    }
+
+    public void setAdsTopBanners(List<GalleryAdsTopBannerImage> adsTopBanners) {
+        this.adsTopBanners = adsTopBanners;
     }
 
     public Date getTopBannerExpiryDate() {
@@ -133,21 +151,5 @@ public class GalleryAd {
 
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
-    }
-
-    public Set<BottomBannerImage> getBottomBannerImages() {
-        return bottomBannerImages;
-    }
-
-    public void setBottomBannerImages(Set<BottomBannerImage> bottomBannerImages) {
-        this.bottomBannerImages = bottomBannerImages;
-    }
-
-    public Set<TopBannerImage> getTopBannerImages() {
-        return topBannerImages;
-    }
-
-    public void setTopBannerImages(Set<TopBannerImage> topBannerImages) {
-        this.topBannerImages = topBannerImages;
     }
 }

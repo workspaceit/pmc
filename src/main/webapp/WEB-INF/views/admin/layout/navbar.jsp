@@ -60,6 +60,8 @@
                         <li><a href="<c:url value="/admin/photographer/add" />">Add New Photographer</a></li>
                         <li><a href="<c:url value="/admin/photographer/all" />">Photographers</a></li>
                         <li><a href="<c:url value="/admin/location/all" />">Locations</a></li>
+                        <li><a href="<c:url value="/admin/user/add" />">Add a new Admin</a></li>
+                        <li><a href="<c:url value="/admin/user/all" />">All Admins</a></li>
 
                     </ul>
                 </li>

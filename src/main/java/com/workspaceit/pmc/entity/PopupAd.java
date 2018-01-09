@@ -1,8 +1,8 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.AdType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -23,10 +23,15 @@ public class PopupAd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private PopupAdType type;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "ad_type")
     private AdType adType;
 
     @Column(name = "duration")
@@ -52,8 +57,8 @@ public class PopupAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "popupAd", targetEntity = PopupBannerImage.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany
+    @JoinColumn(name = "popup_ad_id", referencedColumnName = "id", nullable = true)
     Set<PopupBannerImage> popupBannerImages = new HashSet<PopupBannerImage>();
 
     public int getId() {
@@ -62,6 +67,14 @@ public class PopupAd {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getAdvertiserId() {
+        return advertiserId;
+    }
+
+    public void setAdvertiserId(Integer advertiserId) {
+        this.advertiserId = advertiserId;
     }
 
     public PopupAdType getType() {
@@ -104,6 +117,14 @@ public class PopupAd {
         this.video = video;
     }
 
+    public Set<PopupBannerImage> getPopupBannerImages() {
+        return popupBannerImages;
+    }
+
+    public void setPopupBannerImages(Set<PopupBannerImage> popupBannerImages) {
+        this.popupBannerImages = popupBannerImages;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -129,6 +150,3 @@ public class PopupAd {
     }
 
 }
-
-enum PopupAdType { sms, email }
-enum AdType { banner, video }
