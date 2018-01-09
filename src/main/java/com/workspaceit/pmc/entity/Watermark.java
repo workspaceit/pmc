@@ -1,9 +1,12 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.validation.form.WatermarkForm;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 
@@ -25,6 +28,9 @@ public class Watermark {
 
     @Column(name = "logo_name")
     private String logoName;
+
+    @Column(name = "logo_image")
+    private String logoImage;
 
     @Enumerated(EnumType.STRING)
     private Size size;
@@ -82,6 +88,14 @@ public class Watermark {
 
     public void setLogoName(String logoName) {
         this.logoName = logoName;
+    }
+
+    public String getLogoImage() {
+        return logoImage;
+    }
+
+    public void setLogoImage(String logoImage) {
+        this.logoImage = logoImage;
     }
 
     public Size getSize() {
@@ -156,14 +170,5 @@ public class Watermark {
         this.createdBy = createdBy;
     }
 
+
 }
-
-
-
-
-
-
-
-enum WatermarkType { image, text }
-enum Size { thumb, small, medium, large, x_large }
-enum Placement { tl, tc, tr, cl, cc, cr, bl, bc, br }

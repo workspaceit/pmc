@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="watermark.html">
+                    <a href="/admin/watermark/add">
                         <img src="<s:url value="/resources/images/watermark.png"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Watermark Settings</span>
                     </a>

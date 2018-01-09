@@ -65,6 +65,7 @@ public class FileUploadController{
             case "photographer-profile-image":
             case "venue-logo-image":
             case "venue-background-image":
+            case "watermark-logo-image":
                 default:
                     fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
                     imgContentType = this.imgAllowedMimeType;
