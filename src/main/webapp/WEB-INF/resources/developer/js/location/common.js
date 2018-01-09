@@ -199,5 +199,5 @@ $(document).ready(function(){
             $("#slideShowSettings").hide();
         }
 
-    })
+    });
 });

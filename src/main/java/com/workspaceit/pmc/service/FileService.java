@@ -58,8 +58,8 @@ public class FileService {
 		if(tempFile==null){
 			return;
 		}
-		this.fileUtil.deleteFile(tempFile.getPath());
 		this.tempFileDao.delete(tempFile);
+		this.fileUtil.deleteFile(tempFile.getPath());
 	}
 	@Transactional(rollbackFor = Exception.class)
 	public String copyFileToPhotographerProfilePicture(Integer token){

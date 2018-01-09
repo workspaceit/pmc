@@ -2,9 +2,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix = "fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
-
+    <jsp:attribute name="footer">
+      <p id="copyright">Copyright 1927, Future Bits When There Be Bits Inc.</p>
+    </jsp:attribute>
     <jsp:body>
         <!-- /#page-wrapper -->
         <div id="page-wrapper">
@@ -15,13 +17,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitLocationData()">Save</button>
+                            <button class="btn btn-action-top" onclick="submitData()">Save</button>
                             <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
                             <button class="btn btn-action-top">Cancel</button>
                         </div>
                         <div class="form-group">
-                            <%@  include file="/WEB-INF/views/admin/location/pertial/form-body.jsp" %>
+                            <jsp:include page="/WEB-INF/views/admin/location"/>
                         </div>
                     </div>
 

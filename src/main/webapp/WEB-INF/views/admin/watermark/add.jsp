@@ -22,12 +22,12 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
-                    <div class="btn-group pull-right">
-                        <button type="button" class="wm_tab btn btn-default active" data-name="image">Image</button>
-                        <button type="button" class="wm_tab btn btn-default" data-name="text">Text</button>
+                    <div id="waterMarkImg" class="btn-group pull-right">
+                        <button type="button" class="wm_tab btn btn-default active" data-name="image" >Image</button>
+                        <button type="button" class="wm_tab btn btn-default" data-name="text"  >Text</button>
                     </div>
                 </div>
-                <div class="file-tab panel-body">
+                <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="file-tab panel-body">
 
                         <div id="watermarkLogoImg" >
@@ -87,7 +87,7 @@
 
 
                 </div>
-                <div class="url-tab panel-body" style="display:none;">
+                <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
@@ -144,22 +144,9 @@
 
 
         <input type="hidden" id="venueLogoToken" value="" />
-        <!-- jQuery -->
-        <script src="<s:url value="/resources/js/jquery.js"/>"></script>
 
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
-        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
-
-        <!-- select2 js -->
-        <script src="<s:url value="/resources/js/select2.js"/>"></script>
-        <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-        <!-- image uploader script -->
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
-        <!-- image uploader script -->
+        <script src="<s:url value="/resources/js/select2.js"/>"></script>
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
@@ -237,6 +224,11 @@
                     }
                 });
             }
+
+
+
+
+
         </script>
 
     </jsp:body>

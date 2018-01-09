@@ -1,6 +1,60 @@
 /**
  * Created by mi_rafi on 1/4/18.
  */
+function TempFileTokenStorage () {
+    this.storageTypeStatics ={ls:"localStorage",hhi:"htmlHiddenInput"};
+
+    this.storageType = (typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
+    this.occupy = function(key) {
+        switch(this.storageType){
+            case this.storageTypeStatics.hhi:
+                this._occupyHtmlElement(key);
+                break;
+        }
+    };
+    this._occupyHtmlElement=function(key) {
+        if($("#"+key).length>0){
+            console.log("Key already taken");
+            return;
+        }
+        var keyElem = $("<input>", {type:"hidden",id: key, "value": ""});
+        $("body").append(keyElem);
+    };
+    this._storeInLocalStorage=function(key,val) {
+        localStorage.setItem(key, val);
+    };
+    this._storeInHtmlElement=function(key,val) {
+        if($("#"+key).length==0){
+            this.occupy(key);
+        }
+        $("#"+key).val(val);
+    };
+    this.getToken=function(key){
+        switch(this.storageType){
+            case this.storageTypeStatics.ls:
+                return this._getFromWebStorage(key);
+            case this.storageTypeStatics.hhi:
+                return this._getFromHtmlInputField(key);
+        }
+    };
+    this.storeToken=function(key,token){
+        switch(this.storageType){
+            case this.storageTypeStatics.ls:
+                return this._storeInLocalStorage(key,token);
+            case this.storageTypeStatics.hhi:
+                return this._storeInHtmlElement(key,token);
+        }
+    };
+    this._getFromWebStorage=function(key){
+        return  localStorage.getItem(key);
+    };
+    this._getFromHtmlInputField=function(key){
+        return $("#"+key).val().trim();
+    };
+
+}
+
+
 
 function injectHiddenTokenFields(keys){
     for(var i=0;i<keys.length;i++){

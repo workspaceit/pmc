@@ -8,7 +8,6 @@
 
     <jsp:body>
         <!-- dropzone css -->
-        <link rel="stylesheet" type="text/css" href="https://rawgit.com/enyo/dropzone/master/dist/min/dropzone.min.css">
         <!-- /#page-wrapper -->
         <div id="page-wrapper" style="min-height: 563px !important;">
             <div class="container">
@@ -104,27 +103,7 @@
 
             </div>
         </div>
-        <%--Developer Hidden Field--%>
-        <%--<input type="hidden" id="profilePicToken" value="" />
-        <input type="hidden" id="venueBgImgTokens" value="" />--%>
 
-
-        <!-- jQuery -->
-        <script src="<s:url value="/resources/js/jquery.js"/>"></script>
-
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
-        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
-
-        <!-- select2 js -->
-        <script src="<s:url value="/resources/js/select2.js"/>"></script>
-        <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-        <!-- image uploader script -->
-        <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
-        <!-- image uploader script -->
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script><!-- dropzone -->
