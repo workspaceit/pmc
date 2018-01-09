@@ -1,6 +1,14 @@
 /**
  * Created by mi_rafi on 1/4/18.
  */
+
+function injectHiddenTokenFields(keys){
+    for(var i=0;i<keys.length;i++){
+
+        var keyElem = $("<input>", {type:"hidden",id: keys[i], "value": ""});
+        $("body").append(keyElem);
+    }
+}
 function getToken(elemId){
     var tokens=[];
     try{

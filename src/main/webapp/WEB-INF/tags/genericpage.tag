@@ -22,6 +22,10 @@
         <link href="<s:url value="/resources/css/sb-admin.css"/>" rel="stylesheet">
         <!-- Morris Charts CSS -->
         <link href="<s:url value="/resources/css/plugins/morris.css"/>" rel="stylesheet">
+
+        <!-- Select2 css -->
+        <link href="<s:url value="/resources/css/select2.css"/>" rel="stylesheet"/>
+        <link href="<s:url value="/resources/css/daterangepicker.css"/>" rel="stylesheet"/>
         <!-- Custom Fonts -->
         <link href="<s:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Exo:300,400,500" rel="stylesheet">
