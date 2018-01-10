@@ -22,21 +22,15 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
-                    <div class="btn-group pull-right">
-                        <button type="button" class="wm_tab btn btn-default active" data-name="image">Image</button>
-                        <button type="button" class="wm_tab btn btn-default" data-name="text">Text</button>
+                    <div id="waterMarkImg" class="btn-group pull-right">
+                        <button type="button" class="wm_tab btn btn-default active" data-name="image" >Image</button>
+                        <button type="button" class="wm_tab btn btn-default" data-name="text"  >Text</button>
                     </div>
                 </div>
-                <div class="file-tab panel-body">
-
-                    <div class="col-md-6">
-                        <label>Logo Name</label>
-                        <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
-                    </div>
-
+                <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="file-tab panel-body">
 
-                        <div id="venueLogoImg" >
+                        <div id="watermarkLogoImg" >
 
                             <div class="dz-default dz-message">
                                 <span>Drop files here to upload</span>
@@ -44,20 +38,40 @@
                             </div>
                         </div>
 
+                        <c:set value="" var="logoImgSrc" />
+                        <c:choose>
+                            <c:when test="${watermark.logoImage==null ||location.logoImage.trim().equals('')}">
+                                <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set value="/common/${watermark.logoImage}" var="logoImgSrc" />
+                            </c:otherwise>
+                        </c:choose>
+                        <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+
                         <p id="errorObj_locationLogo"  class="text-danger"></p>
+
                     </div>
+                    <div class="col-md-6">
+                        <label>Logo Name</label>
+                        <input class="form-control" value="${watermark.logoName}" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
+
+                    </div>
+
+
+
 
 
                     <div class="col-md-4">
                         <div class="form-group timepick">
                             <label>Placement</label><br>
                             <select id="e-placement" class="img_placement" name="img_placement">
-                                <option value="tl">Top Left</option>
-                                <option value="tc">Top Center</option>
-                                <option value="tr">Top Right</option>
-                                <option value="bl">Bottom Left</option>
-                                <option value="br">Bottom Right</option>
-                                <option value="bc">Bottom Center</option>
+                                <option value="tl" <c:if test="${watermark.placement.equals('tl') }"> selected </c:if>>Top Left</option>
+                                <option value="tc" <c:if test="${watermark.placement.equals('tc') }"> selected </c:if>>Top Center</option>
+                                <option value="tr" <c:if test="${watermark.placement.equals('tr') }"> selected </c:if>>Top Right</option>
+                                <option value="bl" <c:if test="${watermark.placement.equals('bl') }"> selected </c:if>>Bottom Left</option>
+                                <option value="br" <c:if test="${watermark.placement.equals('br') }"> selected </c:if>>Bottom Right</option>
+                                <option value="bc" <c:if test="${watermark.placement.equals('bc') }"> selected </c:if>>Bottom Center</option>
 
                             </select>
                         </div>
@@ -77,7 +91,7 @@
                     <div class="col-md-4">
                         <label>Fade</label><br>
                         <div class="range-slider">
-                            <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="25" min="0" max="50">
+                            <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="${watermark.fade}" min="0" max="50">
                             <span class="range-slider__value">0</span>
                         </div>
                     </div>
@@ -85,17 +99,18 @@
 
 
                 </div>
-                <div class="url-tab panel-body" style="display:none;">
+
+                <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
-                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watemark">
+                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.logoName}" placeholder="New Watemark">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Watermark</label><br>
-                            <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="enter your text watermark">
+                            <input class="form-control" id="txt_wm_text" name="txt_wm_text" value="${watermark.watermarkText}" placeholder="enter your text watermark">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -115,7 +130,7 @@
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Colors</label>
-                            <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
+                            <input class="jscolor form-control" id="txt_color" name="txt_color" value="${watermark.color}">
                         </div>
                     </div>
                 </div>
@@ -142,22 +157,10 @@
 
 
         <input type="hidden" id="venueLogoToken" value="" />
-        <!-- jQuery -->
-        <script src="<s:url value="/resources/js/jquery.js"/>"></script>
 
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
-        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
-
-        <!-- select2 js -->
-        <script src="<s:url value="/resources/js/select2.js"/>"></script>
-        <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-        <!-- image uploader script -->
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
-        <!-- image uploader script -->
+        <script src="<s:url value="/resources/js/select2.js"/>"></script>
+        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
@@ -171,7 +174,6 @@
                 var type=$('.wm_tab.active').attr("data-name");
                 var logoImgToken='';
                 var logoName='';
-
                 var size='';
                 var fade='';
                 var watermarkText='';
@@ -180,7 +182,7 @@
                 var color='';
 
                 if(type=="image"){
-                    logoImgToken= getVenueLogoToken();
+                    logoImgToken= getwatermarkLogoToken();
                     logoName=$("input[name=img_logo_name]").val();
                     placement=$(".img_placement").val();
                     size=$(".img_font_size").val();
@@ -215,9 +217,11 @@
                     fontId: fontId,
                     color: color
                 };
+
+                var id="${watermark.id}";
                 console.log(data)
                 $.ajax({
-                    url: BASEURL+"api/watermark/create",
+                    url: BASEURL+"api/watermark/update/"+id,
                     type: "POST",
                     data: data ,
                     traditional:true,
@@ -231,11 +235,16 @@
                         }
                     },
                     success: function(response) {
-                        alert("created successfully");
+                        alert("Updated successfully");
                         window.location = BASEURL+"admin/watermark/all";
                     }
                 });
             }
+
+
+
+
+
         </script>
 
     </jsp:body>

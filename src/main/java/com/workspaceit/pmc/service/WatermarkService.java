@@ -99,5 +99,71 @@ public class WatermarkService {
         return watermark;
     }
 
+    public void update(Watermark watermark){
+        this.watermarkDao.update(watermark);
+    }
+
+    public Watermark update(int id,WatermarkForm watermarkForm,Admin admin)throws EntityNotFound{
+        Watermark watermark = this.getById(id);
+        Integer logoImgToken = watermarkForm.getLogoImgToken();
+        System.out.println("logoImgToken"+logoImgToken);
+        String logoImgName = "";
+        if(logoImgToken!=null && logoImgToken>0){
+            System.out.println("logoImgToken"+logoImgToken);
+            logoImgName = this.fileService.copyFile(logoImgToken);
+        }
+
+        System.out.println("logoImgName"+logoImgName);
+        watermark.setLogoImage(logoImgName);
+
+        this.populateWatermarkByWatermarkForm(watermark,watermarkForm);
+
+        this.update(watermark);
+
+
+//        try{
+//            if(bgIdsToRemove!=null && bgIdsToRemove.length>0){
+//                this.locationBackgroundImageService.remove(location,bgIdsToRemove);
+//            }
+//
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+
+
+        /**
+         * Add back ground images
+         * */
+//        try{
+//            if(bgTokens==null || bgTokens.length>0){
+//                this.locationBackgroundImageService.createFromToken(location,bgTokens);
+//            }
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//
+//        }
+
+        return watermark;
+    }
+
+
+    private void populateWatermarkByWatermarkForm(Watermark watermark, WatermarkForm watermarkForm){
+
+       watermark.setLogoName(watermarkForm.getLogoName());
+       watermark.setType(watermarkForm.getType());
+       watermark.setPlacement(watermarkForm.getPlacement());
+       watermark.setSize(watermarkForm.getSize());
+       watermark.setFade(watermarkForm.getFade());
+       watermark.setWatermarkText(watermarkForm.getWatermarkText());
+       watermark.setFont(watermarkForm.getFont());
+       watermark.setColor(watermarkForm.getColor());
+
+
+        /**
+         * Populating slid show settings
+         * */
+
+
+    }
 
 }
