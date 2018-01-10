@@ -1,3 +1,7 @@
+<%@ page import="com.workspaceit.pmc.entity.Placement" %>
+<%@ page import="com.workspaceit.pmc.entity.Font" %>
+<%@ page import="com.workspaceit.pmc.entity.Size" %>
+<%@ page import="com.workspaceit.pmc.entity.WatermarkType" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,8 +27,8 @@
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
                     <div id="waterMarkImg" class="btn-group pull-right">
-                        <button type="button" class="wm_tab btn btn-default active" data-name="image" >Image</button>
-                        <button type="button" class="wm_tab btn btn-default" data-name="text"  >Text</button>
+                        <button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>
+                        <button type="button" class="wm_tab btn btn-default" data-name="text"  id="wm_tab_text_btn">Text</button>
                     </div>
                 </div>
                 <div id="waterMarkImgFile" class="file-tab panel-body">
@@ -62,16 +66,17 @@
 
 
 
+
                     <div class="col-md-4">
                         <div class="form-group timepick">
                             <label>Placement</label><br>
                             <select id="e-placement" class="img_placement" name="img_placement">
-                                <option value="tl" <c:if test="${watermark.placement.equals('tl') }"> selected </c:if>>Top Left</option>
-                                <option value="tc" <c:if test="${watermark.placement.equals('tc') }"> selected </c:if>>Top Center</option>
-                                <option value="tr" <c:if test="${watermark.placement.equals('tr') }"> selected </c:if>>Top Right</option>
-                                <option value="bl" <c:if test="${watermark.placement.equals('bl') }"> selected </c:if>>Bottom Left</option>
-                                <option value="br" <c:if test="${watermark.placement.equals('br') }"> selected </c:if>>Bottom Right</option>
-                                <option value="bc" <c:if test="${watermark.placement.equals('bc') }"> selected </c:if>>Bottom Center</option>
+                                <option value="tl" <c:if test="${watermark.placement.equals(Placement.tl) }"> selected </c:if>>Top Left</option>
+                                <option value="tc" <c:if test="${watermark.placement.equals(Placement.tc) }"> selected </c:if>>Top Center</option>
+                                <option value="tr" <c:if test="${watermark.placement.equals(Placement.tr) }"> selected </c:if>>Top Right</option>
+                                <option value="bl" <c:if test="${watermark.placement.equals(Placement.bl) }"> selected </c:if>>Bottom Left</option>
+                                <option value="br" <c:if test="${watermark.placement.equals(Placement.br) }"> selected </c:if>>Bottom Right</option>
+                                <option value="bc" <c:if test="${watermark.placement.equals(Placement.bc) }"> selected </c:if>>Bottom Center</option>
 
                             </select>
                         </div>
@@ -80,11 +85,11 @@
                         <div class="form-group timepick">
                             <label>Smallest Size</label><br>
                             <select id="e-size" class="img_font_size" name="img_font_size">
-                                <option value="thumb">Thumb</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                                <option value="x_large">X-Large</option>
+                                <option value="thumb" <c:if test="${watermark.size.equals(Size.thumb) }"> selected </c:if>>Thumb</option>
+                                <option value="small" <c:if test="${watermark.size.equals(Size.small) }"> selected </c:if>>Small</option>
+                                <option value="medium" <c:if test="${watermark.size.equals(Size.medium) }"> selected </c:if>>Medium</option>
+                                <option value="large" <c:if test="${watermark.size.equals(Size.large) }"> selected </c:if>>Large</option>
+                                <option value="x_large" <c:if test="${watermark.size.equals(Size.x_large) }"> selected </c:if>>X-Large</option>
                             </select>
                         </div>
                     </div>
@@ -117,13 +122,13 @@
                         <div class="form-group timepick">
                             <label>Font</label><br>
                             <select id="e1" class="txt_font" name="txt_font">
-                                <option value="1">Myriad Pro</option>
-                                <option value="2">Times New Roman</option>
-                                <option value="3">Roboto</option>
-                                <option value="4">Bebas Nueu</option>
-                                <option value="5">Aerial</option>
-                                <option value="6">Gothic Pro</option>
-                                <option value="7">Fira</option>
+                                <option value="1" <c:if test="${watermark.font==1}"> selected </c:if>>Myriad Pro</option>
+                                <option value="2" <c:if test="${watermark.font==2}"> selected </c:if>>Times New Roman</option>
+                                <option value="3" <c:if test="${watermark.font==3}"> selected </c:if>>Roboto</option>
+                                <option value="4" <c:if test="${watermark.font==4}"> selected </c:if>>Bebas Nueu</option>
+                                <option value="5" <c:if test="${watermark.font==5}"> selected </c:if>>Aerial</option>
+                                <option value="6" <c:if test="${watermark.font==6}"> selected </c:if>>Gothic Pro</option>
+                                <option value="7" <c:if test="${watermark.font==7}"> selected </c:if>>Fira</option>
                             </select>
                         </div>
                     </div>
@@ -242,7 +247,15 @@
             }
 
 
+            $(document).ready(function () {
+                if(${watermark.type.equals(WatermarkType.text)}){
+                    $("#wm_tab_text_btn").trigger("click")
+                }else{
 
+                    $("#wm_tab_image_btn").trigger("click")
+                }
+
+            })
 
 
         </script>
