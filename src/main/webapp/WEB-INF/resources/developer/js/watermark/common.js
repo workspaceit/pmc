@@ -154,6 +154,7 @@ function configwatermarkLogoDropZone(){
                 this.on("addedfile", function(file) {
                     file._removeLink.addEventListener("click", function() {
                         console.log(file);
+
                         removeImageByToken(file.token,function (data) {
                             removewatermarkLogoToken(data.token);
                         });
@@ -169,7 +170,7 @@ function configwatermarkLogoDropZone(){
                 $("#profileImg").find(".dz-error-message span").html(msg);
             },
             success:function(file,response){
-
+                $("#logoImg").remove();
                 file.token = response.token;
                 storewatermarkLogoToken(response.token);
                 console.log(file);

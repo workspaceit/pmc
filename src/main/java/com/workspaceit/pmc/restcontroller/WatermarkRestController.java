@@ -33,10 +33,15 @@ import javax.validation.Valid;
 public class WatermarkRestController {
 
     private WatermarkService watermarkService;
-
+    private AdminService adminService;
     @Autowired
     public void setWatermarkService(WatermarkService watermarkService){
         this.watermarkService=watermarkService;
+    }
+
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
     }
 
 
@@ -61,4 +66,28 @@ public class WatermarkRestController {
     }
 
 
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id,@Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
+
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        /**
+         * Basic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+
+        try {
+            this.watermarkService.update(id,watermarkForm,currentUser);
+        } catch (EntityNotFound entityNotFound) {
+            serviceResponse.setValidationError("id",entityNotFound.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+    }
 }
