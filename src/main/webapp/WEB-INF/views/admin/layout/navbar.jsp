@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="ad.html">
+                    <a href="<c:url value="/admin/advertiser/add" />">
                         <img src="<s:url value="/resources/images/fa-buysellads.png"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Advertisement</span>
                     </a>
@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="watermark.html">
+                    <a href="<c:url value="/admin/watermark/add" />">
                         <img src="<s:url value="/resources/images/watermark.png"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Watermark Settings</span>
                     </a>
@@ -54,14 +54,16 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus-circle fa-2x f-size"></i><span class="visible-xs" style="margin-left:15px;">Dashboard</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<c:url value="/admin/advertiser/add" />">Add New Advertiser</a></li>
+                        <li><a href="<c:url value="/admin/user/add" />">Add a new Admin</a></li>
                         <li><a href="<c:url value="/admin/location/add" />">Add New Location</a></li>
                         <li><a href="<c:url value="/admin/venue/add" />"> Add New Venue</a></li>
                         <li><a href="<c:url value="/admin/photographer/add" />">Add New Photographer</a></li>
                         <li><a href="<c:url value="/admin/photographer/all" />">Photographers</a></li>
                         <li><a href="<c:url value="/admin/location/all" />">Locations</a></li>
+                        <li><a href="<c:url value="/admin/user/all" />">Admins</a></li>
+                        <li><a href="<c:url value="/admin/advertiser/all" />">Advertisers</a></li>
+                        <li><a href="<c:url value="/admin/watermark/all" />">Watermarks</a></li>
                         <li><a href="<c:url value="/admin/venue/all" />">Venues</a></li>
-
                     </ul>
                 </li>
                 <li class="dropdown">
