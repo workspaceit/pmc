@@ -2,6 +2,7 @@
  * Created by mi_rafi on 1/4/18.
  */
 function TempFileTokenStorage () {
+    this.keyPrefix = "PMC_TOKEN_STORAGE";
     this.storageTypeStatics ={ls:"localStorage",hhi:"htmlHiddenInput"};
 
     this.storageType = (typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
@@ -11,6 +12,9 @@ function TempFileTokenStorage () {
                 this._occupyHtmlElement(key);
                 break;
         }
+    };
+    this._getKey= function(key){
+        return this.keyPrefix+key;
     };
     this._occupyHtmlElement=function(key) {
         if($("#"+key).length>0){
@@ -29,27 +33,52 @@ function TempFileTokenStorage () {
         }
         $("#"+key).val(val);
     };
+
+    this.emptyToken=function(key){
+        switch(this.storageType){
+            case this.storageTypeStatics.ls:
+                return this._emptyWebStorage(this._getKey(key));
+            case this.storageTypeStatics.hhi:
+                return this.emptyHtmlStorage(this._getKey(key));
+        }
+    };
+    this._emptyWebStorage=function(key){
+        localStorage.setItem(key,"");
+    };
+    this.emptyHtmlStorage=function(key){
+        $("#"+key).val("");
+    };
+    this.setToken=function(key,token){
+
+        switch(this.storageType){
+            case this.storageTypeStatics.ls:
+                return this._storeInLocalStorage(this._getKey(key),token);
+            case this.storageTypeStatics.hhi:
+                return this._storeInHtmlElement(this._getKey(key),token);
+        }
+    };
     this.getToken=function(key){
         switch(this.storageType){
             case this.storageTypeStatics.ls:
-                return this._getFromWebStorage(key);
+                return this._getFromWebStorage(this._getKey(key));
             case this.storageTypeStatics.hhi:
-                return this._getFromHtmlInputField(key);
-        }
-    };
-    this.storeToken=function(key,token){
-        switch(this.storageType){
-            case this.storageTypeStatics.ls:
-                return this._storeInLocalStorage(key,token);
-            case this.storageTypeStatics.hhi:
-                return this._storeInHtmlElement(key,token);
+                return this._getFromHtmlInputField(this._getKey(key));
         }
     };
     this._getFromWebStorage=function(key){
         return  localStorage.getItem(key);
     };
     this._getFromHtmlInputField=function(key){
-        return $("#"+key).val().trim();
+        var token = "";
+        try{
+            if($("#"+key).length>0)
+                token = $("#"+key).val().trim();
+        }catch(ex) {
+            console.log(ex);
+            token="";
+        }
+        return token;
+
     };
 
 }
@@ -63,11 +92,12 @@ function injectHiddenTokenFields(keys){
         $("body").append(keyElem);
     }
 }
-function getToken(elemId){
+function getToken(key){
     var tokens=[];
     try{
-        var tokenStr =  $("#"+elemId).val().trim();
-        tokens = JSON.parse(tokenStr==""?"[]":tokenStr);
+        var ls = new TempFileTokenStorage();
+        var tokenStr =  ls.getToken(key);
+        tokens = JSON.parse( (tokenStr==null || tokenStr=="")?"[]":tokenStr);
 
     }catch(ex) {
         console.log(ex);
@@ -78,20 +108,27 @@ function getToken(elemId){
 function emptyToken(elemId){
     $("#"+elemId).val("");
 }
-function storeToken(elemId,token){
-    var tokens = getToken(elemId);
+
+function storeToken(key,token){
+    if((key ==null || key=="") || (token==null||token=="") ){
+        throw "Key or token missing";
+    }
+    var tokens = getToken(key);
     if(tokens.indexOf(token)<0){
         tokens.push(token);
     }
-    $("#"+elemId).val(JSON.stringify(tokens));
+
+    var ls = new TempFileTokenStorage();
+    ls.setToken(key,JSON.stringify(tokens))
 }
-function removeToken(elemId,token){
-    var tokens=getToken(elemId);
+function removeToken(key,token){
+    var tokens=getToken(key);
     var index = tokens.indexOf(token);
     if(index>=0){
         tokens.splice(index,1);
     }
-    $("#"+elemId).val(JSON.stringify(tokens));
+    var ls = new TempFileTokenStorage();
+    ls.setToken(key,JSON.stringify(tokens))
 }
 function removeFileByToken(token, fn){
     if(token == undefined){

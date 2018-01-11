@@ -1,12 +1,10 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%--<%@attribute name="header" fragment="true" %>--%>
 <%@attribute name="footer" fragment="true" %>
-<%@attribute name="scripts" fragment="true" %>
+<%@attribute name="developerScript" fragment="true" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html lang="en">
     <head>
@@ -38,8 +36,12 @@
         <script src="<s:url value="/resources/js/jquery.js"/>"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
+
+        <%--Developer's custom js--%>
         <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
-        <jsp:invoke fragment="scripts"/>
+        <script src="<s:url value="/resources/developer/js/helper/navigation.js"/>"></script>
+
+        <jsp:invoke fragment="developerScript"/>
         <script>
             var BASEURL = "<c:url value="/" />";
             try{

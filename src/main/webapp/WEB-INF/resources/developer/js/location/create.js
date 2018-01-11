@@ -1,7 +1,9 @@
 /**
  * Created by mi_rafi on 1/3/18.
  */
-function submitLocationData(){
+
+
+function submitLocationData(btnAction){
     var name = $('#name').val();
     var address = $('#address').val();
     var stateId = $('#stateId').val();
@@ -46,7 +48,7 @@ function submitLocationData(){
             }
         },
         success: function(response) {
-            window.location = BASEURL+"admin/location/all";
+            locationAfterSaveAction(btnAction);
         }
     });
 }

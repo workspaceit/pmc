@@ -5,6 +5,7 @@ import com.workspaceit.pmc.dao.PopUpAdsDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.PopupAd;
+import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +37,16 @@ public class PopUpAdsService {
         String smsVideoName = fileService.copyFile(popupAdsForm.getSmsPopupVideo());
         String emailVideoName = fileService.copyFile(popupAdsForm.getEmailPopupVideo());
 
+        String emailVideoType = (emailVideoName==null ||emailVideoName.equals(""))?"":FileHelper.getMimeType(emailVideoName);
+        String smsVideoType= (smsVideoName==null ||smsVideoName.equals(""))?"":FileHelper.getMimeType(smsVideoName);
+
         PopupAd smsPopupAdBanner =  new PopupAd();
 
         smsPopupAdBanner.setAdvertiserId(advertiser.getId());
-        smsPopupAdBanner.setType(PopupAdType.sms);
-        smsPopupAdBanner.setDuration(0);
+        smsPopupAdBanner.setType(PopupAdType.SMS);
+        smsPopupAdBanner.setDuration(popupAdsForm.getSmsPopupVideoDuration());
         smsPopupAdBanner.setVideo(smsVideoName);
+        smsPopupAdBanner.setVideoType(smsVideoType);
         smsPopupAdBanner.setExpiryDate(popupAdsForm.getSmsExpiryDate());
         this.create(smsPopupAdBanner);
         this.popupBannerImageService.create(smsPopupAdBanner,popupAdsForm.getSmsPopupBanner(),admin);
@@ -49,9 +54,10 @@ public class PopUpAdsService {
         PopupAd emailAddBanner =  new PopupAd();
 
         emailAddBanner.setAdvertiserId(advertiser.getId());
-        emailAddBanner.setType(PopupAdType.email);
-        emailAddBanner.setDuration(0);
+        emailAddBanner.setType(PopupAdType.EMAIL);
+        emailAddBanner.setDuration(popupAdsForm.getEmailPopupVideoDuration());
         emailAddBanner.setVideo(emailVideoName);
+        smsPopupAdBanner.setVideoType(emailVideoType);
         emailAddBanner.setExpiryDate(popupAdsForm.getEmailExpiryDate());
 
         this.create(emailAddBanner);
@@ -62,4 +68,15 @@ public class PopUpAdsService {
     public void  create(PopupAd popupAd){
         this.popUpAdsDao.insert(popupAd);
     }
+
+    @Transactional(readOnly = true)
+    public PopupAd getByAdvertiserId(int advertiserId){
+        return this.popUpAdsDao.getByAdvertiserId(advertiserId);
+    }
+
+    @Transactional(readOnly = true)
+    public PopupAd getByAdvertiserId(int advertiserId,PopupAdType popupAdType){
+        return this.popUpAdsDao.getByAdvertiserId(advertiserId,popupAdType);
+    }
+
 }

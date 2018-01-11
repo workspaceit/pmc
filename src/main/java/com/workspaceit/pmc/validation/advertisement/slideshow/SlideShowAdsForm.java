@@ -1,6 +1,9 @@
 package com.workspaceit.pmc.validation.advertisement.slideshow;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Created by mi_rafi on 1/5/18.
@@ -20,6 +23,12 @@ public class SlideShowAdsForm {
 
     @NotNull(message = "Banner Duration required")
     private Integer slideShowBannerDuration;
+
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date videoExpiryDate;
+
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date bannerExpiryDate;
 
     public Integer getAdvertiserId() {
         return advertiserId;
@@ -59,5 +68,21 @@ public class SlideShowAdsForm {
 
     public void setSlideShowBannerDuration(Integer slideShowBannerDuration) {
         this.slideShowBannerDuration = slideShowBannerDuration;
+    }
+
+    public Date getVideoExpiryDate() {
+        return videoExpiryDate;
+    }
+
+    public void setVideoExpiryDate(Date videoExpiryDate) {
+        this.videoExpiryDate = videoExpiryDate;
+    }
+
+    public Date getBannerExpiryDate() {
+        return bannerExpiryDate;
+    }
+
+    public void setBannerExpiryDate(Date bannerExpiryDate) {
+        this.bannerExpiryDate = bannerExpiryDate;
     }
 }

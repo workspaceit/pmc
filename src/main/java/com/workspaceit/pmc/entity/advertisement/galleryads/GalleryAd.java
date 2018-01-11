@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -35,13 +36,13 @@ public class GalleryAd {
     private String backgroundImage;
 
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
-    private List<GalleryAdsBottomBannerImage> bottomBanners;
+    private Set<GalleryAdsBottomBannerImage> bottomBanners;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "gallery_ad_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
-    private List<GalleryAdsTopBannerImage> adsTopBanners;
+    private Set<GalleryAdsTopBannerImage> adsTopBanners;
 
 
     @Column(name = "top_banner_expiry_date")
@@ -97,19 +98,19 @@ public class GalleryAd {
         this.backgroundImage = backgroundImage;
     }
 
-    public List<GalleryAdsBottomBannerImage> getBottomBanners() {
+    public Set<GalleryAdsBottomBannerImage> getBottomBanners() {
         return bottomBanners;
     }
 
-    public void setBottomBanners(List<GalleryAdsBottomBannerImage> bottomBanners) {
+    public void setBottomBanners(Set<GalleryAdsBottomBannerImage> bottomBanners) {
         this.bottomBanners = bottomBanners;
     }
 
-    public List<GalleryAdsTopBannerImage> getAdsTopBanners() {
+    public Set<GalleryAdsTopBannerImage> getAdsTopBanners() {
         return adsTopBanners;
     }
 
-    public void setAdsTopBanners(List<GalleryAdsTopBannerImage> adsTopBanners) {
+    public void setAdsTopBanners(Set<GalleryAdsTopBannerImage> adsTopBanners) {
         this.adsTopBanners = adsTopBanners;
     }
 

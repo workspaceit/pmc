@@ -27,4 +27,9 @@ public class EventService {
     public List<Event> getAll(){
         return this.eventDao.getAll();
     }
+
+    @Transactional
+    public List<Event> getAll(Integer[] ids){
+        return this.eventDao.getAll(ids);
+    }
 }

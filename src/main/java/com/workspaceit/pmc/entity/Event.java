@@ -35,7 +35,7 @@ public class Event {
     @Column(name = "is_private")
     private Date isPrivate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = false)
     private Venue venue;
 
@@ -52,24 +52,18 @@ public class Event {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_photographers",
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "photographer_id")})
     Set<Photographer> photographers = new HashSet<Photographer>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "event_advertisers",
-            joinColumns = {@JoinColumn(name = "event_id")},
-            inverseJoinColumns = {@JoinColumn(name = "advertiser_id")})
-    Set<Advertiser> advertisers = new HashSet<Advertiser>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -164,14 +158,6 @@ public class Event {
 
     public void setPhotographers(Set<Photographer> photographers) {
         this.photographers = photographers;
-    }
-
-    public Set<Advertiser> getAdvertisers() {
-        return advertisers;
-    }
-
-    public void setAdvertisers(Set<Advertiser> advertisers) {
-        this.advertisers = advertisers;
     }
 
     public Set<Watermark> getWatermarks() {

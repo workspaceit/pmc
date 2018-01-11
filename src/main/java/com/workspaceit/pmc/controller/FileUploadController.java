@@ -53,9 +53,8 @@ public class FileUploadController{
         /**
          * Video mime type
          * */
-        videoAllowedMimeType.add("video/3gpp");
-        videoAllowedMimeType.add("video/x-matroska");
-        videoAllowedMimeType.add("video/x-flv");
+        videoAllowedMimeType.add("video/ogg");
+        videoAllowedMimeType.add("video/webm");
         videoAllowedMimeType.add("video/mp4");
     }
 

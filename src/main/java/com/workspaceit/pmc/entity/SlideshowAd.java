@@ -29,6 +29,9 @@ public class SlideshowAd {
     @Column(name = "video")
     private String video;
 
+    @Column(name = "video_type")
+    private String videoType;
+
     @Column(name = "video_duration")
     private int videoDuration;
 
@@ -55,7 +58,7 @@ public class SlideshowAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "slideshow_ad_id", referencedColumnName = "id")
     Set<SlideshowBannerImage> slideshowBannerImages = new HashSet<>();
 
@@ -82,6 +85,14 @@ public class SlideshowAd {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public String getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(String videoType) {
+        this.videoType = videoType;
     }
 
     public int getVideoDuration() {

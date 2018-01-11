@@ -7,11 +7,8 @@
     <jsp:body>
         <!-- /#page-wrapper -->
         <div id="page-wrapper">
-
         <div class="container">
             <h3 class="uni-header"><span>Watermark Setting</span></h3>
-
-
             <div class="btn-container-top">
                 <button class="btn btn-action-top" onclick="submitWatermark()">Save</button>
                 <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
@@ -43,13 +40,7 @@
                     <div class="col-md-6">
                         <label>Logo Name</label>
                         <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
-
                     </div>
-
-
-
-
-
                     <div class="col-md-4">
                         <div class="form-group timepick">
                             <label>Placement</label><br>
@@ -147,6 +138,7 @@
 
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
         <script src="<s:url value="/resources/js/select2.js"/>"></script>
+        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>

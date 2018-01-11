@@ -10,10 +10,10 @@
                 <h3 class="uni-header"><span>Create Advertiser</span></h3>
                 <!-- <h3 class="title-top text-uppercase"><span>Create Advertiser</span></h3> -->
                 <div class="btn-container-top">
-                    <button class="btn btn-action-top" onclick="initSubmit()">Save</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                    <button class="btn btn-action-top">Cancel</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save','create')">Save</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_close','create')">Save&nbsp;&&nbsp;Close</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_new','create')">Save&nbsp;&&nbsp;New</button>
+                    <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel','create')">Cancel</button>
                 </div>
 
                 <div class="tabbable-panel clearfix">
@@ -45,10 +45,10 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp" %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"  %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"  %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/advertiser-info.jsp" %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/gallery-ads.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/slideshow-adds.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/popup-ads.jsp"  %>
                         </div>
                     </div>
                 </div>

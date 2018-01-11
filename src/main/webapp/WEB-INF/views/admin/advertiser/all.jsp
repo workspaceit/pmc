@@ -8,7 +8,7 @@
     <jsp:body>
         <div id="page-wrapper">
             <div class="container">
-                <h1>Photographer List </h1>
+                <h1>Advertiser List</h1>
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-responsive cstm-admin-table">

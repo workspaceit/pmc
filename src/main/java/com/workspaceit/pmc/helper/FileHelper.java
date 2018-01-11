@@ -1,18 +1,14 @@
 package com.workspaceit.pmc.helper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.FileNameMap;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.workspaceit.pmc.config.Environment;
 
 public class FileHelper {
 	
@@ -21,13 +17,32 @@ public class FileHelper {
         String mimeType = multipartFile.getContentType();
 
         if(mimeType==null || mimeType.equals("")){
-            mimeType =  URLConnection.guessContentTypeFromName(multipartFile.getOriginalFilename());
-        }
-        if(mimeType==null || mimeType.equals("")){
-            FileNameMap fileNameMap = URLConnection.getFileNameMap();
-            mimeType = fileNameMap.getContentTypeFor(multipartFile.getOriginalFilename());
+            mimeType = FileHelper.getMimeType(multipartFile.getOriginalFilename());
         }
         return mimeType;
+    }
+	public static String getMimeType(String originalFilename){
+		String mimeType =  URLConnection.guessContentTypeFromName(originalFilename);
+
+		if(mimeType==null || mimeType.equals("")){
+			FileNameMap fileNameMap = URLConnection.getFileNameMap();
+			mimeType = fileNameMap.getContentTypeFor(originalFilename);
+		}
+
+
+		return mimeType;
+	}
+    public static String getMimeType(File file){
+        String mimeType = "";
+        try {
+            mimeType =  Files.probeContentType(file.toPath());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return mimeType;
+    }
+    public static File getFile(String filePath){
+        return new File(filePath);
     }
 	public static String getExtension(MultipartFile multipartFile) {
 		String oiginalFilename = multipartFile.getOriginalFilename();
@@ -50,4 +65,13 @@ public class FileHelper {
 	public static long getByteToMb(long bytes) {
 		return bytes / (long)(1024*1000);
 	}
+
+	public static void main(String[] args) {
+		String e = FileHelper.getMimeType(FileHelper.getFile("/home/mi_rafi/Videos/a.mp4"));
+        try {
+            System.out.println(Files.probeContentType(Paths.get("/home/mi_rafi/Videos/big_buck_bunny_720p_1mb.flv")));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }

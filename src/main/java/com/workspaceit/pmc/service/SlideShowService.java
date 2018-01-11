@@ -4,6 +4,8 @@ import com.workspaceit.pmc.dao.SlideshowAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.SlideshowAd;
+import com.workspaceit.pmc.helper.FileHelper;
+import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,17 +40,31 @@ public class SlideShowService {
     @Transactional(rollbackFor = Exception.class)
     public SlideshowAd create(Advertiser advertiser , SlideShowAdsForm slideShowAdsForm, Admin admin){
         Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoToken();
+        String videoType = this.fileService.getMimeTypeByToken(videoToken);
         String videoName = this.fileService.copyFile(videoToken);
 
         SlideshowAd slideshowAd = new SlideshowAd();
+
         slideshowAd.setAdvertiserId(advertiser.getId());
         slideshowAd.setVideo(videoName);
+        slideshowAd.setVideoType(videoType);
+        slideshowAd.setBannerExpiryDate(slideShowAdsForm.getBannerExpiryDate());
+        slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
         slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
         slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
         slideshowAd.setCreatedBy(admin);
 
-        slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerTokens(),admin);
+        this.create(slideshowAd);
+        this.slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerTokens(),admin);
 
         return slideshowAd;
+    }
+    @Transactional(readOnly = true)
+    public SlideshowAd getByAdvertiserId(int advertiserId){
+       return this.slideshowAdDao.getByAdvertiserId(advertiserId);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void create(SlideshowAd slideshowAd){
+         this.slideshowAdDao.insert(slideshowAd);
     }
 }

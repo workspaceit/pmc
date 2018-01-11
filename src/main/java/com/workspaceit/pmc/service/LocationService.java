@@ -50,9 +50,14 @@ public class LocationService {
         this.fileUtil = fileUtil;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public List<Location> getAll(){
         return this.locationDao.getAll();
+    }
+
+    @Transactional
+    public List<Location> getAll(Integer[] ids){
+        return this.locationDao.getAll(ids);
     }
 
     public Location getById(int id){

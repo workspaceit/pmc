@@ -48,6 +48,14 @@ public class Advertiser {
     @Column(name = "website")
     private String website;
 
+
+
+    @Column(name = "all_locations")
+    private boolean allLocations;
+
+    @Column(name = "all_events")
+    private boolean allEvents;
+
     @Column(name = "other_image")
     private String otherImage;
 
@@ -73,6 +81,27 @@ public class Advertiser {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
+
+
+
+    @ManyToMany
+    @JoinTable(name = "event_advertisers", joinColumns = {
+            @JoinColumn(name = "advertiser_id", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "event_id",
+                    nullable = false, updatable = false) })
+    private Set<Event> events;
+
+
+    @ManyToMany
+    @JoinTable(name = "location_advertisers", joinColumns = {
+            @JoinColumn(name = "advertiser_id", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "location_id",
+                    nullable = false) })
+    private Set<Location> locations;
+
+    @OneToMany
+    @JoinColumn(name = "advertiser_id")
+    private Set<AdvertisersOtherImage> otherImages;
 
     public int getId() {
         return id;
@@ -186,5 +215,44 @@ public class Advertiser {
         this.createdBy = createdBy;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
 
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
+    }
+
+    public boolean isAllLocations() {
+        return allLocations;
+    }
+
+    public void setAllLocations(boolean allLocations) {
+        this.allLocations = allLocations;
+    }
+
+    public boolean isAllEvents() {
+        return allEvents;
+    }
+
+    public void setAllEvents(boolean allEvents) {
+        this.allEvents = allEvents;
+    }
+
+    public Set<AdvertisersOtherImage> getOtherImages() {
+        return otherImages;
+    }
+
+    public void setOtherImages(Set<AdvertisersOtherImage> otherImages) {
+        this.otherImages = otherImages;
+    }
 }
+

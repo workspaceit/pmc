@@ -14,10 +14,10 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitUpdatedData()">Save</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top">Cancel</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedData('save')">Save</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedData('save_and_new')">Save&nbsp;&&nbsp;New</button>
+                            <button class="btn btn-action-top" onclick="locationAfterSaveActionUpdate('cancel')">Cancel</button>
                             <br>
                             <span id="successMsg"></span>
                         </div>
