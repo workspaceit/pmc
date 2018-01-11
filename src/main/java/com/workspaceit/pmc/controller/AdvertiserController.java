@@ -2,6 +2,7 @@ package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.*;
+import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,14 @@ public class AdvertiserController {
     private CityService cityService;
     private EventService eventService;
 
+    private GalleryAdService galleryAdService;
+    private SlideShowService slideShowService;
+    private PopUpAdsService popUpAdsService;
+
     private List<Double> fadeInList;
     private List<Double>fadeOutList;
 
-
+    /*Value are inserted in @PostConstruct function*/
     private Set<Integer> durations;
 
     @PostConstruct
@@ -65,6 +70,22 @@ public class AdvertiserController {
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
+
+    @Autowired
+    public void setGalleryAdService(GalleryAdService galleryAdService) {
+        this.galleryAdService = galleryAdService;
+    }
+
+    @Autowired
+    public void setSlideShowService(SlideShowService slideShowService) {
+        this.slideShowService = slideShowService;
+    }
+
+    @Autowired
+    public void setPopUpAdsService(PopUpAdsService popUpAdsService) {
+        this.popUpAdsService = popUpAdsService;
+    }
+
 
     @Autowired
     public void setFadeInList(List<Double> fadeInList) {
@@ -108,12 +129,35 @@ public class AdvertiserController {
         return model;
     }
     @RequestMapping("/update/{id}")
-    public ModelAndView update(@PathVariable("id") int id){
+    public ModelAndView update(@PathVariable("id") int advertiserId){
 
-        Advertiser advertiser =  this.advertiserService.getById(id);
+        Advertiser advertiser =  this.advertiserService.getById(advertiserId);
+
+        if(advertiser==null){
+            return new ModelAndView("redirect:"+"/admin/advertiser/all");
+        }
+
+        List<Location> locations = this.locationService.getAll();
+        List<State> states = this.stateService.getAll();
+        List<City> cities = this.cityService.getAllNameAcs();
+        List<Event> events = this.eventService.getAll();
+
+
+        GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
+        SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
+        PopupAd popupAd  = this.popUpAdsService.getByAdvertiserId(advertiserId);
+
         ModelAndView model = new ModelAndView("admin/advertiser/edit");
-
         model.addObject("advertiser",advertiser);
+        model.addObject("galleryAd",galleryAd);
+        model.addObject("slideshowAd",slideshowAd);
+        model.addObject("popupAd",popupAd);
+
+        model.addObject("events",events);
+        model.addObject("locations",locations);
+        model.addObject("states",states);
+        model.addObject("cities",cities);
+        model.addObject("durations",durations);
 
         return model;
     }

@@ -4,7 +4,7 @@
 function TempFileTokenStorage () {
     this.storageTypeStatics ={ls:"localStorage",hhi:"htmlHiddenInput"};
 
-    this.storageType = (typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
+    this.storageType = this.storageTypeStatics.hhi;//(typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
     this.occupy = function(key) {
         switch(this.storageType){
             case this.storageTypeStatics.hhi:
@@ -37,7 +37,21 @@ function TempFileTokenStorage () {
                 return this._getFromHtmlInputField(key);
         }
     };
-    this.storeToken=function(key,token){
+    this.emptyToken=function(key){
+        switch(this.storageType){
+            case this.storageTypeStatics.ls:
+                return this._emptyWebStorage(key);
+            case this.storageTypeStatics.hhi:
+                return this.emptyHtmlStorage(key);
+        }
+    };
+    this._emptyWebStorage=function(key){
+        localStorage.setItem(key,"");
+    };
+    this.emptyHtmlStorage=function(key){
+        $("#"+key).val("");
+    };
+    this.setToken=function(key,token){
         switch(this.storageType){
             case this.storageTypeStatics.ls:
                 return this._storeInLocalStorage(key,token);
@@ -78,6 +92,7 @@ function getToken(elemId){
 function emptyToken(elemId){
     $("#"+elemId).val("");
 }
+
 function storeToken(elemId,token){
     var tokens = getToken(elemId);
     if(tokens.indexOf(token)<0){

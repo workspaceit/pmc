@@ -65,4 +65,8 @@ public class GalleryAdService {
     public GalleryAd getById(int id){
         return galleryAdDao.getById(id);
     }
+
+    public GalleryAd getByAdvertiserId(int advertiserId){
+        return galleryAdDao.getByAdvertiserId(advertiserId);
+    }
 }

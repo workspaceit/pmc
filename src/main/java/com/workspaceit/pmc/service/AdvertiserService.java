@@ -1,15 +1,13 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.AdvertiserDao;
-import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.City;
-import com.workspaceit.pmc.entity.State;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.validation.advertiser.AdvertiserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -22,6 +20,8 @@ public class AdvertiserService {
     private AdvertisersOtherImageService advertisersOtherImageService;
     private StateService stateService;
     private CityService cityService;
+    private EventService eventService;
+    private LocationService locationService;
 
     @Autowired
     public void setAdvertiserDao(AdvertiserDao advertiserDao) {
@@ -41,6 +41,15 @@ public class AdvertiserService {
     public void setCityService(CityService cityService) {
         this.cityService = cityService;
     }
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+    @Autowired
+    public void setLocationService(LocationService locationService) {
+        this.locationService = locationService;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Advertiser create(AdvertiserForm advertiserForm, Admin admin){
         City city = this.cityService.getById(advertiserForm.getCityId());
@@ -58,6 +67,17 @@ public class AdvertiserService {
         advertiser.setRuntimeStarts(advertiserForm.getRuntimeStarts());
         advertiser.setRuntimeEnds(advertiserForm.getRuntimeEnds());
         advertiser.setCreatedBy(admin);
+        advertiser.setAllLocations(advertiserForm.getIsAllLocationSelected());
+        advertiser.setAllEvents(advertiserForm.getIsAllEventSelected());
+
+        if(!advertiserForm.getIsAllLocationSelected()) {
+            List<Location> locations = this.locationService.getAll(advertiserForm.getLocationIds());
+            advertiser.setLocations(new HashSet<>(locations));
+        }
+        if(!advertiserForm.getIsAllEventSelected()){
+            List<Event> events = this.eventService.getAll(advertiserForm.getEventIds());
+            advertiser.setEvents(new HashSet<>(events));
+        }
 
         this.create(advertiser);
 

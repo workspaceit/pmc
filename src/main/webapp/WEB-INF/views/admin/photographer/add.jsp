@@ -10,10 +10,10 @@
 
                     <div class="row clearfix">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitPhotographerData()">Save</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top">Cancel</button>
+                            <button class="btn btn-action-top" onclick="submitPhotographerData('save')" >Save</button>
+                            <button class="btn btn-action-top" onclick="submitPhotographerData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitPhotographerData('save_and_new')" >Save&nbsp;&&nbsp;New</button>
+                            <button class="btn btn-action-top" onclick="photographerAfterSaveActionCreate('cancel')" >Cancel</button>
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>
@@ -87,143 +87,15 @@
 
                 </div>
             </div>
-
-
-
-
         </div>
-        <script>
-        function submitPhotographerData(){
-        	var fullName = $("#fullName").val();
-        	var phoneNumber = $("#phoneNumber").val();
-            var email = $("#email").val();
-            var userName = $("#userName").val();
-            var password =  $("#password").val();
-            var confirmPassword = 	$("#confirmPassword").val();
-            
-            var data = {
-            			"fullName":fullName,
-            			"phoneNumber":phoneNumber,
-            			"email":email,
-            			"userName":userName,
-            			"password":password,
-            			"confirmPassword":confirmPassword,
-                        "profilePictureToken":profilePictureToken
-            		};
-            $.ajax({
-                url: BASEURL+'api/photographer/create',
-                data:data,
-                type: 'POST',
-                statusCode: {
-                    401: function (response) {
-                        console.log(response);
-                    },
-                    422: function (response) {
-
-                        BindErrorsWithHtml("errorObj_",response.responseJSON);
-                        console.log(response);
-                    }
-                },success: function(data){
-                    UnBindErrors("errorObj_");
-                    window.location.href =  BASEURL+'photographer/all';
-                }
-            });
-            console.log(data)
-           
-        }
-        
-        
-        </script>
-        
-        
         
         <!-- /#wrapper -->
-
+        <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
 
-
-        <!-- dropzone -->
-        <script>
-            Dropzone.autoDiscover = false;
-            var profilePictureToken = 0;
-            var banerImagesToken = [];
-
-            // alternative to DOMContentLoaded
-            document.onreadystatechange = function () {
-                if (document.readyState == "interactive") {
-                    $(function() {
-                        var profileImgDropzone = new Dropzone("div#profileImg",
-                            {
-                                url: BASEURL+"file/upload/photographer-profile-image",
-                                method:"post",
-                                paramName:"profileImg",
-                                maxFilesize: 1,
-                                maxFiles:1,
-                                addRemoveLinks: true,
-                                previewTemplate:$("#dropZonePreview").html(),
-                                init:function(){
-
-                                    this.on("maxfilesexceeded", function(file) {
-                                        this.removeAllFiles();
-                                        this.addFile(file);
-                                    });
-                                    this.on("addedfile", function(file) {
-                                        file._removeLink.addEventListener("click", function() {
-                                            console.log(file);
-                                            removeImageByToken(file.token);
-                                            profilePictureToken = 0;
-                                            var _ref;
-                                            profileImgDropzone.removeFile(file);
-                                        });
-                                    });
-
-                                },
-                                error:function(file,response){
-                                    var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                                    $("#profileImg").find(".dz-error-message span").html(msg);
-                                },
-                                success:function(file,response){
-
-                                    file.token = response.token;
-                                    profilePictureToken = response.token;
-                                    console.log(file);
-                                }
-                            }
-                        );
-
-                    });
-                }
-            };
-
-            function removeImageByToken(token){
-                if(token == undefined){
-                    return;
-                }
-                $.ajax({
-                    url: BASEURL+'file/remove',
-                    data:{"token":token},
-                    type: 'POST',
-                    statusCode: {
-                        401: function (response) {
-                            console.log(response);
-                        },
-                        422: function (response) {
-                            console.log(response);
-                        }
-                    },success: function(data){
-                        console.log(data);
-                    }
-                });
-            }
-        </script>
-
-
+        <script src="<s:url value="/resources/developer/js/photographer/create.js"/>" ></script>
         
     </jsp:body>
-
-
-
-
 
 </t:genericpage>

@@ -39,8 +39,8 @@ public class PopUpAdsService {
         PopupAd smsPopupAdBanner =  new PopupAd();
 
         smsPopupAdBanner.setAdvertiserId(advertiser.getId());
-        smsPopupAdBanner.setType(PopupAdType.sms);
-        smsPopupAdBanner.setDuration(0);
+        smsPopupAdBanner.setType(PopupAdType.SMS);
+        smsPopupAdBanner.setDuration(popupAdsForm.getSmsPopupVideoDuration());
         smsPopupAdBanner.setVideo(smsVideoName);
         smsPopupAdBanner.setExpiryDate(popupAdsForm.getSmsExpiryDate());
         this.create(smsPopupAdBanner);
@@ -49,8 +49,8 @@ public class PopUpAdsService {
         PopupAd emailAddBanner =  new PopupAd();
 
         emailAddBanner.setAdvertiserId(advertiser.getId());
-        emailAddBanner.setType(PopupAdType.email);
-        emailAddBanner.setDuration(0);
+        emailAddBanner.setType(PopupAdType.EMAIL);
+        emailAddBanner.setDuration(popupAdsForm.getEmailPopupVideoDuration());
         emailAddBanner.setVideo(emailVideoName);
         emailAddBanner.setExpiryDate(popupAdsForm.getEmailExpiryDate());
 
@@ -61,5 +61,10 @@ public class PopUpAdsService {
     @Transactional(rollbackFor = Exception.class)
     public void  create(PopupAd popupAd){
         this.popUpAdsDao.insert(popupAd);
+    }
+
+    @Transactional(readOnly = true)
+    public PopupAd getByAdvertiserId(int advertiserId){
+        return this.popUpAdsDao.getByAdvertiserId(advertiserId);
     }
 }

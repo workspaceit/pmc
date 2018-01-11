@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper">
@@ -9,10 +10,10 @@
                 <h3 class="uni-header"><span>Create Advertiser</span></h3>
                 <!-- <h3 class="title-top text-uppercase"><span>Create Advertiser</span></h3> -->
                 <div class="btn-container-top">
-                    <button class="btn btn-action-top" onclick="initSubmit()">Save</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                    <button class="btn btn-action-top">Cancel</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save','update')">Save</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_close','update')">Save&nbsp;&&nbsp;Close</button>
+                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
+                    <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
                 </div>
 
                 <div class="tabbable-panel clearfix">
@@ -44,10 +45,10 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"/>
-                            <jsp:include page="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"/>
+                            <%@include file="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp" %>
                         </div>
                     </div>
                 </div>
@@ -73,6 +74,13 @@
                 </div>
             </div>
         </div>
+        <%--Developer Hidden Field--%>
+        <input type="hidden" id="advertiserId" value="${advertiser.id}" />
+        <input type="hidden" id="galleryAdId" value="${galleryAd.id}" />
+        <input type="hidden" id="slideshowAdId" value="${slideshowAd.id}" />
+        <input type="hidden" id="popupAdId" value="${popupAd.id}" />
+
+
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <!-- select2 js -->
         <!-- Select2 css -->
@@ -88,7 +96,7 @@
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
-        <script src="<s:url value="/resources/developer/js/pmc-adv/create.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/pmc-adv/update.js"/>"></script>
 
 
 

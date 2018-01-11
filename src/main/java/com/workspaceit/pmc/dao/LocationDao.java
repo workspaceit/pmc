@@ -4,6 +4,7 @@ import com.workspaceit.pmc.entity.Location;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,6 +17,13 @@ public class LocationDao extends BaseDao{
         return session.createQuery("FROM Location ORDER BY id DESC")
                 .list();
     }
+    public List<Location> getAll(Integer[] ids){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Location where id in :ids")
+                .setParameter("ids", Arrays.asList(ids))
+                .list();
+    }
+
     public Location getById(int id){
         Session session = this.getCurrentSession();
         return (Location)session.createQuery("FROM Location where id=:id")

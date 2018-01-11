@@ -13,7 +13,10 @@ import java.util.List;
 public class AdvertiserDao extends BaseDao {
     public Advertiser getById(int id){
         Session session = this.getCurrentSession();
-        return (Advertiser)session.createQuery("FROM Advertiser WHERE id=:id")
+        return (Advertiser)session.createQuery("FROM Advertiser a " +
+                                                        "LEFT JOIN FETCH a.otherImages " +
+                                                        "LEFT JOIN FETCH a.events " +
+                                                        "LEFT JOIN FETCH a.locations WHERE a.id=:id  ")
                 .setParameter("id",id)
                 .setMaxResults(1)
                 .uniqueResult();

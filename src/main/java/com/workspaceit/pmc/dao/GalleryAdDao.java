@@ -10,11 +10,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GalleryAdDao extends BaseDao {
     public GalleryAd getById(int id){
-        System.out.println(id);
         Session session = this.getCurrentSession();
         return (GalleryAd)session.createQuery("FROM GalleryAd where id=:id")
                 .setMaxResults(1)
                 .setParameter("id",id)
+                .uniqueResult();
+    }
+    public GalleryAd getByAdvertiserId(int advertiserId){
+        Session session = this.getCurrentSession();
+        return (GalleryAd)session.createQuery("FROM GalleryAd where advertiserId=:advertiserId")
+                .setMaxResults(1)
+                .setParameter("advertiserId",advertiserId)
                 .uniqueResult();
     }
 }

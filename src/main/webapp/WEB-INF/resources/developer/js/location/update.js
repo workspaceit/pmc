@@ -4,7 +4,25 @@
 $(document).ready(function(){
     injectHiddenBgRemoveIdField();
 });
-function submitUpdatedData(){
+function locationAfterSaveActionUpdate(btnAction){
+    var urlStr ="";
+    switch(btnAction){
+        case "save":
+            urlStr = "admin/location/all";
+            break;
+        case "save_and_close":
+            urlStr = "admin/location/all";
+            break;
+        case "save_and_new":
+            urlStr = "admin/location/add";
+            break;
+        case "cancel":
+            urlStr = "admin/location/all";
+            break;
+    }
+    window.location =BASEURL+urlStr;
+}
+function submitUpdatedData(btnAction){
     var id = $('#locationId').val();
     var name = $('#name').val();
     var address = $('#address').val();
@@ -53,7 +71,9 @@ function submitUpdatedData(){
             }
         },
         success: function(response) {
-            notifyUpdateStatus();
+            notifyUpdateStatus(function(){
+                locationAfterSaveActionUpdate(btnAction);
+            });
         }
     });
 }

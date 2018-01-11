@@ -51,4 +51,8 @@ public class SlideShowService {
 
         return slideshowAd;
     }
+    @Transactional(readOnly = true)
+    public SlideshowAd getByAdvertiserId(int advertiserId){
+       return this.slideshowAdDao.getByAdvertiserId(advertiserId);
+    }
 }

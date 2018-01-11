@@ -5,6 +5,26 @@ Dropzone.autoDiscover = false;
 var profilePictureToken = 0;
 
 
+function locationAfterSaveAction(btnAction){
+    var urlStr ="";
+    switch(btnAction){
+        case "save":
+            urlStr = "admin/location/all";
+            break;
+        case "save_and_close":
+            urlStr = "admin/location/all";
+            break;
+        case "save_and_new":
+            urlStr = "admin/location/add";
+            break;
+        case "cancel":
+            urlStr = "admin/location/all";
+            break;
+    }
+    window.location =BASEURL+urlStr;
+}
+
+
 // alternative to DOMContentLoaded
 $(document).ready(function(){
     //Drop Zone Binding
@@ -15,12 +35,7 @@ $(document).ready(function(){
     // to store uploaded file token
     injectHiddenTokenFieldsForLocation();
 });
-function notifyUpdateStatus(){
-    $("#successMsg").html("Successfully updated").fadeIn(500).delay( 1000 ).fadeIn(500,function(){
-        location.reload();
-    });
 
-}
 function injectHiddenTokenFieldsForLocation(){
     var venueLogoTokenElement = $("<input>", {type:"hidden",id: "venueLogoToken", "value": ""});
     var venueBgImgTokensElement = $("<input>", {type:"hidden",id: "venueBgImgTokens", "value": ""});
