@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 @Repository
-
 public class AdminDao extends BaseDao {
 
     public Admin insert(Admin admin){
@@ -20,7 +19,6 @@ public class AdminDao extends BaseDao {
         session.save(admin);
         return admin;
     }
-
     public Admin getByEmail(String email){
         Session session = this.openSession();
         try{
@@ -44,5 +42,33 @@ public class AdminDao extends BaseDao {
         return session.createQuery("FROM Admin ORDER BY id DESC")
                 .list();
     }
+
+    public Admin getById(int id){
+        Session session = this.openSession();
+        try {
+            return (Admin) session.createQuery("FROM Admin where id=:id")
+                    .setParameter("id", id)
+                    .uniqueResult();
+        }
+        finally {
+            if(session!=null)session.close();
+        }
+    }
+
+
+//    public void update(Admin admin){
+//        Session session = this.openSession();
+//        session.beginTransaction();
+//        try {
+//            session.update(admin);
+//        }
+//        finally {
+//            if(session!=null) {
+//                session.close();
+//                session.getTransaction().commit();
+//            }
+//        }
+//
+//    }
 
 }

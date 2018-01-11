@@ -2,7 +2,7 @@ package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,8 +21,13 @@ import java.util.List;
 @Controller
 @RequestMapping(value = ControllerUriPrefix.ADMIN+"/user")
 public class AdminController {
-    @Autowired
+
     private AdminService adminService;
+
+    @Autowired
+    public void setStateService(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @RequestMapping(value = "/add")
     public ModelAndView add(){
@@ -35,6 +40,20 @@ public class AdminController {
         List<Admin> admins = this.adminService.getAll();
         ModelAndView model= new ModelAndView("admin/admin-user-management/all");
         model.addObject("admins",admins);
+        return model;
+    }
+
+    @RequestMapping(value = "/update/{id}")
+    public ModelAndView update(@PathVariable("id") int id){
+        Admin admin = this.adminService.getById(id);
+
+        if(admin==null){
+            return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
+        }
+        ModelAndView model = new ModelAndView("admin/admin-user-management/edit");
+
+        model.addObject("admin",admin);
+
         return model;
     }
 

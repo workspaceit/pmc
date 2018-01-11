@@ -20,7 +20,7 @@ $(document).ready(function(){
     // to store uploaded file token
     injectHiddenTokenFields();
 });
-function notifyUpdateStatus(){
+function notifyAdminUpdateStatus(){
     $("#successMsg").html("Successfully updated").fadeIn(500).delay( 1000 ).fadeIn(500,function(){
         location.reload();
     });
