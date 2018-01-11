@@ -9,7 +9,6 @@ import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
-import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.service.VenueService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.venue.VenueForm;
@@ -43,7 +42,7 @@ public class VenueRestController {
         this.venueService = venueService;
     }
     @Autowired
-    public void setLocationValidator(VenueValidator venueValidator) {
+    public void setVenueValidator(VenueValidator venueValidator) {
         this.venueValidator = venueValidator;
     }
 

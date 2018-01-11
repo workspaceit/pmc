@@ -1,3 +1,7 @@
+<%@ page import="com.workspaceit.pmc.entity.Placement" %>
+<%@ page import="com.workspaceit.pmc.entity.Font" %>
+<%@ page import="com.workspaceit.pmc.entity.Size" %>
+<%@ page import="com.workspaceit.pmc.entity.WatermarkType" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,21 +26,15 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
-                    <div class="btn-group pull-right">
-                        <button type="button" class="wm_tab btn btn-default active" data-name="image">Image</button>
-                        <button type="button" class="wm_tab btn btn-default" data-name="text">Text</button>
+                    <div id="waterMarkImg" class="btn-group pull-right">
+                        <button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>
+                        <button type="button" class="wm_tab btn btn-default" data-name="text"  id="wm_tab_text_btn">Text</button>
                     </div>
                 </div>
-                <div class="file-tab panel-body">
-
-                    <div class="col-md-6">
-                        <label>Logo Name</label>
-                        <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
-                    </div>
-
+                <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="file-tab panel-body">
 
-                        <div id="venueLogoImg" >
+                        <div id="watermarkLogoImg" >
 
                             <div class="dz-default dz-message">
                                 <span>Drop files here to upload</span>
@@ -44,20 +42,41 @@
                             </div>
                         </div>
 
+                        <c:set value="" var="logoImgSrc" />
+                        <c:choose>
+                            <c:when test="${watermark.logoImage==null ||location.logoImage.trim().equals('')}">
+                                <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set value="/common/${watermark.logoImage}" var="logoImgSrc" />
+                            </c:otherwise>
+                        </c:choose>
+                        <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+
                         <p id="errorObj_locationLogo"  class="text-danger"></p>
+
                     </div>
+                    <div class="col-md-6">
+                        <label>Logo Name</label>
+                        <input class="form-control" value="${watermark.logoName}" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
+
+                    </div>
+
+
+
+
 
 
                     <div class="col-md-4">
                         <div class="form-group timepick">
                             <label>Placement</label><br>
                             <select id="e-placement" class="img_placement" name="img_placement">
-                                <option value="tl">Top Left</option>
-                                <option value="tc">Top Center</option>
-                                <option value="tr">Top Right</option>
-                                <option value="bl">Bottom Left</option>
-                                <option value="br">Bottom Right</option>
-                                <option value="bc">Bottom Center</option>
+                                <option value="tl" <c:if test="${watermark.placement.equals(Placement.tl) }"> selected </c:if>>Top Left</option>
+                                <option value="tc" <c:if test="${watermark.placement.equals(Placement.tc) }"> selected </c:if>>Top Center</option>
+                                <option value="tr" <c:if test="${watermark.placement.equals(Placement.tr) }"> selected </c:if>>Top Right</option>
+                                <option value="bl" <c:if test="${watermark.placement.equals(Placement.bl) }"> selected </c:if>>Bottom Left</option>
+                                <option value="br" <c:if test="${watermark.placement.equals(Placement.br) }"> selected </c:if>>Bottom Right</option>
+                                <option value="bc" <c:if test="${watermark.placement.equals(Placement.bc) }"> selected </c:if>>Bottom Center</option>
 
                             </select>
                         </div>
@@ -66,18 +85,18 @@
                         <div class="form-group timepick">
                             <label>Smallest Size</label><br>
                             <select id="e-size" class="img_font_size" name="img_font_size">
-                                <option value="thumb">Thumb</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="large">Large</option>
-                                <option value="x_large">X-Large</option>
+                                <option value="thumb" <c:if test="${watermark.size.equals(Size.thumb) }"> selected </c:if>>Thumb</option>
+                                <option value="small" <c:if test="${watermark.size.equals(Size.small) }"> selected </c:if>>Small</option>
+                                <option value="medium" <c:if test="${watermark.size.equals(Size.medium) }"> selected </c:if>>Medium</option>
+                                <option value="large" <c:if test="${watermark.size.equals(Size.large) }"> selected </c:if>>Large</option>
+                                <option value="x_large" <c:if test="${watermark.size.equals(Size.x_large) }"> selected </c:if>>X-Large</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label>Fade</label><br>
                         <div class="range-slider">
-                            <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="25" min="0" max="50">
+                            <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="${watermark.fade}" min="0" max="50">
                             <span class="range-slider__value">0</span>
                         </div>
                     </div>
@@ -85,37 +104,38 @@
 
 
                 </div>
-                <div class="url-tab panel-body" style="display:none;">
+
+                <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
-                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watemark">
+                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.logoName}" placeholder="New Watemark">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Watermark</label><br>
-                            <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="enter your text watermark">
+                            <input class="form-control" id="txt_wm_text" name="txt_wm_text" value="${watermark.watermarkText}" placeholder="enter your text watermark">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Font</label><br>
                             <select id="e1" class="txt_font" name="txt_font">
-                                <option value="1">Myriad Pro</option>
-                                <option value="2">Times New Roman</option>
-                                <option value="3">Roboto</option>
-                                <option value="4">Bebas Nueu</option>
-                                <option value="5">Aerial</option>
-                                <option value="6">Gothic Pro</option>
-                                <option value="7">Fira</option>
+                                <option value="1" <c:if test="${watermark.font==1}"> selected </c:if>>Myriad Pro</option>
+                                <option value="2" <c:if test="${watermark.font==2}"> selected </c:if>>Times New Roman</option>
+                                <option value="3" <c:if test="${watermark.font==3}"> selected </c:if>>Roboto</option>
+                                <option value="4" <c:if test="${watermark.font==4}"> selected </c:if>>Bebas Nueu</option>
+                                <option value="5" <c:if test="${watermark.font==5}"> selected </c:if>>Aerial</option>
+                                <option value="6" <c:if test="${watermark.font==6}"> selected </c:if>>Gothic Pro</option>
+                                <option value="7" <c:if test="${watermark.font==7}"> selected </c:if>>Fira</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Colors</label>
-                            <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
+                            <input class="jscolor form-control" id="txt_color" name="txt_color" value="${watermark.color}">
                         </div>
                     </div>
                 </div>
@@ -142,22 +162,10 @@
 
 
         <input type="hidden" id="venueLogoToken" value="" />
-        <!-- jQuery -->
-        <script src="<s:url value="/resources/js/jquery.js"/>"></script>
 
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
-        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
-
-        <!-- select2 js -->
-        <script src="<s:url value="/resources/js/select2.js"/>"></script>
-        <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-        <!-- image uploader script -->
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
-        <!-- image uploader script -->
+        <script src="<s:url value="/resources/js/select2.js"/>"></script>
+        <script src="<s:url value="/resources/js/jscolor.js"/>"></script>
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
@@ -171,7 +179,6 @@
                 var type=$('.wm_tab.active').attr("data-name");
                 var logoImgToken='';
                 var logoName='';
-
                 var size='';
                 var fade='';
                 var watermarkText='';
@@ -180,7 +187,7 @@
                 var color='';
 
                 if(type=="image"){
-                    logoImgToken= getVenueLogoToken();
+                    logoImgToken= getwatermarkLogoToken();
                     logoName=$("input[name=img_logo_name]").val();
                     placement=$(".img_placement").val();
                     size=$(".img_font_size").val();
@@ -215,9 +222,11 @@
                     fontId: fontId,
                     color: color
                 };
+
+                var id="${watermark.id}";
                 console.log(data)
                 $.ajax({
-                    url: BASEURL+"api/watermark/create",
+                    url: BASEURL+"api/watermark/update/"+id,
                     type: "POST",
                     data: data ,
                     traditional:true,
@@ -231,11 +240,24 @@
                         }
                     },
                     success: function(response) {
-                        alert("created successfully");
+                        alert("Updated successfully");
                         window.location = BASEURL+"admin/watermark/all";
                     }
                 });
             }
+
+
+            $(document).ready(function () {
+                if(${watermark.type.equals(WatermarkType.text)}){
+                    $("#wm_tab_text_btn").trigger("click")
+                }else{
+
+                    $("#wm_tab_image_btn").trigger("click")
+                }
+
+            })
+
+
         </script>
 
     </jsp:body>
