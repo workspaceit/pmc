@@ -1,7 +1,7 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%--<%@attribute name="header" fragment="true" %>--%>
 <%@attribute name="footer" fragment="true" %>
-<%@attribute name="scripts" fragment="true" %>
+<%@attribute name="developerScript" fragment="true" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
@@ -41,7 +41,7 @@
         <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/helper/navigation.js"/>"></script>
 
-        <jsp:invoke fragment="scripts"/>
+        <jsp:invoke fragment="developerScript"/>
         <script>
             var BASEURL = "<c:url value="/" />";
             try{

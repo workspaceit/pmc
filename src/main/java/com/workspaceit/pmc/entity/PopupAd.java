@@ -30,7 +30,6 @@ public class PopupAd {
     @Column(name = "type")
     private PopupAdType type;
 
-
     @Column(name = "duration")
     private int duration;
 
@@ -39,6 +38,10 @@ public class PopupAd {
 
     @Column(name = "video")
     private String video;
+
+
+    @Column(name = "video_type")
+    private String videoType;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,7 +57,7 @@ public class PopupAd {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "popup_ad_id", referencedColumnName = "id", nullable = true)
     Set<PopupBannerImage> popupBannerImages = new HashSet<PopupBannerImage>();
 
@@ -108,6 +111,14 @@ public class PopupAd {
         this.video = video;
     }
 
+    public String getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(String videoType) {
+        this.videoType = videoType;
+    }
+
     public Set<PopupBannerImage> getPopupBannerImages() {
         return popupBannerImages;
     }
@@ -140,4 +151,33 @@ public class PopupAd {
         this.createdBy = createdBy;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PopupAd popupAd = (PopupAd) o;
+        return (id == popupAd.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "PopupAd{" +
+                "id=" + id +
+                ", advertiserId=" + advertiserId +
+                ", type=" + type +
+                ", duration=" + duration +
+                ", expiryDate=" + expiryDate +
+                ", video='" + video + '\'' +
+                ", videoType='" + videoType + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdBy=" + createdBy +
+                ", popupBannerImages=" + popupBannerImages +
+                '}';
+    }
 }

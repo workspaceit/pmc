@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="slideShowBannerExpiryDate" type="text" class="form-control" />
                     <i class="fa fa-calendar"></i>
                 </div>
 
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="slideShowVideoExpiryDate" type="text" class="form-control" />
                     <i class="fa fa-calendar"></i>
                 </div>
                 <!-- <div class="" style="margin-left: auto;float:right;margin-right:5px;">
@@ -105,20 +105,20 @@
         </div>
         <div id="advSlideShowVideo"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload</span>
+                <span>Click here to upload video</span>
             </div>
             <p class="text-danger" id="errorObj_slideShowAdsVideoToken" style="display: block;"></p>
             <p class="text-danger" id="errorObj_advImg" style="display: block;"></p>
 
         </div>
         <div class="panel-footer clearfix">
-                              <span class="pull-left" style="font-weight: bold;">Duration:
-                               <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
-                                    <c:forEach var="duration" items="${durations}" >
-                                        <option value="${duration}">${duration}s</option>
-                                    </c:forEach>
-                              </select>
-                              </span>
+          <span class="pull-left" style="font-weight: bold;">Duration:
+               <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                    <c:forEach var="duration" items="${durations}" >
+                        <option value="${duration}">${duration}s</option>
+                    </c:forEach>
+              </select>
+          </span>
             <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>

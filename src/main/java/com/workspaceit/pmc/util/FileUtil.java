@@ -88,5 +88,11 @@ public class FileUtil {
 		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 		return newFilePath.getFileName().toString();
 	}
+	public File getTempFile(String filePath) throws IOException {
+
+		Path source = Paths.get(filePath);
+
+		return new File(source.toUri());
+	}
 
 }

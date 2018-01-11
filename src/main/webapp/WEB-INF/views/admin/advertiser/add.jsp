@@ -45,10 +45,10 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/advertiser-info.jsp" %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/gallery-ads.jsp"  %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/slideshow-adds.jsp"  %>
-                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/popup-ads.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/advertiser-info.jsp" %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/gallery-ads.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/slideshow-adds.jsp"  %>
+                            <%@  include file="/WEB-INF/views/admin/advertiser/partial/add/popup-ads.jsp"  %>
                         </div>
                     </div>
                 </div>

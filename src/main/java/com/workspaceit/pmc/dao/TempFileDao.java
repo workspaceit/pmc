@@ -15,34 +15,20 @@ public class TempFileDao extends BaseDao {
     }
 
     public TempFile getByToken(int token){
-        Session session = this.openSession();
+        Session session = this.getCurrentSession();
 
-        try{
-            return (TempFile)session.createQuery("FROM TempFile  WHERE token=:token")
-                    .setParameter("token",token)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null){
-                session.close();
-            }
-
-        }
+        return (TempFile)session.createQuery("FROM TempFile  WHERE token=:token")
+                .setParameter("token",token)
+                .setMaxResults(1)
+                .uniqueResult();
 
     }
     public List<TempFile> getByToken(List<Integer> tokenList){
-        Session session = this.openSession();
-        try{
-            if(tokenList!=null && tokenList.size()>0){
-                return session.createQuery("FROM TempFile  WHERE token in :tokenList ")
-                        .setParameter("tokenList",tokenList)
-                        .getResultList();
-            }
-        }finally {
-            if(session!=null){
-                session.close();
-            }
-
+        Session session =  this.getCurrentSession();
+        if(tokenList!=null && tokenList.size()>0){
+            return session.createQuery("FROM TempFile  WHERE token in :tokenList ")
+                    .setParameter("tokenList",tokenList)
+                    .getResultList();
         }
 
         return null;

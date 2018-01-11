@@ -150,6 +150,24 @@ $(document).ready(function(){
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
+
+    /*Slide show*/
+
+
+    $('#slideShowBannerExpiryDate').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    },function(start, end, label) {
+        /*var years = moment().diff(start, 'years');
+         alert("You are " + years + " years old.");*/
+    });
+    $('#slideShowVideoExpiryDate').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    },function(start, end, label) {
+        /*var years = moment().diff(start, 'years');
+         alert("You are " + years + " years old.");*/
+    });
     /*Popup ads*/
     $('#smsExpiryDate').daterangepicker({
         singleDatePicker: true,
@@ -440,12 +458,17 @@ function getSlideShowAdsData(prefix){
     var slideShowAdsVideoToken = getToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
     var slideShowBannerDuration = $("#slideShowBannerDuration").val();
     var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
+    var videoExpiryDate  =  $("#slideShowVideoExpiryDate").val();
+    var bannerExpiryDate =  $("#slideShowBannerExpiryDate").val();
 
     var data = {};
     data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
     data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
     data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
     data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    data[prefix+"videoExpiryDate"] = videoExpiryDate;
+    data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
+
     return data;
 }
 function validateSlideShowAds(){

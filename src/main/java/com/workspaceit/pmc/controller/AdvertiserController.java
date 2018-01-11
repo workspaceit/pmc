@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.constant.advertisement.PopupAdType;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.service.*;
@@ -145,13 +146,18 @@ public class AdvertiserController {
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
-        PopupAd popupAd  = this.popUpAdsService.getByAdvertiserId(advertiserId);
+        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.SMS);
+        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.EMAIL);
+
+        System.out.println(popupAdSms);
+        System.out.println(popupAdEmail);
 
         ModelAndView model = new ModelAndView("admin/advertiser/edit");
         model.addObject("advertiser",advertiser);
         model.addObject("galleryAd",galleryAd);
         model.addObject("slideshowAd",slideshowAd);
-        model.addObject("popupAd",popupAd);
+        model.addObject("popupAdSms",popupAdSms);
+        model.addObject("popupAdEmail",popupAdEmail);
 
         model.addObject("events",events);
         model.addObject("locations",locations);

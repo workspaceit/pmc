@@ -1,4 +1,5 @@
 package com.workspaceit.pmc.service;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -89,5 +90,21 @@ public class FileService {
 			return fileName;
 		}
 		return fileName;
+	}
+	@Transactional
+	public String getMimeTypeByToken(Integer token){
+		TempFile tempFile = tempFileDao.getByToken(token);
+		String fileMimeType = "";
+		if(tempFile==null){
+			return fileMimeType;
+		}
+		try {
+			File file = this.fileUtil.getTempFile(env.getTmpFilePath()+"/"+tempFile.getPath());
+			fileMimeType =  FileHelper.getMimeType(file);
+		} catch (IOException e) {
+			return fileMimeType;
+		}
+		return fileMimeType;
+
 	}
 }
