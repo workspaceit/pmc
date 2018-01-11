@@ -103,7 +103,6 @@
         <input type="hidden" id="slideshowAdId" value="${slideshowAd.id}" />
         <input type="hidden" id="popupSmsAdId" value="${popupAdSms.id}" />
         <input type="hidden" id="popupEmailAdId" value="${popupAdEmail.id}" />
-
     </jsp:body>
 
 </t:genericpage>

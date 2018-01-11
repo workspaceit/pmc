@@ -9,35 +9,18 @@
             <div class="col-md-6 col-xs-6 pull-right">
 
                 <div class="" style="margin-left: auto;float:right;">
-                    <!-- <div class="onoffswitch3">
-                        <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch5" checked>
-                        <label class="onoffswitch3-label" for="myonoffswitch5">
-                            <span class="onoffswitch3-inner">
-                                <span class="onoffswitch3-active"><span class="onoffswitch3-switch"><i class="fa fa-repeat"></i>&nbsp;Rotate</span></span>
-                                <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch"><i class="fa fa-minus"></i>&nbsp;Static</span></span>
-                            </span>
-                        </label>
-                    </div> -->
+
                     <div class="btn-group">
                         <button type="button" class="active btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
                         <button type="button" class="btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="slideShowBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${slideshowAd.bannerExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>"/>
                     <i class="fa fa-calendar"></i>
                 </div>
 
-                <!-- <div class="" style="margin-left: auto;float:right;margin-right:5px;">
-                <label style="font-size: 13px;font-weight: 600">Duration : </label>
-                <select class="form-control" style="padding: 0px 12px 0px 12px;height: 28px;width: 75px;display: inline;">
 
-                  <option value="">1s</option>
-                  <option value="">2s</option>
-                  <option value="">3s</option>
-                  <option value="">4s</option>
-                </select>
-                </div> -->
             </div>
             <div class="btn-group pull-right">
 
@@ -46,6 +29,10 @@
         <c:forEach var="slideshowBannerImage" items="${slideshowAd.slideshowBannerImages}" >
             <div>
                 <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${slideshowBannerImage.image}" class="img-thumbnail" width="150">
+                <br>
+                    <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
+                <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${slideshowBannerImage.id})" >Delete</a>
+
             </div>
         </c:forEach>
 
@@ -60,8 +47,14 @@
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
                                 <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+
                                     <c:forEach var="duration" items="${durations}" >
-                                         <option value="${duration}">${duration}s</option>
+                                        <c:set var="durationOptions" value=""></c:set>
+                                        <c:if test="${slideshowAd.bannerDuration == duration}">
+                                            <c:set var="durationOptions" value="selected=\"selected\""></c:set>
+                                        </c:if>
+                                        <option value="${duration}" ${durationOptions} >${duration}s</option>
+                                        <c:set var="durationOptions" value=""></c:set>
                                     </c:forEach>
                               </select>
                               </span>
@@ -77,34 +70,15 @@
             <div class="col-md-6 col-xs-6 pull-right">
 
                 <div class="" style="margin-left: auto;float:right;">
-                    <!-- <div class="onoffswitch3">
-                        <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch6" checked>
-                        <label class="onoffswitch3-label" for="myonoffswitch6">
-                            <span class="onoffswitch3-inner">
-                                <span class="onoffswitch3-active"><span class="onoffswitch3-switch"><i class="fa fa-repeat"></i>&nbsp;Rotate</span></span>
-                                <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch"><i class="fa fa-minus"></i>&nbsp;Static</span></span>
-                            </span>
-                        </label>
-                    </div> -->
                     <div class="btn-group">
                         <button type="button" class="active btn btn-default btn-switch" id="regi8"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
                         <button type="button" class="btn btn-default btn-switch" id="regi9"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input type="text" class="form-control" name="startdate" />
+                    <input id="slideShowVideoExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${slideshowAd.videoExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>"/>
                     <i class="fa fa-calendar"></i>
                 </div>
-                <!-- <div class="" style="margin-left: auto;float:right;margin-right:5px;">
-                <label style="font-size: 13px;font-weight: 600">Duration : </label>
-                <select class="form-control" style="padding: 0px 12px 0px 12px;height: 28px;width: 75px;display: inline;">
-
-                  <option value="">1s</option>
-                  <option value="">2s</option>
-                  <option value="">3s</option>
-                  <option value="">4s</option>
-                </select>
-                </div> -->
             </div>
             <div class="btn-group pull-right">
 
@@ -128,8 +102,13 @@
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
                                <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+
                                     <c:forEach var="duration" items="${durations}" >
-                                        <option value="${duration}">${duration}s</option>
+                                        <c:set var="durationOptions" value=""></c:set>
+                                        <c:if test="${slideshowAd.videoDuration == duration}">
+                                            <c:set var="durationOptions" value="selected=\"selected\""></c:set>
+                                        </c:if>
+                                        <option value="${duration}" ${durationOptions} >${duration}s</option>
                                     </c:forEach>
                               </select>
                               </span>

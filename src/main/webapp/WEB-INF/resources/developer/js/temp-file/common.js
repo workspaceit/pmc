@@ -4,8 +4,12 @@
 function TempFileTokenStorage () {
     this.keyPrefix = "PMC_TOKEN_STORAGE";
     this.storageTypeStatics ={ls:"localStorage",hhi:"htmlHiddenInput"};
-
-    this.storageType = (typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
+        /**
+         * Using html hidden field
+         * Local storage keeps value until browser closed
+         * need some storage which keep value until page refresh
+        * */
+    this.storageType = this.storageTypeStatics.hhi; //(typeof(Storage) !== "undefined")?this.storageTypeStatics.ls:this.storageTypeStatics.hhi;
     this.occupy = function(key) {
         switch(this.storageType){
             case this.storageTypeStatics.hhi:
@@ -25,7 +29,7 @@ function TempFileTokenStorage () {
         $("body").append(keyElem);
     };
     this._storeInLocalStorage=function(key,val) {
-        localStorage.setItem(key, val);
+        sessionStorage.setItem(key, val);
     };
     this._storeInHtmlElement=function(key,val) {
         if($("#"+key).length==0){
@@ -43,7 +47,7 @@ function TempFileTokenStorage () {
         }
     };
     this._emptyWebStorage=function(key){
-        localStorage.setItem(key,"");
+        sessionStorage.setItem(key,"");
     };
     this.emptyHtmlStorage=function(key){
         $("#"+key).val("");
@@ -66,7 +70,7 @@ function TempFileTokenStorage () {
         }
     };
     this._getFromWebStorage=function(key){
-        return  localStorage.getItem(key);
+        return  sessionStorage.getItem(key);
     };
     this._getFromHtmlInputField=function(key){
         var token = "";

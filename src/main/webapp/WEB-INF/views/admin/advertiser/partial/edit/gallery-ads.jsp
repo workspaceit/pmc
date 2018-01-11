@@ -4,10 +4,6 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Logo</h4>
-                    <%--<div>
-                        <button type="button" class="btn btn-default active">File</button>
-                        <button type="button" class="btn btn-default">URL</button>
-                    </div>--%>
                 </div>
                 <div>
                     <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${galleryAd.logo}"/>" class="img-thumbnail" width="150">
@@ -15,7 +11,7 @@
 
                 <div id="advLogo"  class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <span>Change logo</span>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_logoToken"></p>
@@ -42,10 +38,11 @@
                 <div>
                     <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${galleryAd.backgroundImage}"/>" class="img-thumbnail" width="150">
                 </div>
+
                 <div id="advBackgroundImage"  class="panel-body" >
 
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <span>Change background</span>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
@@ -73,7 +70,7 @@
 
                         </div>
                         <div class="date-small pull-right">
-                            <input id="topBannerExpiryDate" type="text" class="form-control"  />
+                            <input id="topBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${galleryAd.topBannerExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>" />
                             <i class="fa fa-calendar"></i>
                         </div>
                     </div>
@@ -82,11 +79,15 @@
                 </div>
                 <c:forEach var="adTopBanner" items="${galleryAd.adsTopBanners}" >
                     <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${adTopBanner.image}"/>" class="img-thumbnail" width="150">                    </div>
+                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${adTopBanner.image}"/>" class="img-thumbnail" width="150">
+                        <br>
+                            <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${adTopBanner.id})" >Delete</a>
+                    </div>
                 </c:forEach>
                 <div id="advTopBannerImage"  class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <span>Add image</span>
 
                     </div>
                 </div>
@@ -120,22 +121,23 @@
 
                         </div>
                         <div class="date-small pull-right">
-                            <input id="bottomBannerExpiryDate" type="text" class="form-control" />
+                            <input id="bottomBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${galleryAd.bottomBannerExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>" />
                             <i class="fa fa-calendar"></i>
                         </div>
                     </div>
 
-
-
                 </div>
                 <c:forEach var="bottomBanner" items="${galleryAd.bottomBanners}" >
                     <div>
-                        <img id="profilePic" onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${bottomBanner.image}" />" class="img-thumbnail" width="150">
+                        <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${bottomBanner.image}" />" class="img-thumbnail" width="150">
+                        <br>
+                            <%--ID_KEY._GALLERY_BOTTOM_BANNER is global vaiable from update.js --%>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${bottomBanner.id})" >Delete</a>
                     </div>
                 </c:forEach>
                 <div id="advBottomBannerImage"   class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <span>Add image</span>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>

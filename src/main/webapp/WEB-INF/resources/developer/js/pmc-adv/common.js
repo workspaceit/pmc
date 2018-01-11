@@ -114,7 +114,7 @@ $(document).ready(function(){
     var runtimeEndsStartDate = ( $('#runtimeEnds').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#runtimeEnds').val();
     $('#runtimeStarts').daterangepicker({
         locale: {
-            format: 'DD/MM/YYYY'
+            format: 'MM/DD/YYYY'
         },
         singleDatePicker: true,
         showDropdowns: true,
@@ -126,7 +126,7 @@ $(document).ready(function(){
 
     $('#runtimeEnds').daterangepicker({
         locale: {
-            format: 'DD/MM/YYYY'
+            format: 'MM/DD/YYYY'
         },
         singleDatePicker: true,
         showDropdowns: true,
@@ -136,49 +136,76 @@ $(document).ready(function(){
          alert("You are " + years + " years old.");*/
     });
     /**Gallery ads Date picker*/
+    var topBannerExpiryDate = ( $('#topBannerExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#topBannerExpiryDate').val();
+    var bottomBannerExpiryDate = ( $('#bottomBannerExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#bottomBannerExpiryDate').val();
     $('#topBannerExpiryDate').daterangepicker({
+        locale: {
+            format: 'MM/DD/YYYY'
+        },
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:topBannerExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
     $('#bottomBannerExpiryDate').daterangepicker({
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:bottomBannerExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
 
     /*Slide show*/
-
+    var slideShowBannerExpiryDate = ( $('#slideShowBannerExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#slideShowBannerExpiryDate').val();
+    var slideShowVideoExpiryDate= ( $('#slideShowVideoExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#slideShowVideoExpiryDate').val();
 
     $('#slideShowBannerExpiryDate').daterangepicker({
+        locale: {
+            format: 'MM/DD/YYYY'
+        },
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:slideShowBannerExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
     $('#slideShowVideoExpiryDate').daterangepicker({
+        locale: {
+            format: 'MM/DD/YYYY'
+        },
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:slideShowVideoExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
     /*Popup ads*/
+    var smsExpiryDate = ( $('#smsExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#smsExpiryDate').val();
+    var emailExpiryDate = ( $('#emailExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#emailExpiryDate').val();
+
     $('#smsExpiryDate').daterangepicker({
+        locale: {
+            format: 'MM/DD/YYYY'
+        },
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:smsExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
     $('#emailExpiryDate').daterangepicker({
+        locale: {
+            format: 'MM/DD/YYYY'
+        },
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,
+        startDate:emailExpiryDate
     },function(start, end, label) {
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/

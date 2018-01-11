@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input id="smsExpiryDate" type="text" class="form-control"  />
+                    <input id="smsExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${popupAdSms.expiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>" />
                     <i class="fa fa-calendar"></i>
                 </div>
 
@@ -26,7 +26,15 @@
         </div>
 
         <c:forEach var="popupBannerImage" items="${popupAdSms.popupBannerImages}" >
-            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${popupBannerImage.image}" class="img-thumbnail" width="150">
+            <div>
+                <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${popupBannerImage.image}" class="img-thumbnail" width="150">
+
+                <br>
+                    <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
+                <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${popupBannerImage.id})" >Delete</a>
+
+            </div>
+
         </c:forEach>
         <div id="advSmsPopUpBanner"  class="panel-body" >
             <div class="dz-default dz-message">
@@ -75,7 +83,7 @@
                     </div>
                 </div>
                 <div class="date-small pull-right">
-                    <input id="emailExpiryDate" type="text" class="form-control" name="" />
+                    <input id="emailExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${popupAdEmail.expiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>" />
                     <i class="fa fa-calendar"></i>
                 </div>
             </div>
@@ -84,7 +92,14 @@
             </div>
         </div>
         <c:forEach var="popupBannerImage" items="${popupAdEmail.popupBannerImages}" >
-            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${popupBannerImage.image}" class="img-thumbnail" width="150">
+            <div>
+                <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${popupBannerImage.image}" class="img-thumbnail" width="150">
+                <br>
+                    <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
+                <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${popupBannerImage.id})" >Delete</a>
+
+            </div>
+
         </c:forEach>
         <div id="advEmailPopUpBanner"  class="panel-body" >
             <div class="dz-default dz-message">

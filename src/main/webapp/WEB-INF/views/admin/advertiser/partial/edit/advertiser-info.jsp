@@ -72,9 +72,12 @@
 
                         </div>
                     </div>
-                    <c:forEach var="otherImages" items="${advertiser.otherImages}" >
+                    <c:forEach var="otherImage" items="${advertiser.otherImages}" >
                         <div>
-                            <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${otherImages.image}" />" class="img-thumbnail" width="150">
+                            <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${otherImage.image}" />" class="img-thumbnail" width="150">
+                            <br>
+                            <%--ID_KEY._ADV_OTHER_IMAGE is global vaiable from update.js --%>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" >Delete</a>
                         </div>
                     </c:forEach>
                     <div id="advertiserOtherImages"  class="panel-body" >
@@ -100,13 +103,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input name="runtimeStarts" id="runtimeStarts" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeStarts}" pattern="dd/MM/yyyy"></fmt:formatDate>">
+                        <input name="runtimeStarts" id="runtimeStarts" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeStarts}" pattern="MM/dd/yyyy"></fmt:formatDate>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>End Date</label>
-                        <input name="runtimeEnds" id="runtimeEnds" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeEnds}" pattern="dd/MM/yyyy"></fmt:formatDate>">
+                        <input name="runtimeEnds" id="runtimeEnds" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeEnds}" pattern="MM/dd/yyyy"></fmt:formatDate>">
                     </div>
                 </div>
             </div>
