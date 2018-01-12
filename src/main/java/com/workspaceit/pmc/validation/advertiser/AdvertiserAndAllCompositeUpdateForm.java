@@ -1,0 +1,64 @@
+package com.workspaceit.pmc.validation.advertiser;
+
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+/**
+ * Created by mi_rafi on 1/8/18.
+ */
+public class AdvertiserAndAllCompositeUpdateForm {
+    @NotNull
+    @Valid
+    AdvertiserUpdateForm advertiser;
+
+    @NotNull
+    @Valid
+    GalleryAdsUpdateForm galleryAds;
+
+    @NotNull
+    @Valid
+    PopupAdsUpdateForm popupAds;
+
+    @NotNull
+    @Valid
+    SlideShowAdsUpdateForm slideShowAds;
+
+    public AdvertiserUpdateForm getAdvertiser() {
+        return advertiser;
+    }
+
+    public void setAdvertiser(AdvertiserUpdateForm advertiser) {
+        this.advertiser = advertiser;
+    }
+
+    public GalleryAdsUpdateForm getGalleryAds() {
+        return galleryAds;
+    }
+
+    public void setGalleryAds(GalleryAdsUpdateForm galleryAds) {
+        this.galleryAds = galleryAds;
+    }
+
+    public PopupAdsUpdateForm getPopupAds() {
+        return popupAds;
+    }
+
+    public void setPopupAds(PopupAdsUpdateForm popupAds) {
+        this.popupAds = popupAds;
+    }
+
+    public SlideShowAdsUpdateForm getSlideShowAds() {
+        return slideShowAds;
+    }
+
+    public void setSlideShowAds(SlideShowAdsUpdateForm slideShowAds) {
+        this.slideShowAds = slideShowAds;
+    }
+}

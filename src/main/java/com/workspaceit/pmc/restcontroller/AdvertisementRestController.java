@@ -49,6 +49,7 @@ public class AdvertisementRestController {
     public void setSlideShowAdsValidator(SlideShowAdsValidator slideShowAdsValidator) {
         this.slideShowAdsValidator = slideShowAdsValidator;
     }
+
     @Autowired
     public void setPopupAdsValidator(PopUpAdsValidator popupAdsValidator) {
         this.popupAdsValidator = popupAdsValidator;
@@ -160,6 +161,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<?> galleryCreate(@PathVariable("id") int id){
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.galleryAdService.getById(id));
     }
 
@@ -247,6 +249,5 @@ public class AdvertisementRestController {
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
-
 
 }

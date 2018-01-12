@@ -4,6 +4,7 @@ import com.workspaceit.pmc.dao.AdvertisersOtherImageDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.AdvertisersOtherImage;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,15 @@ public class AdvertisersOtherImageService {
 
         return advertisersOtherImages;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteById(Advertiser advertiser, Integer[] ids){
+        /**
+         * Implementation is not done of
+         * deleting physical image by using @TransactionalEventListener
+         * */
+        List<AdvertisersOtherImage> advertisersOtherImages = this.getById(advertiser.getId(),ids);
+        this.delete(advertisersOtherImages);
+    }
     public void create(List<AdvertisersOtherImage> advertisersOtherImages){
         for(AdvertisersOtherImage advertisersOtherImage:advertisersOtherImages){
             this.create(advertisersOtherImage);
@@ -56,5 +66,16 @@ public class AdvertisersOtherImageService {
     }
     public void create(AdvertisersOtherImage advertisersOtherImage){
         this.advertisersOtherImageDao.insert(advertisersOtherImage);
+    }
+    public List<AdvertisersOtherImage> getById(int advertiserId,Integer[] ids){
+       return this.advertisersOtherImageDao.getById(advertiserId,ids);
+    }
+    public void delete(List<AdvertisersOtherImage> advertisersOtherImages){
+        for(AdvertisersOtherImage advertisersOtherImage:advertisersOtherImages){
+            this.delete(advertisersOtherImage);
+        }
+    }
+    public void delete(AdvertisersOtherImage advertisersOtherImage){
+        this.advertisersOtherImageDao.delete(advertisersOtherImage);
     }
 }

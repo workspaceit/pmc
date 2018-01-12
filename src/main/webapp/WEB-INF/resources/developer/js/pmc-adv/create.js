@@ -16,7 +16,7 @@ function validateAll(){
 
 
 /*Create advertiser and other adds */
-function createAdvertiser(){
+function createAdvertiser(fnSuccess){
     var data = {};
     var advertiserData = getAdvertiserInfoData("advertiser");
     var galleryAdsData =getGalleryAddsData("galleryAds");
@@ -47,8 +47,9 @@ function createAdvertiser(){
             }
         },
         success: function(response) {
-            notifyUser("advertiserInfoErrorCount",response,false);
-            advertiserAfterSaveAction(globalBtnAction);
+            if(typeof fnSuccess=="function"){
+                fnSuccess(response);
+            }
         }
     });
 }

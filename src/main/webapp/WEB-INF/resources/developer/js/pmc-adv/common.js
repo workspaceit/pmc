@@ -287,19 +287,17 @@ function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess
     return advImgDropZone;
 }
 
-function initValidationForUpdate(btnAction,submitAction){
-    globalBtnAction=btnAction;
-    globalSubmitAction = submitAction;
+function initValidationForUpdate(btnAction,submitType){
+    globalBtnAction = btnAction;
     UnBindErrors("errorObj_");
     errorFound = false;
-    submitAdvertiserData(true,1);
+    submitAdvertiserData(submitType,true,1);
 }
-function initSubmitAdvertiserData(btnAction,submitAction){
-    globalBtnAction=btnAction;
-    globalSubmitAction = submitAction;
+function initSubmitAdvertiserData(btnAction,submitType){
+    globalBtnAction = btnAction;
     UnBindErrors("errorObj_");
     errorFound = false;
-    submitAdvertiserData(false,1);
+    submitAdvertiserData(submitType,false,1);
 }
 function advertiserAfterSaveAction(btnAction){
     var urlStr ="";
@@ -319,62 +317,67 @@ function advertiserAfterSaveAction(btnAction){
     }
     window.location =BASEURL+urlStr;
 }
-function submitAdvertiserData(forUpdate,marker){
+function submitAdvertiserData(submitType,forUpdate,marker){
     switch (marker){
         case 1:
             validateAdvertiser(function(response){
                 notifyUser("advertiserInfoErrorCount",response,false);
-                submitAdvertiserData(forUpdate,2);
+                submitAdvertiserData(submitType,forUpdate,2);
             },function(response){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("advertiserInfoErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(forUpdate,2);
+                submitAdvertiserData(submitType,forUpdate,2);
             });
             break;
         case 2:
             validateGalleryAdds(forUpdate,function(response){
                 notifyUser("galleryAdsErrorCount",response,false);
-                submitAdvertiserData(forUpdate,3);
+                submitAdvertiserData(submitType,forUpdate,3);
             },function(response){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("galleryAdsErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(forUpdate,3);
+                submitAdvertiserData(submitType,forUpdate,3);
             });
             break;
         case 3:
             validateSlideShowAds(forUpdate,function(response){
                 notifyUser("slideShowAdsErrorCount",response,false);
-                submitAdvertiserData(forUpdate,4);
+                submitAdvertiserData(submitType,forUpdate,4);
             },function(response){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("slideShowAdsErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(forUpdate,4);
+                submitAdvertiserData(submitType,forUpdate,4);
             });
             break;
         case 4:
             validatePopUpAdsData(forUpdate,function(response){
                 notifyUser("popUpAdsErrorCount",response,false);
-                submitAdvertiserData(forUpdate,5);
+                submitAdvertiserData(submitType,forUpdate,5);
             },function(response){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("popUpAdsErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(forUpdate,5);
+                submitAdvertiserData(submitType,forUpdate,5);
             });
             break;
         case 5:
-            if(!errorFound)
-                submitCreateOrUpdate();
+            if(!errorFound){
+                submitCreateOrUpdate(submitType);
+            }
+
             break;
     }
 }
-function submitCreateOrUpdate(){
-       switch (globalSubmitAction){
+function submitCreateOrUpdate(btnAction){
+       switch (btnAction){
            case "create":
-               createAdvertiser();
+               createAdvertiser(function(response){
+                   notifyUser("advertiserInfoErrorCount",response,false);
+                   advertiserAfterSaveAction(globalBtnAction);
+               });
                break;
            case "update":
                updateAdvertiser();

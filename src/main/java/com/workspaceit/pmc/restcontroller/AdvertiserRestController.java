@@ -4,11 +4,13 @@ import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.popup.PopUpAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsValidator;
+import com.workspaceit.pmc.validation.advertiser.AdvertiserAndAllCompositeUpdateForm;
 import com.workspaceit.pmc.validation.advertiser.AdvertiserForm;
 import com.workspaceit.pmc.validation.advertiser.AdvertiserValidator;
 import com.workspaceit.pmc.validation.advertiser.AdvertiserAndAllCompositeForm;
@@ -139,7 +141,7 @@ public class AdvertiserRestController {
     }
     @Secured({UserRole._SUPER_ADMIN})
     @PostMapping(value = "/create-all")
-    public ResponseEntity<?> galleryCreate(Authentication authentication, @Valid AdvertiserAndAllCompositeForm advertiserAndAllCompositeForm, BindingResult bindingResult){
+    public ResponseEntity<?> advertiserCreate(Authentication authentication, @Valid AdvertiserAndAllCompositeForm advertiserAndAllCompositeForm, BindingResult bindingResult){
         /**
          * Validation should be done separately from Client before submitting
          * Below Validation not meant for client end error showing
@@ -186,6 +188,55 @@ public class AdvertiserRestController {
         this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
         this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
         this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");
+    }
+
+    @PostMapping(value = "/update-all/{id}")
+    public ResponseEntity<?> advertiserUpdate(@PathVariable("id") int id,
+                                              Authentication authentication,
+                                              @Valid AdvertiserAndAllCompositeUpdateForm advertiserAndAllCompositeForm,
+                                              BindingResult bindingResult){
+        /**
+         * Validation should be done separately from Client before submitting
+         * Below Validation not meant for client end error showing
+         * and it would be difficult to show
+         * */
+
+        /**
+         * Basic Validation and Business logic Validation
+         * */
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        /**
+         * Basic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+
+        this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);
+        this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
+        this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
+        this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        try {
+            Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
+        } catch (EntityNotFound entityNotFound) {
+
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.setMsg("id",entityNotFound.getMessage()).getFormError());
+
+        }
+
+//        this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
+//        this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
+//        this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");
     }
 }

@@ -29,8 +29,9 @@ public class ServiceResponse {
     public Map<String,Object> getMsg(){
         return this.msgMap;
     }
-    public void setMsg(String param,Object val){
+    public ServiceResponse setMsg(String param,Object val){
         this.msgMap.put(param,val);
+        return this;
     }
     public boolean hasErrors(){
         return this.formError.size()>0;

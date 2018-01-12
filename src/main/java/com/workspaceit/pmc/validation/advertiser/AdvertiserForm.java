@@ -1,12 +1,5 @@
 package com.workspaceit.pmc.validation.advertiser;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -15,47 +8,20 @@ import java.util.Date;
  */
 public class AdvertiserForm {
 
-    @NotBlank(message = "Name is required")
-    @Length(max = 50,message = "Value too large")
-    private String name;
-
-    @NotBlank(message = "Address is required")
-    @Length(max = 50,message = "Value too large")
-    private String address;
-
-    @NotNull(message = "City Id is required")
-    private Integer cityId;
-
-    @NotNull(message = "State required")
-    private Integer stateId;
-
-    @NotBlank(message = "Zip is required")
-    private String zip;
-
-    @NotBlank(message = "Phone is required")
-    @Length(max = 50,message = "Value too large")
-    private String phone;
-
-    @NotBlank(message = "Website is required")
-    @Length(max = 100,message = "Value too large")
-    private String website;
-
-    private Integer[] otherImage;
-
-    @NotNull(message = "Start date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date runtimeStarts;
-
-    @NotNull(message = "End date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date runtimeEnds;
-
-
-    private Integer[] locationIds;
-    private Integer[] eventIds;
-
-    private Boolean isAllLocationSelected =false;
-    private Boolean isAllEventSelected =false;
+    protected String name;
+    protected String address;
+    protected Integer cityId;
+    protected Integer stateId;
+    protected String zip;
+    protected String phone;
+    protected String website;
+    protected Integer[] otherImage;
+    protected Date runtimeStarts;
+    protected Date runtimeEnds;
+    protected Integer[] locationIds;
+    protected Integer[] eventIds;
+    protected Boolean isAllLocationSelected =false;
+    protected Boolean isAllEventSelected =false;
 
     public String getName() {
         return name;

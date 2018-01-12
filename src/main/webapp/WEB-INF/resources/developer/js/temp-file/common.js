@@ -1,5 +1,6 @@
 /**
  * Created by mi_rafi on 1/4/18.
+ * Store tokens and id
  */
 function TempFileTokenStorage () {
     this.keyPrefix = "PMC_TOKEN_STORAGE";
