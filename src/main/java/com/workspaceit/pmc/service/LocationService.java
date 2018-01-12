@@ -60,10 +60,11 @@ public class LocationService {
         return this.locationDao.getAll(ids);
     }
 
+    @Transactional
     public Location getById(int id){
         return this.locationDao.getById(id);
     }
-
+    @Transactional
     public Location getLocation(int id)throws EntityNotFound{
         Location location = this.locationDao.getById(id);
         if(location==null){
@@ -101,9 +102,11 @@ public class LocationService {
 
         return location;
     }
+    @Transactional(rollbackFor = Exception.class)
     public void create(Location location){
         this.locationDao.insert(location);
     }
+    @Transactional(rollbackFor = Exception.class)
     public Location update(int id,LocationForm locationForm,Admin admin)throws EntityNotFound{
         Location location = this.getLocation(id);
         Integer logoImgToken = locationForm.getLogoImgToken();
@@ -231,6 +234,7 @@ public class LocationService {
 
 
     }
+    @Transactional(rollbackFor = Exception.class)
     public void update(Location location){
         this.locationDao.update(location);
     }

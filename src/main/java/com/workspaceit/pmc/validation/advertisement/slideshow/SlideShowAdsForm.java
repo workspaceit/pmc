@@ -10,25 +10,22 @@ import java.util.Date;
  */
 public class SlideShowAdsForm {
 
+    private Integer id;
     private Integer advertiserId;
-
-    @NotNull(message = "Slide Show Ads Banner required")
     private Integer[] slideShowAdsBannerTokens;
-
-    @NotNull(message = "Slide Show Ads Video required")
     private Integer slideShowAdsVideoToken;
-
-    @NotNull(message = "Video Duration required")
     private Integer slideShowVideoDuration;
-
-    @NotNull(message = "Banner Duration required")
     private Integer slideShowBannerDuration;
-
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date videoExpiryDate;
-
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date bannerExpiryDate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getAdvertiserId() {
         return advertiserId;

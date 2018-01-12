@@ -1,8 +1,8 @@
 package com.workspaceit.pmc.validation.advertiser;
 
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
-import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
-import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,15 +17,15 @@ public class AdvertiserAndAllCompositeForm {
 
     @NotNull
     @Valid
-    GalleryAdsForm galleryAds;
+    GalleryAdsCreateForm galleryAds;
 
     @NotNull
     @Valid
-    PopupAdsForm popupAds;
+    PopupAdsCreateForm popupAds;
 
     @NotNull
     @Valid
-    SlideShowAdsForm slideShowAds;
+    SlideShowAdsCreateForm slideShowAds;
 
     public AdvertiserForm getAdvertiser() {
         return advertiser;
@@ -35,27 +35,27 @@ public class AdvertiserAndAllCompositeForm {
         this.advertiser = advertiser;
     }
 
-    public GalleryAdsForm getGalleryAds() {
+    public GalleryAdsCreateForm getGalleryAds() {
         return galleryAds;
     }
 
-    public void setGalleryAds(GalleryAdsForm galleryAds) {
+    public void setGalleryAds(GalleryAdsCreateForm galleryAds) {
         this.galleryAds = galleryAds;
     }
 
-    public PopupAdsForm getPopupAds() {
+    public PopupAdsCreateForm getPopupAds() {
         return popupAds;
     }
 
-    public void setPopupAds(PopupAdsForm popupAds) {
+    public void setPopupAds(PopupAdsCreateForm popupAds) {
         this.popupAds = popupAds;
     }
 
-    public SlideShowAdsForm getSlideShowAds() {
+    public SlideShowAdsCreateForm getSlideShowAds() {
         return slideShowAds;
     }
 
-    public void setSlideShowAds(SlideShowAdsForm slideShowAds) {
+    public void setSlideShowAds(SlideShowAdsCreateForm slideShowAds) {
         this.slideShowAds = slideShowAds;
     }
 }

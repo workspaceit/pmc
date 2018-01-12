@@ -33,9 +33,9 @@
                 <h3 class="uni-header"><span>Create Advertiser</span></h3>
                 <!-- <h3 class="title-top text-uppercase"><span>Create Advertiser</span></h3> -->
                 <div class="btn-container-top">
-                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save','update')">Save</button>
-                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_close','update')">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
+                    <button class="btn btn-action-top" onclick="initValidationForUpdate('save','update')">Save</button>
+                    <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_close','update')">Save&nbsp;&&nbsp;Close</button>
+                    <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
                     <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
                 </div>
 

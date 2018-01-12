@@ -287,12 +287,19 @@ function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess
     return advImgDropZone;
 }
 
+function initValidationForUpdate(btnAction,submitAction){
+    globalBtnAction=btnAction;
+    globalSubmitAction = submitAction;
+    UnBindErrors("errorObj_");
+    errorFound = false;
+    submitAdvertiserData(true,1);
+}
 function initSubmitAdvertiserData(btnAction,submitAction){
     globalBtnAction=btnAction;
     globalSubmitAction = submitAction;
     UnBindErrors("errorObj_");
     errorFound = false;
-    submitAdvertiserData(1);
+    submitAdvertiserData(false,1);
 }
 function advertiserAfterSaveAction(btnAction){
     var urlStr ="";
@@ -312,19 +319,51 @@ function advertiserAfterSaveAction(btnAction){
     }
     window.location =BASEURL+urlStr;
 }
-function submitAdvertiserData(marker){
+function submitAdvertiserData(forUpdate,marker){
     switch (marker){
         case 1:
-            validateAdvertiser();
+            validateAdvertiser(function(response){
+                notifyUser("advertiserInfoErrorCount",response,false);
+                submitAdvertiserData(forUpdate,2);
+            },function(response){
+                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
+                notifyUser("advertiserInfoErrorCount",response,true);
+                errorFound = true;
+                submitAdvertiserData(forUpdate,2);
+            });
             break;
         case 2:
-            validateGalleryAdds();
+            validateGalleryAdds(forUpdate,function(response){
+                notifyUser("galleryAdsErrorCount",response,false);
+                submitAdvertiserData(forUpdate,3);
+            },function(response){
+                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
+                notifyUser("galleryAdsErrorCount",response,true);
+                errorFound = true;
+                submitAdvertiserData(forUpdate,3);
+            });
             break;
         case 3:
-            validateSlideShowAds();
+            validateSlideShowAds(forUpdate,function(response){
+                notifyUser("slideShowAdsErrorCount",response,false);
+                submitAdvertiserData(forUpdate,4);
+            },function(response){
+                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
+                notifyUser("slideShowAdsErrorCount",response,true);
+                errorFound = true;
+                submitAdvertiserData(forUpdate,4);
+            });
             break;
         case 4:
-            validatePopUpAdsData();
+            validatePopUpAdsData(forUpdate,function(response){
+                notifyUser("popUpAdsErrorCount",response,false);
+                submitAdvertiserData(forUpdate,5);
+            },function(response){
+                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
+                notifyUser("popUpAdsErrorCount",response,true);
+                errorFound = true;
+                submitAdvertiserData(forUpdate,5);
+            });
             break;
         case 5:
             if(!errorFound)
@@ -386,7 +425,7 @@ function getAdvertiserInfoData(prefix){
 
     return data;
 }
-function validateAdvertiser(){
+function validateAdvertiser(fnSuccess,fnError){
     var data = getAdvertiserInfoData();
     console.log(data);
     $.ajax({
@@ -403,15 +442,18 @@ function validateAdvertiser(){
             },
             422: function(response) {
                 console.log(response.responseJSON);
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("advertiserInfoErrorCount",response,true);
-                errorFound = true;
-                submitAdvertiserData(2);
+
+                if(typeof fnError == "function"){
+                    fnError(response)
+                }
+
             }
         },
         success: function(response) {
-            notifyUser("advertiserInfoErrorCount",response,false);
-            submitAdvertiserData(2);
+            if(typeof fnSuccess == "function"){
+                fnSuccess(response)
+            }
+
         }
     });
 }
@@ -422,6 +464,7 @@ function getGalleryAddsData(prefix){
     }else{
         prefix += "."
     }
+    var galleryId = ($('#galleryAdId').length>0)?parseInt($('#galleryAdId').val()):0;
     var advertiserId = $('#advertiserId').val();
     var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
 
@@ -434,6 +477,7 @@ function getGalleryAddsData(prefix){
     var slideShowVideoDuration = $('#slideShowVideoDuration').val();
 
     var data={};
+    if(galleryId>0)data[prefix+"id"]= galleryId;
 
     data[prefix+"advertiserId"]= advertiserId;
     data[prefix+"logoToken"]= logoToken;
@@ -445,10 +489,16 @@ function getGalleryAddsData(prefix){
     data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
     return data;
 }
-function validateGalleryAdds(){
+function validateGalleryAdds(forUpdate,fnSuccess,fnError){
+    var url = "";
+    if(forUpdate==undefined || forUpdate==false){
+        url = BASEURL+"api/pmc-adv/gallery-create-validation";
+    }else{
+        url = BASEURL+"api/pmc-adv/gallery-update-validation";
+    }
     var data = getGalleryAddsData();
     $.ajax({
-        url: BASEURL+"api/pmc-adv/gallery-create-validation",
+        url: url,
         type: "POST",
         data: data,
         traditional:true,
@@ -460,16 +510,15 @@ function validateGalleryAdds(){
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("galleryAdsErrorCount",response,true);
-
-                errorFound = true;
-                submitAdvertiserData(3);
+                if(typeof fnError == "function"){
+                    fnError(response);
+                }
             }
         },
         success: function(response) {
-            notifyUser("galleryAdsErrorCount",response,false);
-            submitAdvertiserData(3);
+            if(typeof fnSuccess == "function"){
+                fnSuccess(response);
+            }
         }
     });
 }
@@ -481,6 +530,7 @@ function getSlideShowAdsData(prefix){
         prefix += "."
     }
 
+    var slideShowAdsId = ($("#galleryAdId").length>0)?$("#galleryAdId").val():0;
     var slideShowAdsBannerTokens = getToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
     var slideShowAdsVideoToken = getToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
     var slideShowBannerDuration = $("#slideShowBannerDuration").val();
@@ -489,6 +539,9 @@ function getSlideShowAdsData(prefix){
     var bannerExpiryDate =  $("#slideShowBannerExpiryDate").val();
 
     var data = {};
+    if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
+
+    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
     data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
     data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
     data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
@@ -498,10 +551,16 @@ function getSlideShowAdsData(prefix){
 
     return data;
 }
-function validateSlideShowAds(){
+function validateSlideShowAds(forUpdate,fnSuccess,fnError){
+    var url="";
+    if(forUpdate==undefined ||forUpdate==false){
+       url = BASEURL+"api/pmc-adv/slideshow-create-validation";
+    }else{
+        url = BASEURL+"api/pmc-adv/slideshow-update-validation";
+    }
     var data = getSlideShowAdsData();
     $.ajax({
-        url: BASEURL+"api/pmc-adv/slideshow-create-validation",
+        url: url,
         type: "POST",
         data: data,
         traditional:true,
@@ -513,16 +572,18 @@ function validateSlideShowAds(){
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("slideShowAdsErrorCount",response,true);
-                errorFound = true;
-                submitAdvertiserData(4);
+                if(typeof fnError == "function"){
+                    fnError(response);
+                }
+
             }
         },
         success: function(response) {
             console.log(response);
-            notifyUser("slideShowAdsErrorCount",response,false);
-            submitAdvertiserData(4);
+            if(typeof fnSuccess == "function"){
+                fnSuccess(response);
+            }
+
         }
     });
 }
@@ -533,16 +594,22 @@ function getPopUpAdsData(prefix){
     }else{
         prefix += "."
     }
+    var smsPopupId = $("#popupSmsAdId").length>0? parseInt($("#popupSmsAdId").val()):0;
     var smsPopupBanner = getToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN);
     var smsPopupVideo = getToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
-    var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
-    var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
-    var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
     var smsPopupVideoDuration = $("#smsPopupVideoDuration").val();
     var smsExpiryDate = $("#smsExpiryDate").val();
+
+    var emailPopupId = $("#popupEmailAdId").length>0? parseInt($("#popupEmailAdId").val()):0;
+    var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
+    var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
+    var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
     var emailExpiryDate = $("#emailExpiryDate").val();
 
     var data = {};
+    if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
+    if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
+
     data[prefix+"smsPopupBanner"]=smsPopupBanner;
     data[prefix+"smsPopupVideo"]= smsPopupVideo;
     data[prefix+"emailPopupBanner"]= emailPopupBanner;
@@ -554,10 +621,16 @@ function getPopUpAdsData(prefix){
     data[prefix+"emailExpiryDate"]= emailExpiryDate;
     return data;
 }
-function validatePopUpAdsData() {
+function validatePopUpAdsData(forUpdate,fnSuccess,fnError) {
+    var url = "";
+    if(forUpdate==undefined || forUpdate==false){
+        url = BASEURL+"api/pmc-adv/popup-create-validation";
+    }else{
+        url = BASEURL+"api/pmc-adv/popup-update-validation";
+    }
     var data = getPopUpAdsData();
     $.ajax({
-        url: BASEURL+"api/pmc-adv/popup-create-validation",
+        url: url,
         type: "POST",
         data: data,
         traditional:true,
@@ -569,15 +642,17 @@ function validatePopUpAdsData() {
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                BindErrorsWithHtml("errorObj_",response.responseJSON,true);
-                notifyUser("popUpAdsErrorCount",response,true);
-                errorFound = true;
-                submitAdvertiserData(5);
+                if(typeof fnError == "function"){
+                    fnError(response);
+                }
+
             }
         },
         success: function(response) {
-            notifyUser("popUpAdsErrorCount",response,false);
-            submitAdvertiserData(5);
+            if(typeof fnSuccess == "function"){
+                fnSuccess(response);
+            }
+
         }
     });
 }

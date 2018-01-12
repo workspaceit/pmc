@@ -4,7 +4,8 @@ import com.workspaceit.pmc.dao.GalleryImageDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.*;
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class GalleryAdImageService {
         this.fileService = fileService;
     }
 
-    public void create(GalleryAdsForm galleryAdsForm, GalleryAd galleryAd,Admin admin){
+    public void create(GalleryAdsCreateForm galleryAdsForm, GalleryAd galleryAd, Admin admin){
         List<Object> galleryAdsImageList = new ArrayList<>();
 
         Integer[] topBannerImgTokens = galleryAdsForm.getTopBannerImgTokens();

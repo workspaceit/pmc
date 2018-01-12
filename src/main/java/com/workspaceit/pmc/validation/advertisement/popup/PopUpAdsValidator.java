@@ -3,7 +3,6 @@ package com.workspaceit.pmc.validation.advertisement.popup;
 
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.service.AdvertiserService;
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -43,6 +42,9 @@ public class PopUpAdsValidator implements Validator {
                     this.checkValidAdvertiserId(popupAdsForm.getAdvertiserId(), errors);
             }
         }
+    }
+    public void validateUpdate(Object obj, Errors errors){
+        PopupAdsUpdateForm popupAdsUpdateForm = (PopupAdsUpdateForm)obj;
     }
     private void checkValidAdvertiserId(Integer advertiserId, Errors errors) {
         if (advertiserId==null){

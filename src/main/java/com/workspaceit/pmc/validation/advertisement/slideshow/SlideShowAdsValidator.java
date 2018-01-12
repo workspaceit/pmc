@@ -45,6 +45,11 @@ public class SlideShowAdsValidator implements Validator {
             }
         }
     }
+    public void validateUpdate(Object obj, Errors errors) {
+        SlideShowAdsUpdateForm slideShowAdsForm = (SlideShowAdsUpdateForm)obj;
+
+
+    }
     private void checkValidAdvertiserId(Integer advertiserId, Errors errors) {
         if (advertiserId==null){
             ValidationUtils.rejectIfEmpty(errors,"advertiserId","Advertiser is required");

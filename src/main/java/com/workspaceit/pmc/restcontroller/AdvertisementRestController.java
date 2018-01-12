@@ -3,16 +3,17 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.service.AdminService;
-import com.workspaceit.pmc.service.GalleryAdImageService;
 import com.workspaceit.pmc.service.GalleryAdService;
 import com.workspaceit.pmc.util.ServiceResponse;
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.popup.PopUpAdsValidator;
-import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
-import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
+import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,22 +32,19 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(ControllerUriPrefix.API+"/pmc-adv")
 public class AdvertisementRestController {
-    GalleryAdsValidator galleryAdsValidator;
-    SlideShowAdsValidator slideShowAdsValidator;
-    PopUpAdsValidator popupAdsValidator;
+    private GalleryAdsValidator galleryAdsValidator;
+    private SlideShowAdsValidator slideShowAdsValidator;
+    private PopUpAdsValidator popupAdsValidator;
 
-    AdminService adminService;
-    GalleryAdImageService galleryImageService;
-    GalleryAdService galleryAdService;
+    private AdminService adminService;
+    private GalleryAdService galleryAdService;
 
-    @Autowired
-    public void setAdminService(AdminService adminService) {
-        this.adminService = adminService;
-    }
+
     @Autowired
     public void setGalleryAdsValidator(GalleryAdsValidator galleryAdsValidator) {
         this.galleryAdsValidator = galleryAdsValidator;
     }
+
     @Autowired
     public void setSlideShowAdsValidator(SlideShowAdsValidator slideShowAdsValidator) {
         this.slideShowAdsValidator = slideShowAdsValidator;
@@ -55,10 +53,12 @@ public class AdvertisementRestController {
     public void setPopupAdsValidator(PopUpAdsValidator popupAdsValidator) {
         this.popupAdsValidator = popupAdsValidator;
     }
+
     @Autowired
-    public void setGalleryImageService(GalleryAdImageService galleryImageService) {
-        this.galleryImageService = galleryImageService;
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
     }
+
     @Autowired
     public void setGalleryAdService(GalleryAdService galleryAdService) {
         this.galleryAdService = galleryAdService;
@@ -66,7 +66,7 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/gallery-create-validation")
-    public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid GalleryAdsForm galleryAdsForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid GalleryAdsCreateForm galleryAdsForm, BindingResult bindingResult){
         Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -96,10 +96,41 @@ public class AdvertisementRestController {
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
-    @Secured(UserRole._SUPER_ADMIN)
 
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping(value = "/popup-create-validation")
+    public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid PopupAdsCreateForm pupAdsCreateForm, BindingResult bindingResult){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        /**
+         * Basic Validation
+         * */
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        this.popupAdsValidator.validate(pupAdsCreateForm, bindingResult,"smsPopupBanner",
+                "smsPopupVideo",
+                "emailPopupBanner",
+                "emailPopupVideo");
+        serviceResponse.bindValidationError(bindingResult);
+
+        /**
+         * Business logic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
+    }
+
+    @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/slideshow-create-validation")
-    public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid SlideShowAdsForm slideShowAdsForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid SlideShowAdsCreateForm slideShowAdsForm, BindingResult bindingResult){
         Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -125,8 +156,17 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
-    @PostMapping(value = "/popup-create-validation")
-    public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid PopupAdsForm popupAdsForm, BindingResult bindingResult){
+
+    @Secured(UserRole._SUPER_ADMIN)
+    @GetMapping(value = "/get/{id}")
+    public ResponseEntity<?> galleryCreate(@PathVariable("id") int id){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.galleryAdService.getById(id));
+    }
+
+
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping(value = "/gallery-update-validation")
+    public ResponseEntity<?> validateGalleryAdsUpdate(Authentication authentication, @Valid GalleryAdsUpdateForm galleryAdsUpdateForm, BindingResult bindingResult){
         Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -140,10 +180,7 @@ public class AdvertisementRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
-        this.popupAdsValidator.validate(popupAdsForm, bindingResult,"smsPopupBanner",
-                                                                            "smsPopupVideo",
-                                                                            "emailPopupBanner",
-                                                                            "emailPopupVideo");
+        this.galleryAdsValidator.validateUpdate(galleryAdsUpdateForm, bindingResult);
         serviceResponse.bindValidationError(bindingResult);
 
         /**
@@ -155,10 +192,61 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping(value = "/slideshow-update-validation")
+    public ResponseEntity<?> validateSlideShowUpdate(Authentication authentication, @Valid SlideShowAdsUpdateForm slideShowAdsForm, BindingResult bindingResult){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
 
-    @GetMapping(value = "/get/{id}")
-    public ResponseEntity<?> galleryCreate(@PathVariable("id") int id){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.galleryAdService.getById(id));
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        /**
+         * Basic Validation
+         * */
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        this.slideShowAdsValidator.validateUpdate(slideShowAdsForm, bindingResult);
+        serviceResponse.bindValidationError(bindingResult);
+
+        /**
+         * Business logic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
+
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping(value = "/popup-update-validation")
+    public ResponseEntity<?> validatePopUpUpdate(Authentication authentication, @Valid PopupAdsUpdateForm popupAdsUpdateForm, BindingResult bindingResult){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        /**
+         * Basic Validation
+         * */
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        this.popupAdsValidator.validateUpdate(popupAdsUpdateForm, bindingResult);
+        serviceResponse.bindValidationError(bindingResult);
+
+        /**
+         * Business logic Validation
+         * */
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
+    }
+
 
 }

@@ -1,44 +1,38 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Created by mi_rafi on 1/5/18.
  */
 public class PopupAdsForm {
-
-
+    private Integer smsId;
+    private Integer emailId;
     private Integer advertiserId;
-
-    @NotNull(message = "Sms Popup Banner is required")
     private Integer[] smsPopupBanner;
-
-    @NotNull(message = "Sms Popup Video is required")
     private Integer smsPopupVideo;
-
-    @NotNull(message = "Email Popup Banner is required")
     private Integer[] emailPopupBanner;
-
-    @NotNull(message = "Email Popup Video is required")
     private Integer emailPopupVideo;
-
-    @NotNull(message = "Email Popup Video duration is required")
     private Integer emailPopupVideoDuration;
-
-    @NotNull(message = "Email Popup Video duration is required")
     private Integer smsPopupVideoDuration;
-
-
-    @NotNull(message = "Expiry Date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date smsExpiryDate;
-
-    @NotNull(message = "Expiry Date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date emailExpiryDate;
+
+    public Integer getSmsId() {
+        return smsId;
+    }
+
+    public void setSmsId(Integer smsId) {
+        this.smsId = smsId;
+    }
+
+    public Integer getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(Integer emailId) {
+        this.emailId = emailId;
+    }
 
     public Integer getAdvertiserId() {
         return advertiserId;

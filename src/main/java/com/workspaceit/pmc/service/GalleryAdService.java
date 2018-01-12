@@ -4,7 +4,8 @@ import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class GalleryAdService {
         this.fileService = fileService;
     }
 
-    public GalleryAd create(Advertiser advertiser,GalleryAdsForm galleryAdsForm, Admin admin){
+    public GalleryAd create(Advertiser advertiser, GalleryAdsCreateForm galleryAdsForm, Admin admin){
         Integer logoToken = galleryAdsForm.getLogoToken();
         Integer bgImgTokens = galleryAdsForm.getBgImgTokens();
         String logoFileName = this.fileService.copyFile(logoToken);

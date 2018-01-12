@@ -6,6 +6,7 @@ import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.SlideshowAd;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.util.FileUtil;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class SlideShowService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public SlideshowAd create(Advertiser advertiser , SlideShowAdsForm slideShowAdsForm, Admin admin){
+    public SlideshowAd create(Advertiser advertiser , SlideShowAdsCreateForm slideShowAdsForm, Admin admin){
         Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoToken();
         String videoType = this.fileService.getMimeTypeByToken(videoToken);
         String videoName = this.fileService.copyFile(videoToken);
