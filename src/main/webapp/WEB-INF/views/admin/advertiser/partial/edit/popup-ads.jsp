@@ -7,6 +7,7 @@
             </div>
 
             <div class="col-md-6 col-xs-6 pull-right">
+                <span id="smsExpiryDateLbl" class="date_view"><fmt:formatDate value="${popupAdSms.expiryDate}" type="date" ></fmt:formatDate></span>
 
                 <div class="" style="margin-left: auto;float:right;">
                     <div class="btn-group">
@@ -60,7 +61,11 @@
                           <span class="pull-left" style="font-weight: bold;">Duration:
                             <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
                                     <c:forEach var="duration" items="${durations}" >
-                                        <option value="${duration}">${duration}s</option>
+                                        <c:set var="durationOptionsSelected" value=""></c:set>
+                                        <c:if test="${popupAdSms.duration == duration}">
+                                            <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
+                                        </c:if>
+                                        <option value="${duration}" ${durationOptionsSelected}>${duration}s</option>
                                     </c:forEach>
                               </select>
                           </span>
@@ -76,6 +81,7 @@
             <div class="col-md-6 col-xs-6 pull-right">
 
                 <div class="" style="margin-left: auto;float:right;">
+                    <span id="emailExpiryDateLbl" class="date_view"><fmt:formatDate value="${popupAdEmail.expiryDate}" type="date" ></fmt:formatDate></span>
 
                     <div class="btn-group">
                         <button type="button" class="active btn btn-default btn-switch" id="regi12"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
@@ -125,7 +131,11 @@
                           <span class="pull-left" style="font-weight: bold;">Duration:
                             <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
                                 <c:forEach var="duration" items="${durations}" >
-                                    <option value="${duration}">${duration}s</option>
+                                    <c:set var="durationOptionsSelected" value=""></c:set>
+                                    <c:if test="${popupAdEmail.duration == duration}">
+                                        <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
+                                    </c:if>
+                                    <option value="${duration}" ${durationOptionsSelected} >${duration}s</option>
                                 </c:forEach>
                           </select>
                           </span>

@@ -32,6 +32,9 @@ public class PopupBannerImageService {
 
     @Transactional(rollbackFor = Exception.class)
     public List<PopupBannerImage> create(PopupAd popupAd,Integer[] tokens,Admin admin){
+        if(tokens==null || tokens.length==0){
+            return null;
+        }
         List<PopupBannerImage> popupBannerImages = new ArrayList<>();
         for(int token:tokens){
             String imageName = this.fileService.copyFile(token);
@@ -46,12 +49,36 @@ public class PopupBannerImageService {
 
         return popupBannerImages;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void remove(PopupAd popupAd,Integer[] ids,Admin admin){
+        if(ids==null || ids.length==0){
+            return;
+        }
+        List<PopupBannerImage> popupBannerImages = this.getById(ids,popupAd.getId());
+        this.remove(popupBannerImages);
+    }
+    @Transactional(rollbackFor = Exception.class)
     public void create( List<PopupBannerImage> popupBannerImages){
         for(PopupBannerImage popupBannerImage:popupBannerImages){
             this.create(popupBannerImage);
         }
     }
+    @Transactional(rollbackFor = Exception.class)
     public void create( PopupBannerImage popupBannerImage){
         this.popupBannerImageDao.insert(popupBannerImage);
+    }
+    @Transactional
+    public List<PopupBannerImage> getById(Integer[] ids,int advertiserId){
+        return this.popupBannerImageDao.getById(ids,advertiserId);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void remove( List<PopupBannerImage> popupBannerImages){
+        for(PopupBannerImage popupBannerImage:popupBannerImages){
+            this.remove(popupBannerImage);
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void remove( PopupBannerImage popupBannerImages){
+            this.popupBannerImageDao.delete(popupBannerImages);
     }
 }

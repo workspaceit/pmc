@@ -20,10 +20,31 @@ public class PopUpAdsDao extends BaseDao{
 
     public PopupAd getByAdvertiserId(int advertiserId, PopupAdType popupAdType){
         Session session = this.getCurrentSession();
-        return (PopupAd)session.createQuery("FROM PopupAd where advertiserId=:advertiserId AND type =:popupAdType ")
+        return (PopupAd)session.createQuery("FROM PopupAd p" +
+                                                        " where p.advertiserId=:advertiserId" +
+                                                        " AND p.type =:popupAdType ")
                 .setMaxResults(1)
                 .setParameter("advertiserId",advertiserId)
                 .setParameter("popupAdType",popupAdType)
+                .uniqueResult();
+    }
+
+    public PopupAd getById(int id){
+        Session session = this.getCurrentSession();
+        return (PopupAd)session.createQuery("FROM PopupAd where id=:id ")
+                .setMaxResults(1)
+                .setParameter("id",id)
+                .uniqueResult();
+    }
+    public PopupAd getById(int id,int advertiserId){
+        Session session = this.getCurrentSession();
+        return (PopupAd)session.createQuery("FROM PopupAd " +
+                                                        " where id=:id " +
+                                                        " and advertiserId=:advertiserId")
+                .setMaxResults(1)
+                .setParameter("id",id)
+                .setParameter("advertiserId",advertiserId)
+
                 .uniqueResult();
     }
 }

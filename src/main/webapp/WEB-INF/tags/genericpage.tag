@@ -38,10 +38,6 @@
         <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
 
         <%--Developer's custom js--%>
-        <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
-        <script src="<s:url value="/resources/developer/js/helper/navigation.js"/>"></script>
-
-        <jsp:invoke fragment="developerScript"/>
         <script>
             var BASEURL = "<c:url value="/" />";
             try{
@@ -51,6 +47,12 @@
                 BASEURL = "<c:url value="/" />";
             }
         </script>
+        <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/helper/navigation.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/helper/others.js"/>"></script>
+
+        <jsp:invoke fragment="developerScript"/>
+
     </head>
     <body>
         <jsp:include page="/WEB-INF/views/admin/layout/navbar.jsp"/>

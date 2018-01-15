@@ -1917,3 +1917,13 @@ ordered & tabbed in a way that represents the nesting of the generated HTML.
         margin-top: 15px;
     }
 }
+
+
+/*extra*/
+.date_view{
+    position: absolute;
+    right: 210px;
+    top: 4px;
+    font-size: 11px;
+}
+/*extra*/

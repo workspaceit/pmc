@@ -1,7 +1,6 @@
 package com.workspaceit.pmc.entity.advertisement.galleryads.images;
 
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class GalleryAdsTopBannerImage {
     private String image;
 
     @Column(name = "gallery_ad_id")
-    private Integer galleryAd;
+    private Integer galleryAdId;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,12 +50,12 @@ public class GalleryAdsTopBannerImage {
         this.image = image;
     }
 
-    public Integer getGalleryAd() {
-        return galleryAd;
+    public Integer getGalleryAdId() {
+        return galleryAdId;
     }
 
-    public void setGalleryAd(Integer galleryAd) {
-        this.galleryAd = galleryAd;
+    public void setGalleryAdId(Integer galleryAdId) {
+        this.galleryAdId = galleryAdId;
     }
 
     public Date getCreatedAt() {

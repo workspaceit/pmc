@@ -4,10 +4,12 @@ import com.workspaceit.pmc.dao.SlideshowAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.SlideshowAd;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
+import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,12 +62,63 @@ public class SlideShowService {
 
         return slideshowAd;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public SlideshowAd update(int id,Advertiser advertiser , SlideShowAdsUpdateForm slideShowAdsForm, Admin admin)throws EntityNotFound{
+        Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoToken();
+        Integer[] bannerTokens = slideShowAdsForm.getSlideShowAdsBannerTokens();
+        Integer[] removeBannerIds = slideShowAdsForm.getRemoveBannerIds();
+        SlideshowAd slideshowAd = this.getSlideshowAd(id,advertiser.getId());
+
+        if(videoToken!=null && videoToken>0){
+            String videoType = this.fileService.getMimeTypeByToken(videoToken);
+            String videoName = this.fileService.copyFile(videoToken);
+            slideshowAd.setVideo(videoName);
+            slideshowAd.setVideoType(videoType);
+        }
+
+        slideshowAd.setBannerExpiryDate(slideShowAdsForm.getBannerExpiryDate());
+        slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
+        slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
+        slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
+
+        this.update(slideshowAd);
+
+        if(bannerTokens!=null && bannerTokens.length>0){
+            this.slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerTokens(),admin);
+        }
+
+        if(removeBannerIds!=null && removeBannerIds.length>0){
+            this.slideshowBannerImageService.remove(slideshowAd,slideShowAdsForm.getRemoveBannerIds(),admin);
+        }
+
+        return slideshowAd;
+    }
     @Transactional(readOnly = true)
     public SlideshowAd getByAdvertiserId(int advertiserId){
        return this.slideshowAdDao.getByAdvertiserId(advertiserId);
     }
+    @Transactional(readOnly = true)
+    public SlideshowAd getSlideshowAd(int id)throws EntityNotFound{
+        SlideshowAd slideshowAd =  this.slideshowAdDao.getById(id);
+        if(slideshowAd==null){
+            throw new EntityNotFound("No slideshowAd entity found with id :"+id);
+        }
+        return slideshowAd;
+    }
+    @Transactional(readOnly = true)
+    public SlideshowAd getSlideshowAd(int id,int advertiserId)throws EntityNotFound{
+        SlideshowAd slideshowAd =  this.slideshowAdDao.getById(id,advertiserId);
+        if(slideshowAd==null){
+            throw new EntityNotFound("No slideshowAd entity found with id :"+id);
+        }
+        return slideshowAd;
+    }
     @Transactional(rollbackFor = Exception.class)
     public void create(SlideshowAd slideshowAd){
          this.slideshowAdDao.insert(slideshowAd);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SlideshowAd slideshowAd){
+        this.slideshowAdDao.update(slideshowAd);
     }
 }

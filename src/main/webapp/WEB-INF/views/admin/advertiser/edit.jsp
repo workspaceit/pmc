@@ -93,7 +93,6 @@
                     <div class="dz-error-message">
                         <span data-dz-errormessage></span>
                     </div>
-
                 </div>
             </div>
         </div>

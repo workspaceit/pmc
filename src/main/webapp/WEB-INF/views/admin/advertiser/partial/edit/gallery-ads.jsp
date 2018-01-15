@@ -61,7 +61,7 @@
                     <div class="col-md-6 col-xs-6 pull-right">
 
                         <div class="" style="margin-left: auto;float:right;">
-
+                            <span id="topBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.topBannerExpiryDate}" type="date" ></fmt:formatDate></span>
 
                             <div class="btn-group">
                                 <button type="button" class="active btn btn-default btn-switch" id="regi1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
@@ -105,15 +105,8 @@
                     <div class="col-md-6 col-xs-6 pull-right">
 
                         <div class="" style="margin-left: auto;float:right;">
-                            <!-- <div class="onoffswitch3">
-                                <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch4" checked>
-                                <label class="onoffswitch3-label" for="myonoffswitch4">
-                                    <span class="onoffswitch3-inner">
-                                        <span class="onoffswitch3-active"><span class="onoffswitch3-switch"><i class="fa fa-repeat"></i>&nbsp;Rotate</span></span>
-                                        <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch"><i class="fa fa-minus"></i>&nbsp;Static</span></span>
-                                    </span>
-                                </label>
-                            </div> -->
+                            <span id="bottomBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.bottomBannerExpiryDate}" type="date" ></fmt:formatDate></span>
+
                             <div class="btn-group">
                                 <button type="button" class="active btn btn-default btn-switch" id="regi3"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
                                 <button type="button" class="btn btn-default btn-switch" id="regi4"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>

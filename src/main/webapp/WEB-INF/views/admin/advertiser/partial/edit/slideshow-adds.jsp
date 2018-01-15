@@ -9,6 +9,7 @@
             <div class="col-md-6 col-xs-6 pull-right">
 
                 <div class="" style="margin-left: auto;float:right;">
+                    <span id="slideShowBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${slideshowAd.bannerExpiryDate}" type="date" ></fmt:formatDate></span>
 
                     <div class="btn-group">
                         <button type="button" class="active btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
@@ -54,7 +55,6 @@
                                             <c:set var="durationOptions" value="selected=\"selected\""></c:set>
                                         </c:if>
                                         <option value="${duration}" ${durationOptions} >${duration}s</option>
-                                        <c:set var="durationOptions" value=""></c:set>
                                     </c:forEach>
                               </select>
                               </span>
@@ -68,6 +68,7 @@
             </div>
 
             <div class="col-md-6 col-xs-6 pull-right">
+                <span id="slideShowVideoExpiryDateLbl" class="date_view"><fmt:formatDate value="${slideshowAd.videoExpiryDate}" type="date" ></fmt:formatDate></span>
 
                 <div class="" style="margin-left: auto;float:right;">
                     <div class="btn-group">

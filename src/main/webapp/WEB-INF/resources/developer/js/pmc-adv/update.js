@@ -1,7 +1,14 @@
 /**
  * Created by mi_rafi on 1/10/18.
  * Function used storeToken,getToken from /js/tmp-file/common.js
+ * /js/pmc-adv/common.js is required
+ * /resources/developer/js/helper/others.js is required
  */
+
+if(!isScriptLoadedAtPage("/developer/js/pmc-adv/common.js")){
+    console.log("/js/pmc-adv/common.js is reuired")
+}
+
 var ID_KEY = {
     _ADV_OTHER_IMAGE : "_ADV_OTHER_IMAGE",
     _GALLERY_TOP_BANNER : "_GALLERY_TOP_BANNER",
@@ -28,11 +35,18 @@ function updateAdvertiser(){
     var data = {};
     var advertiserData = getAdvertiserInfoData("advertiser");
     var galleryAdsData =getGalleryAddsData("galleryAds");
-    var popupAdsData =getPopUpAdsData("popupAds");
     var slideShowAdsData =getSlideShowAdsData("slideShowAds");
+    var popupAdsData =getPopUpAdsData("popupAds");
 
 
     advertiserData["advertiser.removeOtherImageIds"]= getToken(ID_KEY._ADV_OTHER_IMAGE);
+    galleryAdsData["galleryAds.removeTopBannerIds"]= getToken(ID_KEY._GALLERY_TOP_BANNER);
+    galleryAdsData["galleryAds.removeBottomBannerIds"]= getToken(ID_KEY._GALLERY_BOTTOM_BANNER);
+    slideShowAdsData["slideShowAds.removeBannerIds"]= getToken(ID_KEY._SLIDE_SHOW_BANNER);
+
+    popupAdsData["popupAds.removeSmsBannerIds"]= getToken(ID_KEY._POPUP_SMS_BANNER);
+    popupAdsData["popupAds.removeEmailBannerIds"]= getToken(ID_KEY._POPUP_EMAIL_BANNER);
+
 
     data = $.extend({}, data, advertiserData);
     data = $.extend({}, data,galleryAdsData);

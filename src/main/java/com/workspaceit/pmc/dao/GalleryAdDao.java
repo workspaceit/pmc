@@ -16,6 +16,16 @@ public class GalleryAdDao extends BaseDao {
                 .setParameter("id",id)
                 .uniqueResult();
     }
+
+    public GalleryAd getById(int id,int advertiserId){
+        Session session = this.getCurrentSession();
+        return (GalleryAd)session.createQuery("FROM GalleryAd where id=:id AND advertiserId=:advertiserId")
+                .setMaxResults(1)
+                .setParameter("id",id)
+                .setParameter("advertiserId",advertiserId)
+                .uniqueResult();
+    }
+
     public GalleryAd getByAdvertiserId(int advertiserId){
         Session session = this.getCurrentSession();
         return (GalleryAd)session.createQuery("FROM GalleryAd where advertiserId=:advertiserId")

@@ -72,4 +72,20 @@ public class SlideshowBannerImage {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SlideshowBannerImage that = (SlideshowBannerImage) o;
+
+
+        return (id == that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

@@ -7,9 +7,21 @@ import javax.validation.constraints.NotNull;
  */
 public class SlideShowAdsUpdateForm extends SlideShowAdsForm {
 
+
+
+    private Integer[] removeBannerIds;
+
     @Override
     @NotNull(message = "Id required")
     public Integer getId() {
         return super.getId();
+    }
+
+    public Integer[] getRemoveBannerIds() {
+        return removeBannerIds;
+    }
+
+    public void setRemoveBannerIds(Integer[] removeBannerIds) {
+        this.removeBannerIds = removeBannerIds;
     }
 }

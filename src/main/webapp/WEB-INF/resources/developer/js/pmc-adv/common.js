@@ -146,6 +146,8 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:topBannerExpiryDate
     },function(start, end, label) {
+        console.log(start, end, label);
+        $("#topBannerExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -154,6 +156,7 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:bottomBannerExpiryDate
     },function(start, end, label) {
+        $("#bottomBannerExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -170,6 +173,7 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:slideShowBannerExpiryDate
     },function(start, end, label) {
+        $("#slideShowBannerExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -181,6 +185,7 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:slideShowVideoExpiryDate
     },function(start, end, label) {
+        $("#slideShowVideoExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -196,6 +201,7 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:smsExpiryDate
     },function(start, end, label) {
+        $("#smsExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -207,6 +213,7 @@ $(document).ready(function(){
         showDropdowns: true,
         startDate:emailExpiryDate
     },function(start, end, label) {
+        $("#emailExpiryDateLbl").html(start.format('MMM D, YYYY'));
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
@@ -399,16 +406,15 @@ function getAdvertiserInfoData(prefix){
     var zip = $('#zip').val();
     var phone = $('#phone').val();
     var website = $('#website').val();
-    var runtimeStarts = $('#runtimeStarts').val();
-    var runtimeEnds = $('#runtimeEnds').val();
+    var runtimeStarts = $('#runtimeStarts').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var runtimeEnds = $('#runtimeEnds').data('daterangepicker').startDate.format("MM/DD/YYYY");
     var locationIds = $('#locationIds').val();
-    var createdAt = $('#createdAt').val();
-    var updatedAt = $('#updatedAt').val();
-    var createdBy = $('#createdBy').val();
     var allLocationSelected = hasAllLocationSelected();
     var allEventSelected = hasAllEventSelected();
     var otherImage = getToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN);
+
     var data={};
+
     data[prefix+"name"]= name;
     data[prefix+"address"]= address;
     data[prefix+"cityId"]= cityId;
@@ -428,6 +434,106 @@ function getAdvertiserInfoData(prefix){
 
     return data;
 }
+
+/*Gallery Ads */
+function getGalleryAddsData(prefix){
+    if(prefix==undefined){
+        prefix = "";
+    }else{
+        prefix += "."
+    }
+    var galleryId = ($('#galleryAdId').length>0)?parseInt($('#galleryAdId').val()):0;
+    var advertiserId = $('#advertiserId').val();
+    var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
+
+    var bgImgTokens =  getToken(ADV_IMG_TYPE._BACKGROUND_IMAGE);
+    var topBannerImgTokens = getToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN);
+    var bottomBannerImgTokens = getToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN);
+
+    var topBannerExpiryDate = $('#topBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+
+    var slideShowVideoDuration = $('#slideShowVideoDuration').val();
+
+    var data={};
+    if(galleryId>0)data[prefix+"id"]= galleryId;
+
+    data[prefix+"advertiserId"]= advertiserId;
+    data[prefix+"logoToken"]= logoToken;
+    data[prefix+"bgImgTokens"]= bgImgTokens;
+    data[prefix+"topBannerImgTokens"]=topBannerImgTokens;
+    data[prefix+"bottomBannerImgTokens"]=bottomBannerImgTokens;
+    data[prefix+"topBannerExpiryDate"]= topBannerExpiryDate;
+    data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
+    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    return data;
+}
+/*Slideshow Ads */
+function getSlideShowAdsData(prefix){
+    if(prefix==undefined){
+        prefix="";
+    }else{
+        prefix += "."
+    }
+
+    var slideShowAdsId = ($("#slideshowAdId").length>0)?$("#slideshowAdId").val():0;
+    var slideShowAdsBannerTokens = getToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
+    var slideShowAdsVideoToken = getToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
+    var slideShowBannerDuration = $("#slideShowBannerDuration").val();
+    var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
+
+    var videoExpiryDate  =  $('#slideShowVideoExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var bannerExpiryDate = $('#slideShowBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+
+    var data = {};
+    if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
+
+    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
+    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
+    data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
+    data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
+    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    data[prefix+"videoExpiryDate"] = videoExpiryDate;
+    data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
+
+    return data;
+}
+/*PopUp Ads */
+function getPopUpAdsData(prefix){
+    if(prefix==undefined){
+        prefix="";
+    }else{
+        prefix += "."
+    }
+    var smsPopupId = $("#popupSmsAdId").length>0? parseInt($("#popupSmsAdId").val()):0;
+    var smsPopupBanner = getToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN);
+    var smsPopupVideo = getToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
+    var smsPopupVideoDuration = $("#smsPopupVideoDuration").val();
+    var smsExpiryDate = $('#smsExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+
+    var emailPopupId = $("#popupEmailAdId").length>0? parseInt($("#popupEmailAdId").val()):0;
+    var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
+    var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
+    var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
+    var emailExpiryDate =  $('#emailExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+
+    var data = {};
+    if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
+    if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
+
+    data[prefix+"smsPopupBanner"]=smsPopupBanner;
+    data[prefix+"smsPopupVideo"]= smsPopupVideo;
+    data[prefix+"emailPopupBanner"]= emailPopupBanner;
+    data[prefix+"emailPopupVideo"]= emailPopupVideo;
+    data[prefix+"emailPopupVideoDuration"]= emailPopupVideoDuration;
+    data[prefix+"smsPopupVideoDuration"]= smsPopupVideoDuration;
+
+    data[prefix+"smsExpiryDate"]= smsExpiryDate;
+    data[prefix+"emailExpiryDate"]= emailExpiryDate;
+    return data;
+}
+
+/*Validation */
 function validateAdvertiser(fnSuccess,fnError){
     var data = getAdvertiserInfoData();
     console.log(data);
@@ -459,38 +565,6 @@ function validateAdvertiser(fnSuccess,fnError){
 
         }
     });
-}
-/*Gallery Ads */
-function getGalleryAddsData(prefix){
-    if(prefix==undefined){
-        prefix = "";
-    }else{
-        prefix += "."
-    }
-    var galleryId = ($('#galleryAdId').length>0)?parseInt($('#galleryAdId').val()):0;
-    var advertiserId = $('#advertiserId').val();
-    var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
-
-    var bgImgTokens =  getToken(ADV_IMG_TYPE._BACKGROUND_IMAGE);
-    var topBannerImgTokens = getToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN);
-    var bottomBannerImgTokens = getToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN);
-
-    var topBannerExpiryDate = $('#topBannerExpiryDate').val();
-    var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').val();
-    var slideShowVideoDuration = $('#slideShowVideoDuration').val();
-
-    var data={};
-    if(galleryId>0)data[prefix+"id"]= galleryId;
-
-    data[prefix+"advertiserId"]= advertiserId;
-    data[prefix+"logoToken"]= logoToken;
-    data[prefix+"bgImgTokens"]= bgImgTokens;
-    data[prefix+"topBannerImgTokens"]=topBannerImgTokens;
-    data[prefix+"bottomBannerImgTokens"]=bottomBannerImgTokens;
-    data[prefix+"topBannerExpiryDate"]= topBannerExpiryDate;
-    data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
-    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
-    return data;
 }
 function validateGalleryAdds(forUpdate,fnSuccess,fnError){
     var url = "";
@@ -525,39 +599,10 @@ function validateGalleryAdds(forUpdate,fnSuccess,fnError){
         }
     });
 }
-/*Slideshow Ads */
-function getSlideShowAdsData(prefix){
-    if(prefix==undefined){
-        prefix="";
-    }else{
-        prefix += "."
-    }
-
-    var slideShowAdsId = ($("#galleryAdId").length>0)?$("#galleryAdId").val():0;
-    var slideShowAdsBannerTokens = getToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
-    var slideShowAdsVideoToken = getToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
-    var slideShowBannerDuration = $("#slideShowBannerDuration").val();
-    var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
-    var videoExpiryDate  =  $("#slideShowVideoExpiryDate").val();
-    var bannerExpiryDate =  $("#slideShowBannerExpiryDate").val();
-
-    var data = {};
-    if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
-
-    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
-    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
-    data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
-    data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
-    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
-    data[prefix+"videoExpiryDate"] = videoExpiryDate;
-    data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
-
-    return data;
-}
 function validateSlideShowAds(forUpdate,fnSuccess,fnError){
     var url="";
     if(forUpdate==undefined ||forUpdate==false){
-       url = BASEURL+"api/pmc-adv/slideshow-create-validation";
+        url = BASEURL+"api/pmc-adv/slideshow-create-validation";
     }else{
         url = BASEURL+"api/pmc-adv/slideshow-update-validation";
     }
@@ -589,40 +634,6 @@ function validateSlideShowAds(forUpdate,fnSuccess,fnError){
 
         }
     });
-}
-/*PopUp Ads */
-function getPopUpAdsData(prefix){
-    if(prefix==undefined){
-        prefix="";
-    }else{
-        prefix += "."
-    }
-    var smsPopupId = $("#popupSmsAdId").length>0? parseInt($("#popupSmsAdId").val()):0;
-    var smsPopupBanner = getToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN);
-    var smsPopupVideo = getToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
-    var smsPopupVideoDuration = $("#smsPopupVideoDuration").val();
-    var smsExpiryDate = $("#smsExpiryDate").val();
-
-    var emailPopupId = $("#popupEmailAdId").length>0? parseInt($("#popupEmailAdId").val()):0;
-    var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
-    var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
-    var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
-    var emailExpiryDate = $("#emailExpiryDate").val();
-
-    var data = {};
-    if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
-    if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
-
-    data[prefix+"smsPopupBanner"]=smsPopupBanner;
-    data[prefix+"smsPopupVideo"]= smsPopupVideo;
-    data[prefix+"emailPopupBanner"]= emailPopupBanner;
-    data[prefix+"emailPopupVideo"]= emailPopupVideo;
-    data[prefix+"emailPopupVideoDuration"]= emailPopupVideoDuration;
-    data[prefix+"smsPopupVideoDuration"]= smsPopupVideoDuration;
-
-    data[prefix+"smsExpiryDate"]= smsExpiryDate;
-    data[prefix+"emailExpiryDate"]= emailExpiryDate;
-    return data;
 }
 function validatePopUpAdsData(forUpdate,fnSuccess,fnError) {
     var url = "";
@@ -659,7 +670,6 @@ function validatePopUpAdsData(forUpdate,fnSuccess,fnError) {
         }
     });
 }
-
 
 function hasAllLocationSelected(){
     var isChecked = $("#allLocationSelection:checked").length;

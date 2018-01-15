@@ -226,17 +226,34 @@ public class AdvertiserRestController {
             serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
+
         try {
+            int galleryAdId = advertiserAndAllCompositeForm.getGalleryAds().getId();
+            int slideShowAdId = advertiserAndAllCompositeForm.getSlideShowAds().getId();
+            int smsPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getSmsId();
+            int emailPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getEmailId();
+
             Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
+            this.galleryAdService.update(galleryAdId,
+                                        advertiser,
+                                        advertiserAndAllCompositeForm.getGalleryAds(),
+                                        currentUser);
+
+            this.slideShowService.update(slideShowAdId,advertiser,
+                                        advertiserAndAllCompositeForm.getSlideShowAds(),
+                                        currentUser);
+
+            this.popUpAdsService.update(smsPopUpAdId,
+                                            emailPopUpAdId,
+                                            advertiser,
+                                            advertiserAndAllCompositeForm.getPopupAds(),
+                                            currentUser);
+
         } catch (EntityNotFound entityNotFound) {
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.setMsg("id",entityNotFound.getMessage()).getFormError());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.setMsg("id",entityNotFound.getMessage()).getFormError());
 
         }
-
-//        this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
-//        this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
-//        this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");
     }
 }

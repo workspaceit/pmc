@@ -32,10 +32,11 @@ public class SlideshowBannerImageService {
         this.fileService = fileService;
     }
 
-
-
     @Transactional(rollbackFor = Exception.class)
     public List<SlideshowBannerImage> create(SlideshowAd slideshowAd , Integer[] tokens,Admin admin){
+        if(tokens==null ||tokens.length==0){
+            return null;
+        }
         List<SlideshowBannerImage> slideshowBannerImageList = new ArrayList<>();
 
         for(int token:tokens){
@@ -53,6 +54,16 @@ public class SlideshowBannerImageService {
         this.create(slideshowBannerImageList);
         return slideshowBannerImageList;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void remove(SlideshowAd slideshowAd , Integer[] ids,Admin admin){
+        if(ids==null||ids.length==0){
+            return;
+        }
+        List<SlideshowBannerImage> slideshowBannerImageList = this.getById(ids,slideshowAd.getId());
+        this.remove(slideshowBannerImageList);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void create(SlideshowBannerImage slideshowBannerImage){
        this.slideshowBannerImageDao.insert(slideshowBannerImage);
@@ -65,4 +76,34 @@ public class SlideshowBannerImageService {
             this.slideshowBannerImageDao.insert(slideshowBannerImage);
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(List<SlideshowBannerImage> slideshowBannerImages){
+        for(SlideshowBannerImage slideshowBannerImage:slideshowBannerImages){
+
+            this.slideshowBannerImageDao.update(slideshowBannerImage);
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SlideshowBannerImage slideshowBannerImage){
+        this.slideshowBannerImageDao.update(slideshowBannerImage);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void remove(List<SlideshowBannerImage> slideshowBannerImages){
+        for(SlideshowBannerImage slideshowBannerImage:slideshowBannerImages){
+            this.slideshowBannerImageDao.delete(slideshowBannerImage);
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void remove(SlideshowBannerImage slideshowBannerImage){
+        this.slideshowBannerImageDao.delete(slideshowBannerImage);
+    }
+
+    @Transactional
+    public List<SlideshowBannerImage>  getById(Integer[] ids,int slideshowAdId){
+        return this.slideshowBannerImageDao.getById(ids,slideshowAdId);
+    }
+
+
 }
