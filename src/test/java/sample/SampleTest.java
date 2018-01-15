@@ -1,8 +1,10 @@
-package config;
+package sample;
 
 import com.workspaceit.pmc.config.WebConfig;
 import com.workspaceit.pmc.service.LocationService;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -13,19 +15,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
-public class LocationTest {
+public class SampleTest {
 
 
-   // LocationService locationService;
+    private LocationService locationService;
 
-  //  @Autowired
+    @Autowired
     public void setLocationService(LocationService locationService) {
-       // this.locationService = locationService;
+        this.locationService = locationService;
     }
 
-    //@Test
+    @Test
     public void test() {
-      //  System.out.println(locationService.getAll());
+        System.out.println("HELLO");
+        System.out.println(locationService.getAll());
 
     }
 }
