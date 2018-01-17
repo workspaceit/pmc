@@ -1,9 +1,9 @@
 $(document).ready(function () {
     var pictureToken = 0;
     var eventImgDropzone = new Dropzone("div#eventImg", {
-            url: BASEURL + "file/upload/event-image-image",
+            url: BASEURL + "file/upload/event-image",
             method: "post",
-            paramName: "eventImg",
+            paramName: "profileImg",
             maxFilesize: 1,
             maxFiles: 1,
             addRemoveLinks: true,
@@ -17,7 +17,7 @@ $(document).ready(function () {
                     file._removeLink.addEventListener("click", function () {
                         console.log(file);
                         removeFileByToken(file.token);
-                        profilePictureToken = 0;
+                        pictureToken = 0;
                         var _ref;
                         profileImgDropzone.removeFile(file);
                     });
@@ -26,19 +26,18 @@ $(document).ready(function () {
             },
             error: function (file, response) {
                 var msg = (typeof response == "object") ? ((response.length > 0) ? response[0].msg : "") : response;
-                $("#profileImg").find(".dz-error-message span").html(msg);
+                $("#eventImg").find(".dz-error-message span").html(msg);
             },
             success: function (file, response) {
-
                 file.token = response.token;
-                profilePictureToken = response.token;
+                pictureToken = response.token;
                 console.log(file);
             }
         }
     );
 
     $('#save-watermark-btn').click(function () {
-        console.log("hi there");
+        console.log("submitting . . .");
         var eventName = $('#eventName').val();
         var startDate = $('#startDate').val();
         var startTime = $('#startTime').val();
@@ -48,7 +47,39 @@ $(document).ready(function () {
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
         var watermarkIds = $('#watermark-select2').val();
+        var data = {
+            'eventName': eventName,
+            'startDate': startDate,
+            'startTime': startTime,
+            'endDate' : endDate,
+            'endTime' : endTime,
+            'venueId': venueId,
+            'photographerIds': photographerIds,
+            'advertiserIds': advertiserIds,
+            'watermarkIds': watermarkIds,
+            'imageToken': pictureToken
+        };
 
+        $.ajax({
+            url: BASEURL+'api/event/create',
+            data:data,
+            type: 'POST',
+            statusCode: {
+                401: function (response) {
+                    console.log(response);
+                },
+                422: function (response) {
+
+                    BindErrorsWithHtml("errorObj_",response.responseJSON);
+                    console.log(response);
+                    btnAction
+                }
+            },success: function(data){
+                UnBindErrors("errorObj_");
+                photographerAfterSaveActionCreate(btnAction);
+            }
+        });
+        console.log(data)
     });
 
     $("#event-form").submit(function (e) {
