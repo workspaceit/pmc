@@ -69,7 +69,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="font-size:16px;color:#fff;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span style="margin-left:15px;"> John Smith </span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="fa fa-fw fa-user"></i>Profile</a></li>
+                        <li><a href="<c:url value="/admin/user/profile" />"><i class="fa fa-fw fa-user"></i>Profile</a></li>
                         <li><a href="<c:url value="/logout" />"><i class="fa fa-fw fa-power-off"></i>Log Out</a></li>
                     </ul>
                 </li>

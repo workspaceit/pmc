@@ -6,6 +6,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,32 @@ public class AdminController {
         ModelAndView model = new ModelAndView("admin/admin-user-management/edit");
 
         model.addObject("admin",admin);
+
+        return model;
+    }
+    @RequestMapping(value = "/profile")
+    public ModelAndView profileDetails(Authentication authentication){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+        if(currentUser==null){
+            return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
+        }
+        ModelAndView model = new ModelAndView("admin/profile/details");
+
+        model.addObject("user",currentUser);
+
+        return model;
+    }
+    @RequestMapping(value = "/profile/edit")
+    public ModelAndView profileUpdate(Authentication authentication){
+        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+
+        if(currentUser==null){
+            return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
+        }
+        ModelAndView model = new ModelAndView("admin/profile/edit");
+
+        model.addObject("user",currentUser);
 
         return model;
     }
