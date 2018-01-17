@@ -47,7 +47,7 @@ public class PhotographerRestController {
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication,@Valid PhotographerForm photographerForm, BindingResult bindingResult){
         System.out.println(authentication.getPrincipal().getClass());
-        User user =  (User)authentication.getPrincipal();
+        Admin currentUser =  (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
         /**
@@ -67,7 +67,7 @@ public class PhotographerRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         /** End OF Validation**/
-        Photographer photographer = photographerService.create(photographerForm,user);
+        Photographer photographer = photographerService.create(photographerForm,currentUser);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographer);
     }
     @PostMapping("/update/profile-picture/{id}")
@@ -152,7 +152,7 @@ public class PhotographerRestController {
                                             @Valid PhotographerForm photographerForm,
                                             BindingResult bindingResult,
                                             @PathVariable("id")  Integer id){
-        User user =  (User)authentication.getPrincipal();
+        Admin currentUser =  (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
          * Basic Validation for specific parameter
@@ -181,7 +181,7 @@ public class PhotographerRestController {
 
         Photographer photographer = null;
         try {
-            photographer = this.photographerService.updateBasicInfo(id,photographerForm,user);
+            photographer = this.photographerService.updateBasicInfo(id,photographerForm,currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
         }
