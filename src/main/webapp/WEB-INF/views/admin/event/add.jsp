@@ -129,12 +129,17 @@
                             <div class="imageupload panel panel-default">
                                 <div class="panel-heading clearfix">
                                     <h4 class="panel-title pull-left">Add Event Photo</h4>
-                                    <div class="btn-group pull-right">
+                                    <div  class="btn-group pull-right">
 
                                     </div>
                                 </div>
                                 <div class="file-tab panel-body">
-                                    <form action="/upload-target" class="dropzone"></form>
+                                    <div id="eventImg">
+                                        <div class="dz-default dz-message">
+                                            <span>Drop file or click to select</span>
+                                            <p id="errorObj_profilePictureToken"></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -198,6 +203,10 @@
                 src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
+        <!-- /#wrapper -->
+        <!-- dropzone -->
+        <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
+        <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/event/create.js"/>" ></script>
     </jsp:body>
 </t:genericpage>
