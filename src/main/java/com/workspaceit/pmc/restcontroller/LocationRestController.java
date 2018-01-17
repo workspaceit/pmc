@@ -51,7 +51,7 @@ public class LocationRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid LocationForm locationForm, BindingResult bindingResult) {
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -83,7 +83,7 @@ public class LocationRestController {
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,
                                     @Valid LocationForm locationForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 

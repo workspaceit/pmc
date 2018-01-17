@@ -1,13 +1,17 @@
 /**
  * temp-file/common.js required
 * */
+if(!isScriptLoadedAtPage("/developer/js/temp-file/common.js")){
+    console.log("developer/js/temp-file/common.js required")
+}
+
 
 function configDropZone(elementId,param,maxFile,maxFileSize,fnSuccess,fnError){
     var advImgDropZone = new Dropzone("#"+elementId,
         {
-            url: BASEURL+"file/upload/adv/"+param,
+            url: BASEURL+"file/upload/"+param,
             method:"post",
-            paramName:"advImg",
+            paramName:"profileImg",
             maxFilesize: maxFileSize,
             maxFiles:maxFile,
             addRemoveLinks: true,
@@ -15,6 +19,11 @@ function configDropZone(elementId,param,maxFile,maxFileSize,fnSuccess,fnError){
             init:function(){
 
                 this.on("maxfilesexceeded", function(file) {
+
+
+                    if(this.files.length>0){
+                        removeFileByToken(this.files[0].token,fnError);
+                    }
                     this.removeAllFiles();
                     this.addFile(file);
                 });

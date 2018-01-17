@@ -3,6 +3,7 @@
 <!-- Navigation -->
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="color: #f4e6fd;font-family: 'Exo', sans-serif;fview allont-size: 31px;font-weight: 500;" href="index2.html">
+            <a class="navbar-brand" style="color: #f4e6fd;font-family: 'Exo', sans-serif;fview allont-size: 31px;font-weight: 500;" href="<s:url value="/"/>">
                 <img style="display:inline;" width="140" src="<s:url value="/resources/images/logo2.png"/>" class="small-logo">
             </a>
         </div>
@@ -67,7 +68,11 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" style="font-size:16px;color:#fff;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span style="margin-left:15px;"> John Smith </span><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" style="font-size:16px;color:#fff;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i><span style="margin-left:15px;">
+                        <sec:authorize access="isAuthenticated()">
+                            <sec:authentication property="principal.name"/>
+                        </sec:authorize>
+                    </span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<c:url value="/admin/user/profile" />"><i class="fa fa-fw fa-user"></i>Profile</a></li>
                         <li><a href="<c:url value="/logout" />"><i class="fa fa-fw fa-power-off"></i>Log Out</a></li>

@@ -70,7 +70,7 @@ public class WatermarkRestController {
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id,@Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
 
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
         /**

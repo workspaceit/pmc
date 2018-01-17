@@ -6,9 +6,9 @@ import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.CypherHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.admin.AdminEditForm;
-import com.workspaceit.pmc.validation.admin.AdminForm;
+import com.workspaceit.pmc.validation.admin.AdminCreateForm;
+import com.workspaceit.pmc.validation.admin.AdminProfileUpdateForm;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,9 +93,9 @@ public class AdminService {
         this.adminDao.update(admin);
     }
     @Transactional(rollbackFor = Exception.class)
-    public Admin create(AdminForm adminForm ){
-        Admin admin = getAdminFromAdminForm(adminForm);
-        Integer profilePictureToken = adminForm.getProfilePictureToken();
+    public Admin create(AdminCreateForm adminCreateForm){
+        Admin admin = getAdminFromAdminForm(adminCreateForm);
+        Integer profilePictureToken = adminCreateForm.getProfilePictureToken();
 
 
         String profileImageName = "";
@@ -109,13 +109,39 @@ public class AdminService {
 
         return admin;
     }
-    private Admin getAdminFromAdminForm(AdminForm adminForm){
+    public Admin updateProfile(int id, AdminProfileUpdateForm profileUpdateForm, Admin currentUser)throws EntityNotFound {
+        Admin admin = this.getById(id);
+        Integer profileImgToken = profileUpdateForm.getProfilePictureToken();
+
+
+        admin.setName(profileUpdateForm.getFullName());
+        admin.setPhoneNumber(profileUpdateForm.getPhoneNumber());
+
+        if(profileUpdateForm.getPassword()!=null && !profileUpdateForm.getPassword().trim().equals("")){
+            admin.setPassword(CypherHelper.getbCryptPassword(profileUpdateForm.getPassword()));
+        }
+
+        /**
+         * Update admin profile
+         * It replace previous image in database but
+         * the physical image in folder explicitly
+         * */
+        if(profileImgToken!=null && profileImgToken>0){
+            this.fileUtil.deleteFileInCommonFolder(admin.getImage());
+            String profileImgName =  this.fileService.copyFile(profileImgToken);
+            admin.setImage(profileImgName);
+        }
+        this.update(admin);
+
+        return admin;
+    }
+    private Admin getAdminFromAdminForm(AdminCreateForm adminCreateForm){
         Admin admin = new Admin();
-        admin.setName(adminForm.getFullName());
-        admin.setPhoneNumber(adminForm.getPhoneNumber());
-        admin.setUserName(adminForm.getUserName());
-        admin.setEmail(adminForm.getEmail());
-        admin.setPassword(CypherHelper.getbCryptPassword(adminForm.getPassword()));
+        admin.setName(adminCreateForm.getFullName());
+        admin.setPhoneNumber(adminCreateForm.getPhoneNumber());
+        admin.setUserName(adminCreateForm.getUserName());
+        admin.setEmail(adminCreateForm.getEmail());
+        admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
         return admin;
     }
     private void populateAdminByAdminForm(Admin admin, AdminEditForm adminEditForm){

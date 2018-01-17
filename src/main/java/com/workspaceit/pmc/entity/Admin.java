@@ -52,9 +52,6 @@ public class Admin {
     @JoinTable(name = "admin_has_roles",
             joinColumns = {@JoinColumn(name = "admin_id")},
             inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
-
-
-
     private Set<AdminRole> adminRoles = new HashSet<>();
 
     public int getId() {

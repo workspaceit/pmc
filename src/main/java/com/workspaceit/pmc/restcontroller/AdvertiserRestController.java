@@ -124,7 +124,7 @@ public class AdvertiserRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @RequestMapping(value = "/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid AdvertiserForm advertiserForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
 
         /**
@@ -158,7 +158,7 @@ public class AdvertiserRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
 
         this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);
@@ -212,7 +212,7 @@ public class AdvertiserRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
 
         this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);

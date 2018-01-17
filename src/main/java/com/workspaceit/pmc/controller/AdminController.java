@@ -59,7 +59,7 @@ public class AdminController {
     }
     @RequestMapping(value = "/profile")
     public ModelAndView profileDetails(Authentication authentication){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         if(currentUser==null){
             return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
@@ -72,7 +72,7 @@ public class AdminController {
     }
     @RequestMapping(value = "/profile/edit")
     public ModelAndView profileUpdate(Authentication authentication){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         if(currentUser==null){
             return new ModelAndView("redirect:"+"/admin/admin-user-management/all");

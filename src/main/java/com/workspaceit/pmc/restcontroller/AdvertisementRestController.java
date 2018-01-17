@@ -68,7 +68,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/gallery-create-validation")
     public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid GalleryAdsCreateForm galleryAdsForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -101,7 +101,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/popup-create-validation")
     public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid PopupAdsCreateForm pupAdsCreateForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -132,7 +132,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/slideshow-create-validation")
     public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid SlideShowAdsCreateForm slideShowAdsForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -169,7 +169,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/gallery-update-validation")
     public ResponseEntity<?> validateGalleryAdsUpdate(Authentication authentication, @Valid GalleryAdsUpdateForm galleryAdsUpdateForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -197,7 +197,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/slideshow-update-validation")
     public ResponseEntity<?> validateSlideShowUpdate(Authentication authentication, @Valid SlideShowAdsUpdateForm slideShowAdsForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -225,7 +225,7 @@ public class AdvertisementRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/popup-update-validation")
     public ResponseEntity<?> validatePopUpUpdate(Authentication authentication, @Valid PopupAdsUpdateForm popupAdsUpdateForm, BindingResult bindingResult){
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 

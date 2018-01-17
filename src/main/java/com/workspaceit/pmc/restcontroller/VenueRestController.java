@@ -49,7 +49,7 @@ public class VenueRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid VenueForm venueForm, BindingResult bindingResult) {
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         //System.out.println(currentUser.getId());
         /**
@@ -91,7 +91,7 @@ public class VenueRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id, @Valid VenueForm venueForm, BindingResult bindingResult) throws EntityNotFound{
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         //System.out.println(currentUser.getId());
         /**

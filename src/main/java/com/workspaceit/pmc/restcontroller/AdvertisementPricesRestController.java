@@ -53,7 +53,7 @@ public class AdvertisementPricesRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping("/update")
     public ResponseEntity<?> update(Authentication authentication, @Valid AdvertisementPricesForm advertisementPricesForm, BindingResult bindingResult) throws EntityNotFound {
-        Admin currentUser = this.adminService.getAdminByEmail(((User) authentication.getPrincipal()).getUsername());
+        Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         //System.out.println(currentUser.getId());
         /**

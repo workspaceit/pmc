@@ -21,11 +21,11 @@ $(document).ready(function(){
     injectHiddenTokenFields();
 });
 
-function notifyAdminUpdateStatus(){
-    $("#successMsg").html("Successfully updated").fadeIn(500).delay( 1000 ).fadeIn(500,function(){
+function notifyAdminUpdateStatus() {
+    $("#successMsg").html("Successfully updated").fadeIn(500).delay(1000).fadeIn(500, function () {
         location.reload();
     });
-
+}
 
 function injectHiddenTokenFields(){
     var profilePicTokenElement = $("<input>", {type:"hidden",id: "profilePicToken", "value": ""});

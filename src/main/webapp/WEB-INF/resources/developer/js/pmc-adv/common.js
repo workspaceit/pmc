@@ -1,6 +1,7 @@
 /**
  * Created by mi_rafi on 1/4/18.
  */
+
 var errorFound = false;
 var globalBtnAction = "";
 var globalSubmitAction = "";

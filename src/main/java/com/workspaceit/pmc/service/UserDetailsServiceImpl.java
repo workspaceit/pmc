@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.auth.AdminUserDetails;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.AdminRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        for(AdminRole adminRole: roles){
 //            System.out.println(adminRole.toString());
 //        }
-        List<GrantedAuthority> authorities =
-                buildUserAuthority(admin.getAdminRoles());
-        return buildUserForAuthentication(admin, authorities);
+
+
+        return new AdminUserDetails(admin);
 
     }
 
