@@ -3,6 +3,7 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.PhotographerService;
 import com.workspaceit.pmc.util.ServiceResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * Created by mi_rafi on 12/28/17.
@@ -190,4 +192,17 @@ public class PhotographerRestController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Info successfully updated"));
     }
+
+    @GetMapping("/auto-suggest")
+    public ResponseEntity<?> getSuggestedPhotographers(@RequestParam("searchTerm") String searchTerm){
+        try {
+            List<Photographer> photographers = photographerService.getSuggestedPhotographers(searchTerm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographers);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,6 +23,9 @@ public class Watermark {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private WatermarkType type;
@@ -51,16 +55,19 @@ public class Watermark {
     @Column(name = "color")
     private String color;
 
+    @JsonIgnore
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @JsonIgnore
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
@@ -72,6 +79,14 @@ public class Watermark {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public WatermarkType getType() {
@@ -169,6 +184,8 @@ public class Watermark {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
+
+
 
 
 }

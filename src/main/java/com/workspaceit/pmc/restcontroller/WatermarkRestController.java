@@ -3,6 +3,7 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.LocationService;
@@ -18,12 +19,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by mi_rafi on 1/1/18.
@@ -34,6 +33,7 @@ public class WatermarkRestController {
 
     private WatermarkService watermarkService;
     private AdminService adminService;
+
     @Autowired
     public void setWatermarkService(WatermarkService watermarkService){
         this.watermarkService=watermarkService;
@@ -90,4 +90,17 @@ public class WatermarkRestController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
+
+    @GetMapping("/auto-suggest")
+    public ResponseEntity<?> getSuggestedWatermarks(@RequestParam("searchTerm") String searchTerm){
+        try {
+            List<Watermark> watermarks = watermarkService.getSuggestedWatermarks(searchTerm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(watermarks);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+    }
+
 }

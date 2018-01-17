@@ -21,12 +21,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by mi_rafi on 1/4/18.
@@ -256,4 +254,17 @@ public class AdvertiserRestController {
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");
     }
+
+    @GetMapping("/auto-suggest")
+    public ResponseEntity<?> getSuggestedWatermarks(@RequestParam("searchTerm") String searchTerm){
+        try {
+            List<Advertiser> advertisers = advertiserService.getSuggestedAdvertisers(searchTerm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertisers);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+    }
+
 }

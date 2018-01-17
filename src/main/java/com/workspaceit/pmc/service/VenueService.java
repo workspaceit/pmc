@@ -4,6 +4,7 @@ import com.workspaceit.pmc.dao.VenueDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.Venue;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.venue.VenueForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class VenueService {
 
     public List<Venue> getAll(){
         return this.venueDao.getAll();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Venue> getSuggestedVenues(String searchTerm){
+        return this.venueDao.getSuggestedVenues(searchTerm);
     }
 
     public Venue getById(int id){

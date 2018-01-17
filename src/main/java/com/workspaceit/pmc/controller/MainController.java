@@ -42,6 +42,13 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
+    public ModelAndView adminDashboard() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("admin/home");
+        return model;
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {

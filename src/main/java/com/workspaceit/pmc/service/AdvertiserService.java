@@ -160,4 +160,10 @@ public class AdvertiserService {
     public List<Advertiser> getAll(){
         return this.advertiserDao.getAll();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
+        return this.advertiserDao.getSuggestedAdvertisers(searchTerm);
+    }
+
 }

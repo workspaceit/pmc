@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Tomal on 1/10/2018.
  */
 @Controller
-@RequestMapping(ControllerUriPrefix.ADMIN+"/advertisementPrices")
+@RequestMapping(ControllerUriPrefix.ADMIN+"/advertisement-prices")
 public class AdvertisementPricesController {
 
     private AdvertisementPricesService advertisementPricesService;
@@ -25,7 +25,7 @@ public class AdvertisementPricesController {
         this.advertisementPricesService = advertisementPricesService;
     }
 
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "")
     public ModelAndView update(){
 
         List<AdvertisementPrices> pricesList = this.advertisementPricesService.getAll();

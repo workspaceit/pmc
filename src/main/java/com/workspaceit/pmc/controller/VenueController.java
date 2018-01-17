@@ -41,6 +41,8 @@ public class VenueController {
             return model;
     }
 
+
+
     @RequestMapping(value = "/all")
     public ModelAndView all(){
         List<Venue> venues = this.venueService.getAll();
