@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;background-color: #222">
                 <li>
-                    <a href="index2.html">
+                    <a href="<c:url value="/admin/dashboard"/>">
                         <img src="<s:url value="/resources/images/dashboard.svg"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Dashboard</span>
                     </a>
@@ -34,13 +34,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="design-update.html">
+                    <a href="<c:url value="/admin/event/add"/>">
                         <img src="<s:url value="/resources/images/add-event.svg"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Create Event</span>
                     </a>
                 </li>
                 <li>
-                    <a href="pricing.html">
+                    <a href="<c:url value="/admin/advertisement-prices"/>">
                         <img src="<s:url value="/resources/images/price.png"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Pricing</span>
                     </a>

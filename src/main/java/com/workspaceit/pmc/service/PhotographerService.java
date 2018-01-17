@@ -160,4 +160,9 @@ public class PhotographerService {
     public void update(Photographer photographer){
         this.photographerDao.update(photographer);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Photographer> getSuggestedPhotographers(String searchTerm){
+        return this.photographerDao.getSuggestedPhotographers(searchTerm);
+    }
 }

@@ -46,12 +46,14 @@ public class WatermarkService {
         return this.watermarkDao.getAll();
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public List<Watermark> getSuggestedWatermarks(String searchTerm){
+        return this.watermarkDao.getSuggestedWatermarks(searchTerm);
+    }
+
     public Watermark getById(int id){
         return this.watermarkDao.getById(id);
     }
-//    public Watermark getById(int id){
-//        return this.watermarkDao.getById(id);
-//    }
 
     @Transactional(rollbackFor = Exception.class)
     public Watermark create(WatermarkForm watermarkForm){
@@ -79,6 +81,7 @@ public class WatermarkService {
 
         return watermark;
     }
+
     public void create(Watermark watermark){
         this.watermarkDao.insert(watermark);
     }
@@ -165,5 +168,6 @@ public class WatermarkService {
 
 
     }
+
 
 }

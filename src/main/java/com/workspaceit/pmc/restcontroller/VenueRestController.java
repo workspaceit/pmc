@@ -7,6 +7,7 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Venue;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.VenueService;
@@ -20,12 +21,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 @RequestMapping(ControllerUriPrefix.API+"/venue")
 public class VenueRestController {
@@ -73,6 +73,18 @@ public class VenueRestController {
         this.venueService.create(venueForm);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+    }
+
+    @GetMapping("/auto-suggest")
+    public ResponseEntity<?> getSuggestedVenues(@RequestParam("searchTerm") String searchTerm){
+        try {
+            List<Venue> venues = venueService.getSuggestedVenues(searchTerm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(venues);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
     }
 
 

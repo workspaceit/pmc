@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -33,25 +34,28 @@ public class Event {
     private Date endsAt;
 
     @Column(name = "is_private")
-    private Date isPrivate;
+    private Boolean isPrivate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = false)
     private Venue venue;
 
     @Column(name = "event_photo")
-    private Date eventPhoto;
+    private String eventPhoto;
 
+    @JsonIgnore
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @JsonIgnore
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
@@ -104,12 +108,20 @@ public class Event {
         this.endsAt = endsAt;
     }
 
-    public Date getIsPrivate() {
+    public Boolean getPrivate() {
         return isPrivate;
     }
 
-    public void setIsPrivate(Date isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setPrivate(Boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
+
+    public String getEventPhoto() {
+        return eventPhoto;
+    }
+
+    public void setEventPhoto(String eventPhoto) {
+        this.eventPhoto = eventPhoto;
     }
 
     public Venue getVenue() {
@@ -120,13 +132,7 @@ public class Event {
         this.venue = venue;
     }
 
-    public Date getEventPhoto() {
-        return eventPhoto;
-    }
 
-    public void setEventPhoto(Date eventPhoto) {
-        this.eventPhoto = eventPhoto;
-    }
 
     public Date getCreatedAt() {
         return createdAt;
