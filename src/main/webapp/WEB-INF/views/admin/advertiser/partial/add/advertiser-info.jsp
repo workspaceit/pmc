@@ -5,11 +5,11 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label>Name</label>
-                    <input id="name" class="form-control" value="${advertiser.name}">
+                    <input id="name" class="form-control" value="">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <input id="address" class="form-control" value="${advertiser.address}" >
+                    <input id="address" class="form-control" value="" >
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-4 col-xs-12">
@@ -19,13 +19,8 @@
                             </label>
                             <div>
                                 <select id="cityId" class="form-control">
-                                    <c:set var="cityOptionSelected" value="" ></c:set>
                                     <c:forEach var="city" items="${cities}">
-                                        <c:if test="${advertiser.city.id == city.id}">
-                                            <c:set var="cityOptionSelected" value="selected=\"selected\"" ></c:set>
-                                        </c:if>
-
-                                        <option value="${city.id}" ${cityOptionSelected} >${city.name}</option>
+                                        <option value="${city.id}"  >${city.name}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -50,12 +45,8 @@
                             <label style="width:100%;">
                                 <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                                 <select id="stateId" class="form-control" >
-                                    <c:set var="stateOptionSelected" value="" ></c:set>
                                     <c:forEach var="state" items="${states}" >
-                                        <c:if test="${state.id == advertiser.state.id }" >
-                                            <c:set var="stateOptionSelected" value="selected=\"selected\"" ></c:set>
-                                        </c:if>
-                                        <option value="${state.id}" ${stateOptionSelected}>${state.name}</option>
+                                        <option value="${state.id}" >${state.name}</option>
                                     </c:forEach>
                                 </select>
                             </label>
@@ -64,17 +55,17 @@
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
                             <label>Zip</label>
-                            <input id="zip" class="form-control" value="${advertiser.zip}">
+                            <input id="zip" class="form-control" value="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input id="phone" class="form-control" value="${advertiser.phone}" >
+                    <input id="phone" class="form-control" value="" >
                 </div>
                 <div class="form-group">
                     <label>Website URL</label>
-                    <input id="website" class="form-control" value="${advertiser.website}" >
+                    <input id="website" class="form-control" value="" >
                 </div>
 
                 <div class="imageupload panel panel-default">
@@ -109,13 +100,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input name="runtimeStarts" id="runtimeStarts" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeStarts}" pattern="dd/MM/yyyy"></fmt:formatDate>">
+                        <input name="runtimeStarts" id="runtimeStarts" class="form-control" value="">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>End Date</label>
-                        <input name="runtimeEnds" id="runtimeEnds" class="form-control" value="<fmt:formatDate  value="${advertiser.runtimeEnds}" pattern="dd/MM/yyyy"></fmt:formatDate>">
+                        <input name="runtimeEnds" id="runtimeEnds" class="form-control" value="">
                     </div>
                 </div>
             </div>
@@ -126,21 +117,11 @@
                     </div>
                     <div class="panel-body">
                         <div>
-                            <c:set var="allEventSelectionChecked" value="" ></c:set>
-                            <c:if test="${advertiser.allLocations}" >
-                                <c:set var="allEventSelectionChecked" value="checked" ></c:set>
-                            </c:if>
-                            <input id="allLocationSelection" type="checkbox" value="1"  ${allEventSelectionChecked} />All Location
+                            <input id="allLocationSelection" type="checkbox" value="1" />All Location
                         </div>
                         <div style="width: 100%">
                             <select id="locationIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
                                 <c:forEach var="location" items="${locations}" >
-                                    <c:set var="locationSelected" value="" ></c:set>
-                                    <c:forEach var="advertiserLocation" items="${advertiser.locations}" >
-                                        <c:if test="${advertiserLocation.id == location.id}">
-                                            <c:set var="locationSelected" value="selected=\"selected\"" ></c:set>
-                                        </c:if>
-                                    </c:forEach>
                                     <option value="${location.id}" ${locationSelected} >${location.name}</option>
                                 </c:forEach>
                             </select>
@@ -159,22 +140,12 @@
                         <div style="width: 100%">
                             <div>
 
-                                <c:set var="allEventSelectionChecked" value="" ></c:set>
-                                <c:if test="${advertiser.allEvents}" >
-                                    <c:set var="allEventSelectionChecked" value="checked" ></c:set>
-                                </c:if>
 
-                                <input id="allEventSelection" type="checkbox" value="1"  ${allEventSelectionChecked} />All Event
+                                <input id="allEventSelection" type="checkbox" value="1"  />All Event
                             </div>
                             <div>
                                 <select id="eventIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
                                     <c:forEach var="event" items="${events}" >
-                                        <c:set var="eventSelected" value="" ></c:set>
-                                        <c:forEach var="advertiserEvent" items="${advertiser.events}" >
-                                            <c:if test="${advertiserEvent.id == event.id}">
-                                                <c:set var="eventSelected" value="selected=\"selected\"" ></c:set>
-                                            </c:if>
-                                        </c:forEach>
                                         <option value="${event.id}" ${eventSelected} >${event.name}</option>
                                     </c:forEach>
 

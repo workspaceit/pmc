@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by mi_rafi on 1/4/18.
@@ -70,8 +72,8 @@ public class AdvertiserService {
         advertiser.setRuntimeStarts(advertiserForm.getRuntimeStarts());
         advertiser.setRuntimeEnds(advertiserForm.getRuntimeEnds());
         advertiser.setCreatedBy(admin);
-        advertiser.setAllLocations(advertiserForm.getIsAllLocationSelected());
-        advertiser.setAllEvents(advertiserForm.getIsAllEventSelected());
+        advertiser.setIsAllLocationSelected(advertiserForm.getIsAllLocationSelected());
+        advertiser.setAllEventSelected(advertiserForm.getIsAllEventSelected());
 
         if(!advertiserForm.getIsAllLocationSelected()) {
             List<Location> locations = this.locationService.getAll(advertiserForm.getLocationIds());
@@ -104,8 +106,8 @@ public class AdvertiserService {
         advertiser.setWebsite( advertiserForm.getWebsite());
         advertiser.setRuntimeStarts(advertiserForm.getRuntimeStarts());
         advertiser.setRuntimeEnds(advertiserForm.getRuntimeEnds());
-        advertiser.setAllLocations(advertiserForm.getIsAllLocationSelected());
-        advertiser.setAllEvents(advertiserForm.getIsAllEventSelected());
+        advertiser.setIsAllLocationSelected(advertiserForm.getIsAllLocationSelected());
+        advertiser.setAllEventSelected(advertiserForm.getIsAllEventSelected());
 
         if(!advertiserForm.getIsAllLocationSelected()) {
             List<Location> locations = this.locationService.getAll(advertiserForm.getLocationIds());
@@ -161,9 +163,32 @@ public class AdvertiserService {
         return this.advertiserDao.getAll();
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
         return this.advertiserDao.getSuggestedAdvertisers(searchTerm);
     }
-
+    @Transactional
+    public List<Advertiser> getByEventId(int eventId){
+        return this.advertiserDao.getByEventId(eventId);
+    }
+    @Transactional
+    public List<Integer> getIdByEventId(int eventId){
+        List<Advertiser> advertisers =  this.getByEventId(eventId);
+        if(advertisers==null || advertisers.size()==0){
+            return new ArrayList<>(0);
+        }
+        return advertisers.stream().map(Advertiser::getId).collect(Collectors.toList());
+    }
+    @Transactional
+    public List<Advertiser> getByLocationId(int locationId){
+        return this.advertiserDao.getByLocationId(locationId);
+    }
+    @Transactional
+    public List<Integer> getIdByLocationId(int locationId){
+        List<Advertiser> advertisers =  this.getByLocationId(locationId);
+        if(advertisers==null || advertisers.size()==0){
+            return new ArrayList<>(0);
+        }
+        return advertisers.stream().map(Advertiser::getId).collect(Collectors.toList());
+    }
 }

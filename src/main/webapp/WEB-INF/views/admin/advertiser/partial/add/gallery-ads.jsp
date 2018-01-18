@@ -59,9 +59,9 @@
                         <div class="" style="margin-left: auto;float:right;">
 
 
-                            <div class="btn-group">
-                                <button type="button" class="active btn btn-default btn-switch" id="regi1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button type="button" class="btn btn-default btn-switch" id="regi2"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                            <div id="galleryTopRotationBtn" class="btn-group">
+                                <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>
@@ -93,18 +93,9 @@
                     <div class="col-md-6 col-xs-6 pull-right">
 
                         <div class="" style="margin-left: auto;float:right;">
-                            <!-- <div class="onoffswitch3">
-                                <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch4" checked>
-                                <label class="onoffswitch3-label" for="myonoffswitch4">
-                                    <span class="onoffswitch3-inner">
-                                        <span class="onoffswitch3-active"><span class="onoffswitch3-switch"><i class="fa fa-repeat"></i>&nbsp;Rotate</span></span>
-                                        <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch"><i class="fa fa-minus"></i>&nbsp;Static</span></span>
-                                    </span>
-                                </label>
-                            </div> -->
-                            <div class="btn-group">
-                                <button type="button" class="active btn btn-default btn-switch" id="regi3"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button type="button" class="btn btn-default btn-switch" id="regi4"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                             <div id="galleryBottomRotationBtn" class="btn-group">
+                                <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button type="button" class="btn btn-default btn-switch" id="regi4" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>
@@ -112,16 +103,6 @@
                             <input id="bottomBannerExpiryDate" type="text" class="form-control" />
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <!-- <div class="" style="margin-left: auto;float:right;margin-right:5px;">
-                        <label style="font-size: 13px;font-weight: 600">Duration : </label>
-                        <select class="form-control" style="padding: 0px 12px 0px 12px;height: 28px;width: 75px;display: inline;">
-
-                          <option value="">1s</option>
-                          <option value="">2s</option>
-                          <option value="">3s</option>
-                          <option value="">4s</option>
-                        </select>
-                        </div> -->
                     </div>
 
 

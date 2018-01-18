@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.gallery;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -54,40 +55,16 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
         return bottomBannerExpiryDate;
     }
 
+
     @Override
-    public void setAdvertiserId(Integer advertiserId) {
-        this.advertiserId = advertiserId;
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getTopBannerRotation() {
+        return super.getTopBannerRotation();
     }
 
     @Override
-    public void setLogoToken(Integer logoToken) {
-        this.logoToken = logoToken;
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getBannerRotation() {
+        return super.getBannerRotation();
     }
-
-    @Override
-    public void setBgImgTokens(Integer bgImgTokens) {
-        this.bgImgTokens = bgImgTokens;
-    }
-
-    @Override
-    public void setTopBannerImgTokens(Integer[] topBannerImgTokens) {
-        this.topBannerImgTokens = topBannerImgTokens;
-    }
-
-    @Override
-    public void setBottomBannerImgTokens(Integer[] bottomBannerImgTokens) {
-        this.bottomBannerImgTokens = bottomBannerImgTokens;
-    }
-
-    @Override
-    public void setTopBannerExpiryDate(Date topBannerExpiryDate) {
-        this.topBannerExpiryDate = topBannerExpiryDate;
-    }
-
-    @Override
-    public void setBottomBannerExpiryDate(Date bottomBannerExpiryDate) {
-        this.bottomBannerExpiryDate = bottomBannerExpiryDate;
-    }
-
-
 }

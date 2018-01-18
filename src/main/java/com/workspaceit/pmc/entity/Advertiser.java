@@ -1,15 +1,11 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,10 +47,10 @@ public class Advertiser {
 
 
     @Column(name = "all_locations")
-    private boolean allLocations;
+    private boolean isAllLocationSelected;
 
     @Column(name = "all_events")
-    private boolean allEvents;
+    private boolean isAllEventSelected;
 
     @Column(name = "other_image")
     private String otherImage;
@@ -231,20 +227,20 @@ public class Advertiser {
         this.locations = locations;
     }
 
-    public boolean isAllLocations() {
-        return allLocations;
+    public boolean getIsAllLocationSelected() {
+        return isAllLocationSelected;
     }
 
-    public void setAllLocations(boolean allLocations) {
-        this.allLocations = allLocations;
+    public void setIsAllLocationSelected(boolean isAllLocationSelected) {
+        this.isAllLocationSelected = isAllLocationSelected;
     }
 
-    public boolean isAllEvents() {
-        return allEvents;
+    public boolean getIsAllEventSelected() {
+        return isAllEventSelected;
     }
 
-    public void setAllEvents(boolean allEvents) {
-        this.allEvents = allEvents;
+    public void setAllEventSelected(boolean allEventSelected) {
+        this.isAllEventSelected = allEventSelected;
     }
 
     public Set<AdvertisersOtherImage> getOtherImages() {
@@ -254,5 +250,19 @@ public class Advertiser {
     public void setOtherImages(Set<AdvertisersOtherImage> otherImages) {
         this.otherImages = otherImages;
     }
-}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Advertiser that = (Advertiser) o;
+
+        return (id == that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
+}

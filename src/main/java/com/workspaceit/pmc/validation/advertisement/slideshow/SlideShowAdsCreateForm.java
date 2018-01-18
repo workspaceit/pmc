@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.slideshow;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -53,4 +54,18 @@ public class SlideShowAdsCreateForm extends SlideShowAdsForm {
     public Date getBannerExpiryDate() {
         return super.getBannerExpiryDate();
     }
+
+    @Override
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getBannerRotation() {
+        return super.getBannerRotation();
+    }
+
+    @Override
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getVideoRotation() {
+        return super.getVideoRotation();
+    }
+
+
 }

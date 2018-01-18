@@ -5,6 +5,14 @@
 var errorFound = false;
 var globalBtnAction = "";
 var globalSubmitAction = "";
+var RotationSettings={
+    _GALLERY_BOTTOM:"galleryBottomRotationBtn",
+    _GALLERY_TOP:"galleryTopRotationBtn",
+    _SLIDE_SHOW_BANNER:"slideShowBannerRotationBtn",
+    _SLIDE_SHOW_VIDEO:"slideShowVideoRotationBtn",
+    _POP_UP_SMS:"popUpSmsRotationBtn",
+    _POP_UP_EMAIL:"popUpEmailRotationBtn"
+};
 function notifyUser(id,response,errorFound){
     if(errorFound){
         $("#"+id).html(response.responseJSON.length).show();
@@ -14,7 +22,29 @@ function notifyUser(id,response,errorFound){
 }
 $(document).ready(function(){
     injectHiddenTokenFieldsForAdvertiser();
+
+    for(var key in RotationSettings){
+        var id = RotationSettings[key];
+        initRtationSettings(id);
+    }
 });
+
+function getRotationSetting(id){
+   var rotationSettingVal =  $("#"+id+" .active").data("val");
+    rotationSettingVal = parseInt(rotationSettingVal);
+
+    if(rotationSettingVal==1){
+        return "ROTATE";
+    }else{
+        return "STATIC";
+    }
+}
+function initRtationSettings(id){
+    $("#"+id+" .btn").click(function(){
+        $("#"+id+" .btn").removeClass("active");
+        $(this).addClass("active");
+    });
+}
 
 var ADV_IMG_TYPE = {
     _ADVERTISER_OTHER_IMAGES_TOKEN:"otherImagesToken",
@@ -454,7 +484,10 @@ function getGalleryAddsData(prefix){
     var topBannerExpiryDate = $('#topBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
     var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
 
-    var slideShowVideoDuration = $('#slideShowVideoDuration').val();
+    var topBannerRotation = getRotationSetting(RotationSettings._GALLERY_TOP);
+    var bottomBannerRotation = getRotationSetting(RotationSettings._GALLERY_BOTTOM);
+
+
 
     var data={};
     if(galleryId>0)data[prefix+"id"]= galleryId;
@@ -466,7 +499,8 @@ function getGalleryAddsData(prefix){
     data[prefix+"bottomBannerImgTokens"]=bottomBannerImgTokens;
     data[prefix+"topBannerExpiryDate"]= topBannerExpiryDate;
     data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
-    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
+    data[prefix+"topBannerRotation"]= topBannerRotation;
+    data[prefix+"bottomBannerRotation"]= bottomBannerRotation;
     return data;
 }
 /*Slideshow Ads */
@@ -486,6 +520,9 @@ function getSlideShowAdsData(prefix){
     var videoExpiryDate  =  $('#slideShowVideoExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
     var bannerExpiryDate = $('#slideShowBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
 
+    var bannerRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_BANNER);
+    var videoRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_VIDEO);
+
     var data = {};
     if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
 
@@ -496,7 +533,8 @@ function getSlideShowAdsData(prefix){
     data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
     data[prefix+"videoExpiryDate"] = videoExpiryDate;
     data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
-
+    data[prefix+"bannerRotation"] = bannerRotation;
+    data[prefix+"videoRotation"] = videoRotation;
     return data;
 }
 /*PopUp Ads */
@@ -518,6 +556,9 @@ function getPopUpAdsData(prefix){
     var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
     var emailExpiryDate =  $('#emailExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
 
+    var smsRotation = getRotationSetting(RotationSettings._POP_UP_SMS);
+    var emailRotation = getRotationSetting(RotationSettings._POP_UP_EMAIL);
+
     var data = {};
     if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
     if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
@@ -528,9 +569,11 @@ function getPopUpAdsData(prefix){
     data[prefix+"emailPopupVideo"]= emailPopupVideo;
     data[prefix+"emailPopupVideoDuration"]= emailPopupVideoDuration;
     data[prefix+"smsPopupVideoDuration"]= smsPopupVideoDuration;
-
     data[prefix+"smsExpiryDate"]= smsExpiryDate;
     data[prefix+"emailExpiryDate"]= emailExpiryDate;
+    data[prefix+"smsRotation"]= smsRotation;
+    data[prefix+"emailRotation"]= emailRotation;
+
     return data;
 }
 

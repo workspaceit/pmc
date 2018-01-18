@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Watermark;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -44,5 +45,25 @@ public class AdvertiserDao extends BaseDao {
         query.setParameter("txtp", "%" +searchTerm);
         return query.list();
     }
-
+    public List<Advertiser> getByEventId(int eventId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Advertiser a "+
+                "LEFT JOIN FETCH a.events event WHERE event.id=:eventId  ")
+                .setParameter("eventId",eventId)
+                .list();
+    }
+    public List<Advertiser> getByLocationId(int locationId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Advertiser a "+
+                "LEFT JOIN FETCH a.locations location WHERE location.id=:locationId  ")
+                .setParameter("locationId",locationId)
+                .list();
+    }
+    public List<Advertiser> getByEventId(int eventId,boolean includeAllSelected){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Advertiser a "+
+                "LEFT JOIN FETCH a.events event WHERE event.id=:eventId or a")
+                .setParameter("eventId",eventId)
+                .list();
+    }
 }
