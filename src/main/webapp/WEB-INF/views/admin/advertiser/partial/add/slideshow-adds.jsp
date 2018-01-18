@@ -1,3 +1,4 @@
+<%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
     <div class="imageupload panel panel-default">

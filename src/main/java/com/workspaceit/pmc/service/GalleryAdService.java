@@ -50,6 +50,8 @@ public class GalleryAdService {
         galleryAd.setBackgroundImage(bgFileName);
         galleryAd.setTopBannerExpiryDate( topBannerExpiryDate);
         galleryAd.setBottomBannerExpiryDate(bottomBannerExpiryDate);
+        galleryAd.setTopBannerRotate(galleryAdsForm.getTopBannerRotation());
+        galleryAd.setBottomBannerRotate(galleryAdsForm.getBottomBannerRotation());
         galleryAd.setCreatedBy(admin);
 
         this.create(galleryAd);
@@ -82,6 +84,9 @@ public class GalleryAdService {
 
         galleryAd.setTopBannerExpiryDate( topBannerExpiryDate);
         galleryAd.setBottomBannerExpiryDate(bottomBannerExpiryDate);
+
+        galleryAd.setTopBannerRotate(galleryAdsForm.getTopBannerRotation());
+        galleryAd.setBottomBannerRotate(galleryAdsForm.getBottomBannerRotation());
 
         this.update(galleryAd);
 

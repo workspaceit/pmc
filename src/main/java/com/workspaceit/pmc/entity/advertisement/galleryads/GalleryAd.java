@@ -52,11 +52,11 @@ public class GalleryAd {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "top_banner_rotation_settings")
-    private AdvertiseRotationSettings topBannerRotationSettings;
+    private AdvertiseRotationSettings topBannerRotate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "bottom_banner_rotation_settings")
-    private AdvertiseRotationSettings bottomBannerRotationSettings;
+    private AdvertiseRotationSettings bottomBannerRotate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -137,20 +137,20 @@ public class GalleryAd {
         this.bottomBannerExpiryDate = bottomBannerExpiryDate;
     }
 
-    public AdvertiseRotationSettings getBottomBannerRotationSettings() {
-        return bottomBannerRotationSettings;
+    public AdvertiseRotationSettings getBottomBannerRotate() {
+        return bottomBannerRotate;
     }
 
-    public void setBottomBannerRotationSettings(AdvertiseRotationSettings bottomBannerRotationSettings) {
-        this.bottomBannerRotationSettings = bottomBannerRotationSettings;
+    public void setBottomBannerRotate(AdvertiseRotationSettings bottomBannerRotate) {
+        this.bottomBannerRotate = bottomBannerRotate;
     }
 
-    public AdvertiseRotationSettings getTopBannerRotationSettings() {
-        return topBannerRotationSettings;
+    public AdvertiseRotationSettings getTopBannerRotate() {
+        return topBannerRotate;
     }
 
-    public void setTopBannerRotationSettings(AdvertiseRotationSettings topBannerRotationSettings) {
-        this.topBannerRotationSettings = topBannerRotationSettings;
+    public void setTopBannerRotate(AdvertiseRotationSettings topBannerRotate) {
+        this.topBannerRotate = topBannerRotate;
     }
 
     public Date getCreatedAt() {

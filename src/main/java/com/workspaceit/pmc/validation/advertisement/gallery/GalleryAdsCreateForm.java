@@ -64,7 +64,7 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
 
     @Override
     @NotNull(message = "Rotation settings required")
-    public AdvertiseRotationSettings getBannerRotation() {
-        return super.getBannerRotation();
+    public AdvertiseRotationSettings getBottomBannerRotation() {
+        return super.getBottomBannerRotation();
     }
 }

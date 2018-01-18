@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -43,6 +44,15 @@ public class SlideshowAd {
 
     @Column(name = "banner_expiry_date")
     private Date bannerExpiryDate;
+
+
+    @Column(name = "banner_rotate")
+    @Enumerated(EnumType.STRING)
+    private AdvertiseRotationSettings bannerRotate;
+
+    @Column(name = "video_rotate")
+    @Enumerated(EnumType.STRING)
+    private AdvertiseRotationSettings videoRotate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -127,6 +137,22 @@ public class SlideshowAd {
         this.bannerExpiryDate = bannerExpiryDate;
     }
 
+    public AdvertiseRotationSettings getBannerRotate() {
+        return bannerRotate;
+    }
+
+    public void setBannerRotate(AdvertiseRotationSettings bannerRotate) {
+        this.bannerRotate = bannerRotate;
+    }
+
+    public AdvertiseRotationSettings getVideoRotate() {
+        return videoRotate;
+    }
+
+    public void setVideoRotate(AdvertiseRotationSettings videoRotate) {
+        this.videoRotate = videoRotate;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -157,5 +183,20 @@ public class SlideshowAd {
 
     public void setSlideshowBannerImages(Set<SlideshowBannerImage> slideshowBannerImages) {
         this.slideshowBannerImages = slideshowBannerImages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SlideshowAd that = (SlideshowAd) o;
+
+        return (id == that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

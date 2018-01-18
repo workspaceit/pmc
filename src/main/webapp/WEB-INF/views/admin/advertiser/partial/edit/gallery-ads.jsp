@@ -1,3 +1,4 @@
+<%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
 <div class="tab-pane" id="tab_default_2">
     <div class="row clearfix">
         <div class="col-md-6">
@@ -63,9 +64,20 @@
                         <div class="" style="margin-left: auto;float:right;">
                             <span id="topBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.topBannerExpiryDate}" type="date" ></fmt:formatDate></span>
 
-                            <div class="btn-group">
-                                <button type="button" class="active btn btn-default btn-switch" id="regi1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button type="button" class="btn btn-default btn-switch" id="regi2"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                            <c:set var="topBannerRotateActive" value="" ></c:set>
+                            <c:set var="topBannerStaticActive" value="" ></c:set>
+                            <c:choose>
+                                <c:when test="${galleryAd.topBannerRotate == AdvertiseRotationSettings.ROTATE }" >
+                                    <c:set var="topBannerRotateActive" value="active" ></c:set>
+                                </c:when>
+                                <c:when test="${galleryAd.topBannerRotate == AdvertiseRotationSettings.STATIC}">
+                                    <c:set var="topBannerStaticActive" value="active" ></c:set>
+                                </c:when>
+                            </c:choose>
+
+                            <div id="galleryTopRotationBtn" class="btn-group">
+                                <button type="button" class="${topBannerRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button type="button" class="${topBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>
@@ -107,9 +119,19 @@
                         <div class="" style="margin-left: auto;float:right;">
                             <span id="bottomBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.bottomBannerExpiryDate}" type="date" ></fmt:formatDate></span>
 
-                            <div class="btn-group">
-                                <button type="button" class="active btn btn-default btn-switch" id="regi3"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button type="button" class="btn btn-default btn-switch" id="regi4"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                            <c:set var="bottomBannerRotateActive" value="" ></c:set>
+                            <c:set var="bottomBannerStaticActive" value="" ></c:set>
+                            <c:choose>
+                                <c:when test="${galleryAd.bottomBannerRotate == AdvertiseRotationSettings.ROTATE }" >
+                                    <c:set var="bottomBannerRotateActive" value="active" ></c:set>
+                                </c:when>
+                                <c:when test="${galleryAd.bottomBannerRotate == AdvertiseRotationSettings.STATIC}">
+                                    <c:set var="bottomBannerStaticActive" value="active" ></c:set>
+                                </c:when>
+                            </c:choose>
+                            <div id="galleryBottomRotationBtn" class="btn-group">
+                                <button type="button" class="${bottomBannerRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button type="button" class="${bottomBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>

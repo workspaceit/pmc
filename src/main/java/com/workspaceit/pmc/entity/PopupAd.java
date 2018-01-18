@@ -1,7 +1,7 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import com.workspaceit.pmc.constant.advertisement.PopupAdType;
-import com.workspaceit.pmc.constant.advertisement.AdType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,6 +42,11 @@ public class PopupAd {
 
     @Column(name = "video_type")
     private String videoType;
+
+    @Column(name = "ad_rotate")
+    @Enumerated(EnumType.STRING)
+    private AdvertiseRotationSettings adRotate;
+
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -127,6 +132,16 @@ public class PopupAd {
         this.popupBannerImages = popupBannerImages;
     }
 
+    public AdvertiseRotationSettings getAdRotate() {
+        return adRotate;
+    }
+
+    public void setAdRotate(AdvertiseRotationSettings adRotate) {
+        this.adRotate = adRotate;
+    }
+
+
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -164,20 +179,5 @@ public class PopupAd {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "PopupAd{" +
-                "id=" + id +
-                ", advertiserId=" + advertiserId +
-                ", type=" + type +
-                ", duration=" + duration +
-                ", expiryDate=" + expiryDate +
-                ", video='" + video + '\'' +
-                ", videoType='" + videoType + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", createdBy=" + createdBy +
-                ", popupBannerImages=" + popupBannerImages +
-                '}';
-    }
+
 }

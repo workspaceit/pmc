@@ -23,7 +23,7 @@ public class GalleryAdsForm {
     protected Date bottomBannerExpiryDate;
 
     AdvertiseRotationSettings topBannerRotation;
-    AdvertiseRotationSettings bannerRotation;
+    AdvertiseRotationSettings bottomBannerRotation;
 
     public Integer getId() {
         return id;
@@ -97,11 +97,11 @@ public class GalleryAdsForm {
         this.topBannerRotation = topBannerRotation;
     }
 
-    public AdvertiseRotationSettings getBannerRotation() {
-        return bannerRotation;
+    public AdvertiseRotationSettings getBottomBannerRotation() {
+        return bottomBannerRotation;
     }
 
-    public void setBannerRotation(AdvertiseRotationSettings bannerRotation) {
-        this.bannerRotation = bannerRotation;
+    public void setBottomBannerRotation(AdvertiseRotationSettings bottomBannerRotation) {
+        this.bottomBannerRotation = bottomBannerRotation;
     }
 }
