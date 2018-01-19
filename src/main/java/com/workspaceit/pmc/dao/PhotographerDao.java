@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,6 +18,16 @@ public class PhotographerDao extends BaseDao {
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Photographer ORDER BY id DESC")
                 .list();
+    }
+    public List<Photographer> getAll(Integer[] ids){
+        List<Photographer> photographers = null;
+        if(ids.length > 0) {
+            Session session = this.getCurrentSession();
+            photographers = session.createQuery("FROM Photographer where id in :ids")
+                    .setParameterList("ids", Arrays.asList(ids))
+                    .list();
+        }
+        return photographers;
     }
     public Photographer getById(int id){
         Session session = this.getCurrentSession();

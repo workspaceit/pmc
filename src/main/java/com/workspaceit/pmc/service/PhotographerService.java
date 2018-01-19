@@ -61,6 +61,11 @@ public class PhotographerService {
         return this.photographerDao.getAll();
     }
 
+    @Transactional
+    public List<Photographer> getAll(Integer[] ids){
+        return this.photographerDao.getAll(ids);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Photographer create(PhotographerForm photographerForm,User user){
         Admin admin = this.adminDao.getByEmail(user.getUsername());

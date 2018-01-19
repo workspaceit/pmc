@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +36,17 @@ public class WatermarkDao extends BaseDao {
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Watermark ORDER BY id DESC")
                 .list();
+    }
+
+    public List<Watermark> getAll(Integer[] ids){
+        List<Watermark> watermarks = null;
+        if(ids.length > 0) {
+            Session session = this.getCurrentSession();
+            watermarks = session.createQuery("FROM Watermark w where id in :ids")
+                    .setParameterList("ids", ids)
+                    .list();
+        }
+        return watermarks;
     }
 
 

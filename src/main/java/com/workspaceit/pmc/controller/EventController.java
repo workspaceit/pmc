@@ -1,9 +1,11 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.entity.Venue;
 import com.workspaceit.pmc.entity.Watermark;
+import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.PhotographerService;
 import com.workspaceit.pmc.service.VenueService;
 import com.workspaceit.pmc.service.WatermarkService;
@@ -22,12 +24,27 @@ import java.util.List;
 @RequestMapping(value = ControllerUriPrefix.ADMIN+"/event")
 public class EventController {
 
+
+    private VenueService venueService;
+    private PhotographerService photographerService;
+    private WatermarkService watermarkService;
+    private EventService eventService;
     @Autowired
-    VenueService venueService;
+    public void setVenueService(VenueService venueService) {
+        this.venueService = venueService;
+    }
     @Autowired
-    PhotographerService photographerService;
+    public void setPhotographerService(PhotographerService photographerService) {
+        this.photographerService = photographerService;
+    }
     @Autowired
-    WatermarkService watermarkService;
+    public void setWatermarkService(WatermarkService watermarkService) {
+        this.watermarkService = watermarkService;
+    }
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @RequestMapping(value = "/add")
     public ModelAndView add(){
@@ -38,6 +55,14 @@ public class EventController {
         model.addObject("venues", venues);
         model.addObject("photographers", photographers);
         model.addObject("watermarks", watermarks);
+        return model;
+    }
+
+    @RequestMapping(value = "/all")
+    public ModelAndView all(){
+        List<Event> events = this.eventService.getAll();
+        ModelAndView model = new ModelAndView("admin/event/all");
+        model.addObject("events", events);
         return model;
     }
 

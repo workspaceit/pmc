@@ -11,7 +11,7 @@ import java.util.List;
  * Created by mi_rafi on 1/3/18.
  */
 @Repository
-public class EventDao extends BaseDao{
+public class EventDao extends BaseDao {
 
     public List<Event> getAll(){
         Session session = this.getCurrentSession();

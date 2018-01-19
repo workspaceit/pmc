@@ -166,4 +166,9 @@ public class AdvertiserService {
         return this.advertiserDao.getSuggestedAdvertisers(searchTerm);
     }
 
+    @Transactional
+    public List<Advertiser> getAll(Integer[] ids){
+        return this.advertiserDao.getAll(ids);
+    }
+
 }
