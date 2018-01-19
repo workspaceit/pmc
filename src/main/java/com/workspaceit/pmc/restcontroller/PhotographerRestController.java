@@ -75,7 +75,7 @@ public class PhotographerRestController {
                                                   @RequestParam("profilePictureToken") Integer token,
                                                   @PathVariable("id")  Integer id){
         System.out.println(authentication.getPrincipal().getClass());
-        User user =  (User)authentication.getPrincipal();
+        Admin currentUser =  (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
          * Basic Validation
@@ -95,7 +95,7 @@ public class PhotographerRestController {
 
         Photographer photographer = null;
         try {
-            photographer = this.photographerService.updateProfilePicture(id,token,user);
+            photographer = this.photographerService.updateProfilePicture(id,token,currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
         }

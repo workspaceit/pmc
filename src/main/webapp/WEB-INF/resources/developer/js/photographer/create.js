@@ -83,7 +83,7 @@ function submitPhotographerData(btnAction){
 
                 BindErrorsWithHtml("errorObj_",response.responseJSON);
                 console.log(response);
-                btnAction
+
             }
         },success: function(data){
             UnBindErrors("errorObj_");

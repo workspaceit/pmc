@@ -61,13 +61,14 @@ function initUpdate(btnAction){
 
 function update(count){
 
-    var password =  $("#password").val();
+
     updateCount =0;
     switch(count){
         case 1:
             updateBasicInfo();
             break;
         case 2:
+            var password =  $("#password").val();
             if(password!=null && password.trim()!=""){
                 updatePassword();
             }else{
@@ -82,9 +83,7 @@ function update(count){
             }
             break;
         case 4:
-            notifyUpdateStatus(function(){
-                photographerAfterSaveAction(globalBtnAction);
-            });
+            photographerAfterSaveAction(globalBtnAction);
     }
 
 

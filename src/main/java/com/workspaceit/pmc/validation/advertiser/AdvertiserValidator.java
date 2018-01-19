@@ -5,6 +5,7 @@ import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.service.*;
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -22,7 +23,7 @@ public class AdvertiserValidator implements Validator {
     private CityService cityService;
     private StateService stateService;
     private EventService eventService;
-
+    private UrlValidator urlValidator = new UrlValidator();
 
     @Autowired
     public void setPhotographerService(PhotographerService photographerService) {
@@ -53,9 +54,9 @@ public class AdvertiserValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         AdvertiserForm advertiserForm = (AdvertiserForm)obj;
 
-
         this.checkCityExistence(advertiserForm.getCityId(),errors);
         this.checkStateExistence(advertiserForm.getStateId(),errors);
+        this.checkValidUrl(advertiserForm.getWebsite(),errors);
 
         if(!advertiserForm.getIsAllLocationSelected()){
             this.checkLocationExistence(advertiserForm.getLocationIds(),errors);
@@ -63,6 +64,7 @@ public class AdvertiserValidator implements Validator {
         if(!advertiserForm.getIsAllEventSelected()){
             this.checkEventExistence(advertiserForm.getEventIds(),errors);
         }
+
 
     }
 
@@ -129,6 +131,11 @@ public class AdvertiserValidator implements Validator {
     private void checkMinEventSelected(Integer[] eventIds, Errors errors){
         if(eventIds==null || eventIds.length==0){
             errors.rejectValue("eventIds","Event required");
+        }
+    }
+    private void checkValidUrl(String url, Errors errors){
+        if(!urlValidator.isValid(url)){
+            errors.rejectValue("website","Url is not in valid format");
         }
     }
 }
