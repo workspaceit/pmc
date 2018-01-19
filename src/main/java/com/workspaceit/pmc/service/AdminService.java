@@ -66,18 +66,24 @@ public class AdminService {
     public Admin getAdminByEmail(String email){
         return adminDao.getByEmail(email);
     }
+
+    public Admin getAdminByEmail(String email, Admin admin){
+        return adminDao.getByEmail(email, admin);
+    }
     public Admin getByUserName(String userName){
         return this.adminDao.getByUserName(userName);
+    }
+    public Admin getByUserName(String userName, Admin admin){
+        return this.adminDao.getByUserName(userName, admin);
     }
     public void create(Admin admin){
         this.adminDao.insert(admin);
     }
-    public Admin update(int id, AdminEditForm adminEditForm, Admin currentUser)throws EntityNotFound {
+    public Admin update(int id, AdminCreateForm adminCreateForm, Admin currentUser)throws EntityNotFound {
         Admin admin = this.getById(id);
-        Integer profileImgToken = adminEditForm.getProfilePictureToken();
+        Integer profileImgToken = adminCreateForm.getProfilePictureToken();
 
-
-        this.populateAdminByAdminForm(admin,adminEditForm);
+        this.populateAdminByAdminForm(admin,adminCreateForm);
 
         /**
          * Update admin profile
@@ -159,9 +165,12 @@ public class AdminService {
         admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
         return admin;
     }
-    private void populateAdminByAdminForm(Admin admin, AdminEditForm adminEditForm){
-        admin.setName(adminEditForm.getFullName());
-        admin.setPhoneNumber(adminEditForm.getPhoneNumber());
+    private void populateAdminByAdminForm(Admin admin, AdminCreateForm adminCreateForm){
+        admin.setName(adminCreateForm.getFullName());
+        admin.setPhoneNumber(adminCreateForm.getPhoneNumber());
+        admin.setUserName(adminCreateForm.getUserName());
+        admin.setEmail(adminCreateForm.getEmail());
+        admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
     }
     @Transactional(rollbackFor = Exception.class)
     public List<Admin> getAll(){

@@ -11,10 +11,10 @@
 
                     <div class="row clearfix">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData()">Save</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top">Cancel</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save')">Save</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-close')">Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-new')">Save&nbsp;&&nbsp;New</button>
+                            <a href="<c:url value="/admin/user/all"/>" class="btn btn-action-top">Cancel</a>
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -28,22 +28,22 @@
                             <label>Phone Number</label>
                             <input id="phoneNumber" class="form-control" type="Number" value="${admin.phoneNumber}" >
                         </div>
-                        <%--<div class="form-group">--%>
-                            <%--<label>User Name</label>--%>
-                            <%--<input id=userName class="form-control" value="${admin.userName}" >--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Email</label>--%>
-                            <%--<input id="email" class="form-control" value="${admin.email}" >--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Password</label>--%>
-                            <%--<input id="password" class="form-control" type="password" placeholder="******">--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Confirm Password</label>--%>
-                            <%--<input id="confirmPassword" class="form-control" type="password" placeholder="******">--%>
-                        <%--</div>--%>
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input id=userName class="form-control" value="${admin.userName}" >
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="email" class="form-control" value="${admin.email}" >
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input id="password" class="form-control" type="password" placeholder="******">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input id="confirmPassword" class="form-control" type="password" placeholder="******">
+                        </div>
                         <div class="imageupload panel panel-default">
                             <div class="panel-heading clearfix">
                                 <h4 class="panel-title pull-left">Profile Image</h4>

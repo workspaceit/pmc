@@ -36,7 +36,7 @@ $(document).ready(function () {
         }
     );
 
-    $('#save-watermark-btn').click(function () {
+    function save(action){
         UnBindErrors("errorObj_");
         console.log("submitting . . .");
         var eventName = $('#eventName').val();
@@ -49,11 +49,8 @@ $(document).ready(function () {
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
         var watermarkIds = $('#watermark-select2').val();
-
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
-
-
         var data = {
             'eventName': eventName,
             'startDate': startDate,
@@ -65,7 +62,6 @@ $(document).ready(function () {
             'imageToken': pictureToken,
             'isPrivate': isPrivate
         };
-
         $.ajax({
             url: BASEURL+'api/event/create',
             data: data,
@@ -83,13 +79,27 @@ $(document).ready(function () {
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
-                photographerAfterSaveActionCreate(btnAction);
+                if(action === "save" || action === "save-close") {
+                    window.location = BASEURL + "admin/event/all";
+                }
+                else if(action === "save-new"){
+                    window.location = BASEURL + "admin/event/add";
+                }
             }
         });
+    }
 
+    $('#save-watermark-btn').click(function () {
+        save('save');
+    });
+    $('#save-close-watermark-btn').click(function () {
+        save('save-close');
+    });
+    $('#save-new-watermark-btn').click(function () {
+        save('save-new');
     });
 
-    $('#update-watermark-btn').click(function () {
+    function update(action){
         UnBindErrors("errorObj_");
         console.log("submitting . . .");
         var eventName = $('#eventName').val();
@@ -136,10 +146,24 @@ $(document).ready(function () {
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
-                photographerAfterSaveActionCreate(btnAction);
+                if(action === "save" || action === "save-close") {
+                    window.location = BASEURL + "admin/event/all";
+                }
+                else if(action === "save-new"){
+                    window.location = BASEURL + "admin/event/add";
+                }
             }
         });
+    }
 
+    $('#update-watermark-btn').click(function () {
+        update('save');
+    });
+    $('#update-close-watermark-btn').click(function () {
+        update('save-close');
+    });
+    $('#update-new-watermark-btn').click(function () {
+        update('save-new');
     });
 
     $("#watermark-select2").select2({

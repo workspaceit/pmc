@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
@@ -8,9 +9,9 @@
                 <h3 class="uni-header"><span>Create Event</span></h3>
                 <div class="btn-container-top">
                     <button class="btn btn-action-top" id="save-watermark-btn">Save</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                    <button class="btn btn-action-top">Cancel</button>
+                    <button class="btn btn-action-top" id="save-close-watermark-btn">Save&nbsp;&&nbsp;Close</button>
+                    <button class="btn btn-action-top" id="save-new-watermark-btn">Save&nbsp;&&nbsp;New</button>
+                    <a href="<c:url value="/admin/event/all"/>" class="btn btn-action-top">Cancel</a>
                 </div>
                 <!-- Page Heading -->
                 <div class="row cstm-tab tab-pane clearfix" style="margin:0px !important">
@@ -91,11 +92,11 @@
                                                                     class="select2-hidden-accessible" aria-hidden="true">
                                                             </select>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary btn-sm-new"
-                                                                data-toggle="modal" data-target="#addPhotographer"
-                                                                style="margin-top: 15px;">
-                                                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer
-                                                        </button>
+                                                        <%--<button type="button" class="btn btn-primary btn-sm-new"--%>
+                                                                <%--data-toggle="modal" data-target="#addPhotographer"--%>
+                                                                <%--style="margin-top: 15px;">--%>
+                                                            <%--<i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer--%>
+                                                        <%--</button>--%>
                                                     </div>
                                                 </div>
                                             </div>

@@ -15,7 +15,7 @@ public class EventDao extends BaseDao {
 
     public List<Event> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Event")
+        return session.createQuery("FROM Event ORDER BY id DESC")
                 .list();
     }
     public List<Event> getAll(Integer[] ids){
