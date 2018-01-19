@@ -42,4 +42,5 @@ public class GalleryAdDao extends BaseDao {
                 .setParameter("advertiserId", Arrays.asList(advertiserId))
                 .list();
     }
+
 }

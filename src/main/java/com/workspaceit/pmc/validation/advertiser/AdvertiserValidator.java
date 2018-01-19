@@ -5,9 +5,11 @@ import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.service.*;
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 
@@ -22,7 +24,7 @@ public class AdvertiserValidator implements Validator {
     private CityService cityService;
     private StateService stateService;
     private EventService eventService;
-
+    private UrlValidator urlValidator = new UrlValidator();
 
     @Autowired
     public void setPhotographerService(PhotographerService photographerService) {
@@ -44,6 +46,11 @@ public class AdvertiserValidator implements Validator {
         this.stateService = stateService;
     }
 
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+
     @Override
     public boolean supports(Class<?> aClass) {
         return AdvertiserForm.class.equals(aClass);
@@ -51,18 +58,21 @@ public class AdvertiserValidator implements Validator {
 
     @Override
     public void validate(Object obj, Errors errors) {
-        AdvertiserForm advertiserForm = (AdvertiserForm)obj;
 
+
+        AdvertiserForm advertiserForm = (AdvertiserForm)obj;
 
         this.checkCityExistence(advertiserForm.getCityId(),errors);
         this.checkStateExistence(advertiserForm.getStateId(),errors);
+        this.checkValidUrl(advertiserForm.getWebsite(),errors);
 
-        if(!advertiserForm.getIsAllLocationSelected()){
+        if(!advertiserForm.getIsAllLocationSelected() ){
             this.checkLocationExistence(advertiserForm.getLocationIds(),errors);
         }
         if(!advertiserForm.getIsAllEventSelected()){
-            this.checkEventExistence(advertiserForm.getEventIds(),errors);
+           this.checkEventExistence(advertiserForm.getEventIds(),errors);
         }
+
 
     }
 
@@ -98,7 +108,10 @@ public class AdvertiserValidator implements Validator {
         }
     }
     private void checkLocationExistence(Integer[] locationIds, Errors errors){
-
+        if(locationIds==null || locationIds.length==0){
+            errors.rejectValue("locationIds","Location is required");
+            return;
+        }
         for(int locationId:locationIds){
             Location location =  this.locationService.getById(locationId);
             if( location == null ){
@@ -110,7 +123,10 @@ public class AdvertiserValidator implements Validator {
 
     }
     private void checkEventExistence(Integer[] eventIds, Errors errors){
-
+        if(eventIds==null || eventIds.length==0){
+            errors.rejectValue("eventIds","Event is required");
+            return;
+        }
         for(int eventId:eventIds){
             Event event =  this.eventService.getById(eventId);
             if( event == null ){
@@ -129,6 +145,11 @@ public class AdvertiserValidator implements Validator {
     private void checkMinEventSelected(Integer[] eventIds, Errors errors){
         if(eventIds==null || eventIds.length==0){
             errors.rejectValue("eventIds","Event required");
+        }
+    }
+    private void checkValidUrl(String url, Errors errors){
+        if(!urlValidator.isValid(url)){
+            errors.rejectValue("website","Url is not in valid format");
         }
     }
 }

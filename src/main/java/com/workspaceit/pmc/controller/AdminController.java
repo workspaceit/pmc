@@ -64,7 +64,7 @@ public class AdminController {
         if(currentUser==null){
             return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
         }
-        ModelAndView model = new ModelAndView("admin/profile/details");
+        ModelAndView model = new ModelAndView("admin/admin-user-management/profile/details");
 
         model.addObject("user",currentUser);
 
@@ -77,7 +77,7 @@ public class AdminController {
         if(currentUser==null){
             return new ModelAndView("redirect:"+"/admin/admin-user-management/all");
         }
-        ModelAndView model = new ModelAndView("admin/profile/edit");
+        ModelAndView model = new ModelAndView("admin/admin-user-management/profile/edit");
 
         model.addObject("user",currentUser);
 

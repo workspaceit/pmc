@@ -165,6 +165,10 @@ public class AdvertiserController {
         model.addObject("cities",cities);
         model.addObject("durations",durations);
 
+          /*For location Modal Page*/
+        model.addObject("fadeInList",this.fadeInList);
+        model.addObject("fadeOutList",this.fadeOutList);
+
         return model;
     }
 }

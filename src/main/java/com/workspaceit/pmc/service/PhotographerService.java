@@ -132,13 +132,13 @@ public class PhotographerService {
         return photographer;
     }
     @Transactional(rollbackFor = Exception.class)
-    public Photographer updateProfilePicture(int id,int token,User user)throws EntityNotFound{
+    public Photographer updateProfilePicture(int id,int token,Admin user)throws EntityNotFound{
         Photographer photographer =  this.getPhotographer(id);
         return this.updateProfilePicture(photographer,token,user);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    Photographer updateProfilePicture(Photographer photographer,int token,User user){
+    Photographer updateProfilePicture(Photographer photographer,int token,Admin user){
         String fileName = this.fileService.copyFileToPhotographerProfilePicture(token);
         if(fileName==null || fileName.equals("")){
             return photographer;

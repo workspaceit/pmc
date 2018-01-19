@@ -15,12 +15,7 @@
                 </h3>
                 <div class="col-md-12">
                     <div class="row clearfix">
-                        <div class="btn-container-top">
-                            <button class="btn btn-action-top">Save</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top">Cancel</button>
-                        </div>
+
                         <div class="col-md-5">
                             <c:set value="" var="imgSrc" />
                             <c:choose>

@@ -207,7 +207,7 @@
                                                 <div class="input-group" style="margin-bottom: 13px">
                                                     <fmt:parseNumber var = "durationSpeedVal" integerOnly = "true"
                                                                      type = "number" value ="${location.durationSpeed}" />
-                                                    <input type="text" class="form-control" id="durationSpeed" placeholder=""  value="${durationSpeedVal}">
+                                                    <input min="0" type="number" class="form-control" id="durationSpeed" placeholder=""  value="${durationSpeedVal}">
                                                     <div class="input-group-addon">sec</div>
                                                 </div>
                                                 <p class="text-danger" id="errorObj_durationSpeed"></p>
@@ -215,7 +215,7 @@
                                                 <div class="input-group">
                                                     <fmt:parseNumber var = "breakTimeVal" integerOnly = "true"
                                                                      type = "number" value ="${location.breakTime}" />
-                                                    <input type="text" class="form-control" id="breakTime" placeholder="" value="${breakTimeVal}" >
+                                                    <input min="0" type="number" class="form-control" id="breakTime" placeholder="" value="${breakTimeVal}" >
                                                     <div class="input-group-addon">min</div>
 
                                                 </div>

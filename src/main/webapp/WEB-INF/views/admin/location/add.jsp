@@ -152,13 +152,13 @@
                                                 <h3 style="text-align: left;color: #fff"> TRANSITIONS</h3>
                                                 <p style="text-align: left;">Duration Speed</p>
                                                 <div class="input-group" style="margin-bottom: 13px">
-                                                    <input type="number" class="form-control" id="durationSpeed" placeholder="">
+                                                    <input type="number" min="0" class="form-control" id="durationSpeed" placeholder="">
                                                     <div class="input-group-addon">sec</div>
                                                 </div>
                                                 <p class="text-danger" id="errorObjLocation_durationSpeed"></p>
                                                 <p style="text-align: left;">Ad Break Time</p>
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="breakTime" placeholder="">
+                                                    <input type="number" min="0" class="form-control" id="breakTime" placeholder="">
                                                     <div class="input-group-addon">min</div>
 
                                                 </div>
