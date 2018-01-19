@@ -135,7 +135,6 @@ public class AdvertisementRestController {
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
-
         /**
          * Basic Validation
          * */

@@ -1,8 +1,10 @@
 package com.workspaceit.pmc.validation.advertisement.slideshow;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -18,6 +20,10 @@ public class SlideShowAdsForm {
     private Integer slideShowBannerDuration;
     private Date videoExpiryDate;
     private Date bannerExpiryDate;
+
+    private AdvertiseRotationSettings bannerRotation;
+    private AdvertiseRotationSettings videoRotation;
+
 
     public Integer getId() {
         return id;
@@ -81,5 +87,37 @@ public class SlideShowAdsForm {
 
     public void setBannerExpiryDate(Date bannerExpiryDate) {
         this.bannerExpiryDate = bannerExpiryDate;
+    }
+
+    public AdvertiseRotationSettings getBannerRotation() {
+        return bannerRotation;
+    }
+
+    public void setBannerRotation(AdvertiseRotationSettings bannerRotation) {
+        this.bannerRotation = bannerRotation;
+    }
+
+    public AdvertiseRotationSettings getVideoRotation() {
+        return videoRotation;
+    }
+
+    public void setVideoRotation(AdvertiseRotationSettings videoRotation) {
+        this.videoRotation = videoRotation;
+    }
+
+    @Override
+    public String toString() {
+        return "SlideShowAdsForm{" +
+                "id=" + id +
+                ", advertiserId=" + advertiserId +
+                ", slideShowAdsBannerTokens=" + Arrays.toString(slideShowAdsBannerTokens) +
+                ", slideShowAdsVideoToken=" + slideShowAdsVideoToken +
+                ", slideShowVideoDuration=" + slideShowVideoDuration +
+                ", slideShowBannerDuration=" + slideShowBannerDuration +
+                ", videoExpiryDate=" + videoExpiryDate +
+                ", bannerExpiryDate=" + bannerExpiryDate +
+                ", bannerRotation=" + bannerRotation +
+                ", videoRotation=" + videoRotation +
+                '}';
     }
 }

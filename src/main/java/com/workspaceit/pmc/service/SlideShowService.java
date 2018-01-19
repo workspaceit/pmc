@@ -5,10 +5,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.SlideshowAd;
 import com.workspaceit.pmc.exception.EntityNotFound;
-import com.workspaceit.pmc.helper.FileHelper;
-import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
-import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +52,8 @@ public class SlideShowService {
         slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
         slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
         slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
+        slideshowAd.setBannerRotate(slideShowAdsForm.getBannerRotation());
+        slideshowAd.setVideoRotate(slideShowAdsForm.getVideoRotation());
         slideshowAd.setCreatedBy(admin);
 
         this.create(slideshowAd);
@@ -80,6 +79,8 @@ public class SlideShowService {
         slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
         slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
         slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
+        slideshowAd.setBannerRotate(slideShowAdsForm.getBannerRotation());
+        slideshowAd.setVideoRotate(slideShowAdsForm.getVideoRotation());
 
         this.update(slideshowAd);
 

@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.auth.AdminUserDetails;
 import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.exception.EntityNotFound;
@@ -10,6 +11,9 @@ import com.workspaceit.pmc.validation.admin.AdminCreateForm;
 import com.workspaceit.pmc.validation.admin.AdminProfileUpdateForm;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,6 +136,17 @@ public class AdminService {
             admin.setImage(profileImgName);
         }
         this.update(admin);
+
+        /**
+         * Update Spring authentication information
+         * with new admin object
+         * */
+        /*******************************************/
+        AdminUserDetails adminUserDetails = new AdminUserDetails(admin);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(adminUserDetails, admin.getPassword(), adminUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        /*******************************************/
+
 
         return admin;
     }

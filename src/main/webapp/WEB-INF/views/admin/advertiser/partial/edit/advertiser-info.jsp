@@ -120,11 +120,11 @@
                     </div>
                     <div class="panel-body">
                         <div>
-                            <c:set var="allEventSelectionChecked" value="" ></c:set>
-                            <c:if test="${advertiser.allLocations}" >
-                                <c:set var="allEventSelectionChecked" value="checked" ></c:set>
+                            <c:set var="allLocationSelectionChecked" value="" ></c:set>
+                            <c:if test="${advertiser.isAllLocationSelected}" >
+                                <c:set var="allLocationSelectionChecked" value="checked" ></c:set>
                             </c:if>
-                            <input id="allLocationSelection" type="checkbox" value="1"  ${allEventSelectionChecked} />All Location
+                            <input id="allLocationSelection" type="checkbox" value="1"  ${allLocationSelectionChecked} />All Location
                         </div>
                         <div style="width: 100%">
                             <select id="locationIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
@@ -154,7 +154,7 @@
                             <div>
 
                                 <c:set var="allEventSelectionChecked" value="" ></c:set>
-                                <c:if test="${advertiser.allEvents}" >
+                                <c:if test="${advertiser.isAllEventSelected}" >
                                     <c:set var="allEventSelectionChecked" value="checked" ></c:set>
                                 </c:if>
 

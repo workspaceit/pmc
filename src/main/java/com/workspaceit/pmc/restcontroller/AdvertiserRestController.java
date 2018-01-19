@@ -10,10 +10,7 @@ import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.popup.PopUpAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsValidator;
-import com.workspaceit.pmc.validation.advertiser.AdvertiserAndAllCompositeUpdateForm;
-import com.workspaceit.pmc.validation.advertiser.AdvertiserForm;
-import com.workspaceit.pmc.validation.advertiser.AdvertiserValidator;
-import com.workspaceit.pmc.validation.advertiser.AdvertiserAndAllCompositeForm;
+import com.workspaceit.pmc.validation.advertiser.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -117,7 +114,7 @@ public class AdvertiserRestController {
     }
     @Secured(UserRole._SUPER_ADMIN)
     @RequestMapping(value = "/validate-create")
-    public ResponseEntity<?> validateCreate(Authentication authentication, @Valid AdvertiserForm advertiserForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateCreate(Authentication authentication, @Valid AdvertiserCreateForm advertiserForm, BindingResult bindingResult){
         return this.getValidated(advertiserForm,bindingResult);
     }
 

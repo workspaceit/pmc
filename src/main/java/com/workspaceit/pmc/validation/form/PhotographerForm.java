@@ -1,13 +1,16 @@
 package com.workspaceit.pmc.validation.form;
 
-import com.workspaceit.pmc.validation.validator.UniqueEmail;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.GroupSequence;
+import javax.validation.constraints.Pattern;
 
+/*interface Cheap {}
+interface Expensive {}
+
+@GroupSequence(value={Cheap.class,Expensive.class}, scope=PER_TARGET)*/
 /**
  * Created by mi_rafi on 12/28/17.
  */
@@ -24,6 +27,7 @@ public class PhotographerForm
     @Length(max=50,message = "Value is too large")
     private String userName;
 
+
     @NotBlank(message="Password required")
     @Length.List({
             @Length(min=5,message = "At least 5 character required"),
@@ -33,8 +37,9 @@ public class PhotographerForm
     private String password;
 
     @NotBlank(message="Email required")
-    @Length(max=50,message = "Value is too large")
-    @Email(message = "Email is not valid")
+    @Length(max=100,message = "Value is too large")
+   // @Email(message = "Email is not valid")
+    @Pattern(regexp ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?:[a-zA-Z]{2,6})$", message="Email is not valid")
     private String email;
 
 

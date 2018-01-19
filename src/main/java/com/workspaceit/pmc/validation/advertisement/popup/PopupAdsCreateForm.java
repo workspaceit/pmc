@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -64,5 +65,18 @@ public class PopupAdsCreateForm extends PopupAdsForm {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     public Date getEmailExpiryDate() {
         return super.getEmailExpiryDate();
+    }
+
+
+    @Override
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getSmsRotation() {
+        return super.getSmsRotation();
+    }
+
+    @Override
+    @NotNull(message = "Rotation settings required")
+    public AdvertiseRotationSettings getEmailRotation() {
+        return super.getEmailRotation();
     }
 }

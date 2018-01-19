@@ -1,7 +1,7 @@
 package com.workspaceit.pmc.entity.advertisement.galleryads;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBannerImage;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsTopBannerImage;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 
@@ -50,6 +49,14 @@ public class GalleryAd {
 
     @Column(name = "bottom_banner_expiry_date")
     private Date bottomBannerExpiryDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "top_banner_rotation_settings")
+    private AdvertiseRotationSettings topBannerRotate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bottom_banner_rotation_settings")
+    private AdvertiseRotationSettings bottomBannerRotate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -130,6 +137,22 @@ public class GalleryAd {
         this.bottomBannerExpiryDate = bottomBannerExpiryDate;
     }
 
+    public AdvertiseRotationSettings getBottomBannerRotate() {
+        return bottomBannerRotate;
+    }
+
+    public void setBottomBannerRotate(AdvertiseRotationSettings bottomBannerRotate) {
+        this.bottomBannerRotate = bottomBannerRotate;
+    }
+
+    public AdvertiseRotationSettings getTopBannerRotate() {
+        return topBannerRotate;
+    }
+
+    public void setTopBannerRotate(AdvertiseRotationSettings topBannerRotate) {
+        this.topBannerRotate = topBannerRotate;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -152,5 +175,25 @@ public class GalleryAd {
 
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
+    }
+
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GalleryAd galleryAd = (GalleryAd) o;
+
+
+        return (id == galleryAd.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 }

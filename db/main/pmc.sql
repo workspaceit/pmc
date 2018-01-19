@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2018 at 08:14 PM
--- Server version: 5.5.57-0ubuntu0.14.04.1-log
+-- Generation Time: Jan 19, 2018 at 10:10 AM
+-- Server version: 5.6.39
 -- PHP Version: 5.5.9-1ubuntu4.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -38,18 +38,21 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=137 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=140 ;
 
 --
 -- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `user_name`, `phone_number`, `image`, `password`, `created_at`, `created_by`) VALUES
-(132, 'Anik S.', 'aniksarker17@gmail.com', '', '', '', '$2a$10$6C3HCNuSOm52lli4CK43wuGMoi4MvPXzxPpsSEbe/P5DHA4YlhSgC', '2017-12-19 18:08:02', NULL),
+(132, 'Anik S.01564', 'aniksarker17@gmail.com', 'anik', '132165487435345', '71595162975927.png', '$2a$10$CB454JLAnGhfH9pRQaSJHebfuik3TaCkaAgopXvTAPZfzhHvtmvFi', '2017-12-19 18:08:02', NULL),
 (133, 'Shawon', 'shawon@gmail.com', 'shawon', '01234565', '28712497703892.png', '$2a$10$LxT2LHSvFBXOIZPGCOTTq.HzHpFeV9NotBGy4G0UU7dEzfDAPMPTC', '2018-01-09 18:47:25', NULL),
 (134, 'Roy Roy', 'roy@gmail.com', 'roy', '11', '', '$2a$10$v9aKn09NulrVFtdV..7caOOdlwDjL.AoVpM4SCMK6yDZHc6qdkONu', '2018-01-10 11:14:41', NULL),
 (135, 'lala', 'lala@a', 'lala', '1122', '', '$2a$10$wZpqzPnaz474yTSl2oDeUeWw0V/Rd0/7l2WgRdeNKLjODm6b2zq4K', '2018-01-10 11:19:22', NULL),
-(136, 'Rafi', 'rafi@k', 'Rafi', '354', '101989477327860.jpg', '$2a$10$DqfhIBgUvG6NH49lV3YwOOB.0M4Alo09khwApRyF3ewfzjdYNdGFm', '2018-01-10 15:08:43', NULL);
+(136, 'Rafi', 'rafi@k', 'Rafi', '354', '101989477327860.jpg', '$2a$10$DqfhIBgUvG6NH49lV3YwOOB.0M4Alo09khwApRyF3ewfzjdYNdGFm', '2018-01-10 15:08:43', NULL),
+(137, 'sdf', 'sdf@sdf.com', 'sdf', '34', '71813925232994.png', '$2a$10$uZrZUNnVL9nbuIRb4zObHu8EigqAz5lvlvPQtSGtIFkdU4ezLPh9G', '2018-01-17 16:17:49', NULL),
+(138, 'New Admin', 'dsw@w', 'New', '1', '71892893030084.png', '$2a$10$FzoXjl/ema6gi0ZEcLt2lOew6y.3UhEx.sNVwo/5..zPLTFb6mD0y', '2018-01-17 16:19:12', NULL),
+(139, 'Admin Admin', 'awar@s', 'Admin', '565475671', '5621444081456.png', '$2a$10$nQhM7E2ZQ0k3iFzrG7B5/eg1Oq80ANK6f7QLH5lAb6H5WeUNXLwh2', '2018-01-18 11:58:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -109,7 +112,20 @@ CREATE TABLE IF NOT EXISTS `advertisement_prices` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `advertisement_prices`
+--
+
+INSERT INTO `advertisement_prices` (`id`, `type`, `description`, `price`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 'gallery-background-image', 'Gallery Background Image', 10, '2018-01-16 00:00:00', '2018-01-16 00:00:00', 132),
+(2, 'top-ad-banner', 'Top Ad Banner', 12, '2018-01-16 00:00:00', '2018-01-16 12:57:08', 132),
+(3, 'bottom-ad-banner', 'Bottom Ad Banner', 10, '2018-01-16 00:00:00', '2018-01-16 00:00:00', 132),
+(4, 'slideshow-banner-ad', 'Slideshow Banner Ad', 8, '2018-01-16 00:00:00', '2018-01-16 12:57:41', 132),
+(5, 'slideshow-video-ad', 'Slideshow Video Ad', 10, '2018-01-16 00:00:00', '2018-01-16 00:00:00', 132),
+(6, 'sms-pop-up-ad', 'SMS Pop Up Ad', 10, '2018-01-16 00:00:00', '2018-01-16 00:00:00', 132),
+(7, 'email-pop-up-ad', 'Email Pop Up Ad', 210, '2018-01-16 00:00:00', '2018-01-17 16:40:11', 132);
 
 -- --------------------------------------------------------
 
@@ -137,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `advertisers` (
   PRIMARY KEY (`id`),
   KEY `city_id` (`city_id`),
   KEY `state_id` (`state_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `advertisers`
@@ -153,7 +169,11 @@ INSERT INTO `advertisers` (`id`, `name`, `address`, `city_id`, `state_id`, `zip`
 (7, 'dfg', 'dfg', 1, 1, 'dfg', 'dfg', 'dfg', 0, 0, NULL, '2018-01-11', '2018-01-11', '2018-01-11 12:55:43', '2018-01-11 12:55:43', 132),
 (8, 'dfg', 'dfg', 2, 3, 'dfg', 'dfg', 'dfg', 0, 0, NULL, '2018-01-11', '2018-01-11', '2018-01-11 12:56:34', '2018-01-15 13:28:47', 132),
 (9, 'sdf3423', '4dsf234', 2, 3, 'sdf2343', 'sd34', 'sdf34', 0, 1, NULL, '2018-01-02', '2018-01-10', '2018-01-11 15:05:33', '2018-01-12 20:12:18', 132),
-(10, 'ttyus', 'tyutyu', 2, 3, 'tyu', 'tyutyu', 'tyutyu', 1, 0, NULL, '2018-01-11', '2018-04-12', '2018-01-11 15:17:34', '2018-01-15 13:27:18', 132);
+(10, 'ttyussss', 'tyutyu', 2, 3, 'tyu', 'tyutyu', 'tyutyu', 0, 0, NULL, '2018-01-11', '2018-04-01', '2018-01-11 15:17:34', '2018-01-18 11:14:52', 132),
+(11, 'qqqq', 'qqqq', 2, 3, 'qqq', 'qqq', 'qqqq', 0, 0, NULL, '2018-01-17', '2017-12-31', '2018-01-17 15:15:49', '2018-01-18 11:14:12', 132),
+(12, 'New123', '3123eefrtt345', 2, 3, '454tdrgfbvdf', 'fdfedrfer', 'erwerwer', 0, 1, NULL, '2018-02-02', '2018-01-09', '2018-01-18 11:53:39', '2018-01-18 13:12:24', 132),
+(13, 'ert', 'ert', 1, 1, 'ert', '45erfgdf', 'gdfgdfg', 1, 1, NULL, '2018-01-18', '2018-01-18', '2018-01-18 17:45:51', '2018-01-18 17:45:51', 132),
+(14, 'ert', 'ert', 2, 3, 'ert', '45erfgdf', 'gdfgdfg', 1, 1, NULL, '2018-01-18', '2018-01-18', '2018-01-18 18:11:03', '2018-01-18 18:24:18', 132);
 
 -- --------------------------------------------------------
 
@@ -169,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `advertisers_other_image` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `advertisers_other_image`
@@ -200,8 +220,7 @@ INSERT INTO `advertisers_other_image` (`id`, `advertiser_id`, `image`, `created_
 (22, 8, '180237192640792.png', '2018-01-11 12:56:34', 132),
 (23, 8, '180237192640787.png', '2018-01-11 12:56:34', 132),
 (24, 8, '180237810619809.png', '2018-01-11 12:56:34', 132),
-(26, 9, '188083496765312.png', '2018-01-11 15:05:33', 132),
-(29, 9, '99399805075468.jpg', '2018-01-12 20:12:09', 132);
+(30, 9, '3084285912058.png', '2018-01-18 11:16:00', 132);
 
 -- --------------------------------------------------------
 
@@ -289,32 +308,19 @@ CREATE TABLE IF NOT EXISTS `event_advertisers` (
   KEY `event_id` (`event_id`,`created_by`),
   KEY `event_id_2` (`event_id`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `event_advertisers`
 --
 
 INSERT INTO `event_advertisers` (`id`, `event_id`, `advertiser_id`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 3, 3, NULL, NULL, NULL),
-(2, 4, 3, NULL, NULL, NULL),
-(3, 4, 1, NULL, NULL, NULL),
-(4, 3, 1, NULL, NULL, NULL),
-(5, 3, 2, NULL, NULL, NULL),
-(6, 4, 2, NULL, NULL, NULL),
-(7, 4, 3, NULL, NULL, NULL),
-(8, 3, 3, NULL, NULL, NULL),
-(9, 3, 4, NULL, NULL, NULL),
-(10, 4, 4, NULL, NULL, NULL),
-(11, 3, 5, NULL, NULL, NULL),
-(12, 4, 5, NULL, NULL, NULL),
-(13, 4, 6, NULL, NULL, NULL),
-(14, 3, 6, NULL, NULL, NULL),
-(15, 4, 7, NULL, NULL, NULL),
-(16, 3, 7, NULL, NULL, NULL),
-(23, 3, 8, NULL, NULL, NULL),
-(24, 4, 8, NULL, NULL, NULL),
-(26, 3, 10, NULL, NULL, NULL);
+(6, 3, 11, NULL, NULL, NULL),
+(7, 4, 11, NULL, NULL, NULL),
+(8, 4, 10, NULL, NULL, NULL),
+(9, 3, 10, NULL, NULL, NULL),
+(10, 3, 8, NULL, NULL, NULL),
+(11, 4, 8, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -363,7 +369,7 @@ CREATE TABLE IF NOT EXISTS `event_photographers` (
 --
 
 CREATE TABLE IF NOT EXISTS `event_watermarks` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
   `watermark_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -371,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `event_watermarks` (
   PRIMARY KEY (`id`),
   KEY `event_id` (`event_id`,`watermark_id`,`created_by`),
   KEY `watermark_id` (`watermark_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -403,29 +409,35 @@ CREATE TABLE IF NOT EXISTS `gallery_ads` (
   `background_image` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `top_banner_expiry_date` date NOT NULL,
   `bottom_banner_expiry_date` date NOT NULL,
+  `top_banner_rotation_settings` enum('STATIC','ROTATE') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ROTATE',
+  `bottom_banner_rotation_settings` enum('ROTATE','STATIC') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ROTATE',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `gallery_ads`
 --
 
-INSERT INTO `gallery_ads` (`id`, `advertiser_id`, `logo`, `background_image`, `top_banner_expiry_date`, `bottom_banner_expiry_date`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 1, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-11', '2018-01-11 11:37:33', '2018-01-11 11:37:33', 132),
-(2, 2, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', '2018-01-11 11:38:23', '2018-01-11 11:38:23', 132),
-(3, 3, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', '2018-01-11 11:40:10', '2018-01-11 11:40:10', 132),
-(4, 4, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', '2018-01-11 11:40:39', '2018-01-11 11:40:39', 132),
-(5, 5, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', '2018-01-11 12:54:15', '2018-01-11 12:54:15', 132),
-(6, 6, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', '2018-01-11 12:54:21', '2018-01-11 12:54:21', 132),
-(7, 7, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', '2018-01-11 12:55:43', '2018-01-11 12:55:43', 132),
-(8, 8, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', '2018-01-11 12:56:34', '2018-01-11 12:56:34', 132),
-(9, 9, '12147848592779.jpg', '12146138008302.jpg', '2018-01-09', '2018-01-16', '2018-01-11 15:05:33', '2018-01-15 16:08:41', 132),
-(10, 10, '188888053545192.png', '188891945358247.png', '2018-01-11', '2018-01-11', '2018-01-11 15:17:34', '2018-01-11 15:17:34', 132);
+INSERT INTO `gallery_ads` (`id`, `advertiser_id`, `logo`, `background_image`, `top_banner_expiry_date`, `bottom_banner_expiry_date`, `top_banner_rotation_settings`, `bottom_banner_rotation_settings`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 1, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 11:37:33', '2018-01-11 11:37:33', 132),
+(2, 2, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', 'ROTATE', 'ROTATE', '2018-01-11 11:38:23', '2018-01-11 11:38:23', 132),
+(3, 3, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', 'ROTATE', 'ROTATE', '2018-01-11 11:40:10', '2018-01-11 11:40:10', 132),
+(4, 4, '175579688060009.jpg', '175581761412603.jpg', '2018-01-11', '2018-01-25', 'ROTATE', 'ROTATE', '2018-01-11 11:40:39', '2018-01-11 11:40:39', 132),
+(5, 5, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 12:54:15', '2018-01-11 12:54:15', 132),
+(6, 6, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 12:54:21', '2018-01-11 12:54:21', 132),
+(7, 7, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 12:55:43', '2018-01-11 12:55:43', 132),
+(8, 8, '180252078469730.png', '180254125943095.png', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 12:56:34', '2018-01-11 12:56:34', 132),
+(9, 9, '12147848592779.jpg', '12146138008302.jpg', '2018-01-09', '2018-01-16', 'ROTATE', 'ROTATE', '2018-01-11 15:05:33', '2018-01-15 16:08:41', 132),
+(10, 10, '188888053545192.png', '188891945358247.png', '2018-01-11', '2018-01-11', 'ROTATE', 'ROTATE', '2018-01-11 15:17:34', '2018-01-11 15:17:34', 132),
+(11, 11, '67960501034603.jpeg', '67968983372652.jpeg', '2018-01-30', '2018-01-18', 'ROTATE', 'ROTATE', '2018-01-17 15:15:49', '2018-01-17 15:15:49', 132),
+(12, 12, '5285435796594.png', '5295252521698.jpg', '2018-01-18', '2018-01-18', 'ROTATE', 'ROTATE', '2018-01-18 11:53:40', '2018-01-18 11:53:40', 132),
+(13, 13, '26208423750269.png', '26211446543795.png', '2018-01-18', '2018-01-18', 'ROTATE', 'ROTATE', '2018-01-18 17:45:52', '2018-01-18 17:45:52', 132),
+(14, 14, '26208423750269.png', '26211446543795.png', '2018-01-18', '2018-01-18', 'STATIC', 'STATIC', '2018-01-18 18:11:03', '2018-01-18 18:39:20', 132);
 
 -- --------------------------------------------------------
 
@@ -442,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `gallery_ads_bottom_banner_image` (
   PRIMARY KEY (`id`),
   KEY `gallery_ad_id` (`gallery_ad_id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `gallery_ads_bottom_banner_image`
@@ -466,7 +478,9 @@ INSERT INTO `gallery_ads_bottom_banner_image` (`id`, `image`, `gallery_ad_id`, `
 (15, '180264557003798.png', 8, '2018-01-11 12:56:34', NULL),
 (16, '180264782871109.png', 8, '2018-01-11 12:56:34', NULL),
 (18, '188117370512175.png', 9, '2018-01-11 15:05:33', NULL),
-(20, '188896285477950.png', 10, '2018-01-11 15:17:34', NULL);
+(20, '188896285477950.png', 10, '2018-01-11 15:17:34', NULL),
+(22, '26217562439441.png', 13, '2018-01-18 17:45:52', NULL),
+(23, '26217562439441.png', 14, '2018-01-18 18:11:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -483,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `gallery_ads_top_banner_images` (
   PRIMARY KEY (`id`),
   KEY `gallery_ad_id` (`gallery_ad_id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `gallery_ads_top_banner_images`
@@ -508,7 +522,9 @@ INSERT INTO `gallery_ads_top_banner_images` (`id`, `image`, `gallery_ad_id`, `cr
 (16, '180257984927102.png', 8, '2018-01-11 12:56:34', NULL),
 (18, '188112212987733.png', 9, '2018-01-11 15:05:33', NULL),
 (20, '188894286014157.png', 10, '2018-01-11 15:17:34', NULL),
-(21, '11882980666602.jpg', 9, '2018-01-15 14:37:36', NULL);
+(21, '11882980666602.jpg', 9, '2018-01-15 14:37:36', NULL),
+(23, '26214881399404.png', 13, '2018-01-18 17:45:52', NULL),
+(24, '26214881399404.png', 14, '2018-01-18 18:11:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -535,7 +551,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
   PRIMARY KEY (`id`),
   KEY `city_id` (`state_id`,`created_by`),
   KEY `state_id` (`state_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `locations`
@@ -546,7 +562,10 @@ INSERT INTO `locations` (`id`, `name`, `address`, `state_id`, `zip`, `phone`, `l
 (2, 'Loc2', 'sdf', 2, '234', '234', '19136980333780.png', 1, 435, 345, 1, 2, '2018-01-09 16:07:52', '2018-01-09 16:07:52', NULL),
 (3, 'fdsg', 'fdg', 1, '435', 'fdsg', '19453247125865.png', 1, 4, 4, 1, 1, '2018-01-09 16:13:29', '2018-01-09 16:13:29', NULL),
 (4, 'Loc 2', 'asd', 1, 'sad', 'asd', '20550395407420.png', 1, 12, 21, 1, 1, '2018-01-09 16:31:33', '2018-01-09 16:31:33', NULL),
-(5, 'New Location1', '1234', 2, 'aa', 'dsfdferfhbdf', '4101017069972.jpg', 0, -1, -12, 3, 4, '2018-01-15 12:28:58', '2018-01-15 12:32:21', NULL);
+(5, 'New Location1', '1234', 2, 'aa', 'dsfdferfhbdf', '4101017069972.jpg', 0, -1, -12, 3, 4, '2018-01-15 12:28:58', '2018-01-15 12:32:21', NULL),
+(6, 'gdrgtdf', 'gbdfgfdf', 1, 'fgdfgdfg', 'dfgdfgdfgfgdf', '5062186928326.jpg', 1, 3, 4, 0, 0, '2018-01-18 11:51:27', '2018-01-18 11:51:27', NULL),
+(7, 'dasdas', 'asdasd', 2, 'asdasd', 'adadsdad', '', 1, 2, 2, 0, 0, '2018-01-18 11:52:13', '2018-01-18 11:52:13', NULL),
+(8, 'wewewe', 'ewqewe', 3, 'ewewqe', 'qwewe', '6382421638855.jpeg', 1, -12, -11, 3, 2, '2018-01-18 12:09:10', '2018-01-18 12:10:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -565,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `location_advertisers` (
   KEY `event_id` (`location_id`,`created_by`),
   KEY `event_id_2` (`location_id`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=156 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=187 ;
 
 --
 -- Dumping data for table `location_advertisers`
@@ -582,11 +601,14 @@ INSERT INTO `location_advertisers` (`id`, `location_id`, `advertiser_id`, `creat
 (8, 3, 6, NULL, NULL, NULL),
 (9, 1, 7, NULL, NULL, NULL),
 (10, 3, 7, NULL, NULL, NULL),
-(34, 1, 8, NULL, NULL, NULL),
-(35, 3, 8, NULL, NULL, NULL),
-(153, 1, 9, NULL, NULL, NULL),
-(154, 3, 9, NULL, NULL, NULL),
-(155, 4, 9, NULL, NULL, NULL);
+(167, 5, 11, NULL, NULL, NULL),
+(168, 5, 10, NULL, NULL, NULL),
+(169, 1, 8, NULL, NULL, NULL),
+(170, 3, 8, NULL, NULL, NULL),
+(174, 1, 9, NULL, NULL, NULL),
+(175, 3, 9, NULL, NULL, NULL),
+(176, 4, 9, NULL, NULL, NULL),
+(186, 8, 12, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -602,7 +624,7 @@ CREATE TABLE IF NOT EXISTS `location_bg_images` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `location_id` (`location_id`,`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `location_bg_images`
@@ -615,7 +637,8 @@ INSERT INTO `location_bg_images` (`id`, `image`, `location_id`, `created_at`, `c
 (4, '19447326312104.png', 3, '2018-01-09 16:13:29', NULL),
 (5, '19448373514769.png', 3, '2018-01-09 16:13:29', NULL),
 (6, '20553620236102.png', 4, '2018-01-09 16:31:33', NULL),
-(7, '4133700040871.jpg', 5, '2018-01-15 12:28:58', NULL);
+(7, '4133700040871.jpg', 5, '2018-01-15 12:28:58', NULL),
+(8, '6304605685343.jpg', 8, '2018-01-18 12:10:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -636,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `photographers` (
   `created_by` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `photographers`
@@ -656,7 +679,9 @@ INSERT INTO `photographers` (`id`, `full_name`, `phone_number`, `user_name`, `em
 (11, 'Lala', '343', 'lala', 'lala@w', '$2a$10$6bhNYKPrfmaNHjKBUMkNl.DQtOWgLftjHGgAA8RZlSLK0rBP8804C', '88123709911611.png', '2018-01-10 11:18:37', '2018-01-10 11:18:37', 132),
 (12, 'Shuvo', '11', 'shuvo', 'shuvo11@q', '$2a$10$Wk45sjPG8cd0Agsld5oB7ewt9/eHNggFoNEo.Qz6ncSkC9dtxRp4K', '97926921713467.jpg', '2018-01-10 11:28:47', '2018-01-10 14:01:00', 132),
 (13, 'Baba Rafi', '420', '2131312', '43423423@dfgtsdf', '$2a$10$8cmOBL0FZuZOnndLdbGRM.v5M/aYJ.Sypqq0hxRTrw5VGjjhVEyd6', '', '2018-01-10 15:10:27', '2018-01-10 16:23:34', 132),
-(14, 'New', '4', 'New1', 'ng!@dd', '$2a$10$Z8XJ17qvbYVPBuRyrU5ckuIG8SiGopHv0whes5BKXKjXdqCPVkCIS', '5378074457433.png', '2018-01-15 12:49:47', '2018-01-15 12:53:46', 132);
+(14, 'New', '4', 'New1', 'ng!kjh@jkh.vom', '$2a$10$Z8XJ17qvbYVPBuRyrU5ckuIG8SiGopHv0whes5BKXKjXdqCPVkCIS', '5378074457433.png', '2018-01-15 12:49:47', '2018-01-17 18:29:24', 132),
+(15, 'aaaa', '2233', 'saaaa', 'asa@fsdf.gtft', '$2a$10$Je5dTMxz8mm2GRsrC2dCr.VzW/CR3k4zs3CPJiZxn0v/c8VwqDjt6', '6900805543438.png', '2018-01-17 18:33:58', '2018-01-18 12:19:41', 132),
+(16, 'lalalala', '456684', 'lalala', 'lala@lala.lala', '$2a$10$N7FKjB0.DaOtxqvJIcp28e1wV/OnvvPBF0jyu9TS8HqtBbQcA3fGm', '6878053746830.jpg', '2018-01-18 12:14:04', '2018-01-18 12:19:14', 132);
 
 -- --------------------------------------------------------
 
@@ -672,26 +697,33 @@ CREATE TABLE IF NOT EXISTS `popup_ads` (
   `expiry_date` datetime NOT NULL,
   `video` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `video_type` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ad_rotate` enum('ROTATE','STATIC') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ROTATE',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `popup_ads`
 --
 
-INSERT INTO `popup_ads` (`id`, `advertiser_id`, `type`, `duration`, `expiry_date`, `video`, `video_type`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 4, 'SMS', 1, '2018-01-11 00:00:00', '175666133795002.3gp', '', '2018-01-11 11:40:39', '2018-01-11 11:40:39', NULL),
-(2, 4, 'EMAIL', 1, '2018-01-11 00:00:00', '175625627828074.mp4', '', '2018-01-11 11:40:39', '2018-01-11 11:40:39', NULL),
-(3, 8, 'SMS', 1, '2018-01-11 00:00:00', '180314112592599.ogv', NULL, '2018-01-11 12:56:35', '2018-01-11 12:56:35', NULL),
-(4, 8, 'EMAIL', 1, '2018-01-11 00:00:00', '180317937261213.mp4', NULL, '2018-01-11 12:56:35', '2018-01-11 12:56:35', NULL),
-(5, 9, 'SMS', 5, '2018-01-15 00:00:00', '14261105271426.ogv', NULL, '2018-01-11 15:05:34', '2018-01-15 15:22:02', NULL),
-(6, 9, 'EMAIL', 4, '2018-01-24 00:00:00', '14264103978791.ogv', NULL, '2018-01-11 15:05:34', '2018-01-15 15:22:02', NULL),
-(7, 10, 'SMS', 1, '2018-01-11 00:00:00', '188909940584144.ogv', NULL, '2018-01-11 15:17:35', '2018-01-11 15:17:35', NULL),
-(8, 10, 'EMAIL', 1, '2018-01-11 00:00:00', '188912897739819.mp4', NULL, '2018-01-11 15:17:35', '2018-01-11 15:17:35', NULL);
+INSERT INTO `popup_ads` (`id`, `advertiser_id`, `type`, `duration`, `expiry_date`, `video`, `video_type`, `ad_rotate`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 4, 'SMS', 1, '2018-01-11 00:00:00', '175666133795002.3gp', '', 'ROTATE', '2018-01-11 11:40:39', '2018-01-11 11:40:39', NULL),
+(2, 4, 'EMAIL', 1, '2018-01-11 00:00:00', '175625627828074.mp4', '', 'ROTATE', '2018-01-11 11:40:39', '2018-01-11 11:40:39', NULL),
+(3, 8, 'SMS', 1, '2018-01-11 00:00:00', '180314112592599.ogv', NULL, 'ROTATE', '2018-01-11 12:56:35', '2018-01-11 12:56:35', NULL),
+(4, 8, 'EMAIL', 1, '2018-01-11 00:00:00', '180317937261213.mp4', NULL, 'ROTATE', '2018-01-11 12:56:35', '2018-01-11 12:56:35', NULL),
+(5, 9, 'SMS', 5, '2018-01-15 00:00:00', '14261105271426.ogv', NULL, 'ROTATE', '2018-01-11 15:05:34', '2018-01-15 15:22:02', NULL),
+(6, 9, 'EMAIL', 4, '2018-01-24 00:00:00', '14264103978791.ogv', NULL, 'ROTATE', '2018-01-11 15:05:34', '2018-01-15 15:22:02', NULL),
+(7, 10, 'SMS', 1, '2018-01-11 00:00:00', '188909940584144.ogv', NULL, 'ROTATE', '2018-01-11 15:17:35', '2018-01-11 15:17:35', NULL),
+(8, 10, 'EMAIL', 1, '2018-01-11 00:00:00', '188912897739819.mp4', NULL, 'ROTATE', '2018-01-11 15:17:35', '2018-01-11 15:17:35', NULL),
+(9, 11, 'SMS', 1, '2018-01-31 00:00:00', '68078728449396.mp4', NULL, 'ROTATE', '2018-01-17 15:15:50', '2018-01-17 15:15:50', NULL),
+(10, 11, 'EMAIL', 1, '2018-01-29 00:00:00', '68085518332350.mp4', NULL, 'ROTATE', '2018-01-17 15:15:50', '2018-01-17 15:15:50', NULL),
+(11, 12, 'SMS', 1, '2018-01-18 00:00:00', '5332646008410.mp4', NULL, 'ROTATE', '2018-01-18 11:53:40', '2018-01-18 11:53:40', NULL),
+(12, 12, 'EMAIL', 1, '2018-01-18 00:00:00', '5341526079607.mp4', NULL, 'ROTATE', '2018-01-18 11:53:40', '2018-01-18 11:53:40', NULL),
+(14, 14, 'SMS', 1, '2018-01-18 00:00:00', '26305972930036.webm', NULL, 'STATIC', '2018-01-18 18:11:04', '2018-01-19 10:05:12', NULL),
+(15, 14, 'EMAIL', 1, '2018-01-18 00:00:00', '26309301221684.webm', NULL, 'ROTATE', '2018-01-18 18:11:04', '2018-01-19 10:05:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -707,7 +739,7 @@ CREATE TABLE IF NOT EXISTS `popup_banner_images` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `popup_ad_id` (`popup_ad_id`,`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `popup_banner_images`
@@ -721,7 +753,9 @@ INSERT INTO `popup_banner_images` (`id`, `image`, `popup_ad_id`, `created_at`, `
 (7, '188918509774437.png', 7, '2018-01-11 15:17:35', 132),
 (8, '188920986725591.png', 8, '2018-01-11 15:17:35', 132),
 (10, '14249907052450.png', 5, '2018-01-15 15:17:16', 132),
-(11, '14254543269731.png', 6, '2018-01-15 15:17:16', 132);
+(11, '14254543269731.png', 6, '2018-01-15 15:17:16', 132),
+(15, '26228027907776.png', 14, '2018-01-18 18:11:04', 132),
+(16, '26230965955201.png', 15, '2018-01-18 18:11:04', 132);
 
 -- --------------------------------------------------------
 
@@ -773,23 +807,29 @@ CREATE TABLE IF NOT EXISTS `slideshow_ads` (
   `banner_duration` int(11) NOT NULL,
   `video_expiry_date` datetime DEFAULT NULL,
   `banner_expiry_date` datetime DEFAULT NULL,
+  `banner_rotate` enum('ROTATE','STATIC') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ROTATE',
+  `video_rotate` enum('ROTATE','STATIC') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'ROTATE',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `slideshow_ads`
 --
 
-INSERT INTO `slideshow_ads` (`id`, `advertiser_id`, `video`, `video_type`, `video_duration`, `banner_duration`, `video_expiry_date`, `banner_expiry_date`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 4, '8993174135124.mp4', 'video/mp4', 1, 1, NULL, NULL, '2018-01-11 11:40:39', '2018-01-11 11:40:39', 132),
-(2, 8, '180276497385959.webm', 'video/webm', 1, 1, '2018-01-11 00:00:00', '2018-01-11 00:00:00', '2018-01-11 12:56:35', '2018-01-11 12:56:35', 132),
-(3, 9, '13535566911563.mp4', 'video/mp4', 2, 3, '2018-01-17 00:00:00', '2018-01-25 00:00:00', '2018-01-11 15:05:33', '2018-01-15 15:13:39', 132),
-(4, 10, '188904371037767.webm', 'video/webm', 1, 1, '2018-01-11 00:00:00', '2018-01-11 00:00:00', '2018-01-11 15:17:34', '2018-01-11 15:17:34', 132);
+INSERT INTO `slideshow_ads` (`id`, `advertiser_id`, `video`, `video_type`, `video_duration`, `banner_duration`, `video_expiry_date`, `banner_expiry_date`, `banner_rotate`, `video_rotate`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 4, '8993174135124.mp4', 'video/mp4', 1, 1, NULL, NULL, 'ROTATE', 'ROTATE', '2018-01-11 11:40:39', '2018-01-11 11:40:39', 132),
+(2, 8, '180276497385959.webm', 'video/webm', 1, 1, '2018-01-11 00:00:00', '2018-01-11 00:00:00', 'ROTATE', 'ROTATE', '2018-01-11 12:56:35', '2018-01-11 12:56:35', 132),
+(3, 9, '13535566911563.mp4', 'video/mp4', 2, 3, '2018-01-17 00:00:00', '2018-01-25 00:00:00', 'ROTATE', 'ROTATE', '2018-01-11 15:05:33', '2018-01-15 15:13:39', 132),
+(4, 10, '188904371037767.webm', 'video/webm', 1, 1, '2018-01-11 00:00:00', '2018-01-11 00:00:00', 'ROTATE', 'ROTATE', '2018-01-11 15:17:34', '2018-01-11 15:17:34', 132),
+(5, 11, '68071187937356.mp4', 'video/mp4', 1, 1, '2018-01-17 00:00:00', '2018-01-17 00:00:00', 'ROTATE', 'ROTATE', '2018-01-17 15:15:49', '2018-01-17 15:15:49', 132),
+(6, 12, '5310302022466.mp4', 'video/mp4', 1, 1, '2018-01-18 00:00:00', '2018-01-18 00:00:00', 'ROTATE', 'ROTATE', '2018-01-18 11:53:40', '2018-01-18 11:53:40', 132),
+(7, 13, '26321525779040.ogv', 'video/ogg', 1, 1, '2018-01-18 00:00:00', '2018-01-18 00:00:00', 'ROTATE', 'ROTATE', '2018-01-18 17:45:52', '2018-01-18 17:45:52', 132),
+(8, 14, '26321525779040.ogv', 'video/ogg', 1, 1, '2018-01-18 00:00:00', '2018-01-18 00:00:00', 'STATIC', 'ROTATE', '2018-01-18 18:11:04', '2018-01-18 18:48:22', 132);
 
 -- --------------------------------------------------------
 
@@ -805,7 +845,7 @@ CREATE TABLE IF NOT EXISTS `slideshow_banner_images` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `slideshow_id` (`slideshow_ad_id`,`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `slideshow_banner_images`
@@ -815,7 +855,9 @@ INSERT INTO `slideshow_banner_images` (`id`, `image`, `slideshow_ad_id`, `create
 (1, '175593261198575.jpg', 1, '2018-01-11 11:40:39', 132),
 (2, '180271700570832.png', 2, '2018-01-11 12:56:35', 132),
 (4, '188899071388818.png', 4, '2018-01-11 15:17:34', 132),
-(6, '13530421711359.jpg', 3, '2018-01-15 15:05:03', 132);
+(6, '13530421711359.jpg', 3, '2018-01-15 15:05:03', 132),
+(8, '26221681803263.png', 7, '2018-01-18 17:45:52', 132),
+(9, '26221681803263.png', 8, '2018-01-18 18:11:04', 132);
 
 -- --------------------------------------------------------
 
@@ -855,7 +897,7 @@ CREATE TABLE IF NOT EXISTS `temp_file` (
   `path` text NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=570 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=663 ;
 
 --
 -- Dumping data for table `temp_file`
@@ -1364,7 +1406,85 @@ INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
 (566, 1000698875, '/home/mi_rafi/project_file/pmc/tmp/14249907052450.png', '2018-01-15 09:16:55'),
 (567, 1000473683, '/home/mi_rafi/project_file/pmc/tmp/14254543269731.png', '2018-01-15 09:17:00'),
 (568, 1000698589, '/home/mi_rafi/project_file/pmc/tmp/14261105271426.ogv', '2018-01-15 09:17:06'),
-(569, 1000597195, '/home/mi_rafi/project_file/pmc/tmp/14264103978791.ogv', '2018-01-15 09:17:09');
+(569, 1000597195, '/home/mi_rafi/project_file/pmc/tmp/14264103978791.ogv', '2018-01-15 09:17:09'),
+(570, 1000636901, '/home/mi/project_file/pmc/tmp/7129714776303.png', '2018-01-16 12:46:26'),
+(571, 1000664718, '/home/mi/project_file/pmc/tmp/8790947382147.png', '2018-01-16 13:14:07'),
+(572, 1000573469, '/home/mi/project_file/pmc/tmp/58661022275535.png', '2018-01-17 06:38:33'),
+(573, 1000358161, '/home/mi/project_file/pmc/tmp/58717616990469.png', '2018-01-17 06:39:30'),
+(574, 1000242112, '/home/mi/project_file/pmc/tmp/58775247456959.png', '2018-01-17 06:40:27'),
+(575, 1000779006, '/home/mi/project_file/pmc/tmp/58967455762409.png', '2018-01-17 06:43:40'),
+(576, 1000297765, '/home/mi/project_file/pmc/tmp/58969978210824.png', '2018-01-17 06:43:42'),
+(577, 1000157819, '/home/mi/project_file/pmc/tmp/58976455911012.png', '2018-01-17 06:43:49'),
+(579, 1000570224, '/home/mi/project_file/pmc/tmp/59009818820291.png', '2018-01-17 06:44:22'),
+(580, 1000585869, '/home/mi/project_file/pmc/tmp/59012463801069.png', '2018-01-17 06:44:25'),
+(581, 1000029159, '/home/mi/project_file/pmc/tmp/59037520667263.png', '2018-01-17 06:44:50'),
+(582, 1000309408, '/home/mi/project_file/pmc/tmp/59048135493906.png', '2018-01-17 06:45:00'),
+(584, 1000184721, '/home/mi/project_file/pmc/tmp/59106637588707.png', '2018-01-17 06:45:59');
+INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
+(585, 1000687300, '/home/mi/project_file/pmc/tmp/59141759019474.png', '2018-01-17 06:46:34'),
+(586, 1000201785, '/home/mi/project_file/pmc/tmp/59145645910426.png', '2018-01-17 06:46:38'),
+(587, 1000331350, '/home/mi/project_file/pmc/tmp/59228282549373.png', '2018-01-17 06:48:00'),
+(589, 1000611191, '/home/mi/project_file/pmc/tmp/59255379222891.png', '2018-01-17 06:48:28'),
+(590, 1000774737, '/home/mi/project_file/pmc/tmp/59259703082101.png', '2018-01-17 06:48:32'),
+(591, 1000531457, '/home/mi/project_file/pmc/tmp/59271012550895.png', '2018-01-17 06:48:43'),
+(593, 1000262592, '/home/mi/project_file/pmc/tmp/59340427708509.png', '2018-01-17 06:49:53'),
+(594, 1000736657, '/home/mi/project_file/pmc/tmp/59364965322127.png', '2018-01-17 06:50:17'),
+(595, 1000491872, '/home/mi/project_file/pmc/tmp/59539383785044.png', '2018-01-17 06:53:12'),
+(596, 1000661515, '/home/mi/project_file/pmc/tmp/59543265018462.png', '2018-01-17 06:53:15'),
+(599, 1000448535, '/home/mi/project_file/pmc/tmp/59710030919654.png', '2018-01-17 06:56:02'),
+(602, 1000241633, '/home/mi/project_file/pmc/tmp/59811419965895.png', '2018-01-17 06:57:44'),
+(604, 1000499176, '/home/mi/project_file/pmc/tmp/59829650276923.png', '2018-01-17 06:58:02'),
+(606, 1000402966, '/home/mi/project_file/pmc/tmp/67960501034603.jpeg', '2018-01-17 09:13:33'),
+(607, 1000367779, '/home/mi/project_file/pmc/tmp/67966036906033.jpg', '2018-01-17 09:13:38'),
+(608, 1000626414, '/home/mi/project_file/pmc/tmp/67968983372652.jpeg', '2018-01-17 09:13:41'),
+(609, 1000788873, '/home/mi/project_file/pmc/tmp/67971797376833.png', '2018-01-17 09:13:44'),
+(610, 1000095169, '/home/mi/project_file/pmc/tmp/67976629088205.png', '2018-01-17 09:13:49'),
+(611, 1000372433, '/home/mi/project_file/pmc/tmp/67980236460887.png', '2018-01-17 09:13:52'),
+(612, 1000813479, '/home/mi/project_file/pmc/tmp/67982921927301.png', '2018-01-17 09:13:55'),
+(613, 1000360807, '/home/mi/project_file/pmc/tmp/67985946115133.jpg', '2018-01-17 09:13:58'),
+(615, 1000472309, '/home/mi/project_file/pmc/tmp/68014785697231.png', '2018-01-17 09:14:27'),
+(616, 1000709943, '/home/mi/project_file/pmc/tmp/68028796060017.png', '2018-01-17 09:14:41'),
+(617, 1000668488, '/home/mi/project_file/pmc/tmp/68049264089600.png', '2018-01-17 09:15:01'),
+(618, 1000072077, '/home/mi/project_file/pmc/tmp/68071187937356.mp4', '2018-01-17 09:15:23'),
+(619, 1000741250, '/home/mi/project_file/pmc/tmp/68078728449396.mp4', '2018-01-17 09:15:31'),
+(620, 1000694704, '/home/mi/project_file/pmc/tmp/68085518332350.mp4', '2018-01-17 09:15:38'),
+(621, 1000472548, '/home/mi/project_file/pmc/tmp/71274899351526.png', '2018-01-17 10:08:47'),
+(622, 1000371488, '/home/mi/project_file/pmc/tmp/71339366610399.png', '2018-01-17 10:09:52'),
+(623, 1000605843, '/home/mi/project_file/pmc/tmp/71595162975927.png', '2018-01-17 10:14:07'),
+(624, 1000469333, '/home/mi/project_file/pmc/tmp/71813925232994.png', '2018-01-17 10:17:46'),
+(625, 1000320205, '/home/mi/project_file/pmc/tmp/71892893030084.png', '2018-01-17 10:19:05'),
+(626, 1000353386, '/home/mi/project_file/pmc/tmp/3084285912058.png', '2018-01-18 05:15:59'),
+(627, 1000052877, '/home/mi/project_file/pmc/tmp/5057363761758.jpeg', '2018-01-18 05:48:52'),
+(628, 1000745352, '/home/mi/project_file/pmc/tmp/5062186928326.jpg', '2018-01-18 05:48:56'),
+(629, 1000510037, '/home/mi/project_file/pmc/tmp/5285435796594.png', '2018-01-18 05:52:40'),
+(630, 1000820642, '/home/mi/project_file/pmc/tmp/5288401335815.jpg', '2018-01-18 05:52:43'),
+(631, 1000689638, '/home/mi/project_file/pmc/tmp/5295252521698.jpg', '2018-01-18 05:52:49'),
+(632, 1000242087, '/home/mi/project_file/pmc/tmp/5297643418925.png', '2018-01-18 05:52:52'),
+(633, 1000733819, '/home/mi/project_file/pmc/tmp/5305513372987.png', '2018-01-18 05:53:00'),
+(634, 1000726183, '/home/mi/project_file/pmc/tmp/5310302022466.mp4', '2018-01-18 05:53:05'),
+(635, 1000715560, '/home/mi/project_file/pmc/tmp/5319013451960.png', '2018-01-18 05:53:13'),
+(636, 1000881126, '/home/mi/project_file/pmc/tmp/5325150121192.jpg', '2018-01-18 05:53:19'),
+(637, 1000106473, '/home/mi/project_file/pmc/tmp/5332646008410.mp4', '2018-01-18 05:53:27'),
+(638, 1000301686, '/home/mi/project_file/pmc/tmp/5341526079607.mp4', '2018-01-18 05:53:36'),
+(639, 1000602190, '/home/mi/project_file/pmc/tmp/5621444081456.png', '2018-01-18 05:58:16'),
+(640, 1000046994, '/home/mi/project_file/pmc/tmp/6304605685343.jpg', '2018-01-18 06:09:39'),
+(641, 1000339232, '/home/mi/project_file/pmc/tmp/6382421638855.jpeg', '2018-01-18 06:10:57'),
+(643, 1000194639, '/home/mi/project_file/pmc/tmp/6769518748437.jpg', '2018-01-18 06:17:24'),
+(648, 1000262623, '/home/mi/project_file/pmc/tmp/7312995097593.png', '2018-01-18 06:26:27'),
+(649, 1000514032, '/home/mi/project_file/pmc/tmp/7359444203373.png', '2018-01-18 06:27:14'),
+(650, 1000692157, '/home/mi/project_file/pmc/tmp/7596599306988.png', '2018-01-18 06:31:11'),
+(651, 1000855222, '/home/mi/project_file/pmc/tmp/8374872473109.png', '2018-01-18 06:44:09'),
+(652, 1000128995, '/home/mi/project_file/pmc/tmp/8900846407709.png', '2018-01-18 06:52:55'),
+(653, 1000221839, '/home/mi/project_file/pmc/tmp/26208423750269.png', '2018-01-18 11:41:23'),
+(654, 1000459187, '/home/mi/project_file/pmc/tmp/26211446543795.png', '2018-01-18 11:41:26'),
+(655, 1000379226, '/home/mi/project_file/pmc/tmp/26214881399404.png', '2018-01-18 11:41:29'),
+(656, 1000664921, '/home/mi/project_file/pmc/tmp/26217562439441.png', '2018-01-18 11:41:32'),
+(657, 1000329478, '/home/mi/project_file/pmc/tmp/26221681803263.png', '2018-01-18 11:41:36'),
+(658, 1000638235, '/home/mi/project_file/pmc/tmp/26228027907776.png', '2018-01-18 11:41:42'),
+(659, 1000100784, '/home/mi/project_file/pmc/tmp/26230965955201.png', '2018-01-18 11:41:45'),
+(660, 1000572229, '/home/mi/project_file/pmc/tmp/26305972930036.webm', '2018-01-18 11:43:00'),
+(661, 1000101033, '/home/mi/project_file/pmc/tmp/26309301221684.webm', '2018-01-18 11:43:04'),
+(662, 1000273914, '/home/mi/project_file/pmc/tmp/26321525779040.ogv', '2018-01-18 11:43:16');
 
 -- --------------------------------------------------------
 
@@ -1423,6 +1543,7 @@ INSERT INTO `venues` (`id`, `name`, `location_id`, `created_at`, `updated_at`, `
 
 CREATE TABLE IF NOT EXISTS `watermarks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `type` enum('image','text') COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo_image` text COLLATE utf8_unicode_ci,
@@ -1443,12 +1564,12 @@ CREATE TABLE IF NOT EXISTS `watermarks` (
 -- Dumping data for table `watermarks`
 --
 
-INSERT INTO `watermarks` (`id`, `type`, `logo_name`, `logo_image`, `size`, `fade`, `watermark_text`, `font_id`, `placement`, `color`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 'image', 'dfg', '26126512604901.png', 'thumb', 25, '', NULL, 'tl', '', '2018-01-09 18:05:08', '2018-01-09 18:05:08', NULL),
-(2, 'image', 'Roy', '92296838259199.jpg', 'small', 6, '', NULL, 'br', '', '2018-01-10 12:27:10', '2018-01-10 12:27:10', NULL),
-(3, 'text', 'Roy', '', NULL, NULL, 'Roy', NULL, NULL, 'B3FF57', '2018-01-10 12:28:11', '2018-01-10 12:28:11', NULL),
-(4, 'image', 'Rainbow', '5044984895095.jpeg', 'medium', 29, '', NULL, 'bl', '', '2018-01-15 12:36:39', '2018-01-15 12:43:34', NULL),
-(5, 'text', 'New 1', '', NULL, NULL, 'New 1', NULL, NULL, 'FFFFFF', '2018-01-15 12:45:14', '2018-01-15 12:46:05', NULL);
+INSERT INTO `watermarks` (`id`, `name`, `type`, `logo_name`, `logo_image`, `size`, `fade`, `watermark_text`, `font_id`, `placement`, `color`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, '', 'image', 'dfg', '26126512604901.png', 'thumb', 25, '', NULL, 'tl', '', '2018-01-09 18:05:08', '2018-01-09 18:05:08', NULL),
+(2, '', 'image', 'Roy', '92296838259199.jpg', 'small', 6, '', NULL, 'br', '', '2018-01-10 12:27:10', '2018-01-10 12:27:10', NULL),
+(3, '', 'text', 'Roy', '', NULL, NULL, 'Roy', NULL, NULL, 'B3FF57', '2018-01-10 12:28:11', '2018-01-10 12:28:11', NULL),
+(4, '', 'image', 'Rainbow', '5044984895095.jpeg', 'medium', 29, '', NULL, 'bl', '', '2018-01-15 12:36:39', '2018-01-15 12:43:34', NULL),
+(5, '', 'text', 'New 1', '', NULL, NULL, 'New 1', NULL, NULL, 'FFFFFF', '2018-01-15 12:45:14', '2018-01-15 12:46:05', NULL);
 
 --
 -- Constraints for dumped tables
@@ -1479,7 +1600,7 @@ ALTER TABLE `event_images`
 --
 ALTER TABLE `event_photographers`
   ADD CONSTRAINT `event_photographers_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
-  ADD CONSTRAINT `event_photographers_ibfk_2` FOREIGN KEY (`photographer_id`) REFERENCES `event_photographers` (`id`);
+  ADD CONSTRAINT `event_photographers_ibfk_2` FOREIGN KEY (`photographer_id`) REFERENCES `photographers` (`id`);
 
 --
 -- Constraints for table `event_watermarks`

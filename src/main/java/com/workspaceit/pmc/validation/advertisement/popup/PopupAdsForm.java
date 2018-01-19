@@ -1,5 +1,8 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -17,6 +20,9 @@ public class PopupAdsForm {
     private Integer smsPopupVideoDuration;
     private Date smsExpiryDate;
     private Date emailExpiryDate;
+
+    private AdvertiseRotationSettings smsRotation;
+    private AdvertiseRotationSettings emailRotation;
 
     public Integer getSmsId() {
         return smsId;
@@ -104,5 +110,40 @@ public class PopupAdsForm {
 
     public void setEmailExpiryDate(Date emailExpiryDate) {
         this.emailExpiryDate = emailExpiryDate;
+    }
+
+    public AdvertiseRotationSettings getSmsRotation() {
+        return smsRotation;
+    }
+
+    public void setSmsRotation(AdvertiseRotationSettings smsRotation) {
+        this.smsRotation = smsRotation;
+    }
+
+    public AdvertiseRotationSettings getEmailRotation() {
+        return emailRotation;
+    }
+
+    public void setEmailRotation(AdvertiseRotationSettings emailRotation) {
+        this.emailRotation = emailRotation;
+    }
+
+    @Override
+    public String toString() {
+        return "PopupAdsForm{" +
+                "smsId=" + smsId +
+                ", emailId=" + emailId +
+                ", advertiserId=" + advertiserId +
+                ", smsPopupBanner=" + Arrays.toString(smsPopupBanner) +
+                ", smsPopupVideo=" + smsPopupVideo +
+                ", emailPopupBanner=" + Arrays.toString(emailPopupBanner) +
+                ", emailPopupVideo=" + emailPopupVideo +
+                ", emailPopupVideoDuration=" + emailPopupVideoDuration +
+                ", smsPopupVideoDuration=" + smsPopupVideoDuration +
+                ", smsExpiryDate=" + smsExpiryDate +
+                ", emailExpiryDate=" + emailExpiryDate +
+                ", smsRotation=" + smsRotation +
+                ", emailRotation=" + emailRotation +
+                '}';
     }
 }

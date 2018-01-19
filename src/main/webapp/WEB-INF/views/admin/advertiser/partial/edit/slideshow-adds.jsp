@@ -1,3 +1,4 @@
+<%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
     <div class="imageupload panel panel-default">
@@ -10,10 +11,19 @@
 
                 <div class="" style="margin-left: auto;float:right;">
                     <span id="slideShowBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${slideshowAd.bannerExpiryDate}" type="date" ></fmt:formatDate></span>
-
-                    <div class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                    <c:set var="slideShowBannerRotateActive" value="" ></c:set>
+                    <c:set var="slideShowBannerStaticActive" value="" ></c:set>
+                    <c:choose>
+                        <c:when test="${slideshowAd.bannerRotate == AdvertiseRotationSettings.ROTATE }" >
+                            <c:set var="slideShowBannerRotateActive" value="active" ></c:set>
+                        </c:when>
+                        <c:when test="${slideshowAd.bannerRotate == AdvertiseRotationSettings.STATIC}">
+                            <c:set var="slideShowBannerStaticActive" value="active" ></c:set>
+                        </c:when>
+                    </c:choose>
+                    <div id="slideShowBannerRotationBtn" class="btn-group">
+                        <button type="button" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
@@ -71,9 +81,19 @@
                 <span id="slideShowVideoExpiryDateLbl" class="date_view"><fmt:formatDate value="${slideshowAd.videoExpiryDate}" type="date" ></fmt:formatDate></span>
 
                 <div class="" style="margin-left: auto;float:right;">
-                    <div class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" id="regi8"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" id="regi9"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                    <c:set var="slideShowVideoRotateActive" value="" ></c:set>
+                    <c:set var="slideShowVideoStaticActive" value="" ></c:set>
+                    <c:choose>
+                        <c:when test="${slideshowAd.videoRotate == AdvertiseRotationSettings.ROTATE }" >
+                            <c:set var="slideShowVideoRotateActive" value="active" ></c:set>
+                        </c:when>
+                        <c:when test="${slideshowAd.videoRotate == AdvertiseRotationSettings.STATIC}">
+                            <c:set var="slideShowVideoStaticActive" value="active" ></c:set>
+                        </c:when>
+                    </c:choose>
+                    <div id="slideShowVideoRotationBtn" class="btn-group">
+                        <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">

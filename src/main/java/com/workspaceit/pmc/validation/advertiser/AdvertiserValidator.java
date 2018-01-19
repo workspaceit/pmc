@@ -2,6 +2,7 @@ package com.workspaceit.pmc.validation.advertiser;
 
 import com.workspaceit.pmc.entity.City;
 import com.workspaceit.pmc.entity.Event;
+import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +57,10 @@ public class AdvertiserValidator implements Validator {
         this.checkCityExistence(advertiserForm.getCityId(),errors);
         this.checkStateExistence(advertiserForm.getStateId(),errors);
 
-        if(advertiserForm.getIsAllLocationSelected()){
+        if(!advertiserForm.getIsAllLocationSelected()){
             this.checkLocationExistence(advertiserForm.getLocationIds(),errors);
         }
-        if(advertiserForm.getIsAllEventSelected()){
+        if(!advertiserForm.getIsAllEventSelected()){
             this.checkEventExistence(advertiserForm.getEventIds(),errors);
         }
 
@@ -99,9 +100,9 @@ public class AdvertiserValidator implements Validator {
     private void checkLocationExistence(Integer[] locationIds, Errors errors){
 
         for(int locationId:locationIds){
-            State state =  this.stateService.getById(locationId);
-            if( state == null ){
-                errors.rejectValue("location","State not found by id : "+locationId);
+            Location location =  this.locationService.getById(locationId);
+            if( location == null ){
+                errors.rejectValue("locationIds","State not found by id : "+locationId);
                 return;
             }
 
@@ -113,7 +114,7 @@ public class AdvertiserValidator implements Validator {
         for(int eventId:eventIds){
             Event event =  this.eventService.getById(eventId);
             if( event == null ){
-                errors.rejectValue("event","Event not found by id : "+eventId);
+                errors.rejectValue("eventIds","Event not found by id : "+eventId);
                 return;
             }
 

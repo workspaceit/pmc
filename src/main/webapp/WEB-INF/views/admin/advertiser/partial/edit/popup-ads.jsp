@@ -10,9 +10,19 @@
                 <span id="smsExpiryDateLbl" class="date_view"><fmt:formatDate value="${popupAdSms.expiryDate}" type="date" ></fmt:formatDate></span>
 
                 <div class="" style="margin-left: auto;float:right;">
-                    <div class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" id="regi10"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" id="regi11"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                    <div id="popUpSmsRotationBtn" class="btn-group">
+                        <c:set var="popSmsRotateActive" value="" ></c:set>
+                        <c:set var="popSmsStaticActive" value="" ></c:set>
+                        <c:choose>
+                            <c:when test="${popupAdSms.adRotate == AdvertiseRotationSettings.ROTATE }" >
+                                <c:set var="popSmsRotateActive" value="active" ></c:set>
+                            </c:when>
+                            <c:when test="${popupAdSms.adRotate == AdvertiseRotationSettings.STATIC}">
+                                <c:set var="popSmsStaticActive" value="active" ></c:set>
+                            </c:when>
+                        </c:choose>
+                        <button type="button" class="${popSmsRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${popSmsStaticActive} btn btn-default btn-switch" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
@@ -83,9 +93,19 @@
                 <div class="" style="margin-left: auto;float:right;">
                     <span id="emailExpiryDateLbl" class="date_view"><fmt:formatDate value="${popupAdEmail.expiryDate}" type="date" ></fmt:formatDate></span>
 
-                    <div class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" id="regi12"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" id="regi13"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                    <div id="popUpEmailRotationBtn" class="btn-group">
+                        <c:set var="popEmailRotateActive" value="" ></c:set>
+                        <c:set var="popEmailStaticActive" value="" ></c:set>
+                        <c:choose>
+                            <c:when test="${popupAdEmail.adRotate == AdvertiseRotationSettings.ROTATE }" >
+                                <c:set var="popEmailRotateActive" value="active" ></c:set>
+                            </c:when>
+                            <c:when test="${popupAdEmail.adRotate == AdvertiseRotationSettings.STATIC}">
+                                <c:set var="popEmailStaticActive" value="active" ></c:set>
+                            </c:when>
+                        </c:choose>
+                        <button type="button" class="${popEmailRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${popEmailStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">

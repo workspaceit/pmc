@@ -67,8 +67,7 @@ public class PhotographerService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Photographer create(PhotographerForm photographerForm,User user){
-        Admin admin = this.adminDao.getByEmail(user.getUsername());
+    public Photographer create(PhotographerForm photographerForm,Admin admin){
         String profilePictureName = "";
         Integer fileToken = photographerForm.getProfilePictureToken();
 
@@ -95,7 +94,7 @@ public class PhotographerService {
         return photographer;
     }
     @Transactional(rollbackFor = Exception.class)
-    public Photographer updateBasicInfo(int id,PhotographerForm photographerForm,User user) throws EntityNotFound {
+    public Photographer updateBasicInfo(int id,PhotographerForm photographerForm,Admin admin) throws EntityNotFound {
 
         String profilePictureName = "";
         Integer fileToken = photographerForm.getProfilePictureToken();

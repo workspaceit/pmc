@@ -1,4 +1,3 @@
-<%@ page import="com.workspaceit.pmc.entity.Location" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
@@ -8,7 +7,7 @@
     <jsp:body>
         <div id="page-wrapper">
             <div class="container">
-                <h1>Photographer List </h1>
+                <h1>Location List </h1>
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-responsive cstm-admin-table">

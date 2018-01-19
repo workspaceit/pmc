@@ -50,6 +50,8 @@ public class PopUpAdsService {
         smsPopupAdBanner.setVideo(smsVideoName);
         smsPopupAdBanner.setVideoType(smsVideoType);
         smsPopupAdBanner.setExpiryDate(popupAdsForm.getSmsExpiryDate());
+        smsPopupAdBanner.setAdRotate(popupAdsForm.getSmsRotation());
+
         this.create(smsPopupAdBanner);
         this.popupBannerImageService.create(smsPopupAdBanner,popupAdsForm.getSmsPopupBanner(),admin);
 
@@ -61,6 +63,7 @@ public class PopUpAdsService {
         emailAddBanner.setVideo(emailVideoName);
         smsPopupAdBanner.setVideoType(emailVideoType);
         emailAddBanner.setExpiryDate(popupAdsForm.getEmailExpiryDate());
+        emailAddBanner.setAdRotate(popupAdsForm.getEmailRotation());
 
         this.create(emailAddBanner);
         this.popupBannerImageService.create(emailAddBanner,popupAdsForm.getEmailPopupBanner(),admin);
@@ -73,7 +76,7 @@ public class PopUpAdsService {
                        Admin admin) throws EntityNotFound {
         Integer smsVideoToken = popupAdsForm.getSmsPopupVideo();
         Integer emailVideoToken = popupAdsForm.getEmailPopupVideo();
-
+        System.out.println(popupAdsForm);
 
         PopupAd smsPopupAdBanner =  this.getPopupAd(smsPopupAdBannerId,advertiser.getId());
         smsPopupAdBanner.setDuration(popupAdsForm.getSmsPopupVideoDuration());
@@ -81,6 +84,7 @@ public class PopUpAdsService {
         this.processVideo(smsPopupAdBanner,smsVideoToken);
 
         smsPopupAdBanner.setExpiryDate(popupAdsForm.getSmsExpiryDate());
+        smsPopupAdBanner.setAdRotate(popupAdsForm.getSmsRotation());
 
         this.update(smsPopupAdBanner);
         this.popupBannerImageService.create(smsPopupAdBanner,popupAdsForm.getSmsPopupBanner(),admin);
@@ -95,6 +99,7 @@ public class PopUpAdsService {
         this.processVideo(emailAddBanner,emailVideoToken);
 
         emailAddBanner.setExpiryDate(popupAdsForm.getEmailExpiryDate());
+        emailAddBanner.setAdRotate(popupAdsForm.getEmailRotation());
 
         this.update(emailAddBanner);
         this.popupBannerImageService.create(emailAddBanner,popupAdsForm.getEmailPopupBanner(),admin);

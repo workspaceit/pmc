@@ -1,5 +1,7 @@
 package com.workspaceit.pmc.validation.advertisement.gallery;
 
+import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+
 import java.util.Date;
 
 /**
@@ -14,8 +16,14 @@ public class GalleryAdsForm {
     protected Integer bgImgTokens;
     protected Integer[] topBannerImgTokens;
     protected Integer[] bottomBannerImgTokens;
+
+
+
     protected Date topBannerExpiryDate;
     protected Date bottomBannerExpiryDate;
+
+    AdvertiseRotationSettings topBannerRotation;
+    AdvertiseRotationSettings bottomBannerRotation;
 
     public Integer getId() {
         return id;
@@ -79,5 +87,21 @@ public class GalleryAdsForm {
 
     public void setBottomBannerExpiryDate(Date bottomBannerExpiryDate) {
         this.bottomBannerExpiryDate = bottomBannerExpiryDate;
+    }
+
+    public AdvertiseRotationSettings getTopBannerRotation() {
+        return topBannerRotation;
+    }
+
+    public void setTopBannerRotation(AdvertiseRotationSettings topBannerRotation) {
+        this.topBannerRotation = topBannerRotation;
+    }
+
+    public AdvertiseRotationSettings getBottomBannerRotation() {
+        return bottomBannerRotation;
+    }
+
+    public void setBottomBannerRotation(AdvertiseRotationSettings bottomBannerRotation) {
+        this.bottomBannerRotation = bottomBannerRotation;
     }
 }

@@ -38,8 +38,12 @@ public class ServiceResponse {
     }
     public void bindValidationError(BindingResult result){
         if(result.hasErrors()) {
-
-            for (ObjectError object : result.getAllErrors()) {
+            /**
+             * To generate unique error result
+             * May not work :( ... remove if needed
+             * */
+            Set<ObjectError> orSet = new HashSet<>(result.getAllErrors());
+            for (ObjectError object : orSet) {
 
 
                 if(object instanceof FieldError) {
