@@ -135,4 +135,39 @@ public class Admin {
     public void setAdminRoles(Set<AdminRole> adminRoles) {
         this.adminRoles = adminRoles;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Admin admin = (Admin) o;
+
+        if (id != admin.id) return false;
+        if (name != null ? !name.equals(admin.name) : admin.name != null) return false;
+        if (email != null ? !email.equals(admin.email) : admin.email != null) return false;
+        if (userName != null ? !userName.equals(admin.userName) : admin.userName != null) return false;
+        return phoneNumber != null ? phoneNumber.equals(admin.phoneNumber) : admin.phoneNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

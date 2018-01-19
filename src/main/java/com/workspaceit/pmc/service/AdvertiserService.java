@@ -167,6 +167,14 @@ public class AdvertiserService {
     public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
         return this.advertiserDao.getSuggestedAdvertisers(searchTerm);
     }
+
+
+    @Transactional
+    public List<Advertiser> getAll(Integer[] ids){
+        return this.advertiserDao.getAll(ids);
+    }
+
+
     @Transactional
     public List<Advertiser> getByEventId(int eventId){
         return this.advertiserDao.getByEventId(eventId);
@@ -191,4 +199,5 @@ public class AdvertiserService {
         }
         return advertisers.stream().map(Advertiser::getId).collect(Collectors.toList());
     }
+
 }

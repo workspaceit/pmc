@@ -51,6 +51,11 @@ public class WatermarkService {
         return this.watermarkDao.getSuggestedWatermarks(searchTerm);
     }
 
+    @Transactional
+    public List<Watermark> getAll(Integer[] ids){
+        return this.watermarkDao.getAll(ids);
+    }
+
     public Watermark getById(int id){
         return this.watermarkDao.getById(id);
     }

@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +29,18 @@ public class AdvertiserDao extends BaseDao {
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Advertiser ORDER BY id desc")
                 .list();
+    }
+
+    public List<Advertiser> getAll(Integer[] ids){
+        List<Advertiser> advertisers = null;
+
+        if(ids.length > 0) {
+            Session session = this.getCurrentSession();
+            advertisers = session.createQuery("FROM Advertiser where id in :ids")
+                    .setParameterList("ids", Arrays.asList(ids))
+                    .list();
+        }
+        return advertisers;
     }
 
     public List<Advertiser> getSuggestedAdvertisers(String searchTerm){

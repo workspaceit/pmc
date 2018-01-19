@@ -39,31 +39,38 @@ $(document).ready(function () {
     $('#save-watermark-btn').click(function () {
         console.log("submitting . . .");
         var eventName = $('#eventName').val();
-        var startDate = $('#startDate').val();
+        var startDateOnly = $('#startDate').val();
         var startTime = $('#startTime').val();
-        var endDate = $('#endDate').val();
+        var endDateOnly = $('#endDate').val();
         var endTime = $('#endTime').val();
-        var venueId = $('#venue-select2').val();
+        var isPrivate = $("input[name='private']:checked").val();
+        var venueId = $('#venueId').val();
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
         var watermarkIds = $('#watermark-select2').val();
+
+
+        var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+        var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+
+
         var data = {
             'eventName': eventName,
             'startDate': startDate,
-            'startTime': startTime,
             'endDate' : endDate,
-            'endTime' : endTime,
             'venueId': venueId,
             'photographerIds': photographerIds,
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
-            'imageToken': pictureToken
+            'imageToken': pictureToken,
+            'isPrivate': isPrivate
         };
 
         $.ajax({
             url: BASEURL+'api/event/create',
-            data:data,
+            data: data,
             type: 'POST',
+            traditional: true,
             statusCode: {
                 401: function (response) {
                     console.log(response);
@@ -72,29 +79,15 @@ $(document).ready(function () {
 
                     BindErrorsWithHtml("errorObj_",response.responseJSON);
                     console.log(response);
-                    btnAction
+                    // btnAction
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
                 photographerAfterSaveActionCreate(btnAction);
             }
         });
-        console.log(data)
-    });
 
-    $("#event-form").submit(function (e) {
-        var url = "path/to/your/script.php";
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: $("#event-form").serialize(),
-            success: function (data) {
-                alert(data);
-            }
-        });
-        e.preventDefault();
     });
-
 
     $("#watermark-select2").select2({
         placeholder: 'Select Watermark(s)',
@@ -127,7 +120,7 @@ $(document).ready(function () {
             }
         }
     });
-    $("#venue-select2").select2({
+    $("#venueId").select2({
         placeholder: 'Select a Venue',
 //                    minimumInputLength: 1,
         width: 'resolve',
@@ -216,7 +209,7 @@ $(document).ready(function () {
             }
         }
     });
-    $('input[name="startdate"]').daterangepicker({
+    $('input[name="startDate"]').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true
         },
@@ -224,7 +217,7 @@ $(document).ready(function () {
             var years = moment().diff(start, 'years');
             alert("You are " + years + " years old.");
         });
-    $('input[name="enddate"]').daterangepicker({
+    $('input[name="endDate"]').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true
         },
@@ -232,7 +225,7 @@ $(document).ready(function () {
             var years = moment().diff(start, 'years');
             alert("You are " + years + " years old.");
         });
-    $('#start-time').timepicker();
+    // $('#startTime').timepicker();
     $(".choose-btn > .btn").click(function () {
         $(".choose-btn > .btn").removeClass("active");
         $(this).addClass("active");

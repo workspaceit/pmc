@@ -57,16 +57,16 @@
 
                                         <div class="form-group clearfix">
                                             <div class="yes_no_container">
-                                                <input id="input1" name="public" checked type="radio"/>
+                                                <input id="input1" name="private" value="false" checked type="radio"/>
                                                 <label for="input1">Public</label>
-                                                <input id="input2" name="private" type="radio"/>
+                                                <input id="input2" name="private" value="true" type="radio"/>
                                                 <label for="input2">Private</label>
                                                 <span class="slider"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Event Venue</label>
-                                            <select id="venue-select2" name="venueId" style="width: 100%;" tabindex="-1"
+                                            <select id="venueId" name="venueId" style="width: 100%;" tabindex="-1"
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
                                             </select>
                                             <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"

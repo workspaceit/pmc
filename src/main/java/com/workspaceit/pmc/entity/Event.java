@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -66,7 +67,7 @@ public class Event {
     @JoinTable(name = "event_photographers",
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "photographer_id")})
-    Set<Photographer> photographers = new HashSet<Photographer>();
+    private Set<Photographer> photographers = new HashSet<Photographer>();
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -75,6 +76,13 @@ public class Event {
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "watermark_id")})
     Set<Watermark> watermarks = new HashSet<Watermark>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "event_advertisers",
+            joinColumns = {@JoinColumn(name = "event_id")},
+            inverseJoinColumns = {@JoinColumn(name = "advertiser_id")})
+    private Set<Advertiser> advertisers = new HashSet<Advertiser>();
 
     public int getId() {
         return id;
@@ -158,8 +166,8 @@ public class Event {
         this.createdBy = createdBy;
     }
 
-    public Set<Photographer> getPhotographers() {
-        return photographers;
+    public Set<Photographer> getPhotographers(List<Photographer> photographers) {
+        return this.photographers;
     }
 
     public void setPhotographers(Set<Photographer> photographers) {
@@ -174,4 +182,15 @@ public class Event {
         this.watermarks = watermarks;
     }
 
+    public Set<Photographer> getPhotographers() {
+        return photographers;
+    }
+
+    public Set<Advertiser> getAdvertisers() {
+        return advertisers;
+    }
+
+    public void setAdvertisers(Set<Advertiser> advertisers) {
+        this.advertisers = advertisers;
+    }
 }
