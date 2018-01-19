@@ -16,6 +16,19 @@
                 <button class="btn btn-action-top">Cancel</button>
             </div>
             <!-- Page Heading -->
+
+
+
+            <div class="imageupload panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="margin-top: 10px">Watermark Title</h4>
+
+                </div>
+                <input class="form-control" id="name" name="name" placeholder="Watermark Title">
+
+            </div>
+
+
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
@@ -149,6 +162,7 @@
 
         <script>
             function submitWatermark() {
+                var name = $('#name').val();
                 var type=$('.wm_tab.active').attr("data-name");
                 var logoImgToken='';
                 var logoName='';
@@ -159,7 +173,7 @@
                 var placement='';
                 var color='';
 
-                if(type=="image"){
+                if(type === "image"){
                     logoImgToken= getwatermarkLogoToken();
                     logoName=$("input[name=img_logo_name]").val();
                     placement=$(".img_placement").val();
@@ -167,7 +181,7 @@
                     fade=$("input[name=img_fade_range]").val();
 
 
-                    if(logoName==''||logoImgToken==''||placement==''||size==''||fade==''){
+                    if(name === '' || logoName===''||logoImgToken===''||placement===''||size===''||fade===''){
                         alert("Please fill all the field");
                         return false;
                     }
@@ -178,13 +192,14 @@
                     fontId=$(".txt_font").val();
                     color=$("input[name=txt_color]").val();
 
-                    if(logoName==''||watermarkText==''||fontId==''||color==''){
+                    if(name=== '' || logoName===''||watermarkText===''||fontId===''||color===''){
                         alert("Please fill all the field");
                         return false;
                     }
 
                 }
                 var data = {
+                    name: name,
                     type:type,
                     logoImgToken:logoImgToken,
                     logoName: logoName,

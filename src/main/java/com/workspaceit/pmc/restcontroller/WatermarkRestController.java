@@ -50,7 +50,6 @@ public class WatermarkRestController {
 
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
-
         /**
          * Basic Validation
          * */
@@ -68,11 +67,10 @@ public class WatermarkRestController {
 
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id,@Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
-
+    public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id,
+                                    @Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
         Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
-
         /**
          * Basic Validation
          * */
@@ -80,14 +78,11 @@ public class WatermarkRestController {
 
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-
-
         try {
             this.watermarkService.update(id,watermarkForm,currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
         }
-
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
 

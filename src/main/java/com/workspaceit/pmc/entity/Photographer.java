@@ -58,7 +58,8 @@ public class Photographer {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @ManyToMany(mappedBy = "photographers", fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "photographers",fetch = FetchType.LAZY)
+
     private Set<Event> events = new HashSet<Event>();
 
     public int getId() {
@@ -156,16 +157,7 @@ public class Photographer {
 
         Photographer that = (Photographer) o;
 
-        if (id != that.id) return false;
-        if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (profilePhoto != null ? !profilePhoto.equals(that.profilePhoto) : that.profilePhoto != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-        if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
-        return events != null ? events.equals(that.events) : that.events == null;
+        return id == that.id;
     }
 
     @Override
@@ -179,14 +171,6 @@ public class Photographer {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", userName='" + userName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", profilePhoto='" + profilePhoto + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", createdBy=" + createdBy +
-                ", events=" + events +
                 '}';
     }
 }

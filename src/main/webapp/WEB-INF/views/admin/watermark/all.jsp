@@ -8,12 +8,15 @@
     <jsp:body>
         <div id="page-wrapper">
             <div class="container">
-                <h1>Photographer List </h1>
+                <h1>Watermark List </h1>
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                         <tr>
+                            <th class="cstm-table-header">
+                                Title
+                            </th>
                             <th class="cstm-table-header">
                                 Type
                             </th>
@@ -47,6 +50,9 @@
                         <tbody>
                         <d:forEach var="wm" items="${watermarkList}" >
                         <tr>
+                            <td class="des-clm">
+                                <p class="text-left">${wm.name}</p>
+                            </td>
                             <td class="des-clm">
                                 <p class="text-left">${wm.type}</p>
                             </td>

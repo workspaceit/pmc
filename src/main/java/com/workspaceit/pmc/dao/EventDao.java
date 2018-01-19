@@ -24,7 +24,7 @@ public class EventDao extends BaseDao {
                 .setParameter("ids", Arrays.asList(ids))
                 .list();
     }
-    public Event getById(int id){
+    public Event getById(int id) {
         Session session = this.getCurrentSession();
         return (Event)session.createQuery("FROM Event where id=:id ")
                 .setParameter("id",id)

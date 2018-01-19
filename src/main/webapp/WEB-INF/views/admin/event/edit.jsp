@@ -1,73 +1,89 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
             <div class="container">
                 <h3 class="uni-header"><span>Create Event</span></h3>
                 <div class="btn-container-top">
-                    <button class="btn btn-action-top" id="save-watermark-btn">Save</button>
+                    <button class="btn btn-action-top" id="update-watermark-btn">Save</button>
                     <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
                     <button class="btn btn-action-top">Cancel</button>
                 </div>
                 <!-- Page Heading -->
                 <div class="row cstm-tab tab-pane clearfix" style="margin:0px !important">
                     <form id="event-form" method="post">
                         <div class="col-md-8" style="padding-left: 0px">
-
                             <div class="form-group">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">Event Information</h4>
                                     </div>
                                     <div class="panel-body">
+                                        <input type="hidden" value="${event.id}" id="eventId">
                                         <div class="form-group">
                                             <label>Event Name</label>
-                                            <input type="text" id="eventName" name="name" class="form-control">
+                                            <input type="text" id="eventName" name="name" value="${event.name}" class="form-control">
                                         </div>
 
                                         <div class="row clearfix">
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input name="startDate" id="startDate" class="form-control">
+                                                    <input name="startDate" id="startDate"
+                                                           value='<fmt:formatDate pattern='MM/dd/yyyy' value="${event.startsAt}"/>'
+                                                           class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group timepick">
                                                     <label>Start time</label><br>
-                                                    <input type="time" value="12:45" id="startTime" name="startTime" class="form-control">
+                                                    <input type="time" id="startTime"
+                                                           value='<fmt:formatDate pattern='HH:mm' value="${event.startsAt}"/>'
+                                                           name="startTime" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input name="endDate" id="endDate" class="form-control">
+                                                    <input name="endDate" id="endDate"
+                                                           value='<fmt:formatDate pattern='MM/dd/yyyy' value="${event.endsAt}"/>'
+                                                           class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group timepick">
                                                     <label>End time</label><br>
-                                                    <input type="time" value="16:45" id="endTime" name="endTime" class="form-control">
+                                                    <input type="time" id="endTime" name="endTime"
+                                                           value='<fmt:formatDate pattern='HH:mm' value="${event.endsAt}"/>'
+                                                           class="form-control">
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group clearfix">
                                             <div class="yes_no_container">
-                                                <input id="input1" name="private" value="false" checked type="radio"/>
+                                                <c:if test="${event.eventPrivate eq true}">
+                                                    <input id="input1" name="private" value="false" type="radio"/>
+                                                    <input id="input2" name="private" value="true" checked type="radio"/>
+                                                </c:if>
+                                                <c:if test="${event.eventPrivate eq false}">
+                                                    <input id="input1" name="private" value="false" checked type="radio"/>
+                                                    <input id="input2" name="private" value="true" type="radio"/>
+                                                </c:if>
                                                 <label for="input1">Public</label>
-                                                <input id="input2" name="private" value="true" type="radio"/>
                                                 <label for="input2">Private</label>
                                                 <span class="slider"></span>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Event Venue</label>
                                             <select id="venueId" name="venueId" style="width: 100%;" tabindex="-1"
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
+                                                <option value="${event.venue.id}">${event.venue.name}</option>
                                             </select>
                                             <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"
                                                     data-target="#addLocation" style="margin-top: 15px;"><i
@@ -89,13 +105,16 @@
                                                         <div style="width: 100%">
                                                             <select id="photographer-select2" name="photographerIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                                     class="select2-hidden-accessible" aria-hidden="true">
+                                                                <c:forEach var="photographer" items="${event.photographers}" >
+                                                                    <option value="${photographer.id}" selected>${photographer.fullName}</option>
+                                                                </c:forEach>
                                                             </select>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary btn-sm-new"
-                                                                data-toggle="modal" data-target="#addPhotographer"
-                                                                style="margin-top: 15px;">
-                                                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer
-                                                        </button>
+                                                        <%--<button type="button" class="btn btn-primary btn-sm-new"--%>
+                                                                <%--data-toggle="modal" data-target="#addPhotographer"--%>
+                                                                <%--style="margin-top: 15px;">--%>
+                                                            <%--<i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer--%>
+                                                        <%--</button>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,6 +130,9 @@
                                                         <div style="width: 100%">
                                                             <select id="advertiser-select2" name="advertiserIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                                     class="select2-hidden-accessible" aria-hidden="true">
+                                                                <c:forEach var="advertiser" items="${event.advertisers}">
+                                                                    <option selected value="${advertiser.id}">${advertiser.name}</option>
+                                                                </c:forEach>
                                                             </select>
                                                         </div>
 
@@ -136,10 +158,14 @@
                                 <div class="file-tab panel-body">
                                     <div id="eventImg">
                                         <div class="dz-default dz-message">
-                                            <span>Drop file or click to select</span>
+                                            <span>Drop a new file or click to select</span>
                                             <p id="errorObj_profilePictureToken"></p>
                                         </div>
                                     </div>
+                                </div>
+                                <div>
+                                    <label for="">Current Photo</label>
+                                    <img src="<s:url value="/common/${event.eventPhoto}" />"  class="img-responsive" alt="">
                                 </div>
                             </div>
 
@@ -150,8 +176,11 @@
                                 </div>
                                 <div class="panel-body">
                                     <div style="width: 100%">
-                                        <select id="watermark-select2" value="" name="watermarkIds" style="width: 100%;" tabindex="-1"
+                                        <select id="watermark-select2" name="watermarkIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                 class="select2-hidden-accessible" aria-hidden="true">
+                                            <c:forEach var="watermark" items="${event.watermarks}">
+                                                <option selected value="${watermark.id}">${watermark.name}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
 

@@ -95,6 +95,7 @@ public class WatermarkService {
 
         Watermark watermark = new Watermark();
 
+        watermark.setName(watermarkForm.getName());
         watermark.setType(watermarkForm.getType());
         watermark.setLogoName(watermarkForm.getLogoName());
         watermark.setPlacement(watermarkForm.getPlacement());
@@ -119,59 +120,28 @@ public class WatermarkService {
         if(logoImgToken!=null && logoImgToken>0){
             System.out.println("logoImgToken"+logoImgToken);
             logoImgName = this.fileService.copyFile(logoImgToken);
+            watermark.setLogoImage(logoImgName);
         }
-
-        System.out.println("logoImgName"+logoImgName);
-        watermark.setLogoImage(logoImgName);
-
         this.populateWatermarkByWatermarkForm(watermark,watermarkForm);
-
         this.update(watermark);
-
-
-//        try{
-//            if(bgIdsToRemove!=null && bgIdsToRemove.length>0){
-//                this.locationBackgroundImageService.remove(location,bgIdsToRemove);
-//            }
-//
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-
-
-        /**
-         * Add back ground images
-         * */
-//        try{
-//            if(bgTokens==null || bgTokens.length>0){
-//                this.locationBackgroundImageService.createFromToken(location,bgTokens);
-//            }
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//
-//        }
-
         return watermark;
     }
 
 
     private void populateWatermarkByWatermarkForm(Watermark watermark, WatermarkForm watermarkForm){
-
-       watermark.setLogoName(watermarkForm.getLogoName());
-       watermark.setType(watermarkForm.getType());
-       watermark.setPlacement(watermarkForm.getPlacement());
-       watermark.setSize(watermarkForm.getSize());
-       watermark.setFade(watermarkForm.getFade());
-       watermark.setWatermarkText(watermarkForm.getWatermarkText());
-       watermark.setFont(watermarkForm.getFont());
-       watermark.setColor(watermarkForm.getColor());
-
+        watermark.setName(watermarkForm.getName());
+        watermark.setLogoName(watermarkForm.getLogoName());
+        watermark.setType(watermarkForm.getType());
+        watermark.setPlacement(watermarkForm.getPlacement());
+        watermark.setSize(watermarkForm.getSize());
+        watermark.setFade(watermarkForm.getFade());
+        watermark.setWatermarkText(watermarkForm.getWatermarkText());
+        watermark.setFont(watermarkForm.getFont());
+        watermark.setColor(watermarkForm.getColor());
 
         /**
          * Populating slid show settings
          * */
-
-
     }
 
 

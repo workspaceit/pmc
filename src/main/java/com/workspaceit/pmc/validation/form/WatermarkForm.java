@@ -4,11 +4,8 @@ import com.workspaceit.pmc.entity.Font;
 import com.workspaceit.pmc.entity.Placement;
 import com.workspaceit.pmc.entity.Size;
 import com.workspaceit.pmc.entity.WatermarkType;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 
 /**
  * Created by mi_rafi on 12/28/17.
@@ -16,6 +13,8 @@ import javax.persistence.*;
 public class WatermarkForm
 {
 
+    @NotBlank(message="Name is required")
+    private String name;
     private WatermarkType type;
 
     @NotBlank(message="Logo name can not be null")
@@ -34,6 +33,14 @@ public class WatermarkForm
     private Placement placement;
 
     private String color;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public WatermarkType getType() {
         return type;

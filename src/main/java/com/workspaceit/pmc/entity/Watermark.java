@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -71,6 +73,9 @@ public class Watermark {
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
+
+    @ManyToMany(mappedBy = "watermarks", fetch = FetchType.LAZY)
+    private Set<Event> events = new HashSet<Event>();
 
 
     public int getId() {
@@ -185,7 +190,11 @@ public class Watermark {
         this.createdBy = createdBy;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
 
-
-
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
 }

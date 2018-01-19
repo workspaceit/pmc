@@ -10,12 +10,14 @@ import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.event.EventForm;
 import com.workspaceit.pmc.validation.event.EventValidator;
+import com.workspaceit.pmc.validation.location.LocationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,6 +70,32 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         Event event = this.eventService.create(eventForm);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+    }
+
+    @Secured(UserRole._SUPER_ADMIN)
+    @RequestMapping(value = "/update/{id}")
+    public ResponseEntity<?> update(Authentication authentication,
+                                    @PathVariable("id") int id,
+                                    @Valid EventForm eventForm, BindingResult bindingResult) throws EntityNotFound {
+        Admin admin = (Admin) authentication.getPrincipal();
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        /**
+         * Basic Validation
+         * */
+        if(bindingResult.hasErrors()){
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        /**
+         * Business logic Validation
+         * */
+        this.eventValidator.validate(eventForm, bindingResult);
+        serviceResponse.bindValidationError(bindingResult);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        Event event = eventService.update(id,eventForm);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
 

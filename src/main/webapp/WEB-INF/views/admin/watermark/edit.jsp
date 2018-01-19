@@ -25,6 +25,14 @@
             <!-- Page Heading -->
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="margin-top: 10px">Watermark Title</h4>
+
+                </div>
+                <input class="form-control" id="name" name="name" value="${watermark.name}" placeholder="Watermark Title">
+
+            </div>
+            <div class="imageupload panel panel-default">
+                <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
                     <div id="waterMarkImg" class="btn-group pull-right">
                         <button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>
@@ -176,6 +184,7 @@
 
         <script>
             function submitWatermark() {
+                var name = $('#name').val();
                 var type=$('.wm_tab.active').attr("data-name");
                 var logoImgToken='';
                 var logoName='';
@@ -194,7 +203,7 @@
                     fade=$("input[name=img_fade_range]").val();
 
 
-                    if(logoName==''||logoImgToken==''||placement==''||size==''||fade==''){
+                    if(name === '' || logoName===''||logoImgToken===''||placement===''||size===''||fade===''){
                         alert("Please fill all the field");
                         return false;
                     }
@@ -205,13 +214,14 @@
                     fontId=$(".txt_font").val();
                     color=$("input[name=txt_color]").val();
 
-                    if(logoName==''||watermarkText==''||fontId==''||color==''){
+                    if(name === '' || logoName===''||watermarkText===''||fontId===''||color===''){
                         alert("Please fill all the field");
                         return false;
                     }
 
                 }
                 var data = {
+                    name: name,
                     type:type,
                     logoImgToken:logoImgToken,
                     logoName: logoName,

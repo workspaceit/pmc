@@ -11,6 +11,7 @@ import com.workspaceit.pmc.service.VenueService;
 import com.workspaceit.pmc.service.WatermarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,6 +64,14 @@ public class EventController {
         List<Event> events = this.eventService.getAll();
         ModelAndView model = new ModelAndView("admin/event/all");
         model.addObject("events", events);
+        return model;
+    }
+
+    @RequestMapping(value = "/update/{id}")
+    public ModelAndView update(@PathVariable("id") int id){
+        Event event = this.eventService.getById(id);
+        ModelAndView model = new ModelAndView("admin/event/edit");
+        model.addObject("event", event);
         return model;
     }
 

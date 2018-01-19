@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -102,8 +103,48 @@ public class EventService {
             event.setAdvertisers(new HashSet<>(advertisers));
         }
         event.setEventPhoto(eventImageName);
-        event.setPrivate(eventForm.getIsPrivate());
+        event.setEventPrivate(eventForm.getIsPrivate());
         event.setCreatedBy(admin);
+        return event;
+    }
+
+    @Transactional
+    public Event update(Integer eventId, EventForm eventForm) throws EntityNotFound {
+        Event event = eventDao.getById(eventId);
+        Venue venue =  venueService.getVenue(eventForm.getVenueId());
+        List<Watermark> watermarks = watermarkService.getAll(eventForm.getWatermarkIds());
+        List<Photographer> photographers = photographerService.getAll(eventForm.getPhotographerIds());
+        List<Advertiser> advertisers = advertiserService.getAll(eventForm.getAdvertiserIds());
+        Integer eventImageToken = eventForm.getImageToken();
+        if(eventImageToken != 0){
+            String eventImageName = this.fileService.copyFile(eventImageToken);
+            event.setEventPhoto(eventImageName);
+        }
+        event.setName(eventForm.getEventName());
+        event.setStartsAt(eventForm.getStartDate());
+        event.setEndsAt(event.getEndsAt());
+        event.setVenue(venue);
+        event.setEventPrivate(eventForm.getIsPrivate());
+
+        if(photographers != null) {
+            event.setPhotographers(new HashSet<>(photographers));
+        }
+        else {
+            event.setPhotographers(new HashSet<>());
+        }
+        if(advertisers != null) {
+            event.setAdvertisers(new HashSet<>(advertisers));
+        }
+        else{
+            event.setAdvertisers(new HashSet<>());
+        }
+        if(watermarks != null) {
+            event.setWatermarks(new HashSet<>(watermarks));
+        }
+        else {
+            event.setWatermarks(new HashSet<>());
+        }
+        eventDao.update(event);
         return event;
     }
 

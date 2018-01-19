@@ -65,6 +65,7 @@
                         <li><a href="<c:url value="/admin/advertiser/all" />">Advertisers</a></li>
                         <li><a href="<c:url value="/admin/watermark/all" />">Watermarks</a></li>
                         <li><a href="<c:url value="/admin/venue/all" />">Venues</a></li>
+                        <li><a href="<c:url value="/admin/event/all" />">Events</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

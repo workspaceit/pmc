@@ -37,6 +37,7 @@ $(document).ready(function () {
     );
 
     $('#save-watermark-btn').click(function () {
+        UnBindErrors("errorObj_");
         console.log("submitting . . .");
         var eventName = $('#eventName').val();
         var startDateOnly = $('#startDate').val();
@@ -48,7 +49,6 @@ $(document).ready(function () {
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
         var watermarkIds = $('#watermark-select2').val();
-
 
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
@@ -68,6 +68,59 @@ $(document).ready(function () {
 
         $.ajax({
             url: BASEURL+'api/event/create',
+            data: data,
+            type: 'POST',
+            traditional: true,
+            statusCode: {
+                401: function (response) {
+                    console.log(response);
+                },
+                422: function (response) {
+
+                    BindErrorsWithHtml("errorObj_",response.responseJSON);
+                    console.log(response);
+                    // btnAction
+                }
+            },success: function(data){
+                UnBindErrors("errorObj_");
+                photographerAfterSaveActionCreate(btnAction);
+            }
+        });
+
+    });
+
+    $('#update-watermark-btn').click(function () {
+        UnBindErrors("errorObj_");
+        console.log("submitting . . .");
+        var eventName = $('#eventName').val();
+        var startDateOnly = $('#startDate').val();
+        var startTime = $('#startTime').val();
+        var endDateOnly = $('#endDate').val();
+        var endTime = $('#endTime').val();
+        var isPrivate = $("input[name='private']:checked").val();
+        var venueId = $('#venueId').val();
+        var photographerIds = $('#photographer-select2').val();
+        var advertiserIds = $('#advertiser-select2').val();
+        var watermarkIds = $('#watermark-select2').val();
+
+        var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+        var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+
+
+        var data = {
+            'eventName': eventName,
+            'startDate': startDate,
+            'endDate' : endDate,
+            'venueId': venueId,
+            'photographerIds': photographerIds,
+            'advertiserIds': advertiserIds,
+            'watermarkIds': watermarkIds,
+            'imageToken': pictureToken,
+            'isPrivate': isPrivate
+        };
+        var eventId = $('#eventId').val();
+        $.ajax({
+            url: BASEURL+'api/event/update/' + eventId,
             data: data,
             type: 'POST',
             traditional: true,
@@ -209,22 +262,24 @@ $(document).ready(function () {
             }
         }
     });
+    var startDate = ( $('#startDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#startDate').val();
+    var endDate = ( $('#endDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#endDate').val();
     $('input[name="startDate"]').daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'MM/DD/YYYY'
         },
-        function (start, end, label) {
-            var years = moment().diff(start, 'years');
-            alert("You are " + years + " years old.");
-        });
+        startDate: startDate
+    });
     $('input[name="endDate"]').daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'MM/DD/YYYY'
         },
-        function (start, end, label) {
-            var years = moment().diff(start, 'years');
-            alert("You are " + years + " years old.");
-        });
+        startDate: endDate
+    });
     // $('#startTime').timepicker();
     $(".choose-btn > .btn").click(function () {
         $(".choose-btn > .btn").removeClass("active");
