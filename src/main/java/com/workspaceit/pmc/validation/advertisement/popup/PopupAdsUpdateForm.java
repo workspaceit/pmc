@@ -37,4 +37,6 @@ public class PopupAdsUpdateForm extends PopupAdsForm {
     public void setRemoveEmailBannerIds(Integer[] removeEmailBannerIds) {
         this.removeEmailBannerIds = removeEmailBannerIds;
     }
+
+
 }

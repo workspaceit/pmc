@@ -76,7 +76,7 @@ public class PopUpAdsService {
                        Admin admin) throws EntityNotFound {
         Integer smsVideoToken = popupAdsForm.getSmsPopupVideo();
         Integer emailVideoToken = popupAdsForm.getEmailPopupVideo();
-
+        System.out.println(popupAdsForm);
 
         PopupAd smsPopupAdBanner =  this.getPopupAd(smsPopupAdBannerId,advertiser.getId());
         smsPopupAdBanner.setDuration(popupAdsForm.getSmsPopupVideoDuration());

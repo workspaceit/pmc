@@ -2,6 +2,7 @@ package com.workspaceit.pmc.validation.advertisement.popup;
 
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -125,5 +126,24 @@ public class PopupAdsForm {
 
     public void setEmailRotation(AdvertiseRotationSettings emailRotation) {
         this.emailRotation = emailRotation;
+    }
+
+    @Override
+    public String toString() {
+        return "PopupAdsForm{" +
+                "smsId=" + smsId +
+                ", emailId=" + emailId +
+                ", advertiserId=" + advertiserId +
+                ", smsPopupBanner=" + Arrays.toString(smsPopupBanner) +
+                ", smsPopupVideo=" + smsPopupVideo +
+                ", emailPopupBanner=" + Arrays.toString(emailPopupBanner) +
+                ", emailPopupVideo=" + emailPopupVideo +
+                ", emailPopupVideoDuration=" + emailPopupVideoDuration +
+                ", smsPopupVideoDuration=" + smsPopupVideoDuration +
+                ", smsExpiryDate=" + smsExpiryDate +
+                ", emailExpiryDate=" + emailExpiryDate +
+                ", smsRotation=" + smsRotation +
+                ", emailRotation=" + emailRotation +
+                '}';
     }
 }

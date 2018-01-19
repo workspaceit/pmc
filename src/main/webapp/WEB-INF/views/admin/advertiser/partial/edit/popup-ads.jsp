@@ -21,8 +21,8 @@
                                 <c:set var="popSmsStaticActive" value="active" ></c:set>
                             </c:when>
                         </c:choose>
-                        <button type="button" class="${popSmsRotateActive} btn btn-default btn-switch" id="regi10"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="${popSmsStaticActive} btn btn-default btn-switch" id="regi11"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="${popSmsRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${popSmsStaticActive} btn btn-default btn-switch" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
@@ -104,8 +104,8 @@
                                 <c:set var="popEmailStaticActive" value="active" ></c:set>
                             </c:when>
                         </c:choose>
-                        <button type="button" class="${popEmailRotateActive} btn btn-default btn-switch" id="regi12"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="${popEmailStaticActive} btn btn-default btn-switch" id="regi13"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="${popEmailRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${popEmailStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right">
