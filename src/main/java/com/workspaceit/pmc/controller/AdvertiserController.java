@@ -2,10 +2,11 @@ package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
-import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,7 @@ public class AdvertiserController {
         List<Event> events = this.eventService.getAll();
         Map<GalleryAdsConstant,AdvertisementPrices> galleryAdsPrices = this.advertisementPricesService.getGalleryAdPrice();
         Map<SlideshowAdsConstant,AdvertisementPrices> slideshowAdPrice = this.advertisementPricesService.getSlideshowAdPrice();
-
+        Map<PopupAdConstant,AdvertisementPrices> popupAdPrice = this.advertisementPricesService.getPopupAdPrice();
 
 
         ModelAndView model = new ModelAndView("admin/advertiser/add");
@@ -133,7 +134,7 @@ public class AdvertiserController {
         model.addObject("cities",cities);
         model.addObject("galleryAdsPrices",galleryAdsPrices);
         model.addObject("slideshowAdPrice",slideshowAdPrice);
-
+        model.addObject("popupAdPrice",popupAdPrice);
         model.addObject("durations",durations);
 
         /*For location Modal Page*/
@@ -178,8 +179,8 @@ public class AdvertiserController {
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
-        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.SMS);
-        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.EMAIL);
+        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
+        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
 
         System.out.println(popupAdSms);
         System.out.println(popupAdEmail);

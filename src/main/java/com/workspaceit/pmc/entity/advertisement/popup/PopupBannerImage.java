@@ -1,5 +1,6 @@
-package com.workspaceit.pmc.entity;
+package com.workspaceit.pmc.entity.advertisement.popup;
 
+import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `slideshow_ad_quantity_price` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `slideshow_id` int(11) NOT NULL,
+  `slideshow_ad_id` int(11) NOT NULL,
   `ad_type` enum('BANNER','VIDEO') NOT NULL,
   `price` float(5,2) NOT NULL,
   `quantity` int(11) NOT NULL,

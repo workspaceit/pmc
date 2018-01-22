@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 22, 2018 at 05:21 PM
+-- Generation Time: Jan 22, 2018 at 07:13 PM
 -- Server version: 5.6.39
 -- PHP Version: 5.5.9-1ubuntu4.22
 
@@ -23,23 +23,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gallery_quantity_price`
+-- Table structure for table `popup_ad_quantity_price`
 --
 
-CREATE TABLE IF NOT EXISTS `gallery_quantity_price` (
+CREATE TABLE IF NOT EXISTS `popup_ad_quantity_price` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `gallery_ad_id` int(11) NOT NULL,
-  `ad_type` enum('BACKGROUND_IMAGE','TOP_AD_BANNER','BOTTOM_AD_BANNER') NOT NULL,
+  `popup_ad_id` int(11) NOT NULL,
+  `ad_type` enum('SMS','EMAIL') NOT NULL,
   `price` float(5,2) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `gallery_quantity_price`
---
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

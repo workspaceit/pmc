@@ -1,17 +1,16 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.dao.AdvertisementPricesDao;
 import com.workspaceit.pmc.entity.AdvertisementPrices;
-import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.price.AdvertisementPricesForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,9 @@ import java.util.Map;
 public class AdvertisementPricesService {
 
     private AdvertisementPricesDao advertisementPricesDao;
-
+    private static String GALLERY_AD_PREFIX = "GALLERY_";
+    private static String SLIDESHOW_AD_PREFIX = "SLIDESHOW_";
+    private static String POPUP_AD_PREFIX = "POPUP_";
     @Autowired
     public void setAdvertisementPricesDao(AdvertisementPricesDao advertisementPricesDao) {
         this.advertisementPricesDao = advertisementPricesDao;
@@ -74,7 +75,7 @@ public class AdvertisementPricesService {
     @Transactional
     public Map<GalleryAdsConstant,AdvertisementPrices> getGalleryAdPrice(){
         Map<GalleryAdsConstant,AdvertisementPrices> pricesMap = new HashMap<>();
-        final String prefix = "GALLERY_";
+        final String prefix = GALLERY_AD_PREFIX;
         List<AdvertisementPrices> galleryAdQuantityPrices = this.advertisementPricesDao.getByType(
                             prefix+GalleryAdsConstant.BACKGROUND_IMAGE.name(),
                             prefix+GalleryAdsConstant.TOP_AD_BANNER.name(),
@@ -97,7 +98,7 @@ public class AdvertisementPricesService {
     @Transactional
     public Map<SlideshowAdsConstant,AdvertisementPrices> getSlideshowAdPrice(){
         Map<SlideshowAdsConstant,AdvertisementPrices> pricesMap = new HashMap<>();
-        final String prefix = "SLIDESHOW_";
+        final String prefix = SLIDESHOW_AD_PREFIX;
         List<AdvertisementPrices> galleryAdQuantityPrices = this.advertisementPricesDao.getByType(
                 prefix+SlideshowAdsConstant.BANNER.name(),
                 prefix+SlideshowAdsConstant.VIDEO.name()
@@ -109,6 +110,26 @@ public class AdvertisementPricesService {
                 pricesMap.put(SlideshowAdsConstant.BANNER,advertisementPrice);
             }else if (adType.equals(prefix+SlideshowAdsConstant.VIDEO.name())){
                 pricesMap.put(SlideshowAdsConstant.VIDEO,advertisementPrice);
+            }
+        }
+        return pricesMap;
+    }
+
+    @Transactional
+    public Map<PopupAdConstant,AdvertisementPrices> getPopupAdPrice(){
+        Map<PopupAdConstant,AdvertisementPrices> pricesMap = new HashMap<>();
+        final String prefix = POPUP_AD_PREFIX;
+        List<AdvertisementPrices> galleryAdQuantityPrices = this.advertisementPricesDao.getByType(
+                prefix+ PopupAdConstant.SMS.name(),
+                prefix+ PopupAdConstant.EMAIL.name()
+        );
+
+        for(AdvertisementPrices advertisementPrice :galleryAdQuantityPrices){
+            String adType = advertisementPrice.getType();
+            if (adType.equals(prefix+ PopupAdConstant.SMS.name())){
+                pricesMap.put(PopupAdConstant.SMS,advertisementPrice);
+            }else if (adType.equals(prefix+ PopupAdConstant.EMAIL.name())){
+                pricesMap.put(PopupAdConstant.EMAIL,advertisementPrice);
             }
         }
         return pricesMap;

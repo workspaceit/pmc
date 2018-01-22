@@ -2,8 +2,8 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.PopupBannerImageDao;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.PopupAd;
-import com.workspaceit.pmc.entity.PopupBannerImage;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupBannerImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

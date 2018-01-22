@@ -33,12 +33,6 @@ public class GalleryAd {
     @Column(name = "logo")
     private String logo;
 
-    @Column(name = "price")
-    private Float price;
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @Column(name = "background_image")
     private String backgroundImage;
 
@@ -110,21 +104,6 @@ public class GalleryAd {
         this.logo = logo;
     }
 
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
 
     public String getBackgroundImage() {
         return backgroundImage;

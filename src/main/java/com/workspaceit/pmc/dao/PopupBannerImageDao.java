@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.PopupBannerImage;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupBannerImage;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
