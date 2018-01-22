@@ -2,8 +2,8 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.SlideshowBannerImageDao;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.SlideshowAd;
-import com.workspaceit.pmc.entity.SlideshowBannerImage;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowBannerImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.dao.AdvertisementPricesDao;
 import com.workspaceit.pmc.entity.AdvertisementPrices;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
@@ -71,7 +72,7 @@ public class AdvertisementPricesService {
         return advertisementPrices;
     }
     @Transactional
-    public Map<GalleryAdsConstant,AdvertisementPrices> getGalleryAddPrice(){
+    public Map<GalleryAdsConstant,AdvertisementPrices> getGalleryAdPrice(){
         Map<GalleryAdsConstant,AdvertisementPrices> pricesMap = new HashMap<>();
         final String prefix = "GALLERY_";
         List<AdvertisementPrices> galleryAdQuantityPrices = this.advertisementPricesDao.getByType(
@@ -82,7 +83,6 @@ public class AdvertisementPricesService {
 
         for(AdvertisementPrices advertisementPrice :galleryAdQuantityPrices){
             String adType = advertisementPrice.getType();
-            System.out.println(adType.length()+" "+(prefix+GalleryAdsConstant.BOTTOM_AD_BANNER.name()).length());
             if (adType.equals(prefix+GalleryAdsConstant.BACKGROUND_IMAGE.name())){
                 pricesMap.put(GalleryAdsConstant.BACKGROUND_IMAGE,advertisementPrice);
             }else if (adType.equals(prefix+GalleryAdsConstant.TOP_AD_BANNER.name())){
@@ -94,6 +94,24 @@ public class AdvertisementPricesService {
         }
         return pricesMap;
     }
+    @Transactional
+    public Map<SlideshowAdsConstant,AdvertisementPrices> getSlideshowAdPrice(){
+        Map<SlideshowAdsConstant,AdvertisementPrices> pricesMap = new HashMap<>();
+        final String prefix = "SLIDESHOW_";
+        List<AdvertisementPrices> galleryAdQuantityPrices = this.advertisementPricesDao.getByType(
+                prefix+SlideshowAdsConstant.BANNER.name(),
+                prefix+SlideshowAdsConstant.VIDEO.name()
+        );
 
+        for(AdvertisementPrices advertisementPrice :galleryAdQuantityPrices){
+            String adType = advertisementPrice.getType();
+            if (adType.equals(prefix+SlideshowAdsConstant.BANNER.name())){
+                pricesMap.put(SlideshowAdsConstant.BANNER,advertisementPrice);
+            }else if (adType.equals(prefix+SlideshowAdsConstant.VIDEO.name())){
+                pricesMap.put(SlideshowAdsConstant.VIDEO,advertisementPrice);
+            }
+        }
+        return pricesMap;
+    }
 
 }

@@ -3,8 +3,10 @@ package com.workspaceit.pmc.controller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
 import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,7 +120,8 @@ public class AdvertiserController {
         List<State> states = this.stateService.getAll();
         List<City> cities = this.cityService.getAllNameAcs();
         List<Event> events = this.eventService.getAll();
-        Map<GalleryAdsConstant,AdvertisementPrices> galleryAdsPrices = this.advertisementPricesService.getGalleryAddPrice();
+        Map<GalleryAdsConstant,AdvertisementPrices> galleryAdsPrices = this.advertisementPricesService.getGalleryAdPrice();
+        Map<SlideshowAdsConstant,AdvertisementPrices> slideshowAdPrice = this.advertisementPricesService.getSlideshowAdPrice();
 
 
 
@@ -129,6 +132,8 @@ public class AdvertiserController {
         model.addObject("states",states);
         model.addObject("cities",cities);
         model.addObject("galleryAdsPrices",galleryAdsPrices);
+        model.addObject("slideshowAdPrice",slideshowAdPrice);
+
         model.addObject("durations",durations);
 
         /*For location Modal Page*/

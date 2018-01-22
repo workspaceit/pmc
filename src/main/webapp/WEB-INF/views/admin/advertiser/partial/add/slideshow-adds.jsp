@@ -1,4 +1,4 @@
-<%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@ page import="com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
     <div class="imageupload panel panel-default">
@@ -40,7 +40,7 @@
                                     </c:forEach>
                               </select>
                               </span>
-            <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.BANNER).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
     <div class="imageupload panel panel-default">
@@ -83,7 +83,7 @@
                     </c:forEach>
               </select>
           </span>
-            <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">Price:$ <input type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.VIDEO).price    }" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
 </div>

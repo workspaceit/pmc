@@ -2,14 +2,17 @@ package sample;
 
 import com.workspaceit.pmc.config.WebConfig;
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.dao.AdvertiserDao;
 import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.AdvertisementPrices;
-import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowQuantityPrice;
 import com.workspaceit.pmc.service.AdvertisementPricesService;
 import com.workspaceit.pmc.service.AdvertiserService;
 import com.workspaceit.pmc.service.LocationService;
+import com.workspaceit.pmc.service.SlideShowService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +36,7 @@ public class SampleTest {
     private LocationService locationService;
     private AdvertiserDao advertiserDao;
     private GalleryAdDao galleryAdDao;
-
+    private SlideShowService slideShowService;
     private AdvertiserService advertiserService;
 
     @Autowired
@@ -50,6 +53,12 @@ public class SampleTest {
     public void setAdvertiserDao(AdvertiserDao advertiserDao) {
         this.advertiserDao = advertiserDao;
     }
+
+    @Autowired
+    public void setSlideShowService(SlideShowService slideShowService) {
+        this.slideShowService = slideShowService;
+    }
+
     @Autowired
     public void setGalleryAdDao(GalleryAdDao galleryAdDao) {
         this.galleryAdDao = galleryAdDao;
@@ -66,23 +75,17 @@ public class SampleTest {
     public void test() {
         System.out.println("*******************");
 
-        GalleryAd  list = this.galleryAdDao.getById(1);
-        Map<GalleryAdsConstant,GalleryAdQuantityPrice> g = list.getGalleryQuantityPrice();
+        SlideshowAd ssa = this.slideShowService.getByAdvertiserId(4);
+        Map<SlideshowAdsConstant,SlideshowQuantityPrice> g = ssa.getQuantityPrice();
         if(g ==null){
             return;
         }
-        Set<GalleryAdsConstant> keys = g.keySet();
-        for(GalleryAdsConstant key: keys){
+        Set<SlideshowAdsConstant> keys = g.keySet();
+        for(SlideshowAdsConstant key: keys){
 
             System.out.println(g.get(key));
         }
         System.out.println("*******************");
-        Map<GalleryAdsConstant,AdvertisementPrices> pricesMap = advertisementPricesService.getGalleryAddPrice();
-        Set<GalleryAdsConstant> pkeys = pricesMap.keySet();
-        for(GalleryAdsConstant key: pkeys){
-            System.out.println(key);
-            System.out.println(pricesMap.get(key));
-        }
 
     }
 }
