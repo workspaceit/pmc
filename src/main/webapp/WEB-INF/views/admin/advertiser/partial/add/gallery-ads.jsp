@@ -1,3 +1,4 @@
+<%@ page import="com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant" %>
 <div class="tab-pane" id="tab_default_2">
     <div class="row clearfix">
         <div class="col-md-6">
@@ -42,7 +43,7 @@
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/></h4>
                 </div>
 
             </div>
@@ -81,7 +82,7 @@
                 </div>
                 <p id="errorObj_topBannerImgTokens" class="text-danger"></p>
                 <p class="text-danger" id="errorObj_topBannerExpiryDate"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
                 </div>
             </div>
             <div class="imageupload panel panel-default">
@@ -115,7 +116,7 @@
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:30px;"/></h4></div>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4></div>
             </div>
         </div>
     </div>
