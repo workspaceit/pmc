@@ -1,0 +1,2 @@
+ALTER TABLE  `gallery_ads` ADD  `price` FLOAT( 11, 2 ) NOT NULL AFTER  `advertiser_id` ;
+ALTER TABLE  `gallery_ads` ADD  `quantity` INT NOT NULL AFTER  `price` ;

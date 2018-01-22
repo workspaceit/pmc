@@ -3,6 +3,7 @@ package com.workspaceit.pmc.validation.advertisement.gallery;
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -21,6 +22,20 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
     @NotNull(message = "Logo is required")
     public Integer getLogoToken() {
         return logoToken;
+    }
+
+    @Override
+    @NotNull(message = "Price is required")
+    @Min(value = 1,message = "Price can't be zero or negative")
+    public Float getPrice() {
+        return super.getPrice();
+    }
+
+    @Override
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1,message = "Least 1 quantity required")
+    public Integer getQuantity() {
+        return super.getQuantity();
     }
 
     @Override

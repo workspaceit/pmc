@@ -13,6 +13,8 @@ public class GalleryAdsForm {
     protected Integer advertiserId;
 
     protected Integer logoToken;
+    protected Float price;
+    protected Integer quantity;
     protected Integer bgImgTokens;
     protected Integer[] topBannerImgTokens;
     protected Integer[] bottomBannerImgTokens;
@@ -35,6 +37,14 @@ public class GalleryAdsForm {
 
     public Integer getLogoToken() {
         return logoToken;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public Integer getBgImgTokens() {
@@ -67,6 +77,14 @@ public class GalleryAdsForm {
 
     public void setLogoToken(Integer logoToken) {
         this.logoToken = logoToken;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public void setBgImgTokens(Integer bgImgTokens) {
@@ -104,4 +122,6 @@ public class GalleryAdsForm {
     public void setBottomBannerRotation(AdvertiseRotationSettings bottomBannerRotation) {
         this.bottomBannerRotation = bottomBannerRotation;
     }
+
+
 }

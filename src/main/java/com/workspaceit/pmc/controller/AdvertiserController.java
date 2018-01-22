@@ -129,6 +129,15 @@ public class AdvertiserController {
 
         return model;
     }
+    @RequestMapping("/invoice/{id}")
+    public ModelAndView invoice(@PathVariable("id") int id){
+
+        Advertiser advertiser =  this.advertiserService.getById(id);
+        ModelAndView model = new ModelAndView("admin/advertiser/invoice");
+        model.addObject("advertiser",advertiser);
+
+        return model;
+    }
     @RequestMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") int advertiserId){
 

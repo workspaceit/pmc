@@ -4,6 +4,7 @@ import com.workspaceit.pmc.entity.AdvertisementPrices;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,4 +25,17 @@ public class AdvertisementPricesDao extends BaseDao {
             return session.createQuery("FROM AdvertisementPrices ORDER BY id desc")
                     .list();
         }
+    public AdvertisementPrices getByType(String type){
+        Session session = this.getCurrentSession();
+        return (AdvertisementPrices)session.createQuery("FROM AdvertisementPrices ap WHERE ap.type=:id")
+                .setParameter("id",type)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+    public List<AdvertisementPrices> getByType(String... type){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM AdvertisementPrices ap WHERE ap.type in :adType")
+                .setParameter("adType", Arrays.asList(type))
+                .list();
+    }
 }
