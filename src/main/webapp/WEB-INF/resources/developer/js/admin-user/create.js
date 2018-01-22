@@ -1,7 +1,9 @@
 /**
  * Created by mi_rafi on 1/3/18.
  */
+
 function submitAdminUserData(btnAction){
+
     var fullName = $('#fullName').val();
     var phoneNumber = $('#phoneNumber').val();
     var userName = $('#userName').val();
@@ -36,7 +38,7 @@ function submitAdminUserData(btnAction){
             }
         },
         success: function(response) {
-            redirectFromAdminUser(btnAction)
+            redirectFromAdminUser(btnAction);
         }
     });
 }

@@ -10,8 +10,9 @@
                 <h3 class="uni-header"><span>Create Event</span></h3>
                 <div class="btn-container-top">
                     <button class="btn btn-action-top" id="update-watermark-btn">Save</button>
-                    <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                    <button class="btn btn-action-top">Cancel</button>
+                    <button class="btn btn-action-top" id="update-close-watermark-btn">Save&nbsp;&&nbsp;Close</button>
+                    <button class="btn btn-action-top" id="update-new-watermark-btn">Save&nbsp;&&nbsp;New</button>
+                    <a href="<c:url value="/admin/event/all"/>" class="btn btn-action-top">Cancel</a>
                 </div>
                 <!-- Page Heading -->
                 <div class="row cstm-tab tab-pane clearfix" style="margin:0px !important">

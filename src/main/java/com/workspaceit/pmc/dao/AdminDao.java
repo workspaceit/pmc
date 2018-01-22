@@ -30,10 +30,30 @@ public class AdminDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+    public Admin getByEmail(String email, Admin admin){
+        Session session = this.openSession();
+        try{
+            return (Admin)session.createQuery("FROM Admin  WHERE email=:email AND id!=:id")
+                    .setParameter("email",email)
+                    .setParameter("id",admin.getId())
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
     public Admin getByUserName(String userName){
         Session session = this.openSession();
         return (Admin)session.createQuery("FROM Admin  WHERE userName=:userName")
                 .setParameter("userName",userName)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+    public Admin getByUserName(String userName, Admin admin){
+        Session session = this.openSession();
+        return (Admin)session.createQuery("FROM Admin  WHERE userName=:userName AND id !=:id")
+                .setParameter("userName",userName)
+                .setParameter("id",admin.getId())
                 .setMaxResults(1)
                 .uniqueResult();
     }

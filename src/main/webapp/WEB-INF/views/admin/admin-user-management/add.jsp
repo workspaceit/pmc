@@ -16,9 +16,10 @@
                     <div class="row">
                         <div class="btn-container-top">
                             <button class="btn btn-action-top"  onclick="submitAdminUserData('save')">Save</button>
-                            <button class="btn btn-action-top"  onclick="submitAdminUserData('save_and_close')">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top"  onclick="submitAdminUserData('save_and_new')">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top"  onclick="redirectFromAdminUser('cancel')">Cancel</button>
+                            <button class="btn btn-action-top" onclick="submitAdminUserData('save-close')">Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitAdminUserData('save-new')">Save&nbsp;&&nbsp;New</button>
+                            <a href="<c:url value="/admin/user/all"/>" class="btn btn-action-top">Cancel</a>
+
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>

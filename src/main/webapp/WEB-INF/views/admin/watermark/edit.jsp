@@ -17,10 +17,10 @@
 
 
             <div class="btn-container-top">
-                <button class="btn btn-action-top" onclick="submitWatermark()">Save</button>
-                <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                <button class="btn btn-action-top">Cancel</button>
+                <button class="btn btn-action-top" onclick="submitWatermark('save')">Save</button>
+                <button class="btn btn-action-top" onclick="submitWatermark('save-close')">Save&nbsp;&&nbsp;Close</button>
+                <button class="btn btn-action-top" onclick="submitWatermark('save-new')">Save&nbsp;&&nbsp;New</button>
+                <a href="<c:url value="/admin/watermark/all"/>" class="btn btn-action-top">Cancel</a>
             </div>
             <!-- Page Heading -->
             <div class="imageupload panel panel-default">
@@ -183,7 +183,7 @@
 
 
         <script>
-            function submitWatermark() {
+            function submitWatermark(action) {
                 var name = $('#name').val();
                 var type=$('.wm_tab.active').attr("data-name");
                 var logoImgToken='';
@@ -250,8 +250,13 @@
                         }
                     },
                     success: function(response) {
-                        alert("Updated successfully");
-                        window.location = BASEURL+"admin/watermark/all";
+//                        alert("Updated successfully");
+                        if(action === "save" || action === "save-close") {
+                            window.location = BASEURL+"admin/watermark/all";
+                        }
+                        else if(action === "save-new"){
+                            window.location = BASEURL+"admin/watermark/add";
+                        }
                     }
                 });
             }

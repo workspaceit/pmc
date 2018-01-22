@@ -5,10 +5,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.util.ServiceResponse;
-import com.workspaceit.pmc.validation.admin.AdminEditForm;
-import com.workspaceit.pmc.validation.admin.AdminCreateForm;
-import com.workspaceit.pmc.validation.admin.AdminProfileUpdateForm;
-import com.workspaceit.pmc.validation.admin.AdminValidator;
+import com.workspaceit.pmc.validation.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,13 @@ import javax.validation.Valid;
 public class AdminRestController {
 
     private AdminValidator adminValidator;
+    private AdminEditValidator adminEditValidator;
     private AdminService adminService;
+
+    @Autowired
+    public void setAdminEditValidator(AdminEditValidator adminEditValidator) {
+        this.adminEditValidator = adminEditValidator;
+    }
 
     @Autowired
     public void setAdminValidator(AdminValidator adminValidator) {
@@ -83,7 +86,9 @@ public class AdminRestController {
             serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
+
         this.adminValidator.validateUpdate(adminEditForm,bindingResult);
+
         /**
          * Business logic Validation
          * */

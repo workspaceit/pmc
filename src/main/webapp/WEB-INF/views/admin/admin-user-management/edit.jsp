@@ -11,10 +11,12 @@
 
                     <div class="row clearfix">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save')" >Save</button>
-                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save_and_new')" >Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top" onclick="redirectFromAdminUser('cancel')" >Cancel</button>
+
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save')">Save</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-close')">Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-new')">Save&nbsp;&&nbsp;New</button>
+                            <a href="<c:url value="/admin/user/all"/>" class="btn btn-action-top">Cancel</a>
+
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -35,6 +37,7 @@
                         <div class="form-group">
                             <label>Email</label>
                             <input id="email" class="form-control" value="${admin.email}" disabled="disabled" >
+
                         </div>
                         <div class="form-group">
                             <label>Password</label>
