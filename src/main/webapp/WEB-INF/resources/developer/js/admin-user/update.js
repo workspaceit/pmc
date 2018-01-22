@@ -1,17 +1,21 @@
 /**
  * Created by mi_rafi on 1/3/18.
  */
-function submitUpdatedAdminUserData(){
+function submitUpdatedAdminUserData(btnAction){
     var id = $('#admin_id').val();
     var fullName = $('#fullName').val();
     var phoneNumber = $('#phoneNumber').val();
+    var password = $('#password').val();
+    var confirmPassword = $('#confirmPassword').val();
     var profilePictureToken=  getVenueLogoToken();
 
 
     var data = {
         fullName: fullName,
         phoneNumber: phoneNumber,
-        profilePictureToken: profilePictureToken
+        profilePictureToken: profilePictureToken,
+        password:password,
+        confirmPassword:confirmPassword
     };
     console.log(data);
     $.ajax({
@@ -29,7 +33,7 @@ function submitUpdatedAdminUserData(){
             }
         },
         success: function(response) {
-            notifyAdminUpdateStatus();
+            redirectFromAdminUser(btnAction);
         }
     });
 }

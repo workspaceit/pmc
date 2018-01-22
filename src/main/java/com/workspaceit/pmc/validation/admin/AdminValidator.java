@@ -47,18 +47,25 @@ public class AdminValidator implements Validator {
     }
     @Override
     public void validate(Object obj, Errors errors) {
-        AdminCreateForm adminrForm = (AdminCreateForm)obj;
+        AdminCreateForm adminrForm = (AdminCreateForm) obj;
 
         String email = adminrForm.getEmail();
         String userName = adminrForm.getUserName();
         String password = adminrForm.getPassword();
         String conPassword = adminrForm.getConfirmPassword();
 
-        this.uniqueEmailCheck(email,errors);
-        this.uniqueUserNameCheck(userName,errors);
+        this.uniqueEmailCheck(email, errors);
+        this.uniqueUserNameCheck(userName, errors);
+        this.passwordMatchCheck(password, conPassword, errors);
+    }
+    public void validateUpdate(Object obj, Errors errors) {
+        AdminForm adminForm = (AdminEditForm)obj;
+
+        String password = adminForm.getPassword();
+        String conPassword = adminForm.getConfirmPassword();
+
         this.passwordMatchCheck(password,conPassword,errors);
     }
-
     public void validateProfileUpdate(Object obj, Errors errors) {
         AdminProfileUpdateForm adminProfileUpdateForm = (AdminProfileUpdateForm)obj;
 

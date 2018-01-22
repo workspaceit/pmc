@@ -104,3 +104,21 @@ function configVenueLogoDropZone(){
         }
     );
 }
+function redirectFromAdminUser(btnAction){
+    var url = BASEURL+"admin/user";
+    switch(btnAction){
+        case "save":
+            url +="/all";
+            break;
+        case "save_and_new":
+            url +="/add";
+            break;
+        case "save_and_close":
+            url +="/all";
+            break;
+        case "cancel":
+            url +="/all";
+            break;
+    }
+    window.location = url;
+}

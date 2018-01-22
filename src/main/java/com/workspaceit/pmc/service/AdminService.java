@@ -79,13 +79,17 @@ public class AdminService {
 
         this.populateAdminByAdminForm(admin,adminEditForm);
 
+        if(adminEditForm.getPassword()!=null && !adminEditForm.getPassword().trim().equals("")){
+            admin.setPassword(CypherHelper.getbCryptPassword(adminEditForm.getPassword()));
+        }
+
         /**
          * Update admin profile
          * It replace previous image in database but
          * the physical image in folder explicitly
          * */
         if(profileImgToken!=null && profileImgToken>0){
-            this.fileUtil.deleteFileInCommonFolder(admin.getImage());
+            //this.fileUtil.deleteFileInCommonFolder(admin.getImage());
             String profileImgName =  this.fileService.copyFile(profileImgToken);
             admin.setImage(profileImgName);
         }

@@ -83,12 +83,12 @@ public class AdminRestController {
             serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-        serviceResponse.bindValidationError(bindingResult);
-
+        this.adminValidator.validateUpdate(adminEditForm,bindingResult);
         /**
          * Business logic Validation
          * */
         if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 

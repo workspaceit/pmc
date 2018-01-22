@@ -11,10 +11,10 @@
 
                     <div class="row clearfix">
                         <div class="btn-container-top">
-                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData()">Save</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top">Cancel</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save')" >Save</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
+                            <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save_and_new')" >Save&nbsp;&&nbsp;New</button>
+                            <button class="btn btn-action-top" onclick="redirectFromAdminUser('cancel')" >Cancel</button>
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -28,27 +28,40 @@
                             <label>Phone Number</label>
                             <input id="phoneNumber" class="form-control" type="Number" value="${admin.phoneNumber}" >
                         </div>
-                        <%--<div class="form-group">--%>
-                            <%--<label>User Name</label>--%>
-                            <%--<input id=userName class="form-control" value="${admin.userName}" >--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Email</label>--%>
-                            <%--<input id="email" class="form-control" value="${admin.email}" >--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Password</label>--%>
-                            <%--<input id="password" class="form-control" type="password" placeholder="******">--%>
-                        <%--</div>--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label>Confirm Password</label>--%>
-                            <%--<input id="confirmPassword" class="form-control" type="password" placeholder="******">--%>
-                        <%--</div>--%>
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input id="userName" class="form-control"  value="${admin.userName}" disabled="disabled" >
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="email" class="form-control" value="${admin.email}" disabled="disabled" >
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input id="password" class="form-control" type="password" placeholder="******">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input id="confirmPassword" class="form-control" type="password" placeholder="******">
+                        </div>
                         <div class="imageupload panel panel-default">
                             <div class="panel-heading clearfix">
                                 <h4 class="panel-title pull-left">Profile Image</h4>
                                 <div class="btn-group pull-right">
                                 </div>
+                            </div>
+                            <div>
+                                <c:set value="" var="imgSrc" />
+                                <c:choose>
+                                    <c:when test="${admin.image==null || admin.image.trim().equals('')}">
+                                        <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set value="/common/${admin.image}" var="imgSrc" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <img id="profilePic" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-thumbnail" width="150">
+
                             </div>
                             <div class="file-tab panel-body">
 
@@ -63,16 +76,7 @@
                                 <p id="errorObj_locationLogo"  class="text-danger"></p>
                             </div>
                         </div>
-                        <!--
-                        <div class="form-group">
-                        	<label>Require Password reset</label>
-	                        <div class="btn-group choose-btn">
-	                            <button type="button" class="active btn btn-default" id="regi1">Yes</button>
-	                            <button type="button" class="btn btn-default" id="regi3">No</button>
-	                        </div>
-                        </div>
 
-                        -->
 
                     </div>
 
