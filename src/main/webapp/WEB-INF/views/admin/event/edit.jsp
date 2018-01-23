@@ -7,7 +7,7 @@
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
             <div class="container">
-                <h3 class="uni-header"><span>Create Event</span></h3>
+                <h3 class="uni-header"><span>Update Event</span></h3>
                 <div class="btn-container-top">
                     <button class="btn btn-action-top" id="update-watermark-btn">Save</button>
                     <button class="btn btn-action-top" id="update-close-watermark-btn">Save&nbsp;&&nbsp;Close</button>
@@ -86,10 +86,10 @@
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
                                                 <option value="${event.venue.id}">${event.venue.name}</option>
                                             </select>
-                                            <%--<button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"--%>
-                                                    <%--data-target="#addLocation" style="margin-top: 15px;"><i--%>
-                                                    <%--class="fa fa-plus" aria-hidden="true"></i>Add new Venue--%>
-                                            <%--</button>--%>
+                                            <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"
+                                                    data-target="#add-new-venue-modal" style="margin-top: 15px;"><i
+                                                    class="fa fa-plus" aria-hidden="true"></i>Add new Venue
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -111,11 +111,11 @@
                                                                 </c:forEach>
                                                             </select>
                                                         </div>
-                                                        <%--<button type="button" class="btn btn-primary btn-sm-new"--%>
-                                                                <%--data-toggle="modal" data-target="#addPhotographer"--%>
-                                                                <%--style="margin-top: 15px;">--%>
-                                                            <%--<i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer--%>
-                                                        <%--</button>--%>
+                                                        <button type="button" class="btn btn-primary btn-sm-new"
+                                                                data-toggle="modal" data-target="#add-photographer-modal"
+                                                                style="margin-top: 15px;">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Photographer
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -224,6 +224,109 @@
                 </div>
             </div>
         </div>
+
+
+        <%--venue add modal--%>
+        <div class="modal fade" id="add-new-venue-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addLocation">Add new Venue</h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <div class="btn-container-top">
+                            <button class="btn btn-action-top" id="btn-add-venue">Save</button>
+                            <button class="btn btn-action-top" data-toggle="modal"
+                                    data-target="#add-new-venue-modal">Cancel</button>
+                        </div>
+                        <div class="form-group col-md-12" style="padding:0px;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="">
+                                        <div class="form-group">
+                                            <label>Venue name</label>
+                                            <input class="form-control" id="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">Location</a>
+                                            </label>
+                                            <select class="js-example-placeholder-multiple js-states form-control" id="location">
+                                                <c:forEach var="location" items="${locations}">
+                                                    <option value="${location.id}">${location.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--end venue add modal--%>
+
+        <%--photographer add modal--%>
+        <div class="modal fade" id="add-photographer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addPhotographer">Photographer Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-container-top">
+                            <button class="btn btn-action-top" id="btn-photographer-add">Save</button>
+                            <button class="btn btn-action-top" data-toggle="modal"
+                                    data-target="#add-photographer-modal">Cancel</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input id="fullName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input id="phoneNumber" class="form-control" type="Number">
+                        </div>
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input id=userName class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input id="password" class="form-control" type="password" placeholder="******">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input id="confirmPassword" class="form-control" type="password" placeholder="******">
+                        </div>
+                        <div class="imageupload panel panel-default">
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title pull-left">Profile Image</h4>
+                                <div class="btn-group pull-right">
+                                </div>
+                            </div>
+                            <div class="file-tab panel-body">
+                                <div id="profileImg">
+                                    <div class="dz-default dz-message">
+                                        <span>Drop files here to upload</span>
+                                        <p id="errorObj_profilePictureToken"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--end photographer add modal--%>
+
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <link href="<s:url value="/resources/css/select2.css"/>" rel="stylesheet"/>
         <link href="<s:url value="/resources/css/daterangepicker.css"/>" rel="stylesheet"/>

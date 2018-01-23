@@ -49,11 +49,19 @@ public class EventValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         EventForm eventForm = (EventForm) o;
+        this.checkImageToken(eventForm.getImageToken(), errors);
         this.checkAdvertiserExistence(eventForm.getAdvertiserIds(), errors);
         this.checkPhotographerExistence(eventForm.getPhotographerIds(), errors);
         this.checkWatermarkExistence(eventForm.getWatermarkIds(), errors);
         this.checkVenueExistence(eventForm.getVenueId(), errors);
         this.checkDates(eventForm.getStartDate(), eventForm.getEndDate(), errors);
+
+    }
+
+    private void checkImageToken(Integer token, Errors errors){
+        if(token == 0){
+            errors.rejectValue("imageToken","Image is required");
+        }
     }
 
     private void checkPhotographerExistence(Integer[] photographerIds, Errors errors){

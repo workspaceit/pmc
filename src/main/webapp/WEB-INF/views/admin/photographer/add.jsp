@@ -5,7 +5,7 @@
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
             <div class="container">
-                <h3 class="uni-header"><span>Account Details</span></h3>
+                <h3 class="uni-header"><span>Photographer Details</span></h3>
                 <div class="col-md-12">
 
                     <div class="row clearfix">

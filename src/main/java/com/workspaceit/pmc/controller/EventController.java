@@ -1,14 +1,8 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.Venue;
-import com.workspaceit.pmc.entity.Watermark;
-import com.workspaceit.pmc.service.EventService;
-import com.workspaceit.pmc.service.PhotographerService;
-import com.workspaceit.pmc.service.VenueService;
-import com.workspaceit.pmc.service.WatermarkService;
+import com.workspaceit.pmc.entity.*;
+import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +24,7 @@ public class EventController {
     private PhotographerService photographerService;
     private WatermarkService watermarkService;
     private EventService eventService;
+    private LocationService locationService;
     @Autowired
     public void setVenueService(VenueService venueService) {
         this.venueService = venueService;
@@ -46,16 +41,16 @@ public class EventController {
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
+    @Autowired
+    public void setLocationService(LocationService locationService) {
+        this.locationService = locationService;
+    }
 
     @RequestMapping(value = "/add")
     public ModelAndView add(){
-        List<Venue> venues = venueService.getAll();
-        List<Photographer> photographers = photographerService.getAll();
-        List<Watermark> watermarks = watermarkService.getAll();
+        List<Location> locations = this.locationService.getAll();
         ModelAndView model = new ModelAndView("admin/event/add");
-        model.addObject("venues", venues);
-        model.addObject("photographers", photographers);
-        model.addObject("watermarks", watermarks);
+        model.addObject("locations",locations);
         return model;
     }
 
@@ -70,8 +65,10 @@ public class EventController {
     @RequestMapping(value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") int id){
         Event event = this.eventService.getById(id);
+        List<Location> locations = this.locationService.getAll();
         ModelAndView model = new ModelAndView("admin/event/edit");
         model.addObject("event", event);
+        model.addObject("locations",locations);
         return model;
     }
 

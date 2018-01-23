@@ -25,6 +25,7 @@ public class Venue {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id")

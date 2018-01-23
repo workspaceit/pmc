@@ -70,9 +70,9 @@ public class VenueRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         venueForm.setUserEmail(currentUser.getEmail());
-        this.venueService.create(venueForm);
+        Venue venue = this.venueService.create(venueForm);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(venue);
     }
 
     @GetMapping("/auto-suggest")
