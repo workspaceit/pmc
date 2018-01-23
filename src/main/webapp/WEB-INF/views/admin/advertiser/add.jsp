@@ -97,7 +97,6 @@
             </div>
         </div>
 
-
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <!-- select2 js -->
         <!-- Select2 css -->

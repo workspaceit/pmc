@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.SlideshowBannerImage;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowBannerImage;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 

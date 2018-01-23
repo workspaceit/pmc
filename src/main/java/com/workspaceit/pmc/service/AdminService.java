@@ -8,6 +8,7 @@ import com.workspaceit.pmc.helper.CypherHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.admin.AdminEditForm;
 import com.workspaceit.pmc.validation.admin.AdminCreateForm;
+import com.workspaceit.pmc.validation.admin.AdminForm;
 import com.workspaceit.pmc.validation.admin.AdminProfileUpdateForm;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,11 +80,16 @@ public class AdminService {
     public void create(Admin admin){
         this.adminDao.insert(admin);
     }
-    public Admin update(int id, AdminCreateForm adminCreateForm, Admin currentUser)throws EntityNotFound {
+    public Admin update(int id, AdminForm adminEditForm, Admin currentUser)throws EntityNotFound {
         Admin admin = this.getById(id);
-        Integer profileImgToken = adminCreateForm.getProfilePictureToken();
+        Integer profileImgToken = adminEditForm.getProfilePictureToken();
 
-        this.populateAdminByAdminForm(admin,adminCreateForm);
+        admin.setName(adminEditForm.getFullName());
+        admin.setPhoneNumber(adminEditForm.getPhoneNumber());
+
+        if(adminEditForm.getPassword()!=null && !adminEditForm.getPassword().trim().equals("")){
+            admin.setPassword(CypherHelper.getbCryptPassword(adminEditForm.getPassword()));
+        }
 
         /**
          * Update admin profile
@@ -91,7 +97,7 @@ public class AdminService {
          * the physical image in folder explicitly
          * */
         if(profileImgToken!=null && profileImgToken>0){
-            this.fileUtil.deleteFileInCommonFolder(admin.getImage());
+            //this.fileUtil.deleteFileInCommonFolder(admin.getImage());
             String profileImgName =  this.fileService.copyFile(profileImgToken);
             admin.setImage(profileImgName);
         }

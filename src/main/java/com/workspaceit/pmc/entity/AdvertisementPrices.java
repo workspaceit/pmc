@@ -110,4 +110,32 @@ public class AdvertisementPrices {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AdvertisementPrices that = (AdvertisementPrices) o;
+
+        return (id == that.id) ;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "AdvertisementPrices{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdBy=" + createdBy +
+                '}';
+    }
 }

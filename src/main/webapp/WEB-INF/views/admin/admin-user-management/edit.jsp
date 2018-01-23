@@ -11,10 +11,12 @@
 
                     <div class="row clearfix">
                         <div class="btn-container-top">
+
                             <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save')">Save</button>
                             <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-close')">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-new')">Save&nbsp;&&nbsp;New</button>
                             <a href="<c:url value="/admin/user/all"/>" class="btn btn-action-top">Cancel</a>
+
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -30,11 +32,12 @@
                         </div>
                         <div class="form-group">
                             <label>User Name</label>
-                            <input id=userName class="form-control" value="${admin.userName}" >
+                            <input id="userName" class="form-control"  value="${admin.userName}" disabled="disabled" >
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input id="email" class="form-control" value="${admin.email}" >
+                            <input id="email" class="form-control" value="${admin.email}" disabled="disabled" >
+
                         </div>
                         <div class="form-group">
                             <label>Password</label>
@@ -50,6 +53,19 @@
                                 <div class="btn-group pull-right">
                                 </div>
                             </div>
+                            <div>
+                                <c:set value="" var="imgSrc" />
+                                <c:choose>
+                                    <c:when test="${admin.image==null || admin.image.trim().equals('')}">
+                                        <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set value="/common/${admin.image}" var="imgSrc" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <img id="profilePic" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-thumbnail" width="150">
+
+                            </div>
                             <div class="file-tab panel-body">
 
                                 <div id="profilePicImg" >
@@ -63,16 +79,7 @@
                                 <p id="errorObj_locationLogo"  class="text-danger"></p>
                             </div>
                         </div>
-                        <!--
-                        <div class="form-group">
-                        	<label>Require Password reset</label>
-	                        <div class="btn-group choose-btn">
-	                            <button type="button" class="active btn btn-default" id="regi1">Yes</button>
-	                            <button type="button" class="btn btn-default" id="regi3">No</button>
-	                        </div>
-                        </div>
 
-                        -->
 
                     </div>
 

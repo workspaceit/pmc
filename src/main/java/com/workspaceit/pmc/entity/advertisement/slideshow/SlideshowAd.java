@@ -1,14 +1,15 @@
-package com.workspaceit.pmc.entity;
+package com.workspaceit.pmc.entity.advertisement.slideshow;
 
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
+import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -53,6 +54,12 @@ public class SlideshowAd {
     @Column(name = "video_rotate")
     @Enumerated(EnumType.STRING)
     private AdvertiseRotationSettings videoRotate;
+
+
+    @OneToMany
+    @JoinColumn(name = "slideshow_id",referencedColumnName = "id")
+    @MapKey(name = "adType")
+    Map<SlideshowAdsConstant,SlideshowQuantityPrice> quantityPrice;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -151,6 +158,15 @@ public class SlideshowAd {
 
     public void setVideoRotate(AdvertiseRotationSettings videoRotate) {
         this.videoRotate = videoRotate;
+    }
+
+
+    public Map<SlideshowAdsConstant, SlideshowQuantityPrice> getQuantityPrice() {
+        return quantityPrice;
+    }
+
+    public void setQuantityPrice(Map<SlideshowAdsConstant, SlideshowQuantityPrice> quantityPrice) {
+        this.quantityPrice = quantityPrice;
     }
 
     public Date getCreatedAt() {

@@ -3,7 +3,7 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.dao.SlideshowAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.SlideshowAd;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;

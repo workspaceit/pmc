@@ -1,10 +1,10 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.dao.PopUpAdsDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.PopupAd;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
@@ -12,6 +12,8 @@ import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by mi_rafi on 1/8/18.
@@ -45,7 +47,7 @@ public class PopUpAdsService {
         PopupAd smsPopupAdBanner =  new PopupAd();
 
         smsPopupAdBanner.setAdvertiserId(advertiser.getId());
-        smsPopupAdBanner.setType(PopupAdType.SMS);
+        smsPopupAdBanner.setType(PopupAdConstant.SMS);
         smsPopupAdBanner.setDuration(popupAdsForm.getSmsPopupVideoDuration());
         smsPopupAdBanner.setVideo(smsVideoName);
         smsPopupAdBanner.setVideoType(smsVideoType);
@@ -58,7 +60,7 @@ public class PopUpAdsService {
         PopupAd emailAddBanner =  new PopupAd();
 
         emailAddBanner.setAdvertiserId(advertiser.getId());
-        emailAddBanner.setType(PopupAdType.EMAIL);
+        emailAddBanner.setType(PopupAdConstant.EMAIL);
         emailAddBanner.setDuration(popupAdsForm.getEmailPopupVideoDuration());
         emailAddBanner.setVideo(emailVideoName);
         smsPopupAdBanner.setVideoType(emailVideoType);
@@ -127,12 +129,12 @@ public class PopUpAdsService {
         this.popUpAdsDao.update(popupAd);
     }
     @Transactional(readOnly = true)
-    public PopupAd getByAdvertiserId(int advertiserId){
+    public List<PopupAd> getByAdvertiserId(int advertiserId){
         return this.popUpAdsDao.getByAdvertiserId(advertiserId);
     }
 
     @Transactional(readOnly = true)
-    public PopupAd getByAdvertiserId(int advertiserId,PopupAdType popupAdType){
+    public PopupAd getByAdvertiserId(int advertiserId,PopupAdConstant popupAdType){
         return this.popUpAdsDao.getByAdvertiserId(advertiserId,popupAdType);
     }
     @Transactional

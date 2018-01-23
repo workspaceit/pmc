@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.entity.advertisement.galleryads;
 
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBannerImage;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsTopBannerImage;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -63,6 +65,11 @@ public class GalleryAd {
     @Column(name = "created_at")
     private Date createdAt;
 
+    @OneToMany
+    @JoinColumn(name = "gallery_ad_id",referencedColumnName = "id")
+    @MapKey(name = "adType")
+    private Map<GalleryAdsConstant,GalleryAdQuantityPrice> galleryQuantityPrice;
+
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
@@ -96,6 +103,7 @@ public class GalleryAd {
     public void setLogo(String logo) {
         this.logo = logo;
     }
+
 
     public String getBackgroundImage() {
         return backgroundImage;
@@ -151,6 +159,14 @@ public class GalleryAd {
 
     public void setTopBannerRotate(AdvertiseRotationSettings topBannerRotate) {
         this.topBannerRotate = topBannerRotate;
+    }
+
+    public Map<GalleryAdsConstant, GalleryAdQuantityPrice> getGalleryQuantityPrice() {
+        return galleryQuantityPrice;
+    }
+
+    public void setGalleryQuantityPrice(Map<GalleryAdsConstant, GalleryAdQuantityPrice> galleryQuantityPrice) {
+        this.galleryQuantityPrice = galleryQuantityPrice;
     }
 
     public Date getCreatedAt() {

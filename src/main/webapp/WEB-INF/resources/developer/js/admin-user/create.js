@@ -1,7 +1,9 @@
 /**
  * Created by mi_rafi on 1/3/18.
  */
-function submitAdminUserData(action){
+
+function submitAdminUserData(btnAction){
+
     var fullName = $('#fullName').val();
     var phoneNumber = $('#phoneNumber').val();
     var userName = $('#userName').val();
@@ -36,12 +38,7 @@ function submitAdminUserData(action){
             }
         },
         success: function(response) {
-            if(action === "save" || action === "save-close") {
-                window.location = BASEURL + "admin/user/all";
-            }
-            else if(action === "save-new"){
-                window.location = BASEURL + "admin/user/add";
-            }
+            redirectFromAdminUser(btnAction);
         }
     });
 }

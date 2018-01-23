@@ -1,9 +1,13 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
+import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,6 +32,7 @@ public class AdvertiserController {
     private StateService stateService;
     private CityService cityService;
     private EventService eventService;
+    private AdvertisementPricesService advertisementPricesService;
 
     private GalleryAdService galleryAdService;
     private SlideShowService slideShowService;
@@ -40,11 +46,12 @@ public class AdvertiserController {
 
     @PostConstruct
     private void initConfig(){
-        durations = new HashSet<>();
+        Set<Integer> durations = new HashSet<>();
         for(int i=1;i<=5;i++){
             durations.add(i);
         }
 
+        this.setDurations(durations);
     }
 
     @Autowired
@@ -73,6 +80,11 @@ public class AdvertiserController {
     }
 
     @Autowired
+    public void setAdvertisementPricesService(AdvertisementPricesService advertisementPricesService) {
+        this.advertisementPricesService = advertisementPricesService;
+    }
+
+    @Autowired
     public void setGalleryAdService(GalleryAdService galleryAdService) {
         this.galleryAdService = galleryAdService;
     }
@@ -98,12 +110,21 @@ public class AdvertiserController {
         this.fadeOutList = fadeOutList;
     }
 
+    //Do not autowired check initConfig()
+    public void setDurations(Set<Integer> durations) {
+        this.durations = durations;
+    }
+
     @RequestMapping("/add")
     public ModelAndView add(){
         List<Location> locations = this.locationService.getAll();
         List<State> states = this.stateService.getAll();
         List<City> cities = this.cityService.getAllNameAcs();
         List<Event> events = this.eventService.getAll();
+        Map<GalleryAdsConstant,AdvertisementPrices> galleryAdsPrices = this.advertisementPricesService.getGalleryAdPrice();
+        Map<SlideshowAdsConstant,AdvertisementPrices> slideshowAdPrice = this.advertisementPricesService.getSlideshowAdPrice();
+        Map<PopupAdConstant,AdvertisementPrices> popupAdPrice = this.advertisementPricesService.getPopupAdPrice();
+
 
         ModelAndView model = new ModelAndView("admin/advertiser/add");
 
@@ -111,6 +132,9 @@ public class AdvertiserController {
         model.addObject("locations",locations);
         model.addObject("states",states);
         model.addObject("cities",cities);
+        model.addObject("galleryAdsPrices",galleryAdsPrices);
+        model.addObject("slideshowAdPrice",slideshowAdPrice);
+        model.addObject("popupAdPrice",popupAdPrice);
         model.addObject("durations",durations);
 
         /*For location Modal Page*/
@@ -126,6 +150,15 @@ public class AdvertiserController {
 
 
         model.addObject("advertisers",advertisers);
+
+        return model;
+    }
+    @RequestMapping("/invoice/{id}")
+    public ModelAndView invoice(@PathVariable("id") int id){
+
+        Advertiser advertiser =  this.advertiserService.getById(id);
+        ModelAndView model = new ModelAndView("admin/advertiser/invoice");
+        model.addObject("advertiser",advertiser);
 
         return model;
     }
@@ -146,8 +179,8 @@ public class AdvertiserController {
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
-        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.SMS);
-        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdType.EMAIL);
+        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
+        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
 
         System.out.println(popupAdSms);
         System.out.println(popupAdEmail);

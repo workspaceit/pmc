@@ -1,24 +1,25 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.constant.advertisement.PopupAdType;
-import com.workspaceit.pmc.entity.PopupAd;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
+import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by mi_rafi on 1/8/18.
  */
 @Repository
 public class PopUpAdsDao extends BaseDao{
-    public PopupAd getByAdvertiserId(int advertiserId){
+    public List<PopupAd> getByAdvertiserId(int advertiserId){
         Session session = this.getCurrentSession();
-        return (PopupAd)session.createQuery("FROM PopupAd where advertiserId=:advertiserId")
-                .setMaxResults(1)
+        return session.createQuery("FROM PopupAd where advertiserId=:advertiserId")
                 .setParameter("advertiserId",advertiserId)
-                .uniqueResult();
+                .list();
     }
 
-    public PopupAd getByAdvertiserId(int advertiserId, PopupAdType popupAdType){
+    public PopupAd getByAdvertiserId(int advertiserId, PopupAdConstant popupAdType){
         Session session = this.getCurrentSession();
         return (PopupAd)session.createQuery("FROM PopupAd p" +
                                                         " where p.advertiserId=:advertiserId" +

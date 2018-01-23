@@ -1,13 +1,15 @@
-package com.workspaceit.pmc.entity;
+package com.workspaceit.pmc.entity.advertisement.popup;
 
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
-import com.workspaceit.pmc.constant.advertisement.PopupAdType;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
+import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,7 +30,7 @@ public class PopupAd {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private PopupAdType type;
+    private PopupAdConstant type;
 
     @Column(name = "duration")
     private int duration;
@@ -47,6 +49,10 @@ public class PopupAd {
     @Enumerated(EnumType.STRING)
     private AdvertiseRotationSettings adRotate;
 
+    @OneToMany
+    @JoinColumn(name = "popup_ad_id",referencedColumnName = "id")
+    @MapKey(name = "adType")
+    private Map<PopupAdConstant,PopupAdQuantityPrice> quantityPrice;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,11 +88,11 @@ public class PopupAd {
         this.advertiserId = advertiserId;
     }
 
-    public PopupAdType getType() {
+    public PopupAdConstant getType() {
         return type;
     }
 
-    public void setType(PopupAdType type) {
+    public void setType(PopupAdConstant type) {
         this.type = type;
     }
 
@@ -141,6 +147,13 @@ public class PopupAd {
     }
 
 
+    public Map<PopupAdConstant, PopupAdQuantityPrice> getQuantityPrice() {
+        return quantityPrice;
+    }
+
+    public void setQuantityPrice(Map<PopupAdConstant, PopupAdQuantityPrice> quantityPrice) {
+        this.quantityPrice = quantityPrice;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

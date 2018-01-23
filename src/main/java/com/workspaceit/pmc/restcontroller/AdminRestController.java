@@ -74,7 +74,7 @@ public class AdminRestController {
     @RequestMapping(value = "/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,
-                                    @Valid AdminCreateForm adminCreateForm, BindingResult bindingResult){
+                                    @Valid AdminEditForm adminEditForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -86,18 +86,19 @@ public class AdminRestController {
             serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-        this.adminEditValidator.validate(adminCreateForm, id, bindingResult);
-        serviceResponse.bindValidationError(bindingResult);
+
+        this.adminValidator.validateUpdate(adminEditForm,bindingResult);
 
         /**
          * Business logic Validation
          * */
         if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
         try {
-            this.adminService.update(id,adminCreateForm,currentUser);
+            this.adminService.update(id,adminEditForm,currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
         }

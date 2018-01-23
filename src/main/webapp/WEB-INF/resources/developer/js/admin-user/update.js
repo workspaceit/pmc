@@ -1,12 +1,12 @@
 /**
  * Created by mi_rafi on 1/3/18.
  */
-function submitUpdatedAdminUserData(action){
+
+function submitUpdatedAdminUserData(btnAction){
     var id = $('#admin_id').val();
     var fullName = $('#fullName').val();
     var phoneNumber = $('#phoneNumber').val();
-    var userName = $('#userName').val();
-    var email = $('#email').val();
+
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
     var profilePictureToken=  getVenueLogoToken();
@@ -15,11 +15,9 @@ function submitUpdatedAdminUserData(action){
     var data = {
         fullName: fullName,
         phoneNumber: phoneNumber,
-        userName: userName,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-        profilePictureToken: profilePictureToken
+        profilePictureToken: profilePictureToken,
+        password:password,
+        confirmPassword:confirmPassword
     };
     console.log(data);
     $.ajax({
@@ -37,12 +35,7 @@ function submitUpdatedAdminUserData(action){
             }
         },
         success: function(response) {
-            if(action === "save" || action === "save-close") {
-                window.location = BASEURL + "admin/user/all";
-            }
-            else if(action === "save-new"){
-                window.location = BASEURL + "admin/user/add";
-            }notifyAdminUpdateStatus();
+            redirectFromAdminUser(btnAction);
         }
     });
 }
