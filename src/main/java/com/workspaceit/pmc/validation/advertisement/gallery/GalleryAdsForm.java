@@ -13,8 +13,6 @@ public class GalleryAdsForm {
     protected Integer advertiserId;
 
     protected Integer logoToken;
-    protected Float price;
-    protected Integer quantity;
     protected Integer bgImgTokens;
     protected Integer[] topBannerImgTokens;
     protected Integer[] bottomBannerImgTokens;
@@ -26,6 +24,10 @@ public class GalleryAdsForm {
 
     AdvertiseRotationSettings topBannerRotation;
     AdvertiseRotationSettings bottomBannerRotation;
+
+    protected Float bgPrice;
+    protected Float topBannerPrice;
+    protected Float bottomBannerPrice;
 
     public Integer getId() {
         return id;
@@ -39,13 +41,7 @@ public class GalleryAdsForm {
         return logoToken;
     }
 
-    public Float getPrice() {
-        return price;
-    }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
 
     public Integer getBgImgTokens() {
         return bgImgTokens;
@@ -77,14 +73,6 @@ public class GalleryAdsForm {
 
     public void setLogoToken(Integer logoToken) {
         this.logoToken = logoToken;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 
     public void setBgImgTokens(Integer bgImgTokens) {
@@ -123,5 +111,27 @@ public class GalleryAdsForm {
         this.bottomBannerRotation = bottomBannerRotation;
     }
 
+    public Float getBgPrice() {
+        return bgPrice;
+    }
 
+    public void setBgPrice(Float bgPrice) {
+        this.bgPrice = bgPrice;
+    }
+
+    public Float getTopBannerPrice() {
+        return topBannerPrice;
+    }
+
+    public void setTopBannerPrice(Float topBannerPrice) {
+        this.topBannerPrice = topBannerPrice;
+    }
+
+    public Float getBottomBannerPrice() {
+        return bottomBannerPrice;
+    }
+
+    public void setBottomBannerPrice(Float bottomBannerPrice) {
+        this.bottomBannerPrice = bottomBannerPrice;
+    }
 }

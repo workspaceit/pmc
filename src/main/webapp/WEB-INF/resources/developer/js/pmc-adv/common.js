@@ -5,6 +5,29 @@
 var errorFound = false;
 var globalBtnAction = "";
 var globalSubmitAction = "";
+
+/*DropZoneObject used below code*/
+var dropZoneElements = {
+     advertiserOtherImages : {},
+
+     galleryLogoImage : {},
+     galleryBackgroundImage : {},
+     galleryTopBanner : {},
+     galleryBottomBanner : {},
+
+     slideShowBanner : {},
+     slideShowVideo : {},
+
+     popupEmailBanner : {},
+     popupEmailVideo : {},
+
+     popUpSmsBanner : {},
+     popUpSmsVideo : {}
+};
+
+
+
+
 var RotationSettings={
     _GALLERY_BOTTOM:"galleryBottomRotationBtn",
     _GALLERY_TOP:"galleryTopRotationBtn",
@@ -59,6 +82,11 @@ var ADV_IMG_TYPE = {
     _SMS_POPUP_BANNER_TOKEN:"smsPopUpBanner",
     _SMS_POPUP_VIDEO_TOKEN:"smsPopUpVideo"
 };
+
+function addQuantity(){
+
+}
+
 function injectHiddenTokenFieldsForAdvertiser(){
     for(var index in ADV_IMG_TYPE){
         var tokenElem = $("<input>", {type:"hidden",id: ADV_IMG_TYPE[index], "value": ""});
@@ -66,79 +94,79 @@ function injectHiddenTokenFieldsForAdvertiser(){
     }
 }
 
+
 $(document).ready(function(){
-    var advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",6,1,function(response){
+    dropZoneElements.advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",6,1,function(response){
         storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
     });
 
     /*Gallery Ads*/
-    var logoBackgroundImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1,function(response){
+    dropZoneElements.galleryLogoImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1,function(response){
         emptyToken(ADV_IMG_TYPE._LOGO_TOKEN);
         storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
     });
 
-    var backgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",5,1,function(response){
+    dropZoneElements.galleryBackgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",5,1,function(response){
         storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
     });
 
-    var topBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",6,1,function(response){
+    dropZoneElements.galleryTopBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",6,1,function(response){
         storeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
     });
 
-    var bottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",6,1,function(response){
+    dropZoneElements.galleryBottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",6,1,function(response){
         storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
     });
     /*Slide show Ads*/
-    var slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",6,1,function(response){
+    dropZoneElements.slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",6,1,function(response){
         storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
     });
 
-    var slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3,function(response){
+    dropZoneElements.slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3,function(response){
         emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
         storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
     });
     /*PopUp Ads*/
-    var emailPopUpBanner = configAdvertBdImgDropZone("advEmailPopUpBanner","email-popup-banner",6,1,function(response){
+    dropZoneElements.popupEmailBanner = configAdvertBdImgDropZone("advEmailPopUpBanner","email-popup-banner",6,1,function(response){
         storeToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
     });
 
-    var emailPopUpVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3,function(response){
+    dropZoneElements.popupEmailVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3,function(response){
         emptyToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
         storeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
     });
 
-    var smsPopUpBanner = configAdvertBdImgDropZone("advSmsPopUpBanner","sms-popup-banner",6,1,function(response){
+    dropZoneElements.popUpSmsBanner = configAdvertBdImgDropZone("advSmsPopUpBanner","sms-popup-banner",6,1,function(response){
         storeToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
     });
 
-    var smsPopUpVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3,function(response){
+    dropZoneElements.popUpSmsVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3,function(response){
         emptyToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
         storeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
     },function(response){
         removeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
     });
 
-    console.log("RUNTIME");
 
     /**Advertiser Info Date picker*/
     var runtimeStartsDate = ( $('#runtimeStarts').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#runtimeStarts').val();
@@ -337,23 +365,27 @@ function initSubmitAdvertiserData(btnAction,submitType){
     errorFound = false;
     submitAdvertiserData(submitType,false,1);
 }
-function advertiserAfterSaveAction(btnAction){
-    var urlStr ="";
+function advertiserAfterSaveAction(btnAction,id){
+    if(id==undefined){
+        id=-1;
+    }
+    var urlStr =BASEURL+"admin";
     switch(btnAction){
         case "save":
-            urlStr = "admin/advertiser/all";
+            urlStr += "/advertiser/checkout/"+id;
             break;
         case "save_and_close":
-            urlStr = "admin/advertiser/all";
+            urlStr += "/advertiser/all";
             break;
         case "save_and_new":
-            urlStr = "admin/advertiser/add";
+            urlStr += "/advertiser/add";
             break;
         case "cancel":
-            urlStr = "admin/advertiser/all";
+            urlStr += "/advertiser/all";
             break;
     }
-    window.location =BASEURL+urlStr;
+
+    window.location =urlStr;
 }
 function submitAdvertiserData(submitType,forUpdate,marker){
     switch (marker){
@@ -414,7 +446,7 @@ function submitCreateOrUpdate(btnAction){
            case "create":
                createAdvertiser(function(response){
                    notifyUser("advertiserInfoErrorCount",response,false);
-                   advertiserAfterSaveAction(globalBtnAction);
+                   advertiserAfterSaveAction(globalBtnAction,response.id);
                });
                break;
            case "update":
@@ -474,7 +506,7 @@ function getGalleryAddsData(prefix){
         prefix += "."
     }
     var galleryId = ($('#galleryAdId').length>0)?parseInt($('#galleryAdId').val()):0;
-    var advertiserId = $('#advertiserId').val();
+    var advertiserId = ($('#galleryAdId').length>0)?parseInt($('#advertiserId').val()):null;
     var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
 
     var bgImgTokens =  getToken(ADV_IMG_TYPE._BACKGROUND_IMAGE);
@@ -487,7 +519,9 @@ function getGalleryAddsData(prefix){
     var topBannerRotation = getRotationSetting(RotationSettings._GALLERY_TOP);
     var bottomBannerRotation = getRotationSetting(RotationSettings._GALLERY_BOTTOM);
 
-
+    var galleryAdBgPrice = $('#galleryAdBgPrice').val();
+    var galleryAdTopBannerPrice = $('#galleryAdTopBannerPrice').val();
+    var galleryAdBottomBannerPrice = $('#galleryAdBottomBannerPrice').val();
 
     var data={};
     if(galleryId>0)data[prefix+"id"]= galleryId;
@@ -501,6 +535,12 @@ function getGalleryAddsData(prefix){
     data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
     data[prefix+"topBannerRotation"]= topBannerRotation;
     data[prefix+"bottomBannerRotation"]= bottomBannerRotation;
+
+    data[prefix+"bgPrice"]=galleryAdBgPrice;
+    data[prefix+"topBannerPrice"] = galleryAdTopBannerPrice;
+    data[prefix+"bottomBannerPrice"] = galleryAdBottomBannerPrice;
+
+
     return data;
 }
 /*Slideshow Ads */

@@ -1,9 +1,11 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
 import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
+import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
@@ -22,6 +24,7 @@ public class GalleryAdService {
     GalleryAdDao galleryAdDao;
     GalleryAdImageService galleryImagesAdService;
     FileService fileService;
+    GalleryAdQuantityPriceService galleryAdQuantityPriceService;
 
     @Autowired
     public void setGalleryAdDao(GalleryAdDao galleryAdDao) {
@@ -35,6 +38,10 @@ public class GalleryAdService {
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
+    @Autowired
+    public void setGalleryAdQuantityPriceService(GalleryAdQuantityPriceService galleryAdQuantityPriceService) {
+        this.galleryAdQuantityPriceService = galleryAdQuantityPriceService;
+    }
 
     public GalleryAd create(Advertiser advertiser, GalleryAdsCreateForm galleryAdsForm, Admin admin){
         Integer logoToken = galleryAdsForm.getLogoToken();
@@ -43,6 +50,14 @@ public class GalleryAdService {
         String bgFileName = this.fileService.copyFile(bgImgTokens);
         Date topBannerExpiryDate =   galleryAdsForm.getTopBannerExpiryDate();
         Date bottomBannerExpiryDate = galleryAdsForm.getBottomBannerExpiryDate();
+
+        Float bgPrice =  galleryAdsForm.getBgPrice();
+        Float topBannerPrice =  galleryAdsForm.getTopBannerPrice();
+        Float bottomPrice =  galleryAdsForm.getBottomBannerPrice();
+
+        int bgQuantity = (galleryAdsForm.getBgImgTokens()!=null)?1:0;
+        int topBannerQuantity = (galleryAdsForm.getTopBannerImgTokens()!=null)?galleryAdsForm.getTopBannerImgTokens().length:0;
+        int bottomBannerQuantity = (galleryAdsForm.getBottomBannerImgTokens()!=null)?galleryAdsForm.getBottomBannerImgTokens().length:0;
 
         GalleryAd galleryAd = new GalleryAd();
         galleryAd.setAdvertiserId(advertiser.getId());
@@ -54,8 +69,21 @@ public class GalleryAdService {
         galleryAd.setBottomBannerRotate(galleryAdsForm.getBottomBannerRotation());
         galleryAd.setCreatedBy(admin);
 
+
         this.create(galleryAd);
 
+        /** Background,Top Banner,Bottom Banner Images price and quantity */
+        this.galleryAdQuantityPriceService.create(galleryAd.getId(),bgPrice,bgQuantity,
+                                                    GalleryAdsConstant.BACKGROUND_IMAGE,admin);
+        this.galleryAdQuantityPriceService.create(galleryAd.getId(),topBannerPrice,topBannerQuantity,
+                                                    GalleryAdsConstant.TOP_AD_BANNER,admin);
+        this.galleryAdQuantityPriceService.create(galleryAd.getId(),bottomPrice,bottomBannerQuantity,
+                                                    GalleryAdsConstant.BOTTOM_AD_BANNER,admin);
+
+        /**
+         * Background,Top Banner,Bottom Banner Images copy from temp folder to common
+         * and save in database
+        * */
         try{
             this.galleryImagesAdService.create(galleryAdsForm,galleryAd,admin);
         }catch (Exception ex){

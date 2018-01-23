@@ -43,7 +43,9 @@
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
+                    Price: $ <input id="galleryAdBgPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                    <p class="text-danger" id="errorObj_bgPrice" ></p>
                 </div>
 
             </div>
@@ -82,7 +84,9 @@
                 </div>
                 <p id="errorObj_topBannerImgTokens" class="text-danger"></p>
                 <p class="text-danger" id="errorObj_topBannerExpiryDate"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
+                    Price: $ <input id="galleryAdTopBannerPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                    <p class="text-danger" id="errorObj_topBannerPrice" ></p>
                 </div>
             </div>
             <div class="imageupload panel panel-default">
@@ -116,7 +120,11 @@
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4></div>
+                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
+                    Price: $ <input id="galleryAdBottomBannerPrice"  type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                    <p class="text-danger" id="errorObj_bottomBannerPrice" ></p>
+                </div>
+
             </div>
         </div>
     </div>

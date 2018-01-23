@@ -231,7 +231,7 @@
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Discount</strong></td>
                                             <td class="no-line text-left">
-                                                $<input type="text" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                <input type="text" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
 
                                         </tr>

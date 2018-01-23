@@ -24,19 +24,7 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
         return logoToken;
     }
 
-    @Override
-    @NotNull(message = "Price is required")
-    @Min(value = 1,message = "Price can't be zero or negative")
-    public Float getPrice() {
-        return super.getPrice();
-    }
 
-    @Override
-    @NotNull(message = "Quantity is required")
-    @Min(value = 1,message = "Least 1 quantity required")
-    public Integer getQuantity() {
-        return super.getQuantity();
-    }
 
     @Override
     @NotNull(message = "Background Image required")
@@ -81,5 +69,27 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
     @NotNull(message = "Rotation settings required")
     public AdvertiseRotationSettings getBottomBannerRotation() {
         return super.getBottomBannerRotation();
+    }
+
+
+    @Override
+    @Min(value = 1,message = "Price can't be zero or negative")
+    @NotNull(message = "Price is required")
+    public Float getBgPrice() {
+        return super.getBgPrice();
+    }
+
+    @Override
+    @Min(value = 1,message = "Price can't be zero or negative")
+    @NotNull(message = "Price is required")
+    public Float getTopBannerPrice() {
+        return super.getTopBannerPrice();
+    }
+
+    @Override
+    @Min(value = 1,message = "Price can't be zero or negative")
+    @NotNull(message = "Price is required")
+    public Float getBottomBannerPrice() {
+        return super.getBottomBannerPrice();
     }
 }

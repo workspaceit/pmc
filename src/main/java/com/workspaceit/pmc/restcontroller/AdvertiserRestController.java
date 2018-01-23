@@ -131,8 +131,8 @@ public class AdvertiserRestController {
             return this.getValidated(advertiserForm,bindingResult);
         }
 
-        this.advertiserService.create(advertiserForm,currentUser);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Successfully created"));
+        Advertiser advertiser = this.advertiserService.create(advertiserForm,currentUser);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
     }
     @Secured({UserRole._SUPER_ADMIN})
     @PostMapping(value = "/create-all")
@@ -183,7 +183,7 @@ public class AdvertiserRestController {
         this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
         this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
         this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
     }
 
     @PostMapping(value = "/update-all/{id}")

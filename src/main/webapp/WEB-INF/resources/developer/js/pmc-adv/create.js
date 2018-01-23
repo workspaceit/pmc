@@ -47,6 +47,7 @@ function createAdvertiser(fnSuccess){
             }
         },
         success: function(response) {
+            console.log(response);
             if(typeof fnSuccess=="function"){
                 fnSuccess(response);
             }

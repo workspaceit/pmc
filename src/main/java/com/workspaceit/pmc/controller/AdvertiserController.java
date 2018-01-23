@@ -194,7 +194,7 @@ public class AdvertiserController {
 
         return model;
     }
-    @RequestMapping("/invoice/{id}")
+    @RequestMapping("/checkout/{id}")
     public ModelAndView invoice(@PathVariable("id") int advertiserId){
 
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
@@ -209,6 +209,7 @@ public class AdvertiserController {
         PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
 
         /* Price and quantity */
+
         Map<GalleryAdsConstant, GalleryAdQuantityPrice>  galleryQuantityPrice = galleryAd.getGalleryQuantityPrice();
         Map<SlideshowAdsConstant,SlideshowQuantityPrice> slideshowQuantityPrice = slideshowAd.getQuantityPrice();
         Map<PopupAdConstant,PopupAdQuantityPrice> popupAdSmsQuantityPrice = popupAdSms.getQuantityPrice();
@@ -222,11 +223,12 @@ public class AdvertiserController {
         prices.put(GalleryAdsConstant.BACKGROUND_IMAGE,0f);
         prices.put(GalleryAdsConstant.TOP_AD_BANNER,0f);
         prices.put(GalleryAdsConstant.BOTTOM_AD_BANNER,0f);
+
         prices.put(SlideshowAdsConstant.BANNER,0f);
         prices.put(SlideshowAdsConstant.VIDEO,0f);
+
         prices.put(PopupAdConstant.SMS,0f);
         prices.put(PopupAdConstant.EMAIL,0f);
-
 
 
         quantities.put(GalleryAdsConstant.BACKGROUND_IMAGE,0);
@@ -235,40 +237,51 @@ public class AdvertiserController {
 
         quantities.put(SlideshowAdsConstant.BANNER,0);
         quantities.put(SlideshowAdsConstant.VIDEO,0);
+
         quantities.put(PopupAdConstant.SMS,0);
         quantities.put(PopupAdConstant.EMAIL,0);
 
 
 
         if(galleryQuantityPrice!=null){
-            prices.put(GalleryAdsConstant.BACKGROUND_IMAGE,galleryQuantityPrice.get(GalleryAdsConstant.BACKGROUND_IMAGE).getPrice());
-            prices.put(GalleryAdsConstant.TOP_AD_BANNER,galleryQuantityPrice.get(GalleryAdsConstant.TOP_AD_BANNER).getPrice());
-            prices.put(GalleryAdsConstant.BOTTOM_AD_BANNER,galleryQuantityPrice.get(GalleryAdsConstant.BOTTOM_AD_BANNER).getPrice());
+            GalleryAdQuantityPrice bgQP = galleryQuantityPrice.get(GalleryAdsConstant.BACKGROUND_IMAGE);
+            GalleryAdQuantityPrice topQP = galleryQuantityPrice.get(GalleryAdsConstant.TOP_AD_BANNER);
+            GalleryAdQuantityPrice bottomQP = galleryQuantityPrice.get(GalleryAdsConstant.BOTTOM_AD_BANNER);
 
-            quantities.put(GalleryAdsConstant.BACKGROUND_IMAGE,galleryQuantityPrice.get(GalleryAdsConstant.BACKGROUND_IMAGE).getQuantity());
-            quantities.put(GalleryAdsConstant.TOP_AD_BANNER,galleryQuantityPrice.get(GalleryAdsConstant.TOP_AD_BANNER).getQuantity());
-            quantities.put(GalleryAdsConstant.BOTTOM_AD_BANNER,galleryQuantityPrice.get(GalleryAdsConstant.BOTTOM_AD_BANNER).getQuantity());
+            prices.put(GalleryAdsConstant.BACKGROUND_IMAGE,(bgQP != null)?bgQP.getPrice():0);
+            prices.put(GalleryAdsConstant.TOP_AD_BANNER,(topQP != null)?topQP.getPrice():0);
+            prices.put(GalleryAdsConstant.BOTTOM_AD_BANNER,(bottomQP != null)?bottomQP.getPrice():0);
+
+            quantities.put(GalleryAdsConstant.BACKGROUND_IMAGE,(bgQP != null)?bgQP.getQuantity():0);
+            quantities.put(GalleryAdsConstant.TOP_AD_BANNER,(topQP != null)?topQP.getQuantity():0);
+            quantities.put(GalleryAdsConstant.BOTTOM_AD_BANNER,(bottomQP != null)?bottomQP.getQuantity():0);
         }
-
 
 
         if(slideshowQuantityPrice!=null){
-            prices.put(SlideshowAdsConstant.BANNER,slideshowQuantityPrice.get(SlideshowAdsConstant.BANNER).getPrice());
-            prices.put(SlideshowAdsConstant.VIDEO,slideshowQuantityPrice.get(SlideshowAdsConstant.VIDEO).getPrice());
+            SlideshowQuantityPrice bannerQP = slideshowQuantityPrice.get(SlideshowAdsConstant.BANNER);
+            SlideshowQuantityPrice videoQP = slideshowQuantityPrice.get(SlideshowAdsConstant.VIDEO);
 
-            quantities.put(SlideshowAdsConstant.BANNER,slideshowQuantityPrice.get(SlideshowAdsConstant.BANNER).getQuantity());
-            quantities.put(SlideshowAdsConstant.VIDEO,slideshowQuantityPrice.get(SlideshowAdsConstant.VIDEO).getQuantity());
+
+            prices.put(SlideshowAdsConstant.BANNER,(bannerQP != null)?bannerQP.getPrice():0);
+            prices.put(SlideshowAdsConstant.VIDEO,(videoQP != null)?videoQP.getPrice():0);
+
+            quantities.put(SlideshowAdsConstant.BANNER,(bannerQP != null)?bannerQP.getQuantity():0);
+            quantities.put(SlideshowAdsConstant.VIDEO,(videoQP != null)?videoQP.getQuantity():0);
         }
         if(popupAdSmsQuantityPrice!=null){
-            prices.put(PopupAdConstant.SMS,popupAdSmsQuantityPrice.get(PopupAdConstant.SMS).getPrice());
-            quantities.put(PopupAdConstant.SMS,popupAdSmsQuantityPrice.get(PopupAdConstant.SMS).getQuantity());
+            PopupAdQuantityPrice smsQP = popupAdSmsQuantityPrice.get(PopupAdConstant.SMS);
+            prices.put(PopupAdConstant.SMS,(smsQP != null)?smsQP.getPrice():0);
+            quantities.put(PopupAdConstant.SMS,(smsQP != null)?smsQP.getQuantity():0);
         }
         if(popupAdEmailQuantityPrice!=null){
-            prices.put(PopupAdConstant.EMAIL,popupAdEmailQuantityPrice.get(PopupAdConstant.EMAIL).getPrice());
-            quantities.put(PopupAdConstant.EMAIL,popupAdEmailQuantityPrice.get(PopupAdConstant.EMAIL).getQuantity());
+           PopupAdQuantityPrice emailQP =  popupAdEmailQuantityPrice.get(PopupAdConstant.EMAIL);
+            prices.put(PopupAdConstant.EMAIL,(emailQP != null)?emailQP.getPrice():0);
+            quantities.put(PopupAdConstant.EMAIL,(emailQP != null)?emailQP.getQuantity():0);
         }
 
 
+        /* Calculating total */
         for(GalleryAdsConstant key :GalleryAdsConstant.values()){
             totalPrice+=prices.get(key)*quantities.get(key);
         }
@@ -279,8 +292,8 @@ public class AdvertiserController {
             totalPrice+=prices.get(key)*quantities.get(key);
         }
 
-        ModelAndView model = new ModelAndView("admin/advertiser/invoice");
 
+        ModelAndView model = new ModelAndView("admin/advertiser/invoice");
 
         model.addObject("advertiser",advertiser);
         model.addObject("galleryAd",galleryAd);
