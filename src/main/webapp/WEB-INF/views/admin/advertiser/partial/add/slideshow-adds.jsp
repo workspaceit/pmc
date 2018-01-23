@@ -40,7 +40,7 @@
                                     </c:forEach>
                               </select>
                               </span>
-            <span class="pull-right " style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.BANNER).price}" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">Price: $ <input id="slideshowAdBannerPrice" type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.BANNER).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
     <div class="imageupload panel panel-default">
@@ -83,7 +83,7 @@
                     </c:forEach>
               </select>
           </span>
-            <span class="pull-right " style="font-weight: bold;">Price:$ <input type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.VIDEO).price    }" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">Price:$ <input id="slideshowAdVideoPrice" type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.VIDEO).price    }" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
 </div>

@@ -24,6 +24,8 @@ public class SlideShowAdsForm {
     private AdvertiseRotationSettings bannerRotation;
     private AdvertiseRotationSettings videoRotation;
 
+    private Float bannerPrice;
+    private Float videoPrice;
 
     public Integer getId() {
         return id;
@@ -105,6 +107,22 @@ public class SlideShowAdsForm {
         this.videoRotation = videoRotation;
     }
 
+    public Float getBannerPrice() {
+        return bannerPrice;
+    }
+
+    public void setBannerPrice(Float bannerPrice) {
+        this.bannerPrice = bannerPrice;
+    }
+
+    public Float getVideoPrice() {
+        return videoPrice;
+    }
+
+    public void setVideoPrice(Float videoPrice) {
+        this.videoPrice = videoPrice;
+    }
+
     @Override
     public String toString() {
         return "SlideShowAdsForm{" +
@@ -118,6 +136,8 @@ public class SlideShowAdsForm {
                 ", bannerExpiryDate=" + bannerExpiryDate +
                 ", bannerRotation=" + bannerRotation +
                 ", videoRotation=" + videoRotation +
+                ", bannerPrice=" + bannerPrice +
+                ", videoPrice=" + videoPrice +
                 '}';
     }
 }

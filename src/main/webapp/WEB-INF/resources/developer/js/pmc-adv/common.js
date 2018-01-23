@@ -563,6 +563,10 @@ function getSlideShowAdsData(prefix){
     var bannerRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_BANNER);
     var videoRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_VIDEO);
 
+    var bannerPrice = $('#slideshowAdBannerPrice').val();
+    var videoPrice = $('#slideshowAdVideoPrice').val();
+
+
     var data = {};
     if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
 
@@ -575,6 +579,8 @@ function getSlideShowAdsData(prefix){
     data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
     data[prefix+"bannerRotation"] = bannerRotation;
     data[prefix+"videoRotation"] = videoRotation;
+    data[prefix+"bannerPrice"] = bannerPrice;
+    data[prefix+"videoPrice"] = videoPrice;
     return data;
 }
 /*PopUp Ads */

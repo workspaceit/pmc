@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.dao.SlideshowAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SlideShowService {
     private FileService fileService;
     private SlideshowBannerImageService slideshowBannerImageService;
+    private SlideshowQuantityPriceService quantityPriceService;
 
     private SlideshowAdDao slideshowAdDao;
 
@@ -31,6 +33,10 @@ public class SlideShowService {
     public void setSlideshowBannerImageService(SlideshowBannerImageService slideshowBannerImageService) {
         this.slideshowBannerImageService = slideshowBannerImageService;
     }
+    @Autowired
+    public void setQuantityPriceService(SlideshowQuantityPriceService quantityPriceService) {
+        this.quantityPriceService = quantityPriceService;
+    }
 
     @Autowired
     public void setSlideshowAdDao(SlideshowAdDao slideshowAdDao) {
@@ -40,8 +46,15 @@ public class SlideShowService {
     @Transactional(rollbackFor = Exception.class)
     public SlideshowAd create(Advertiser advertiser , SlideShowAdsCreateForm slideShowAdsForm, Admin admin){
         Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoToken();
+        Integer[] bannerTokens = slideShowAdsForm.getSlideShowAdsBannerTokens();
         String videoType = this.fileService.getMimeTypeByToken(videoToken);
         String videoName = this.fileService.copyFile(videoToken);
+
+        float bannerPrice = slideShowAdsForm.getBannerPrice();
+        float videoPrice = slideShowAdsForm.getVideoPrice();
+        int bannerQuantity = bannerTokens!=null?bannerTokens.length:0;
+        int videoQuantity = (videoToken!=null && videoToken>0)?1:0;
+
 
         SlideshowAd slideshowAd = new SlideshowAd();
 
@@ -57,7 +70,11 @@ public class SlideShowService {
         slideshowAd.setCreatedBy(admin);
 
         this.create(slideshowAd);
-        this.slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerTokens(),admin);
+
+        this.quantityPriceService.create(slideshowAd.getId(),bannerPrice,bannerQuantity, SlideshowAdsConstant.BANNER,admin);
+        this.quantityPriceService.create(slideshowAd.getId(),videoPrice,videoQuantity, SlideshowAdsConstant.VIDEO,admin);
+
+        this.slideshowBannerImageService.create(slideshowAd,bannerTokens,admin);
 
         return slideshowAd;
     }

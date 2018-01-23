@@ -34,12 +34,12 @@ public class SlideshowQuantityPrice {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
-    private Date created_at;
+    private Date createdAt;
 
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "created_by", referencedColumnName = "id",nullable = true)
-    private Admin created_by;
+    private Admin createdBy;
 
 
     public Integer getId() {
@@ -83,22 +83,21 @@ public class SlideshowQuantityPrice {
         this.quantity = quantity;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Admin getCreated_by() {
-        return created_by;
+    public Admin getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreated_by(Admin created_by) {
-        this.created_by = created_by;
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -124,8 +123,8 @@ public class SlideshowQuantityPrice {
                 ", adType=" + adType +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", created_at=" + created_at +
-                ", created_by=" + created_by +
+                ", created_at=" + createdAt +
+                ", created_by=" + createdBy +
                 '}';
     }
 }
