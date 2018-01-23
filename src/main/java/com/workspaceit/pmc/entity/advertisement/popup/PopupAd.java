@@ -49,7 +49,7 @@ public class PopupAd {
     @Enumerated(EnumType.STRING)
     private AdvertiseRotationSettings adRotate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "popup_ad_id",referencedColumnName = "id")
     @MapKey(name = "adType")
     private Map<PopupAdConstant,PopupAdQuantityPrice> quantityPrice;

@@ -1,0 +1,1 @@
+ALTER TABLE  `gallery_quantity_price` CHANGE  `price`  `price` FLOAT( 12, 2 ) NOT NULL ;

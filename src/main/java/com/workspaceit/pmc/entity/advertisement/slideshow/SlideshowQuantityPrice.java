@@ -18,8 +18,8 @@ public class SlideshowQuantityPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "slideshow_id")
-    private Integer slideshowId;
+    @Column(name = "slideshow_ad_id")
+    private Integer slideshowAdId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ad_type")
@@ -50,8 +50,12 @@ public class SlideshowQuantityPrice {
         this.id = id;
     }
 
-    public Integer getSlideshowId() {
-        return slideshowId;
+    public Integer getSlideshowAdId() {
+        return slideshowAdId;
+    }
+
+    public void setSlideshowAdId(Integer slideshowAdId) {
+        this.slideshowAdId = slideshowAdId;
     }
 
     public SlideshowAdsConstant getAdType() {
@@ -116,7 +120,7 @@ public class SlideshowQuantityPrice {
     public String toString() {
         return "SlideshowQuantityPrice{" +
                 "id=" + id +
-                ", slideshowId=" + slideshowId +
+                ", slideshowId=" + slideshowAdId +
                 ", adType=" + adType +
                 ", price=" + price +
                 ", quantity=" + quantity +

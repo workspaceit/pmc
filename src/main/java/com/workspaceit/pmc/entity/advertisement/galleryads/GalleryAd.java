@@ -65,7 +65,7 @@ public class GalleryAd {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "gallery_ad_id",referencedColumnName = "id")
     @MapKey(name = "adType")
     private Map<GalleryAdsConstant,GalleryAdQuantityPrice> galleryQuantityPrice;

@@ -56,8 +56,8 @@ public class SlideshowAd {
     private AdvertiseRotationSettings videoRotate;
 
 
-    @OneToMany
-    @JoinColumn(name = "slideshow_id",referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "slideshow_ad_id",referencedColumnName = "id")
     @MapKey(name = "adType")
     Map<SlideshowAdsConstant,SlideshowQuantityPrice> quantityPrice;
 
