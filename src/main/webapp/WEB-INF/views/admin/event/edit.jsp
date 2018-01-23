@@ -86,10 +86,10 @@
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
                                                 <option value="${event.venue.id}">${event.venue.name}</option>
                                             </select>
-                                            <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"
-                                                    data-target="#addLocation" style="margin-top: 15px;"><i
-                                                    class="fa fa-plus" aria-hidden="true"></i>Add new Venue
-                                            </button>
+                                            <%--<button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"--%>
+                                                    <%--data-target="#addLocation" style="margin-top: 15px;"><i--%>
+                                                    <%--class="fa fa-plus" aria-hidden="true"></i>Add new Venue--%>
+                                            <%--</button>--%>
                                         </div>
                                     </div>
                                 </div>
