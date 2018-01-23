@@ -1,10 +1,16 @@
+<%@ page import="com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant" %>
+<%@ page import="com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant" %>
+<%@ page import="com.workspaceit.pmc.constant.advertisement.PopupAdConstant" %>
+
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <t:genericpage>
     <jsp:body>
+
         <div role="tabpanel" class="tab-pane" id="last">
             <div class="col-md-12" style="padding-left: 0px;background-color: #ffffff">
                 <div class="row" style="background-color: #ffffff;margin-top: 10px;">
@@ -64,47 +70,168 @@
                                         <tbody>
                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                         <tr>
-                                            <td>Top Ad Banner</td>
-                                            <td class="text-center">$10.99</td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-right">$10.99</td>
+                                            <td>Background Image</td>
+                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)*quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Bottom Ad Banner</td>
-                                            <td class="text-center">$20.00</td>
-                                            <td class="text-center">3</td>
-                                            <td class="text-right">$60.00</td>
+                                            <td>Gallery Top Ad Banner</td>
+                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)*quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Pop Up Ad Banner</td>
-                                            <td class="text-center">$600.00</td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-right">$600.00</td>
+                                            <td>Gallery Bottom Ad Banner</td>
+                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)*quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                    </td>
                                         </tr>
+
                                         <tr>
                                             <td>Slide show Ad Banner</td>
-                                            <td class="text-center">$600.00</td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-right">$600.00</td>
+                                            <td class="text-center" data-price="${prices.get(SlideshowAdsConstant.BANNER)}">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(SlideshowAdsConstant.BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(SlideshowAdsConstant.BANNER)}" >${quantities.get(SlideshowAdsConstant.BANNER)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(SlideshowAdsConstant.BANNER)*quantities.get(SlideshowAdsConstant.BANNER)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+
+                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Background Image</td>
-                                            <td class="text-center">$50.00</td>
-                                            <td class="text-center">2</td>
-                                            <td class="text-right">$100.00</td>
+                                            <td>Slide show Ad Video</td>
+                                            <td class="text-center" data-price="${prices.get(SlideshowAdsConstant.VIDEO)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(SlideshowAdsConstant.VIDEO)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(SlideshowAdsConstant.VIDEO)}" >${quantities.get(SlideshowAdsConstant.VIDEO)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get('slideShowVideoPrice')*quantities.get('slideShowVideoQuantity')}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Pop Sms Up Ad</td>
+                                            <td class="text-center" data-price="${prices.get(PopupAdConstant.SMS)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(PopupAdConstant.SMS)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(PopupAdConstant.SMS)}" >${quantities.get(PopupAdConstant.SMS)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(PopupAdConstant.SMS)*quantities.get(PopupAdConstant.SMS)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="thick-line"></td>
+                                            <td>Pop Email Up Ad</td>
+                                            <td class="text-center" data-price="${prices.get(PopupAdConstant.EMAIL)}" >
+                                                <fmt:formatNumber
+                                                        value="${prices.get(PopupAdConstant.EMAIL)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                            <td class="text-center" data-quantity="${quantities.get(PopupAdConstant.EMAIL)}" >${quantities.get(PopupAdConstant.EMAIL)}</td>
+                                            <td class="text-right">
+                                                <fmt:formatNumber
+                                                        value="${prices.get(PopupAdConstant.EMAIL)*quantities.get(PopupAdConstant.EMAIL)}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="thick-line" data-price="" ></td>
                                             <td class="thick-line"></td>
                                             <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                            <td class="thick-line text-right">$670.99</td>
+                                            <td class="thick-line text-right">
+                                                <fmt:formatNumber
+                                                    value="${totalPrice}"
+                                                    type="currency"
+                                                    currencyCode="${currencyCode}"
+                                                    currencySymbol="${currencySymbol}"
+                                                    maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
                                         </tr>
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Discount</strong></td>
                                             <td class="no-line text-left">
-                                                <input type="text" class="form-control" placeholder="" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                $<input type="text" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
 
                                         </tr>
@@ -113,7 +240,14 @@
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                            <td class="no-line text-right">$685.99</td>
+                                            <td class="no-line text-right">
+                                                <fmt:formatNumber
+                                                        value="${totalPrice-discount}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
