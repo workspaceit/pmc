@@ -65,8 +65,10 @@ public class EventController {
     @RequestMapping(value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") int id){
         Event event = this.eventService.getById(id);
+        List<Location> locations = this.locationService.getAll();
         ModelAndView model = new ModelAndView("admin/event/edit");
         model.addObject("event", event);
+        model.addObject("locations",locations);
         return model;
     }
 

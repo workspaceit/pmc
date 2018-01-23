@@ -116,7 +116,7 @@ public class EventService {
         List<Photographer> photographers = photographerService.getAll(eventForm.getPhotographerIds());
         List<Advertiser> advertisers = advertiserService.getAll(eventForm.getAdvertiserIds());
         Integer eventImageToken = eventForm.getImageToken();
-        if(eventImageToken != 0){
+        if(eventImageToken != 0 && eventImageToken != - 1){
             String eventImageName = this.fileService.copyFile(eventImageToken);
             event.setEventPhoto(eventImageName);
         }

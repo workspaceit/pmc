@@ -125,7 +125,7 @@ $(document).ready(function () {
             'photographerIds': photographerIds,
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
-            'imageToken': pictureToken,
+            'imageToken': pictureToken == 0 ? -1 :pictureToken,
             'isPrivate': isPrivate
         };
         var eventId = $('#eventId').val();
@@ -371,7 +371,6 @@ $(document).ready(function () {
     });
 
     $('#add-photographer-modal').on('shown.bs.modal', function(){
-
         profileImgDropzone = new Dropzone("div#profileImg",
             {
                 url: BASEURL+"file/upload/photographer-profile-image",
