@@ -197,7 +197,7 @@ $(document).ready(function () {
             }
         }
     });
-    $("#venueId").select2({
+    var $venueSelect2 = $("#venueId").select2({
         placeholder: 'Select a Venue',
 //                    minimumInputLength: 1,
         width: 'resolve',
@@ -226,7 +226,7 @@ $(document).ready(function () {
             }
         }
     });
-    $("#photographer-select2").select2({
+    var $photographerSelect2 = $("#photographer-select2").select2({
         placeholder: 'Select Photographer(s)',
         multiple: true,
 //                    minimumInputLength: 1,
@@ -309,4 +309,162 @@ $(document).ready(function () {
         $(".choose-btn > .btn").removeClass("active");
         $(this).addClass("active");
     });
+
+
+    $('#btn-add-venue').click(function () {
+        submitData();
+    });
+
+    function submitData(){
+        var name = $('#name').val();
+        var location = $('#location').val();
+        var data = {
+            name: name,
+            location_id: location
+        };
+        console.log(data);
+        $.ajax({
+            url: BASEURL+"api/venue/create",
+            type: "POST",
+            data: data ,
+            traditional:true,
+            statusCode:{
+                500: function(response) {
+                    console.log(response);
+                }, 401: function(response) {
+                    console.log(response.responseJSON);
+                }, 422: function(response) {
+                    BindErrorsWithHtml("errorObj_",response.responseJSON);
+                }
+            },
+            success: function(venue) {
+                $('#add-new-venue-modal').modal('hide');
+                var data = {
+                    id: venue.id,
+                    text: venue.name
+                };
+                var newOption = new Option(data.text, data.id, false, true);
+                $venueSelect2.append(newOption).trigger('change');
+            }
+        });
+    }
+
+    $('#btn-photographer-add').click(function () {
+        submitPhotographerData('save');
+    });
+
+    Dropzone.autoDiscover = false;
+    var profilePictureToken = 0;
+    var banerImagesToken = [];
+
+    var profileImgDropzone;
+
+    $('#add-photographer-modal').on('show.bs.modal', function(){
+        initializePhotographerForm();
+        if(profileImgDropzone){
+            profileImgDropzone.destroy();
+        }
+    });
+
+    $('#add-new-venue-modal').on('show.bs.modal', function(){
+        initializeVenueForm();
+    });
+
+    $('#add-photographer-modal').on('shown.bs.modal', function(){
+
+        profileImgDropzone = new Dropzone("div#profileImg",
+            {
+                url: BASEURL+"file/upload/photographer-profile-image",
+                method:"post",
+                paramName:"profileImg",
+                maxFilesize: 1,
+                maxFiles:1,
+                addRemoveLinks: true,
+                previewTemplate:$("#dropZonePreview").html(),
+                init:function(){
+
+                    this.on("maxfilesexceeded", function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
+                    this.on("addedfile", function(file) {
+                        file._removeLink.addEventListener("click", function() {
+                            console.log(file);
+                            removeFileByToken(file.token);
+                            profilePictureToken = 0;
+                            var _ref;
+                            profileImgDropzone.removeFile(file);
+                        });
+                    });
+
+                },
+                error:function(file,response){
+                    var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
+                    $("#profileImg").find(".dz-error-message span").html(msg);
+                },
+                success:function(file,response){
+                    file.token = response.token;
+                    profilePictureToken = response.token;
+                    console.log(file);
+                }
+            }
+        );
+    });
+
+    function submitPhotographerData(btnAction){
+        var fullName = $("#fullName").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var email = $("#email").val();
+        var userName = $("#userName").val();
+        var password =  $("#password").val();
+        var confirmPassword = 	$("#confirmPassword").val();
+        var data = {
+            "fullName":fullName,
+            "phoneNumber":phoneNumber,
+            "email":email,
+            "userName":userName,
+            "password":password,
+            "confirmPassword":confirmPassword,
+            "profilePictureToken":profilePictureToken
+        };
+        $.ajax({
+            url: BASEURL+'api/photographer/create',
+            data:data,
+            type: 'POST',
+            statusCode: {
+                401: function (response) {
+                    console.log(response);
+                },
+                422: function (response) {
+                    BindErrorsWithHtml("errorObj_",response.responseJSON);
+                    console.log(response);
+                }
+            },success: function(photographer){
+                console.log(photographer.id + ": " + photographer.fullName);
+                $('#add-photographer-modal').modal('hide');
+                // var newOption = new Option(photographer.text, photographer.id, false, false);
+                if ($("#photographer-select2").find("option[value=" + photographer.id + "]").length) {
+                    console.log("if");
+                    $("#photographer-select2").val(photographer.id).trigger("change");
+                } else {
+                    console.log("else");
+                    // Create the DOM option that is pre-selected by default
+                    var newState = new Option(photographer.fullName, photographer.id, true, true);
+                    // Append it to the select
+                    $("#photographer-select2").append(newState).trigger('change');
+                }
+
+            }
+        });
+        console.log(data)
+    }
+
+    function initializePhotographerForm(){
+        $('#add-photographer-modal input').val("");
+    }
+
+    function initializeVenueForm(){
+        $('#add-new-venue-modal #name').val("");
+    }
+
 });
