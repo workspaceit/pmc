@@ -54,7 +54,10 @@
 
                                 <div id="profileImg" >
                                     <div class="dz-default dz-message">
-                                        <span>Change Profile Picture</span>
+                                        <div class="droper">
+                                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                            <p class="dropext">Click or Drop your file here</p>
+                                        </div>
                                         <p id="errorObj_profilePictureToken"></p>
                                     </div>
                                 </div>

@@ -82,7 +82,10 @@
                     </c:forEach>
                     <div id="advertiserOtherImages"  class="panel-body" >
                         <div class="dz-default dz-message">
-                            <span>Click here to upload</span>
+                            <div class="droper">
+                                <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                <p class="dropext">Click or Drop your files here</p>
+                            </div>
                         </div>
                     </div>
                 </div>

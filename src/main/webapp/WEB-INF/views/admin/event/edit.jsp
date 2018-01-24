@@ -159,7 +159,10 @@
                                 <div class="file-tab panel-body">
                                     <div id="eventImg">
                                         <div class="dz-default dz-message">
-                                            <span>Drop a new file or click to select</span>
+                                            <div class="droper">
+                                                <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                                <p class="dropext">Click or Drop your files here</p>
+                                            </div>
                                             <p id="errorObj_profilePictureToken"></p>
                                         </div>
                                     </div>

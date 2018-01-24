@@ -83,7 +83,10 @@
 --%>
                                             <div id="venueLogoImg">
                                                 <div class="dz-default dz-message">
-                                                    <span>Change logo</span>
+                                                    <div class="droper">
+                                                        <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                                        <p class="dropext">Click or Drop your file to chnage logo</p>
+                                                    </div>
                                                     <p id="errorObj_profilePictureToken"></p>
                                                 </div>
                                             </div>
@@ -123,7 +126,10 @@
                                         <div id="venueBgImg" class="panel-body">
 
                                             <div class="dz-default dz-message">
-                                                <span>Add background image</span>
+                                                <div class="droper">
+                                                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                                    <p class="dropext">Click or Drop your file here</p>
+                                                </div>
                                                 <p id="errorObj_bgTokens"></p>
                                             </div>
                                             <div class="file-tab panel-body">

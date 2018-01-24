@@ -14,9 +14,7 @@
                 <div class="row clearfix">
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
-                            <label>
-                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
-                            </label>
+                            <label>City</label>
                             <div>
                                 <select id="cityId" class="form-control">
                                     <c:forEach var="city" items="${cities}">
@@ -43,7 +41,7 @@
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
                             <label style="width:100%;">
-                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
+                                <label>State</label>
                                 <select id="stateId" class="form-control" >
                                     <c:forEach var="state" items="${states}" >
                                         <option value="${state.id}" >${state.name}</option>
@@ -78,7 +76,10 @@
                     </div>
                     <div id="advertiserOtherImages"  class="panel-body" >
                         <div class="dz-default dz-message">
-                            <span>Click here to upload</span>
+                            <div class="droper">
+                                <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                <p class="dropext">Click or Drop your files here</p>
+                            </div>
                             <p id="errorObj_"></p>
                         </div>
                     </div>

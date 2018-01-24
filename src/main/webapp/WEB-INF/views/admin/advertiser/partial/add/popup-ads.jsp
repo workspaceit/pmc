@@ -27,7 +27,10 @@
         </div>
         <div id="advSmsPopUpBanner"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload banner image</span>
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your banner image here</p>
+                </div>
 
             </div>
         </div>
@@ -35,7 +38,10 @@
 
         <div id="advSmsPopUpVideo"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload video</span>
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your video here</p>
+                </div>
 
             </div>
         </div>
@@ -78,13 +84,19 @@
         </div>
         <div id="advEmailPopUpBanner"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload banner image</span>
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your banner image here</p>
+                </div>
             </div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
         <div id="advEmailPopUpVideo"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload video</span>
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your video here</p>
+                </div>
             </div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>

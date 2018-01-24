@@ -49,7 +49,10 @@
                                 <div id="profileImg" >
 
                                     <div class="dz-default dz-message">
-                                        <span>Drop files here to upload</span>
+                                        <div class="droper">
+                                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                            <p class="dropext">Click or Drop your file here</p>
+                                        </div>
                                         <p id="errorObj_profilePictureToken"></p>
                                     </div>
                                 </div>

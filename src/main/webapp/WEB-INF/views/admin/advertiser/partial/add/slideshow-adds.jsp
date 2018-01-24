@@ -27,8 +27,10 @@
         </div>
         <div id="advSlideShowBanner"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload</span>
-
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your files here</p>
+                </div>
             </div>
             <p id="errorObj_slideShowAdsBannerTokens"></p>
         </div>
@@ -69,7 +71,10 @@
         </div>
         <div id="advSlideShowVideo"  class="panel-body" >
             <div class="dz-default dz-message">
-                <span>Click here to upload video</span>
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop file to upload video</p>
+                </div>
             </div>
             <p class="text-danger" id="errorObj_slideShowAdsVideoToken" style="display: block;"></p>
             <p class="text-danger" id="errorObj_advImg" style="display: block;"></p>

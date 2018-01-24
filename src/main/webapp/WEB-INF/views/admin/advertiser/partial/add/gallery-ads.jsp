@@ -12,7 +12,10 @@
                 </div>
                 <div id="advLogo"  class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <div class="droper">
+                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                            <p class="dropext">Click or Drop your files here</p>
+                        </div>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_logoToken"></p>
@@ -39,12 +42,15 @@
                 <div id="advBackgroundImage"  class="panel-body" >
 
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <div class="droper">
+                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                            <p class="dropext">Click or Drop your files here</p>
+                        </div>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
-                    Price: $ <input id="galleryAdBgPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><span style="font-weight: bold;">
+                    Price: $ <input id="galleryAdBgPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/></span>
                     <p class="text-danger" id="errorObj_bgPrice" ></p>
                 </div>
 
@@ -56,17 +62,12 @@
                     <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                         <h4 class="panel-title pull-left">Top Ad Banner</h4>
                     </div>
-
                     <div class="col-md-6 col-xs-6 pull-right">
-
                         <div class="" style="margin-left: auto;float:right;">
-
-
                             <div id="galleryTopRotationBtn" class="btn-group">
                                 <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
                                 <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
-
                         </div>
                         <div class="date-small pull-right">
                             <input id="topBannerExpiryDate" type="text" class="form-control"  />
@@ -78,14 +79,16 @@
                 </div>
                 <div id="advTopBannerImage"  class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
-
+                        <div class="droper">
+                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                            <p class="dropext">Click or Drop your files here</p>
+                        </div>
                     </div>
                 </div>
                 <p id="errorObj_topBannerImgTokens" class="text-danger"></p>
                 <p class="text-danger" id="errorObj_topBannerExpiryDate"></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
-                    Price: $ <input id="galleryAdTopBannerPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><span style="font-weight: bold;">
+                    Price: $ <input id="galleryAdTopBannerPrice" type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></span>
                     <p class="text-danger" id="errorObj_topBannerPrice" ></p>
                 </div>
             </div>
@@ -94,34 +97,31 @@
                     <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                         <h4 class="panel-title pull-left">Bottom Ad Banner</h4>
                     </div>
-
                     <div class="col-md-6 col-xs-6 pull-right">
-
                         <div class="" style="margin-left: auto;float:right;">
                              <div id="galleryBottomRotationBtn" class="btn-group">
                                 <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
                                 <button type="button" class="btn btn-default btn-switch" id="regi4" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
-
                         </div>
                         <div class="date-small pull-right">
                             <input id="bottomBannerExpiryDate" type="text" class="form-control" />
                             <i class="fa fa-calendar"></i>
                         </div>
                     </div>
-
-
-
                 </div>
                 <div id="advBottomBannerImage"   class="panel-body" >
                     <div class="dz-default dz-message">
-                        <span>Click here to upload</span>
+                        <div class="droper">
+                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                            <p class="dropext">Click or Drop your files here</p>
+                        </div>
                     </div>
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>
-                <div class="panel-footer text-right"><h4 style="font-weight: bold;">
-                    Price: $ <input id="galleryAdBottomBannerPrice"  type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></h4>
+                <div class="panel-footer text-right"><span style="font-weight: bold;">
+                    Price: $ <input id="galleryAdBottomBannerPrice"  type="text" class="form-control" value="${galleryAdsPrices.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/></span>
                     <p class="text-danger" id="errorObj_bottomBannerPrice" ></p>
                 </div>
 
