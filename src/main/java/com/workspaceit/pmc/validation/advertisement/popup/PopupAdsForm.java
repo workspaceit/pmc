@@ -24,6 +24,10 @@ public class PopupAdsForm {
     private AdvertiseRotationSettings smsRotation;
     private AdvertiseRotationSettings emailRotation;
 
+    private Float smsAdPrice;
+    private Float emailAdPrice;
+
+
     public Integer getSmsId() {
         return smsId;
     }
@@ -128,6 +132,24 @@ public class PopupAdsForm {
         this.emailRotation = emailRotation;
     }
 
+    public Float getSmsAdPrice() {
+        return smsAdPrice;
+    }
+
+    public void setSmsAdPrice(Float smsAdPrice) {
+        this.smsAdPrice = smsAdPrice;
+    }
+
+    public Float getEmailAdPrice() {
+        return emailAdPrice;
+    }
+
+    public void setEmailAdPrice(Float emailAdPrice) {
+        this.emailAdPrice = emailAdPrice;
+    }
+
+
+
     @Override
     public String toString() {
         return "PopupAdsForm{" +
@@ -144,6 +166,8 @@ public class PopupAdsForm {
                 ", emailExpiryDate=" + emailExpiryDate +
                 ", smsRotation=" + smsRotation +
                 ", emailRotation=" + emailRotation +
+                ", smsAdPrice=" + smsAdPrice +
+                ", emailAdPrice=" + emailAdPrice +
                 '}';
     }
 }

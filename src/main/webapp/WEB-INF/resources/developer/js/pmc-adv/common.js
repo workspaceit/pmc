@@ -605,6 +605,10 @@ function getPopUpAdsData(prefix){
     var smsRotation = getRotationSetting(RotationSettings._POP_UP_SMS);
     var emailRotation = getRotationSetting(RotationSettings._POP_UP_EMAIL);
 
+    var smsAdPrice = $("#popUpAdSmsPrice").val();
+    var emailAdPrice = $("#popUpAdEmailPrice").val();
+
+
     var data = {};
     if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
     if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
@@ -619,6 +623,8 @@ function getPopUpAdsData(prefix){
     data[prefix+"emailExpiryDate"]= emailExpiryDate;
     data[prefix+"smsRotation"]= smsRotation;
     data[prefix+"emailRotation"]= emailRotation;
+    data[prefix+"smsAdPrice"]= smsAdPrice;
+    data[prefix+"emailAdPrice"]= emailAdPrice;
 
     return data;
 }
