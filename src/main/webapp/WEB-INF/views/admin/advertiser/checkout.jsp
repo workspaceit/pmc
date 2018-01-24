@@ -236,7 +236,7 @@
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Discount</strong></td>
                                             <td class="no-line text-left">
-                                                <input  id="discountTxtField" onchange="printTotalInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                <input  id="discountTxtField" onchange="printTotalInHtml();printDueInHtml();printPaidInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
 
                                         </tr>
@@ -258,7 +258,12 @@
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Due</strong></td>
-                                            <td class="no-line text-left" id="totalDuePrice"  >$0</td>
+                                            <td class="thin-line text-right" id="totalDuePrice" data-price="${totalDuePrice}"  ><fmt:formatNumber
+                                                    value="${totalDuePrice}"
+                                                    type="currency"
+                                                    currencyCode="${currencyCode}"
+                                                    currencySymbol="${currencySymbol}"
+                                                    maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
 
                                         </tr>
                                         <tr style="overflow:hidden;">
@@ -266,14 +271,20 @@
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Pay</strong></td>
                                             <td class="no-line text-left">
-                                                <input  id="paymentTxtField" onchange="printDueInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                <input  id="paymentTxtField" onchange="printDueInHtml();printPaidInHtml();" type="number" min="0" class="form-control" placeholder="" value="0.0" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
                                         </tr>
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Total Paid</strong></td>
-                                            <td id="totalPayedPrice" class="no-line text-left"></td>
+                                            <td class="thin-line text-right" id="totalPayedPrice">
+                                                <fmt:formatNumber
+                                                        value="${totalPayedPrice}"
+                                                        type="currency"
+                                                        currencyCode="${currencyCode}"
+                                                        currencySymbol="${currencySymbol}"
+                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -24,6 +24,12 @@ public class AdvertiserTransaction {
     @Column(name = "total")
     private float total;
 
+    @Column(name = "total_paid")
+    private float totalPaid;
+
+    @Column(name = "total_due")
+    private float totalDue;
+
     @Column(name = "discount")
     private float discount;
 
@@ -61,6 +67,7 @@ public class AdvertiserTransaction {
         return subtotal;
     }
 
+
     public void setSubtotal(float subtotal) {
         this.subtotal = subtotal;
     }
@@ -87,6 +94,22 @@ public class AdvertiserTransaction {
 
     public void setAdvertiserTransactionDetails(List<AdvertiserTransactionDetails> advertiserTransactionDetails) {
         this.advertiserTransactionDetails = advertiserTransactionDetails;
+    }
+
+    public float getTotalPaid() {
+        return totalPaid;
+    }
+
+    public void setTotalPaid(float totalPaid) {
+        this.totalPaid = totalPaid;
+    }
+
+    public float getTotalDue() {
+        return totalDue;
+    }
+
+    public void setTotalDue(float totalDue) {
+        this.totalDue = totalDue;
     }
 
     public Admin getCreatedBy() {

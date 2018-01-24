@@ -231,7 +231,8 @@ public class AdvertiserController {
         int transactionId = (advertiserTransaction!=null)?advertiserTransaction.getId():0;
         float totalPrice = this.advertisementPriceAndQuantityService.calculateTotal(prices,quantities);
         float discount = (advertiserTransaction!=null)?advertiserTransaction.getDiscount():0;
-
+        float totalDuePrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalDue():0;
+        float totalPayedPrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalPaid():0;
 
 
         ModelAndView model = new ModelAndView("admin/advertiser/checkout");
@@ -248,6 +249,9 @@ public class AdvertiserController {
         model.addObject("quantities",quantities);
         model.addObject("totalPrice",totalPrice);
         model.addObject("discount",discount);
+        model.addObject("totalDuePrice",totalDuePrice);
+        model.addObject("totalPayedPrice",totalPayedPrice);
+
 
         /* Number format settings values */
         model.addObject("currencyCode","USD");

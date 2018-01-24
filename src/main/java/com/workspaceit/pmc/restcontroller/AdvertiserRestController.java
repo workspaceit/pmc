@@ -12,6 +12,7 @@ import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.popup.PopUpAdsValidator;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsValidator;
 import com.workspaceit.pmc.validation.advertiser.*;
+import com.workspaceit.pmc.validation.checkout.CheckoutCreateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -275,9 +276,9 @@ public class AdvertiserRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/checkout/{transactionId}/{advertiserId}")
     public ResponseEntity<?> checkout(@PathVariable("transactionId") int transactionId,
-                                      @PathVariable("advertiserId") int advertiserId,
-                                              @RequestParam("discount") Float discount,
-                                              Authentication authentication) {
+                                      @PathVariable("advertiserId") int advertiserId, @Valid CheckoutCreateForm checkoutCreateForm,
+                                      BindingResult bindingResult,
+                                      Authentication authentication) {
         /**
          * Basic Validation and Business logic Validation
          * */
@@ -297,10 +298,11 @@ public class AdvertiserRestController {
             advertiserTransaction = this.advertiserTransactionService.getById(transactionId);
         }
         if(advertiserTransaction==null){
-            this.advertiserTransactionService.create(advertiserId,discount,currentUser);
+            this.advertiserTransactionService.create(advertiserId,checkoutCreateForm,currentUser);
         }else{
             try {
-                this.advertiserTransactionService.update(advertiserId,transactionId,discount,currentUser);
+
+                this.advertiserTransactionService.update(advertiserId,transactionId,checkoutCreateForm.getDiscount(),currentUser);
             } catch (EntityNotFound entityNotFound) {
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));
             }

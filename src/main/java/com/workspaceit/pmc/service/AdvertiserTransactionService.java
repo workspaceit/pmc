@@ -9,6 +9,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.AdvertiserTransaction;
 import com.workspaceit.pmc.entity.AdvertiserTransactionDetails;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.validation.checkout.CheckoutCreateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +65,7 @@ public class AdvertiserTransactionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdvertiserTransaction create(Integer advertiserId,float discount, Admin admin){
+    public AdvertiserTransaction create(Integer advertiserId, CheckoutCreateForm checkoutCreateForm, Admin admin){
         Map<String,Object>   priceAndQuantity = this.advertisementPriceAndQuantityService.getSoldPriceAndQuantity(advertiserId);
 
         String priceMapKey = AdvertisementPriceAndQuantityService.priceMapKey;
@@ -77,7 +78,7 @@ public class AdvertiserTransactionService {
 
 
         float total = this.advertisementPriceAndQuantityService.getTotal(advertiserId);
-        float subtotal = total - discount;
+        float subtotal = total - checkoutCreateForm.getDiscount();
 
 
         AdvertiserTransaction advertiserTransaction = new AdvertiserTransaction();
@@ -86,7 +87,9 @@ public class AdvertiserTransactionService {
         advertiserTransaction.setAdvertiserTransactionDetails(transactionDetailsList);
         advertiserTransaction.setSubtotal(subtotal);
         advertiserTransaction.setTotal(total);
-        advertiserTransaction.setDiscount(discount);
+        advertiserTransaction.setDiscount(checkoutCreateForm.getDiscount());
+        advertiserTransaction.setTotalDue(checkoutCreateForm.getTotalDue());
+        advertiserTransaction.setTotalPaid(checkoutCreateForm.getTotalPaidAmount());
         advertiserTransaction.setCreatedBy(admin);
         this.create(advertiserTransaction);
 
