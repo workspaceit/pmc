@@ -26,6 +26,7 @@
         <!-- Select2 css -->
         <link href="<s:url value="/resources/css/select2.css"/>" rel="stylesheet"/>
         <link href="<s:url value="/resources/css/daterangepicker.css"/>" rel="stylesheet"/>
+        <link href="<s:url value="/resources/css/jquery.dataTables.min.css"/>" rel="stylesheet"/>
         <!-- Custom Fonts -->
         <link href="<s:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<s:url value="/resources/css/main.css"/>" rel="stylesheet" type="text/css">
@@ -39,6 +40,7 @@
         <script src="<s:url value="/resources/js/jquery.js"/>"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
+        <script src="<s:url value="/resources/js/jquery.dataTables.min.js"/>"></script>
 
         <%--Developer's custom js--%>
         <script>

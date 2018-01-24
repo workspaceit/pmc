@@ -1060,3 +1060,29 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     color: #fff;
 }
 
+/************* Dropzone Modification by Arnab, Modified Date: 24/01/2018 ************/
+.droper:hover {
+    background: #fff;
+}
+.droper {
+    padding: 20px 0px;
+    text-align: center;
+    background: #f1f1f1;
+    margin-top: 0px;
+    border-radius: 5px;
+    border: 1px dashed #291e57;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+.droper .dropext {
+    font-size: 15px;
+    color: #807979;
+    font-weight: bold;
+    transition: all 0.5s ease;
+}
+
+.dropicon i {
+    font-size: 50px;
+    color: #675e8f;
+    transition: all 0.5s ease;
+}

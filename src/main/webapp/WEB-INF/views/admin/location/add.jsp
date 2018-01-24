@@ -65,7 +65,10 @@
                                         <div class="file-tab panel-body">
                                             <div id="venueLogoImg" >
                                                 <div class="dz-default dz-message">
-                                                    <span>Drop files here to upload</span>
+                                                    <div class="droper">
+                                                        <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                                        <p class="dropext">Click or Drop your file here</p>
+                                                    </div>
                                                     <p id="errorObjLocation_profilePictureToken"></p>
                                                 </div>
                                             </div>
@@ -91,7 +94,10 @@
                                         </div>
                                         <div id="venueBgImg" class="panel-body">
                                             <div class="dz-default dz-message">
-                                                <span>Drop files here to upload</span>
+                                                <div class="droper">
+                                                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                                    <p class="dropext">Click or Drop your file here</p>
+                                                </div>
                                                 <p id="errorObjLocation_profilePictureToken"></p>
                                             </div>
                                         </div>

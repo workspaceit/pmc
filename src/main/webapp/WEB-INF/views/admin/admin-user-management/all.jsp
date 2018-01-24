@@ -10,16 +10,13 @@
                 <h1>Admin List </h1>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-responsive cstm-admin-table">
+                    <table id="admin-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                         <tr>
                             <th class="cstm-table-header">
                                 Image
                             </th>
-
-                            <th class="cstm-table-header">
-                                Username
-                            </th>
+                            <th class="cstm-table-header">Username</th>
                             <th class="cstm-table-header">
                                 Email
                             </th>
@@ -36,8 +33,6 @@
                         </thead>
                         <tbody>
                         <d:forEach var="admin" items="${admins}" >
-
-
                         <tr>
                             <td class="img-clm text-center">
                                 <c:set value="" var="imgSrc" />
@@ -65,7 +60,9 @@
                                 <span class="cstm-date-txt">${admin.phoneNumber}</span>
                             </td>
                             <td class="action-clm text-center">
-                                <a href="<c:url value="/admin/user/update/${admin.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                                <a href="<c:url value="/admin/user/update/${admin.id}" />" class="btn btn-success">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                                 <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
@@ -75,7 +72,34 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function() {
+
+                $('#admin-datatable').DataTable();
+
+//                $('#admin-datatable').DataTable( {
+//                    "processing": true,
+//                    "columns": [
+//                        { "data": "first_name" },
+//                        { "data": "Username" },
+//                        { "data": "position" },
+//                        { "data": "office" },
+//                        { "data": "start_date" },
+//                        { "data": "salary" }
+//                    ],
+//                    "columnDefs": [ {
+//                        "targets": [0,5],
+//                        "orderable": false,
+//                    } ],
+//                    "serverSide": true,
+//                    "ajax": {
+//                        "url": BASEURL + 'admin/admin-datatable-data',
+//                        "type":"POST",
+////                        "traditional": true
+//                    }
+//                } );
+            } );
+        </script>
 
     </jsp:body>
-
 </t:genericpage>

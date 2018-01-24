@@ -37,13 +37,15 @@
                         <button type="button" class="wm_tab btn btn-default" data-name="text"  >Text</button>
                     </div>
                 </div>
+
                 <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="file-tab panel-body">
-
                         <div id="watermarkLogoImg" >
-
                             <div class="dz-default dz-message">
-                                <span>Drop files here to upload</span>
+                                <div class="droper">
+                                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                    <p class="dropext">Click or Drop your file here</p>
+                                </div>
                                 <p id="errorObj_profilePictureToken"></p>
                             </div>
                         </div>
