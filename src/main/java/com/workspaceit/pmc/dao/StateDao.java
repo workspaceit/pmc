@@ -20,7 +20,7 @@ public class StateDao extends BaseDao{
     }
     public List<State> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM State")
+        return session.createQuery("FROM State ORDER BY name")
                 .getResultList();
     }
 }
