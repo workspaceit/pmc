@@ -13,8 +13,6 @@ function validateAll(){
     validatePopUpAdsData();
 }
 
-
-
 /*Create advertiser and other adds */
 function createAdvertiser(fnSuccess){
     var data = {};

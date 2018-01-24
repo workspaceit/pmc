@@ -31,6 +31,7 @@ public class AdvertiserController {
     private EventService eventService;
     private AdvertisementPricesService advertisementPricesService;
     private AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService;
+    private AdvertiserTransactionService advertiserTransactionService;
 
     private GalleryAdService galleryAdService;
     private SlideShowService slideShowService;
@@ -111,6 +112,11 @@ public class AdvertiserController {
     @Autowired
     public void setAdvertisementPriceAndQuantityService(AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService) {
         this.advertisementPriceAndQuantityService = advertisementPriceAndQuantityService;
+    }
+
+    @Autowired
+    public void setAdvertiserTransactionService(AdvertiserTransactionService advertiserTransactionService) {
+        this.advertiserTransactionService = advertiserTransactionService;
     }
 
     //Do not autowired check initConfig()
@@ -197,14 +203,16 @@ public class AdvertiserController {
 
         return model;
     }
-    @RequestMapping("/checkout/{id}")
-    public ModelAndView invoice(@PathVariable("id") int advertiserId){
+    @RequestMapping("/checkout/{advertiserId}")
+    public ModelAndView invoice(@PathVariable("advertiserId") int advertiserId){
 
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
 
         if(advertiser==null){
             return new ModelAndView("redirect:"+"/admin/advertiser/all");
         }
+
+        AdvertiserTransaction advertiserTransaction =  this.advertiserTransactionService.getLastByAdvertiserId(advertiser.getId());
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
@@ -220,13 +228,15 @@ public class AdvertiserController {
         Map<Object,Float> prices =(Map<Object,Float>) priceAndQuantity.get(priceMapKey);
         Map<Object,Integer> quantities =(Map<Object,Integer>) priceAndQuantity.get(quantityMapKey);
 
+        int transactionId = (advertiserTransaction!=null)?advertiserTransaction.getId():0;
         float totalPrice = this.advertisementPriceAndQuantityService.calculateTotal(prices,quantities);
-        float discount = 0;
+        float discount = (advertiserTransaction!=null)?advertiserTransaction.getDiscount():0;
 
 
 
-        ModelAndView model = new ModelAndView("admin/advertiser/invoice");
+        ModelAndView model = new ModelAndView("admin/advertiser/checkout");
 
+        model.addObject("transactionId",transactionId);
         model.addObject("advertiser",advertiser);
         model.addObject("galleryAd",galleryAd);
         model.addObject("slideshowAd",slideshowAd);

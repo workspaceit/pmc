@@ -9,6 +9,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <t:genericpage>
+    <jsp:attribute name="developerScript">
+            <script src="<s:url value="/resources/js/numeral.min.js"/>"></script>
+            <script src="<s:url value="/resources/developer/js/checkout/common.js"/>"></script>
+            <script src="<s:url value="/resources/developer/js/checkout/create.js"/>"></script>
+    </jsp:attribute>
     <jsp:body>
 
         <div role="tabpanel" class="tab-pane" id="last">
@@ -71,7 +76,7 @@
                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                         <tr>
                                             <td>Background Image</td>
-                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >
+                                            <td class="text-center price-td" data-price="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)}"
                                                         type="currency"
@@ -79,7 +84,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.BACKGROUND_IMAGE)*quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}"
@@ -91,7 +96,7 @@
                                         </tr>
                                         <tr>
                                             <td>Gallery Top Ad Banner</td>
-                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)}" >
+                                            <td class="text-center price-td"  data-price="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)}"
                                                         type="currency"
@@ -100,7 +105,7 @@
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
 
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.TOP_AD_BANNER)*quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}"
@@ -112,7 +117,7 @@
                                         </tr>
                                         <tr>
                                             <td>Gallery Bottom Ad Banner</td>
-                                            <td class="text-center" data-price="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >
+                                            <td class="text-center price-td" data-price="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}"
                                                         type="currency"
@@ -120,7 +125,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(GalleryAdsConstant.BOTTOM_AD_BANNER)*quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}"
@@ -133,7 +138,7 @@
 
                                         <tr>
                                             <td>Slide show Ad Banner</td>
-                                            <td class="text-center" data-price="${prices.get(SlideshowAdsConstant.BANNER)}">
+                                            <td class="text-center price-td" data-price="${prices.get(SlideshowAdsConstant.BANNER)}">
                                                 <fmt:formatNumber
                                                         value="${prices.get(SlideshowAdsConstant.BANNER)}"
                                                         type="currency"
@@ -141,7 +146,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(SlideshowAdsConstant.BANNER)}" >${quantities.get(SlideshowAdsConstant.BANNER)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(SlideshowAdsConstant.BANNER)}" >${quantities.get(SlideshowAdsConstant.BANNER)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(SlideshowAdsConstant.BANNER)*quantities.get(SlideshowAdsConstant.BANNER)}"
@@ -154,7 +159,7 @@
                                         </tr>
                                         <tr>
                                             <td>Slide show Ad Video</td>
-                                            <td class="text-center" data-price="${prices.get(SlideshowAdsConstant.VIDEO)}" >
+                                            <td class="text-center price-td" data-price="${prices.get(SlideshowAdsConstant.VIDEO)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(SlideshowAdsConstant.VIDEO)}"
                                                         type="currency"
@@ -162,7 +167,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(SlideshowAdsConstant.VIDEO)}" >${quantities.get(SlideshowAdsConstant.VIDEO)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(SlideshowAdsConstant.VIDEO)}" >${quantities.get(SlideshowAdsConstant.VIDEO)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get('slideShowVideoPrice')*quantities.get('slideShowVideoQuantity')}"
@@ -174,8 +179,8 @@
                                         </tr>
 
                                         <tr>
-                                            <td>Pop Sms Up Ad</td>
-                                            <td class="text-center" data-price="${prices.get(PopupAdConstant.SMS)}" >
+                                            <td>Popup Sms Ad</td>
+                                            <td class="text-center price-td" data-price="${prices.get(PopupAdConstant.SMS)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(PopupAdConstant.SMS)}"
                                                         type="currency"
@@ -183,7 +188,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(PopupAdConstant.SMS)}" >${quantities.get(PopupAdConstant.SMS)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(PopupAdConstant.SMS)}" >${quantities.get(PopupAdConstant.SMS)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(PopupAdConstant.SMS)*quantities.get(PopupAdConstant.SMS)}"
@@ -194,8 +199,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Pop Email Up Ad</td>
-                                            <td class="text-center" data-price="${prices.get(PopupAdConstant.EMAIL)}" >
+                                            <td>Popup Email Ad</td>
+                                            <td class="text-center price-td" data-price="${prices.get(PopupAdConstant.EMAIL)}" >
                                                 <fmt:formatNumber
                                                         value="${prices.get(PopupAdConstant.EMAIL)}"
                                                         type="currency"
@@ -203,7 +208,7 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
-                                            <td class="text-center" data-quantity="${quantities.get(PopupAdConstant.EMAIL)}" >${quantities.get(PopupAdConstant.EMAIL)}</td>
+                                            <td class="text-center quantity-td" data-quantity="${quantities.get(PopupAdConstant.EMAIL)}" >${quantities.get(PopupAdConstant.EMAIL)}</td>
                                             <td class="text-right">
                                                 <fmt:formatNumber
                                                         value="${prices.get(PopupAdConstant.EMAIL)*quantities.get(PopupAdConstant.EMAIL)}"
@@ -231,7 +236,7 @@
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Discount</strong></td>
                                             <td class="no-line text-left">
-                                                <input type="text" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                <input  id="discountTxtField" onchange="printTotalInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
 
                                         </tr>
@@ -240,7 +245,7 @@
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                            <td class="no-line text-right">
+                                            <td class="no-line text-right" id="totalCheckoutPrice"  >
                                                 <fmt:formatNumber
                                                         value="${totalPrice-discount}"
                                                         type="currency"
@@ -248,6 +253,27 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
                                             </td>
+                                        </tr>
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Due</strong></td>
+                                            <td class="no-line text-left" id="totalDuePrice"  >$0</td>
+
+                                        </tr>
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Pay</strong></td>
+                                            <td class="no-line text-left">
+                                                <input  id="paymentTxtField" onchange="printDueInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                            </td>
+                                        </tr>
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Total Paid</strong></td>
+                                            <td id="totalPayedPrice" class="no-line text-left"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -258,11 +284,17 @@
                 </div>
 
                 <div class="row text-center" style="background-color: #ffffff;margin-bottom:20px" >
-                    <button class="btn btn-success btn-lg">Checkout</button>
+                    <button onclick="submitCheckoutData()" class="btn btn-success btn-lg">Checkout</button>
                 </div>
             </div>
 
         </div>
+
+        <%-- Developer Hidden field --%>
+        <input type="hidden" id="advertiserId" value="${advertiser.id}" />
+        <input type="hidden" id="transactionId" value="${transactionId}" />
+
+
     </jsp:body>
 
 </t:genericpage>

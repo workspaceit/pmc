@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "advertiser_transaction")
@@ -29,6 +30,10 @@ public class AdvertiserTransaction {
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "advertiser_transaction_id", referencedColumnName = "id", nullable = false)
+    private List<AdvertiserTransactionDetails> advertiserTransactionDetails;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -74,6 +79,14 @@ public class AdvertiserTransaction {
 
     public void setDiscount(float discount) {
         this.discount = discount;
+    }
+
+    public List<AdvertiserTransactionDetails> getAdvertiserTransactionDetails() {
+        return advertiserTransactionDetails;
+    }
+
+    public void setAdvertiserTransactionDetails(List<AdvertiserTransactionDetails> advertiserTransactionDetails) {
+        this.advertiserTransactionDetails = advertiserTransactionDetails;
     }
 
     public Admin getCreatedBy() {

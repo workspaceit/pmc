@@ -4,6 +4,7 @@ import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.entity.AdvertiserTransaction;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
@@ -272,8 +273,9 @@ public class AdvertiserRestController {
         }
     }
     @Secured(UserRole._SUPER_ADMIN)
-    @PostMapping(value = "/checkout/{id}")
-    public ResponseEntity<?> checkout(@PathVariable("id") int advertiserId,
+    @PostMapping(value = "/checkout/{transactionId}/{advertiserId}")
+    public ResponseEntity<?> checkout(@PathVariable("transactionId") int transactionId,
+                                      @PathVariable("advertiserId") int advertiserId,
                                               @RequestParam("discount") Float discount,
                                               Authentication authentication) {
         /**
@@ -290,9 +292,19 @@ public class AdvertiserRestController {
         }
 
         Admin currentUser = (Admin) authentication.getPrincipal();
-
-        this.advertiserTransactionService.create(advertiserId,discount,currentUser);
-
+        AdvertiserTransaction advertiserTransaction=null;
+        if(transactionId>0){
+            advertiserTransaction = this.advertiserTransactionService.getById(transactionId);
+        }
+        if(advertiserTransaction==null){
+            this.advertiserTransactionService.create(advertiserId,discount,currentUser);
+        }else{
+            try {
+                this.advertiserTransactionService.update(advertiserId,transactionId,discount,currentUser);
+            } catch (EntityNotFound entityNotFound) {
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));
+            }
+        }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully checkout");
     }
 
