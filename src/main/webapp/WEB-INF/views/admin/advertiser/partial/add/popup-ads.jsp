@@ -48,7 +48,7 @@
                                     </c:forEach>
                               </select>
                           </span>
-            <span class="pull-right " style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.SMS).price}" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">Price: $ <input id="popUpAdSmsPrice" type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.SMS).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
     <div class="imageupload panel panel-default">
@@ -96,7 +96,8 @@
                                 </c:forEach>
                           </select>
                           </span>
-            <span class="pull-right " style="font-weight: bold;">Price: $ <input type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.EMAIL).price}" style="display:inline;width:100px;height:35px;"/></span>
+
+            <span class="pull-right " style="font-weight: bold;">Price: $ <input id="popUpAdEmailPrice" type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.EMAIL).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>
 </div>

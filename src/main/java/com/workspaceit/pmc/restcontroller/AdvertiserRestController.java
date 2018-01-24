@@ -39,6 +39,7 @@ public class AdvertiserRestController {
     private GalleryAdService galleryAdService;
     private SlideShowService slideShowService;
     private PopUpAdsService popUpAdsService;
+    private AdvertiserTransactionService advertiserTransactionService;
 
     @Autowired
     public void setAdvertiserValidator(AdvertiserValidator advertiserValidator) {
@@ -81,6 +82,11 @@ public class AdvertiserRestController {
     @Autowired
     public void setPopUpAdsService(PopUpAdsService popUpAdsService) {
         this.popUpAdsService = popUpAdsService;
+    }
+
+    @Autowired
+    public void setAdvertiserTransactionService(AdvertiserTransactionService advertiserTransactionService) {
+        this.advertiserTransactionService = advertiserTransactionService;
     }
 
     private ResponseEntity<?> getValidated(AdvertiserForm advertiserForm, BindingResult bindingResult){
@@ -183,6 +189,8 @@ public class AdvertiserRestController {
         this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
         this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
         this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
     }
 
@@ -263,5 +271,30 @@ public class AdvertiserRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
     }
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping(value = "/checkout/{id}")
+    public ResponseEntity<?> checkout(@PathVariable("id") int advertiserId,
+                                              @RequestParam("discount") Float discount,
+                                              Authentication authentication) {
+        /**
+         * Basic Validation and Business logic Validation
+         * */
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        /**
+         * Basic Validation
+         * */
+        Advertiser advertiser = this.advertiserService.getById(advertiserId);
+        if (advertiser == null) {
+            serviceResponse.setValidationError("id","No advertiser found");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        Admin currentUser = (Admin) authentication.getPrincipal();
+
+        this.advertiserTransactionService.create(advertiserId,discount,currentUser);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully checkout");
+    }
+
 
 }

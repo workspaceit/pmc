@@ -6,19 +6,19 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowQuantityPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Transactional
 @Service
 public class SlideshowQuantityPriceService {
-    SlideshowQuantityPriceDao slideshowQuantityPriceDao;
+    private SlideshowQuantityPriceDao slideshowQuantityPriceDao;
 
     @Autowired
     public void setSlideshowQuantityPriceDao(SlideshowQuantityPriceDao slideshowQuantityPriceDao) {
         this.slideshowQuantityPriceDao = slideshowQuantityPriceDao;
     }
-
+    @Transactional(rollbackFor = Exception.class)
     public SlideshowQuantityPrice create(int slideshowAdId,
                                          float price,
                                          int quantity,
@@ -36,6 +36,8 @@ public class SlideshowQuantityPriceService {
 
         return slideshowQuantityPrice;
     }
+
+    @Transactional(rollbackFor = Exception.class)
     public SlideshowQuantityPrice create(SlideshowQuantityPrice slideshowQuantityPrice){
         this.slideshowQuantityPriceDao.insert(slideshowQuantityPrice);
         return slideshowQuantityPrice;

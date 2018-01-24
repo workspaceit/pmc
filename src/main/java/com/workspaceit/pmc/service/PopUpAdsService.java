@@ -24,6 +24,8 @@ public class PopUpAdsService {
     private FileService fileService;
     private PopUpAdsDao popUpAdsDao;
     private PopupBannerImageService popupBannerImageService;
+    private PopUpAdsQuantityPriceService popUpAdsQuantityPriceService;
+
     @Autowired
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
@@ -36,10 +38,21 @@ public class PopUpAdsService {
     public void setPopupBannerImageService(PopupBannerImageService popupBannerImageService) {
         this.popupBannerImageService = popupBannerImageService;
     }
+    @Autowired
+    public void setPopUpAdsQuantityPriceService(PopUpAdsQuantityPriceService popUpAdsQuantityPriceService) {
+        this.popUpAdsQuantityPriceService = popUpAdsQuantityPriceService;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void create(Advertiser advertiser,PopupAdsForm popupAdsForm, Admin admin){
         String smsVideoName = fileService.copyFile(popupAdsForm.getSmsPopupVideo());
         String emailVideoName = fileService.copyFile(popupAdsForm.getEmailPopupVideo());
+
+        Integer[] smsPopUpBannerToken = popupAdsForm.getSmsPopupBanner();
+        Integer smsPopupAdQuantity =(smsPopUpBannerToken!=null)?smsPopUpBannerToken.length:0;
+
+        Integer[] emailPopUpBannerToken = popupAdsForm.getEmailPopupBanner();
+        Integer emailPopupAdQuantity =(emailPopUpBannerToken!=null)?emailPopUpBannerToken.length:0;
 
         String emailVideoType = (emailVideoName==null ||emailVideoName.equals(""))?"":FileHelper.getMimeType(emailVideoName);
         String smsVideoType= (smsVideoName==null ||smsVideoName.equals(""))?"":FileHelper.getMimeType(smsVideoName);
@@ -55,7 +68,8 @@ public class PopUpAdsService {
         smsPopupAdBanner.setAdRotate(popupAdsForm.getSmsRotation());
 
         this.create(smsPopupAdBanner);
-        this.popupBannerImageService.create(smsPopupAdBanner,popupAdsForm.getSmsPopupBanner(),admin);
+        this.popupBannerImageService.create(smsPopupAdBanner,smsPopUpBannerToken,admin);
+        this.popUpAdsQuantityPriceService.create(smsPopupAdBanner.getId(),popupAdsForm.getSmsAdPrice(),smsPopupAdQuantity,PopupAdConstant.SMS,admin);
 
         PopupAd emailAddBanner =  new PopupAd();
 
@@ -69,6 +83,8 @@ public class PopUpAdsService {
 
         this.create(emailAddBanner);
         this.popupBannerImageService.create(emailAddBanner,popupAdsForm.getEmailPopupBanner(),admin);
+        this.popUpAdsQuantityPriceService.create(emailAddBanner.getId(),popupAdsForm.getSmsAdPrice(),emailPopupAdQuantity,PopupAdConstant.EMAIL,admin);
+
     }
     @Transactional(rollbackFor = Exception.class)
     public void update(int smsPopupAdBannerId,
