@@ -26,7 +26,7 @@
                                 <div class="panel-body">
 
                                     <div class="form-group">
-                                        <label>Event Location</label>
+                                        <label>Location Name</label>
                                         <input id="name"  class="form-control" value="${location.name}">
                                     </div>
 
@@ -36,31 +36,6 @@
                                     </div>
 
                                     <div class="row clearfix">
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                            <label>
-                                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
-                                            </label>
-                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                                                <option>Miami</option>
-                                                <option>Florida</option>
-                                                <option>California</option>
-                                            </select>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                            <label>
-                                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-venue">Venue</a>
-                                            </label>
-                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                                                <option>Los Angeles</option>
-                                                <option>Houston</option>
-                                                <option>Las Vegas</option>
-                                            </select>
-                                        </div>
-                                        </div> -->
-
                                         <div class="col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <label>
@@ -106,8 +81,7 @@
                                             </label>
                                             <button type="button" class="btn btn-danger btn-sm-new">Delete image</button>
 --%>
-                                            <div id="venueLogoImg" >
-
+                                            <div id="venueLogoImg">
                                                 <div class="dz-default dz-message">
                                                     <span>Change logo</span>
                                                     <p id="errorObj_profilePictureToken"></p>
@@ -146,7 +120,7 @@
 
                                             </div>
                                         </div>
-                                        <div id="venueBgImg" >
+                                        <div id="venueBgImg" class="panel-body">
 
                                             <div class="dz-default dz-message">
                                                 <span>Add background image</span>

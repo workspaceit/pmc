@@ -328,9 +328,7 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     -moz-osx-font-smoothing: grayscale;
 }
 
-// =================================
-// === Icons mixin =================
-// =================================
+
 .icons() {
     font-family: 'icons';
     speak: none;
@@ -1052,5 +1050,13 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     content: "\e636";
     }
 
-// -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
+.panel-heading .btn-group .btn.active {
+    background: #8d7ed0 !important;
+    color: #fff;
+}
+
+.panel-heading .btn-group .btn {
+    background: #2d2356 !important;
+    color: #fff;
+}
+

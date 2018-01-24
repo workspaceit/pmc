@@ -198,7 +198,7 @@ $(document).ready(function () {
         }
     });
     var $venueSelect2 = $("#venueId").select2({
-        placeholder: 'Select a Venue',
+        placeholder: 'Select a Location',
 //                    minimumInputLength: 1,
         width: 'resolve',
         ajax: {

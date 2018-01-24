@@ -25,7 +25,7 @@
                                 <div class="panel-body">
 
                                     <div class="form-group">
-                                        <label>Event Location</label>
+                                        <label>Location Name</label>
                                         <input id="name"  class="form-control">
                                     </div>
 
@@ -33,33 +33,7 @@
                                         <label>Address</label>
                                         <input id="address" class="form-control">
                                     </div>
-
                                     <div class="row clearfix">
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                            <label>
-                                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
-                                            </label>
-                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                                                <option>Miami</option>
-                                                <option>Florida</option>
-                                                <option>California</option>
-                                            </select>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                            <label>
-                                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-venue">Venue</a>
-                                            </label>
-                                            <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                                                <option>Los Angeles</option>
-                                                <option>Houston</option>
-                                                <option>Las Vegas</option>
-                                            </select>
-                                        </div>
-                                        </div> -->
-
                                         <div class="col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <label>
@@ -80,7 +54,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label>Phone Number</label>
                                         <input id="phone"  class="form-control">
@@ -88,27 +61,14 @@
                                     <div class="imageupload panel panel-default">
                                         <div class="panel-heading clearfix">
                                             <h4 class="panel-title pull-left ">Venue logo</h4>
-                                                <%--<div class="btn-group pull-right">
-                                                    <button type="button" class="btn btn-default active">File</button>
-                                                    <button type="button" class="btn btn-default">URL</button>
-                                                </div>--%>
                                         </div>
                                         <div class="file-tab panel-body">
-                                                <%--<label class="btn btn-primary btn-file btn-sm-new">
-                                                    <span>Browse</span>
-                                                    <!-- The file is stored here. -->
-                                                    <input type="file" name="image-file">
-                                                </label>
-                                                <button type="button" class="btn btn-danger btn-sm-new">Delete image</button>
-                            --%>
                                             <div id="venueLogoImg" >
-
                                                 <div class="dz-default dz-message">
                                                     <span>Drop files here to upload</span>
                                                     <p id="errorObjLocation_profilePictureToken"></p>
                                                 </div>
                                             </div>
-
                                             <p id="errorObjLocation_locationLogo"  class="text-danger"></p>
                                         </div>
                                         <div class="url-tab panel-body" style="display:none;">
@@ -127,17 +87,14 @@
                                         <div class="panel-heading clearfix">
                                             <h4 class="panel-title pull-left">Background Images</h4>
                                             <div class="btn-group pull-right">
-
                                             </div>
                                         </div>
-                                        <div id="venueBgImg" >
-
+                                        <div id="venueBgImg" class="panel-body">
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                                 <p id="errorObjLocation_profilePictureToken"></p>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="imageupload panel panel-default">
                                         <div class="panel-heading clearfix">
@@ -184,16 +141,10 @@
                                                     </c:forEach>
                                                 </select>
                                             </div>
-
-
                                         </div>
                                         <div class="url-tab panel-body" style="display:none;">
-
-
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
