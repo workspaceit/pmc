@@ -40,12 +40,19 @@ public class AdvertisementPriceAndQuantityService {
 
     @Transactional
     public Map<String,Object> getSoldPriceAndQuantity(int advertiserId){
-        Map<String,Object> priceAndQuantity = new HashMap<>();
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
         PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
         PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
+
+        return this.getSoldPriceAndQuantity(galleryAd,slideshowAd,popupAdSms,popupAdEmail);
+
+    }
+    @Transactional
+    public Map<String,Object> getSoldPriceAndQuantity(GalleryAd galleryAd,SlideshowAd slideshowAd,PopupAd popupAdSms,PopupAd popupAdEmail  ){
+        Map<String,Object> priceAndQuantity = new HashMap<>();
+
 
         /* Price and quantity */
 

@@ -3,11 +3,6 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<link href="http://vjs.zencdn.net/6.6.0/video-js.css" rel="stylesheet">
-
-<!-- If you'd like to support IE8 -->
-<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <t:genericpage>
     <jsp:attribute name="developerScript">
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -119,12 +114,16 @@
                 </div>
             </div>
         </div>
+
         <%--Developer Hidden Field--%>
         <input type="hidden" id="advertiserId" value="${advertiser.id}" />
         <input type="hidden" id="galleryAdId" value="${galleryAd.id}" />
         <input type="hidden" id="slideshowAdId" value="${slideshowAd.id}" />
         <input type="hidden" id="popupSmsAdId" value="${popupAdSms.id}" />
         <input type="hidden" id="popupEmailAdId" value="${popupAdEmail.id}" />
+
+
+
     </jsp:body>
 
 </t:genericpage>

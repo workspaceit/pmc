@@ -276,17 +276,24 @@ public class AdvertiserRestController {
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/checkout/{transactionId}/{advertiserId}")
     public ResponseEntity<?> checkout(@PathVariable("transactionId") int transactionId,
-                                      @PathVariable("advertiserId") int advertiserId, @Valid CheckoutCreateForm checkoutCreateForm,
+                                      @PathVariable("advertiserId") int advertiserId,
+                                      @Valid CheckoutCreateForm checkoutCreateForm,
                                       BindingResult bindingResult,
                                       Authentication authentication) {
         /**
          * Basic Validation and Business logic Validation
          * */
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
         /**
          * Basic Validation
          * */
         Advertiser advertiser = this.advertiserService.getById(advertiserId);
+
         if (advertiser == null) {
             serviceResponse.setValidationError("id","No advertiser found");
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
@@ -301,7 +308,6 @@ public class AdvertiserRestController {
             this.advertiserTransactionService.create(advertiserId,checkoutCreateForm,currentUser);
         }else{
             try {
-
                 this.advertiserTransactionService.update(advertiserId,transactionId,checkoutCreateForm,currentUser);
             } catch (EntityNotFound entityNotFound) {
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));

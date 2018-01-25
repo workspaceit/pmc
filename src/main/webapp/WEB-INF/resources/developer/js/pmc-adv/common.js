@@ -390,14 +390,17 @@ function advertiserAfterSaveAction(btnAction,id){
 function submitAdvertiserData(submitType,forUpdate,marker){
     switch (marker){
         case 1:
+            // set last parementer  `marker` of submitAdvertiserData function
+            // to 2 to update all
+            // Only advertiser can be updated as per discussion with Tahsin vhai
             validateAdvertiser(function(response){
                 notifyUser("advertiserInfoErrorCount",response,false);
-                submitAdvertiserData(submitType,forUpdate,2);
+                submitAdvertiserData(submitType,forUpdate,5);
             },function(response){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("advertiserInfoErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(submitType,forUpdate,2);
+                submitAdvertiserData(submitType,forUpdate,5);
             });
             break;
         case 2:

@@ -77,10 +77,10 @@
                             <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${otherImage.image}" />" class="img-thumbnail" width="150">
                             <br>
                             <%--ID_KEY._ADV_OTHER_IMAGE is global vaiable from update.js --%>
-                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" >Delete</a>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" style="display: none;" >Delete</a>
                         </div>
                     </c:forEach>
-                    <div id="advertiserOtherImages"  class="panel-body" >
+                    <div id="advertiserOtherImages"  class="panel-body" style="display: none;" >
                         <div class="dz-default dz-message">
                             <div class="droper">
                                 <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
@@ -89,14 +89,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="form-group">
-                <label>Require Password reset</label>
-                <div class="btn-group choose-btn">
-                    <button type="button" class="active btn btn-default" id="regi1">Yes</button>
-                    <button type="button" class="btn btn-default" id="regi3">No</button>
-                </div>
-                </div> -->
 
             </div>
         </div>
@@ -179,7 +171,6 @@
                             </div>
                             <p class="text-danger" id="errorObj_eventIds" style="display: block;"></p>
                         </div>
-                        <!-- <button type="button" class="btn btn-primary btn-sm-new"  data-toggle="modal" data-target="#addEvent" style="margin-top: 15px;"><i class="fa fa-plus" aria-hidden="true"></i>  Add Event</button> -->
                     </div>
                 </div>
             </div>

@@ -82,7 +82,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}" >${quantities.get(GalleryAdsConstant.BACKGROUND_IMAGE)}</td>
                                             <td class="text-right">
@@ -91,7 +91,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -102,7 +102,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
 
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.TOP_AD_BANNER)}</td>
@@ -112,7 +112,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -123,7 +123,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}" >${quantities.get(GalleryAdsConstant.BOTTOM_AD_BANNER)}</td>
                                             <td class="text-right">
@@ -132,7 +132,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                                     </td>
                                         </tr>
 
@@ -144,7 +144,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(SlideshowAdsConstant.BANNER)}" >${quantities.get(SlideshowAdsConstant.BANNER)}</td>
                                             <td class="text-right">
@@ -153,7 +153,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
 
                                              </td>
                                         </tr>
@@ -165,7 +165,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(SlideshowAdsConstant.VIDEO)}" >${quantities.get(SlideshowAdsConstant.VIDEO)}</td>
                                             <td class="text-right">
@@ -174,7 +174,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
 
@@ -186,7 +186,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(PopupAdConstant.SMS)}" >${quantities.get(PopupAdConstant.SMS)}</td>
                                             <td class="text-right">
@@ -195,7 +195,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -206,7 +206,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                             <td class="text-center quantity-td" data-quantity="${quantities.get(PopupAdConstant.EMAIL)}" >${quantities.get(PopupAdConstant.EMAIL)}</td>
                                             <td class="text-right">
@@ -215,7 +215,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
 
@@ -229,7 +229,7 @@
                                                     type="currency"
                                                     currencyCode="${currencyCode}"
                                                     currencySymbol="${currencySymbol}"
-                                                    maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
+                                                    maxFractionDigits="${maxFractionDigits}" /></td>
                                         </tr>
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>
@@ -251,7 +251,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber>
+                                                        maxFractionDigits="${maxFractionDigits}" />
                                             </td>
                                         </tr>
                                         <tr style="overflow:hidden;">
@@ -263,7 +263,7 @@
                                                     type="currency"
                                                     currencyCode="${currencyCode}"
                                                     currencySymbol="${currencySymbol}"
-                                                    maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
+                                                    maxFractionDigits="${maxFractionDigits}" /></td>
 
                                         </tr>
                                         <tr style="overflow:hidden;">
@@ -276,7 +276,7 @@
                                                         type="currency"
                                                         currencyCode="${currencyCode}"
                                                         currencySymbol="${currencySymbol}"
-                                                        maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
+                                                        maxFractionDigits="${maxFractionDigits}" /></td>
                                         </tr>
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>

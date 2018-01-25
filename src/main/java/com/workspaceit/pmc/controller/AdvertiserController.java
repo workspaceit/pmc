@@ -183,7 +183,6 @@ public class AdvertiserController {
         PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
         PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
 
-
         ModelAndView model = new ModelAndView("admin/advertiser/edit");
         model.addObject("advertiser",advertiser);
         model.addObject("galleryAd",galleryAd);
@@ -200,6 +199,11 @@ public class AdvertiserController {
           /*For location Modal Page*/
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
+
+         /* Number format settings values */
+        model.addObject("currencyCode","USD");
+        model.addObject("currencySymbol","$");
+        model.addObject("maxFractionDigits",2);
 
         return model;
     }

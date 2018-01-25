@@ -1,4 +1,6 @@
 <%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@page import="com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
     <div class="imageupload panel panel-default">
@@ -22,11 +24,11 @@
                         </c:when>
                     </c:choose>
                     <div id="slideShowBannerRotationBtn" class="btn-group">
-                        <button type="button" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" disabled="disabled" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" disabled="disabled" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
-                <div class="date-small pull-right">
+                <div class="date-small pull-right" style="display: none;">
                     <input id="slideShowBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${slideshowAd.bannerExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>"/>
                     <i class="fa fa-calendar"></i>
                 </div>
@@ -42,13 +44,13 @@
                 <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${slideshowBannerImage.image}" class="img-thumbnail" width="150">
                 <br>
                     <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
-                <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${slideshowBannerImage.id})" >Delete</a>
+                <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${slideshowBannerImage.id})" style="display: none;" >Delete</a>
 
             </div>
         </c:forEach>
 
 
-        <div id="advSlideShowBanner"  class="panel-body" >
+        <div id="advSlideShowBanner"  class="panel-body" style="display: none;" >
             <div class="dz-default dz-message">
                 <span>Click here to upload</span>
 
@@ -57,7 +59,7 @@
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
-                                <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                                <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" disabled="disabled" >
 
                                     <c:forEach var="duration" items="${durations}" >
                                         <c:set var="durationOptions" value=""></c:set>
@@ -68,7 +70,13 @@
                                     </c:forEach>
                               </select>
                               </span>
-            <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">
+
+
+                Price: $ <input type="text" class="form-control"
+                                value="${slideshowAd.quantityPrice.get(SlideshowAdsConstant.BANNER).price}"
+                                style="display:inline;width:100px;height:35px;"
+                                disabled="disabled" /></span>
         </div>
     </div>
     <div class="imageupload panel panel-default">
@@ -92,12 +100,12 @@
                         </c:when>
                     </c:choose>
                     <div id="slideShowVideoRotationBtn" class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" disabled="disabled" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" disabled="disabled" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
-                <div class="date-small pull-right">
-                    <input id="slideShowVideoExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${slideshowAd.videoExpiryDate}" pattern="MM/dd/yyyy" ></fmt:formatDate>"/>
+                <div class="date-small pull-right" style="display: none;" >
+                    <input id="slideShowVideoExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${slideshowAd.videoExpiryDate}" pattern="MM/dd/yyyy" />"/>
                     <i class="fa fa-calendar"></i>
                 </div>
             </div>
@@ -122,7 +130,7 @@
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
-                               <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
+                               <select id="slideShowVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" disabled="disabled" >
 
                                     <c:forEach var="duration" items="${durations}" >
                                         <c:set var="durationOptions" value=""></c:set>
@@ -133,7 +141,10 @@
                                     </c:forEach>
                               </select>
                               </span>
-            <span class="pull-right " style="font-weight: bold;">Price: <input type="text" class="form-control" value="$10" style="display:inline;width:100px;height:35px;"/></span>
+            <span class="pull-right " style="font-weight: bold;">
+                Price: $ <input type="text" class="form-control"
+                                value="${slideshowAd.quantityPrice.get(SlideshowAdsConstant.VIDEO).price}"
+                                style="display:inline;width:100px;height:35px;" disabled="disabled" /></span>
         </div>
     </div>
 </div>
