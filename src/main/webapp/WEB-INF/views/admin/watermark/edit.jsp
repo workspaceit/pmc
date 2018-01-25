@@ -40,8 +40,13 @@
                     </div>
                 </div>
                 <div id="waterMarkImgFile" class="file-tab panel-body">
-                    <div class="file-tab panel-body">
+                    <div class="col-md-6">
+                        <label>Logo Name</label>
+                        <input class="form-control" value="${watermark.logoName}" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
 
+                    </div>
+                    <div class="col-md-6">
+                        <label>Logo</label>
                         <div id="watermarkLogoImg" >
 
                             <div class="dz-default dz-message">
@@ -67,11 +72,7 @@
                         <p id="errorObj_locationLogo"  class="text-danger"></p>
 
                     </div>
-                    <div class="col-md-6">
-                        <label>Logo Name</label>
-                        <input class="form-control" value="${watermark.logoName}" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
 
-                    </div>
 
 
 

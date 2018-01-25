@@ -11,7 +11,7 @@
                 <h1>Advertiser List</h1>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-responsive cstm-admin-table">
+                    <table id="advertiser-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                         <tr>
                             <th class="cstm-table-header">
@@ -79,6 +79,12 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#advertiser-datatable').DataTable();
+            });
+        </script>
 
     </jsp:body>
 

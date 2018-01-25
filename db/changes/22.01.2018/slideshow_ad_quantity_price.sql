@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `slideshow_ad_quantity_price` (
 -- Dumping data for table `slideshow_ad_quantity_price`
 --
 
-INSERT INTO `slideshow_ad_quantity_price` (`id`, `slideshow_id`, `ad_type`, `price`, `quantity`, `created_at`, `created_by`) VALUES
+INSERT INTO `slideshow_ad_quantity_price` (`id`, `slideshow_ad_id`, `ad_type`, `price`, `quantity`, `created_at`, `created_by`) VALUES
 (1, 1, 'BANNER', 23.00, 2, '0000-00-00 00:00:00', NULL),
 (2, 1, 'VIDEO', 999.99, 3, '0000-00-00 00:00:00', NULL);
 

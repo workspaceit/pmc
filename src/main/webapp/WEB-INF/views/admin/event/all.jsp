@@ -10,7 +10,7 @@
                 <h1>Event List </h1>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-responsive cstm-admin-table">
+                    <table id="event-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                             <tr>
                                 <th class="cstm-table-header">
@@ -58,5 +58,10 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function() {
+                $('#event-datatable').DataTable();
+            });
+        </script>
     </jsp:body>
 </t:genericpage>
