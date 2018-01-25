@@ -121,7 +121,7 @@
                             <input id="allLocationSelection" type="checkbox" value="1" />All Location
                         </div>
                         <div style="width: 100%">
-                            <select id="locationIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
+                            <select id="locationIds" class="js-example-placeholder-multiple js-states form-control">
                                 <c:forEach var="location" items="${locations}" >
                                     <option value="${location.id}" ${locationSelected} >${location.name}</option>
                                 </c:forEach>
@@ -145,8 +145,8 @@
                                 <input id="allEventSelection" type="checkbox" value="1"  />All Event
                             </div>
                             <div>
-                                <select id="eventIds" class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                                    <c:forEach var="event" items="${events}" >
+                                <select id="eventIds" class="js-example-placeholder-multiple js-states form-control">
+                                    <c:forEach var="event" items="${events}">
                                         <option value="${event.id}" ${eventSelected} >${event.name}</option>
                                     </c:forEach>
 

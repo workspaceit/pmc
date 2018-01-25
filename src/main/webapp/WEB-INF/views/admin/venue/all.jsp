@@ -1,4 +1,3 @@
-<%@ page import="com.workspaceit.pmc.entity.Location" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
@@ -11,7 +10,7 @@
                 <h1>Venue List </h1>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-responsive cstm-admin-table">
+                    <table id="venue-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                         <th class="cstm-table-header">
                             Venue
@@ -44,7 +43,11 @@
                 </div>
             </div>
         </div>
-        
+        <script>
+            $(document).ready(function() {
+                $('#venue-datatable').DataTable();
+            });
+        </script>
     </jsp:body>
 
 </t:genericpage>

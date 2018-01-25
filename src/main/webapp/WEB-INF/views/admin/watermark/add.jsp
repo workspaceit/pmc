@@ -39,7 +39,12 @@
                 </div>
 
                 <div id="waterMarkImgFile" class="file-tab panel-body">
-                    <div class="file-tab panel-body">
+                    <div class="col-md-6">
+                        <label>Logo Name</label>
+                        <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Logo</label>
                         <div id="watermarkLogoImg" >
                             <div class="dz-default dz-message">
                                 <div class="droper">
@@ -49,13 +54,9 @@
                                 <p id="errorObj_profilePictureToken"></p>
                             </div>
                         </div>
-
                         <p id="errorObj_locationLogo"  class="text-danger"></p>
                     </div>
-                    <div class="col-md-6">
-                        <label>Logo Name</label>
-                        <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
-                    </div>
+
                     <div class="col-md-4">
                         <div class="form-group timepick">
                             <label>Placement</label><br>
@@ -89,9 +90,6 @@
                             <span class="range-slider__value">0</span>
                         </div>
                     </div>
-
-
-
                 </div>
                 <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
                     <div class="col-md-3">
