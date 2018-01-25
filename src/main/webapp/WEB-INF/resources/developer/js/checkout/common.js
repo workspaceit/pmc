@@ -10,57 +10,81 @@ function calculateAdvertisementPriceTotal(){
         var quantity = parseFloat($(this).parent().find(".quantity-td").data("quantity"));
         total +=(price*quantity);
     });
-   return {subtotal:total,discount:discount,total:total-discount};
+
+
+    var totalAfterDiscount = total-discount;
+    var totalPaidAmount = getCurrentPayment();
+    var prevPaidAmount = getPrevPaidPrice();
+    var dueAmount = totalAfterDiscount - (prevPaidAmount+totalPaidAmount);
+
+   return {
+       subTotal:total,
+       discount:discount,
+       totalAfterDiscount:totalAfterDiscount,
+       dueAmount:dueAmount,
+       totalPaidAmount:totalPaidAmount,
+       prevPaidAmount:prevPaidAmount
+   };
 }
-function getTotalPayment(){
-    var paymentStr = $("#paymentTxtField").val();
+function getPrevPaidPrice(){
+    return parseFloat($("#prevPaidPrice").data("price"));
+}
+function getCurrentPayment(){
+    var paymentStr = $("#currentPaymentTxtField").val();
     paymentStr = (paymentStr==null || paymentStr.trim()=="")?"0":paymentStr;
 
     return parseFloat(paymentStr);
 }
-function getDuePayment(){
-    var paymentStr = $("#totalDuePrice").data("price");
-    paymentStr = (paymentStr==null || paymentStr=="")?"0":paymentStr;
 
-    return parseFloat(paymentStr);
-}
 function printTotalInHtml(){
+    validateAndCorrect();
     var checkAmount  = calculateAdvertisementPriceTotal();
-    $("#totalCheckoutPrice").html(numeral(checkAmount.total).format('$0,0.00'));
+    $("#totalCheckoutPrice").html(numeral(checkAmount.totalAfterDiscount).format('$0,0.00'));
 }
 function printDueInHtml(){
+    validateAndCorrect();
     var checkAmount  = calculateAdvertisementPriceTotal();
-    var totalPayment = getTotalPayment();
-    var dueAmount = checkAmount.total-totalPayment;
 
+    setDueAmount(checkAmount.dueAmount);
+}
+function setDueAmount(dueAmount){
     $("#totalDuePrice").html(numeral(dueAmount).format('$0,0.00'));
-    setDueAmount();
+    $("#totalDuePrice").data("price",dueAmount);
 }
-function setDueAmount(){
-    var totalPayment = getTotalPayment();
-    $("#totalDuePrice").data("price",totalPayment);
+function setDiscountAmount(discountAmount){
+    $("#discountTxtField").val(discountAmount);
 }
+function setCurrentPaymentAmount(amount){
+    $("#currentPaymentTxtField").val(amount);
+}
+function validateAndCorrect(){
+    var checkAmount  = calculateAdvertisementPriceTotal();
+
+    if(checkAmount.discount>checkAmount.subTotal){
+        checkAmount.discount = checkAmount.subTotal- checkAmount.prevPaidAmount;
+        setDiscountAmount(checkAmount.discount);
+        checkAmount  = calculateAdvertisementPriceTotal();
+    }
+
+    var balance = checkAmount.totalAfterDiscount - (checkAmount.totalPaidAmount+checkAmount.prevPaidAmount) ;
+    if(balance<0){
+        checkAmount.totalPaidAmount = checkAmount.totalAfterDiscount - checkAmount.prevPaidAmount;
+        setCurrentPaymentAmount(checkAmount.totalPaidAmount);
+    }
+
+}
+
 function printPaidInHtml(){
-    var totalPayment = getTotalPayment();
+    var totalPayment = getCurrentPayment();
     $("#totalPayedPrice").html(numeral(totalPayment).format('$0,0.00'));
 }
 function getCheckoutData(){
 
-    var checkoutAmounts = calculateAdvertisementPriceTotal();
-
-
-    var subTotal = checkoutAmounts.subtotal;
-    var discount = checkoutAmounts.discount;
-    var total = checkoutAmounts.total;
-    var totalPaidAmount = getTotalPayment();
-    var totalDue = getDuePayment();
+    var checkoutAmount = calculateAdvertisementPriceTotal();
 
     return {
-        name: name,
-        subTotal: subTotal,
-        discount: discount,
-        total: total,
-        totalPaidAmount:totalPaidAmount,
-        totalDue:totalDue
+        discount: checkoutAmount.discount,
+        totalPaidAmount:checkoutAmount.totalPaidAmount,
+        totalDue:checkoutAmount.dueAmount
     };
 }

@@ -231,8 +231,8 @@ public class AdvertiserController {
         int transactionId = (advertiserTransaction!=null)?advertiserTransaction.getId():0;
         float totalPrice = this.advertisementPriceAndQuantityService.calculateTotal(prices,quantities);
         float discount = (advertiserTransaction!=null)?advertiserTransaction.getDiscount():0;
-        float totalDuePrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalDue():0;
         float totalPayedPrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalPaid():0;
+        float totalDuePrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalDue():(totalPrice-discount)-(totalPayedPrice);
 
 
         ModelAndView model = new ModelAndView("admin/advertiser/checkout");

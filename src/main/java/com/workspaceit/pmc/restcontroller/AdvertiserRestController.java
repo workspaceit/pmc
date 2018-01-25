@@ -302,7 +302,7 @@ public class AdvertiserRestController {
         }else{
             try {
 
-                this.advertiserTransactionService.update(advertiserId,transactionId,checkoutCreateForm.getDiscount(),currentUser);
+                this.advertiserTransactionService.update(advertiserId,transactionId,checkoutCreateForm,currentUser);
             } catch (EntityNotFound entityNotFound) {
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));
             }

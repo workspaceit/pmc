@@ -236,7 +236,7 @@
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Discount</strong></td>
                                             <td class="no-line text-left">
-                                                <input  id="discountTxtField" onchange="printTotalInHtml();printDueInHtml();printPaidInHtml()" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                                <input  id="discountTxtField" onchange="printTotalInHtml();printDueInHtml();" type="number" min="0" class="form-control" placeholder="" value="${discount}" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
                                             </td>
 
                                         </tr>
@@ -269,16 +269,8 @@
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
-                                            <td class="no-line text-center"><strong>Pay</strong></td>
-                                            <td class="no-line text-left">
-                                                <input  id="paymentTxtField" onchange="printDueInHtml();printPaidInHtml();" type="number" min="0" class="form-control" placeholder="" value="0.0" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
-                                            </td>
-                                        </tr>
-                                        <tr style="overflow:hidden;">
-                                            <td class="no-line"></td>
-                                            <td class="no-line"></td>
-                                            <td class="no-line text-center"><strong>Total Paid</strong></td>
-                                            <td class="thin-line text-right" id="totalPayedPrice">
+                                            <td class="no-line text-center"><strong>Previously Paid</strong></td>
+                                            <td class="no-line text-right" id="prevPaidPrice" data-price="${totalPayedPrice}">
                                                 <fmt:formatNumber
                                                         value="${totalPayedPrice}"
                                                         type="currency"
@@ -286,6 +278,16 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" ></fmt:formatNumber></td>
                                         </tr>
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong>Pay</strong></td>
+                                            <td class="no-line text-left">
+                                                <input  id="currentPaymentTxtField" onchange="printDueInHtml();printPaidInHtml();"
+                                                        type="number" min="0" max="${totalPrice}" class="form-control" placeholder="" value="0.0" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                            </td>
+                                        </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
