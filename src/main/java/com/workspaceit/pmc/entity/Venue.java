@@ -1,12 +1,11 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -14,6 +13,7 @@ import java.util.Date;
  */
 
 @Entity
+//@Where(clause="active=true")
 @Table(name = "venues")
 public class Venue {
 
@@ -47,6 +47,9 @@ public class Venue {
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
+
+    @Column(name = "active")
+    private Boolean active;
 
     public int getId() {
         return id;
@@ -96,4 +99,11 @@ public class Venue {
         this.createdBy = createdBy;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

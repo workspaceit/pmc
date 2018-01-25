@@ -1086,3 +1086,55 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     color: #675e8f;
     transition: all 0.5s ease;
 }
+.dtble .dataTables_wrapper .dataTables_filter {
+    float: left !important;
+    text-align: left !important;
+}
+.dtble .dataTables_wrapper .dataTables_length {
+    float: right !important;
+}
+.cs_action_btn{
+    padding: 10px 0px;
+    margin-bottom: 10px;
+}
+.cs_action_btn .ac_btn i {
+    padding-right: 7px;
+}
+.cs_action_btn .ac_btn.new {
+    background: #67ba54;
+    color: #fff;
+    border: 1px solid #67ba54;
+}
+.cs_action_btn .ac_btn {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    background: #fff;
+    transition: all 0.5s ease;
+}
+.cs_action_btn .ac_btn:hover, .cs_action_btn .ac_btn:hover {
+    background: #777373;
+    border-color: #777373;
+    color: #fff;
+
+}
+.dtble .dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #adaaaa;
+    border-radius: 5px;
+}
+.dtble .dataTables_wrapper .dataTables_length select:focus {
+    outline: 0;
+}
+.dtble .dataTables_wrapper .dataTables_length select {
+    margin: 0px 10px;
+    background: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
+}
+.dtble table.dataTable.no-footer {
+    border-top: 2px solid #dedede;
+}
+.dtble table.dataTable tbody th, table.dataTable tbody td {
+    padding: 5px 10px;
+}
