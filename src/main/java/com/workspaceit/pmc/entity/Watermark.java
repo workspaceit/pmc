@@ -77,6 +77,8 @@ public class Watermark {
     @ManyToMany(mappedBy = "watermarks", fetch = FetchType.LAZY)
     private Set<Event> events = new HashSet<Event>();
 
+    @Column(name = "active")
+    private Boolean active;
 
     public int getId() {
         return id;
@@ -197,4 +199,13 @@ public class Watermark {
     public void setEvents(Set<Event> events) {
         this.events = events;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 }
