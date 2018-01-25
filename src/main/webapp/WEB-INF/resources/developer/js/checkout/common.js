@@ -61,6 +61,7 @@ function setCurrentPaymentAmount(amount){
     $("#currentPaymentTxtField").val(amount);
 }
 function validateAndCorrect(){
+
     var checkAmount  = calculateAdvertisementPriceTotal();
     var totalPayable = checkAmount.subTotal- checkAmount.prevPaidAmount;
 

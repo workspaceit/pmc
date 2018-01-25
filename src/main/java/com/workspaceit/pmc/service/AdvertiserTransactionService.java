@@ -9,8 +9,10 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.AdvertiserTransaction;
 import com.workspaceit.pmc.entity.AdvertiserTransactionDetails;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.exception.ServiceException;
 import com.workspaceit.pmc.validation.checkout.CheckoutCreateForm;
 import com.workspaceit.pmc.validation.checkout.CheckoutForm;
+import com.workspaceit.pmc.validation.checkout.CheckoutValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,8 @@ import java.util.Map;
 public class AdvertiserTransactionService {
     private AdvertiserTransactionDao advertiserTransactionDao;
     private AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService;
-    private GalleryAdService galleryAdService;
+    private CheckoutValidator checkoutValidator;
+
     @Autowired
     public void setAdvertiserTransactionDao(AdvertiserTransactionDao advertiserTransactionDao) {
         this.advertiserTransactionDao = advertiserTransactionDao;
@@ -34,8 +37,8 @@ public class AdvertiserTransactionService {
         this.advertisementPriceAndQuantityService = advertisementPriceAndQuantityService;
     }
     @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
+    public void setCheckoutValidator(CheckoutValidator checkoutValidator) {
+        this.checkoutValidator = checkoutValidator;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -66,7 +69,7 @@ public class AdvertiserTransactionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdvertiserTransaction create(Integer advertiserId, CheckoutCreateForm checkoutCreateForm, Admin admin){
+    public AdvertiserTransaction create(Integer advertiserId, CheckoutCreateForm checkoutCreateForm, Admin admin) throws ServiceException {
         Map<String,Object>   priceAndQuantity = this.advertisementPriceAndQuantityService.getSoldPriceAndQuantity(advertiserId);
 
         String priceMapKey = AdvertisementPriceAndQuantityService.priceMapKey;
@@ -81,6 +84,10 @@ public class AdvertiserTransactionService {
         float total = this.advertisementPriceAndQuantityService.getTotal(advertiserId);
         float subtotal = total - checkoutCreateForm.getDiscount();
 
+        List<Map<String,String>> errors = this.checkoutValidator.validatationForService(checkoutCreateForm,total,0);
+        if(errors.size()>0){
+            throw new ServiceException(errors);
+        }
 
         AdvertiserTransaction advertiserTransaction = new AdvertiserTransaction();
 
@@ -98,11 +105,20 @@ public class AdvertiserTransactionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdvertiserTransaction update(Integer advertiserId, Integer id, CheckoutForm checkoutForm, Admin admin)throws EntityNotFound{
+    public AdvertiserTransaction update(Integer advertiserId,
+                                        Integer id,
+                                        CheckoutForm checkoutForm,
+                                        Admin admin)throws EntityNotFound,ServiceException{
         float total = this.advertisementPriceAndQuantityService.getTotal(advertiserId);
         float subtotal = total - checkoutForm.getDiscount();
 
         AdvertiserTransaction advertiserTransaction = this.getAdvertiserTransaction(id);
+
+        List<Map<String,String>> errors = this.checkoutValidator.validatationForService(checkoutForm,total,advertiserTransaction.getTotalPaid());
+        if(errors.size()>0){
+            System.out.println(errors);
+            throw new ServiceException(errors);
+        }
 
         advertiserTransaction.setSubtotal(subtotal);
         advertiserTransaction.setTotal(total);

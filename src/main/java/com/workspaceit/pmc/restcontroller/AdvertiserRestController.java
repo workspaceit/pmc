@@ -6,6 +6,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.AdvertiserTransaction;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.exception.ServiceException;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsValidator;
@@ -304,14 +305,16 @@ public class AdvertiserRestController {
         if(transactionId>0){
             advertiserTransaction = this.advertiserTransactionService.getById(transactionId);
         }
-        if(advertiserTransaction==null){
-            this.advertiserTransactionService.create(advertiserId,checkoutCreateForm,currentUser);
-        }else{
-            try {
+        try {
+            if(advertiserTransaction==null){
+                this.advertiserTransactionService.create(advertiserId,checkoutCreateForm,currentUser);
+            }else{
                 this.advertiserTransactionService.update(advertiserId,transactionId,checkoutCreateForm,currentUser);
-            } catch (EntityNotFound entityNotFound) {
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));
             }
+        } catch (EntityNotFound entityNotFound) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getMsgInMap(entityNotFound.getMessage()));
+        } catch (ServiceException e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getErrors());
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully checkout");
     }

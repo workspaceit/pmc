@@ -55,6 +55,9 @@ public class AdvertiserService {
         this.locationService = locationService;
     }
 
+
+
+
     @Transactional(rollbackFor = Exception.class)
     public Advertiser create(AdvertiserForm advertiserForm, Admin admin){
         City city = this.cityService.getById(advertiserForm.getCityId());

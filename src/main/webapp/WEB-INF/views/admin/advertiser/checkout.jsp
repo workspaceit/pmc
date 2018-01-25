@@ -240,7 +240,15 @@
                                             </td>
 
                                         </tr>
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong></strong></td>
+                                            <td class="no-line">
+                                               <p class="text-danger text-right" id="errorObj_discount" />
+                                            </td>
 
+                                        </tr>
                                         <tr>
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
@@ -285,6 +293,15 @@
                                             <td class="no-line text-left">
                                                 <input  id="currentPaymentTxtField" onchange="printCheckAmount(printDueInHtml);"
                                                         type="number" min="0" max="${totalPrice}" class="form-control" placeholder="" value="0.0" aria-describedby="sizing-addon2" style="text-align: right;width:40%;height: 32px;float:right;">
+                                            </td>
+                                        </tr>
+
+                                        <tr style="overflow:hidden;">
+                                            <td class="no-line"></td>
+                                            <td class="no-line"></td>
+                                            <td class="no-line text-center"><strong></strong></td>
+                                            <td class="no-line">
+                                                <p class="text-danger text-right" id="errorObj_totalPaidAmount" />
                                             </td>
                                         </tr>
 

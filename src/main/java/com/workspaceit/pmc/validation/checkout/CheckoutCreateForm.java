@@ -20,8 +20,6 @@ public class CheckoutCreateForm extends CheckoutForm {
     }
 
     @Override
-    @NotNull(message = "Due required")
-    @Min(value = 0,message = "Due can't be less then zero")
     public Float getTotalDue() {
         return super.getTotalDue();
     }
