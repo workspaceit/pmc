@@ -35,16 +35,19 @@ function getCurrentPayment(){
 
     return parseFloat(paymentStr);
 }
-
-function printTotalInHtml(){
+function printCheckAmount(fn1,fn2,fn3){
+    console.log("sd");
     validateAndCorrect();
+    if(fn1!=undefined && typeof fn1 == "function")fn1();
+    if(fn2!=undefined && typeof fn2 == "function")fn2();
+    if(fn3!=undefined && typeof fn3 == "function")fn3();
+}
+function printTotalInHtml(){
     var checkAmount  = calculateAdvertisementPriceTotal();
     $("#totalCheckoutPrice").html(numeral(checkAmount.totalAfterDiscount).format('$0,0.00'));
 }
 function printDueInHtml(){
-    validateAndCorrect();
     var checkAmount  = calculateAdvertisementPriceTotal();
-
     setDueAmount(checkAmount.dueAmount);
 }
 function setDueAmount(dueAmount){
@@ -59,14 +62,26 @@ function setCurrentPaymentAmount(amount){
 }
 function validateAndCorrect(){
     var checkAmount  = calculateAdvertisementPriceTotal();
+    var totalPayable = checkAmount.subTotal- checkAmount.prevPaidAmount;
 
-    if(checkAmount.discount>checkAmount.subTotal){
-        checkAmount.discount = checkAmount.subTotal- checkAmount.prevPaidAmount;
+    if(checkAmount.discount<0){
+        setDiscountAmount(0);
+        checkAmount  = calculateAdvertisementPriceTotal();
+    }
+
+    if(checkAmount.totalPaidAmount<0){
+        setCurrentPaymentAmount(0);
+        checkAmount  = calculateAdvertisementPriceTotal();
+    }
+    /**Discount can't be greater then payable amount*/
+    if(checkAmount.discount>totalPayable){
+        checkAmount.discount = totalPayable;
         setDiscountAmount(checkAmount.discount);
         checkAmount  = calculateAdvertisementPriceTotal();
     }
 
     var balance = checkAmount.totalAfterDiscount - (checkAmount.totalPaidAmount+checkAmount.prevPaidAmount) ;
+    /**Payment can't be greater then payable amount*/
     if(balance<0){
         checkAmount.totalPaidAmount = checkAmount.totalAfterDiscount - checkAmount.prevPaidAmount;
         setCurrentPaymentAmount(checkAmount.totalPaidAmount);
@@ -74,10 +89,6 @@ function validateAndCorrect(){
 
 }
 
-function printPaidInHtml(){
-    var totalPayment = getCurrentPayment();
-    $("#totalPayedPrice").html(numeral(totalPayment).format('$0,0.00'));
-}
 function getCheckoutData(){
 
     var checkoutAmount = calculateAdvertisementPriceTotal();
