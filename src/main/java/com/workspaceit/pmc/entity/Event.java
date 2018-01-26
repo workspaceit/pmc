@@ -1,12 +1,12 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -119,8 +119,6 @@ public class Event {
         this.endsAt = endsAt;
     }
 
-
-
     public String getEventPhoto() {
         return eventPhoto;
     }
@@ -136,8 +134,6 @@ public class Event {
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
-
-
 
     public Date getCreatedAt() {
         return createdAt;
