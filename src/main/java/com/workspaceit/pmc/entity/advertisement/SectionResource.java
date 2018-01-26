@@ -21,6 +21,7 @@ public class SectionResource {
     @Column(name = "file_name")
     private String fileName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "file_type")
     private FILE_TYPE fileType;
 

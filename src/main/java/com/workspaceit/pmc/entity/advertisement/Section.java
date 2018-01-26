@@ -167,4 +167,20 @@ public class Section {
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", advertisementId=" + advertisementId +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", rotation=" + rotation +
+                ", sectionType=" + sectionType +
+                ", expireDate=" + expireDate +
+                ", sectionResource=" + sectionResource +
+                ", createdAt=" + createdAt +
+                ", createdBy=" + createdBy +
+                '}';
+    }
 }

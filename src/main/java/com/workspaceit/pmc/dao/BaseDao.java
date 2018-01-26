@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
+
 /**
  * Created by anik on 12/19/17.
  */
@@ -24,6 +26,13 @@ public class BaseDao {
     public void insert(Object obj){
         Session session = this.getCurrentSession();
         session.save(obj);
+    }
+    public void insertAll(Collection<? extends Object> entities){
+
+        Session session = this.getCurrentSession();
+        for (Object entity:entities) {
+            session.save(entity);
+        }
     }
     public void update(Object obj){
         Session session = this.getCurrentSession();

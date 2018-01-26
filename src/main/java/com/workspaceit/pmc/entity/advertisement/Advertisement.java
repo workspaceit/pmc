@@ -29,7 +29,7 @@ public class Advertisement {
     @Column(name = "state")
     private ENTITY_STATE state;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "advertisement_id",referencedColumnName = "id",nullable = false)
     @MapKey(name = "sectionType")
     private Map<SECTION_TYPE,Section> sections;
@@ -125,5 +125,18 @@ public class Advertisement {
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Advertisement{" +
+                "id=" + id +
+                ", advertiserId=" + advertiserId +
+                ", adType=" + adType +
+                ", state=" + state +
+                ", sections=" + sections +
+                ", createdAt=" + createdAt +
+                ", createdBy=" + createdBy +
+                '}';
     }
 }

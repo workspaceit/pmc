@@ -74,9 +74,29 @@ public class SampleTest {
     public void setAdvertisementService(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
     }
-
     @Test
-    public void test() {
+    public void getAdvertiser(){
+        List<Advertisement> advertisements = this.advertisementService.getByAdvertiserId(4);
+        printAdvertisement(advertisements);
+
+    }
+    public void printAdvertisement(List<Advertisement> advertisements){
+       for(Advertisement advertisement : advertisements){
+            System.out.println(advertisement.getAdType());
+           printAdvertisementSection(advertisement,SECTION_TYPE.LOGO);
+           printAdvertisementSection(advertisement,SECTION_TYPE.BACKGROUND);
+           printAdvertisementSection(advertisement,SECTION_TYPE.TOP_BANNER);
+           printAdvertisementSection(advertisement,SECTION_TYPE.BOTTOM_BANNER);
+       }
+    }
+    public void printAdvertisementSection(Advertisement advertisement,SECTION_TYPE secType){
+        System.out.println("******* "+secType+"**********");
+        System.out.print(advertisement.getSections().get(secType).getId()+" ");
+        System.out.print(advertisement.getSections().get(secType).getPrice()+" ");
+        System.out.println(advertisement.getSections().get(secType).getQuantity());
+    }
+  //  @Test
+    public void create() {
         /****TEST section***/
 
 

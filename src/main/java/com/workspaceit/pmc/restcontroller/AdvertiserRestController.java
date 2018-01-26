@@ -2,9 +2,12 @@ package com.workspaceit.pmc.restcontroller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.AdvertiserTransaction;
+import com.workspaceit.pmc.entity.advertisement.Advertisement;
+import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.exception.ServiceException;
 import com.workspaceit.pmc.service.*;
@@ -37,12 +40,13 @@ public class AdvertiserRestController {
     private SlideShowAdsValidator slideShowAdsValidator;
     private PopUpAdsValidator popUpAdsValidator;
 
-    private AdminService adminService;
     private AdvertiserService advertiserService;
     private GalleryAdService galleryAdService;
     private SlideShowService slideShowService;
     private PopUpAdsService popUpAdsService;
     private AdvertiserTransactionService advertiserTransactionService;
+    private AdvertisementService advertisementService;
+    private SectionService sectionService;
 
     @Autowired
     public void setAdvertiserValidator(AdvertiserValidator advertiserValidator) {
@@ -60,11 +64,6 @@ public class AdvertiserRestController {
     @Autowired
     public void setPopUpAdsValidator(PopUpAdsValidator popUpAdsValidator) {
         this.popUpAdsValidator = popUpAdsValidator;
-    }
-
-    @Autowired
-    public void setAdminService(AdminService adminService) {
-        this.adminService = adminService;
     }
 
     @Autowired
@@ -90,6 +89,15 @@ public class AdvertiserRestController {
     @Autowired
     public void setAdvertiserTransactionService(AdvertiserTransactionService advertiserTransactionService) {
         this.advertiserTransactionService = advertiserTransactionService;
+    }
+
+    @Autowired
+    public void setAdvertisementService(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
+    }
+    @Autowired
+    public void setSectionService(SectionService sectionService) {
+        this.sectionService = sectionService;
     }
 
     private ResponseEntity<?> getValidated(AdvertiserForm advertiserForm, BindingResult bindingResult){
@@ -192,6 +200,21 @@ public class AdvertiserRestController {
         this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
         this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
         this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+
+        try{
+
+            Advertisement galleryAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.GALLERY,currentUser);
+            Advertisement slideShowAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.SLIDESHOW,currentUser);
+            Advertisement popupSmsAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_SMS,currentUser);
+            Advertisement popupEmailAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_EMAIL,currentUser);
+
+            this.sectionService.create(galleryAd,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
+            this.sectionService.create(slideShowAd,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
+            this.sectionService.create(popupSmsAd,popupEmailAd,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
