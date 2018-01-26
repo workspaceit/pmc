@@ -401,7 +401,7 @@ function submitAdvertiserData(submitType,forUpdate,marker){
                 BindErrorsWithHtml("errorObj_",response.responseJSON,true);
                 notifyUser("advertiserInfoErrorCount",response,true);
                 errorFound = true;
-                submitAdvertiserData(submitType,forUpdate,tmpMarkerk);
+                submitAdvertiserData(submitType,forUpdate,tmpMarker);
             });
             break;
         case 2:
