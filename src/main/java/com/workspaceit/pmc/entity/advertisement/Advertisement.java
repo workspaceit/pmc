@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.entity.advertisement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.workspaceit.pmc.constant.ENTITY_STATE;
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.entity.Admin;
@@ -23,6 +24,10 @@ public class Advertisement {
     @Enumerated(EnumType.STRING)
     @Column(name = "ad_type")
     private ADVERTISEMENT_TYPE adType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private ENTITY_STATE state;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "advertisement_id",referencedColumnName = "id",nullable = false)
@@ -57,6 +62,14 @@ public class Advertisement {
 
     public ADVERTISEMENT_TYPE getAdType() {
         return adType;
+    }
+
+    public ENTITY_STATE getState() {
+        return state;
+    }
+
+    public void setState(ENTITY_STATE state) {
+        this.state = state;
     }
 
     public void setAdType(ADVERTISEMENT_TYPE adType) {
