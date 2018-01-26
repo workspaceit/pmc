@@ -10,7 +10,7 @@
                 <h1>Admin List </h1>
                 <%--<hr>--%>
                 <div class="cs_action_btn">
-                    <input type="hidden" id="type" value="admin">
+                    <input type="hidden" id="type" value="user">
                     <a href="<c:url value="/admin/user/add"/>" class="ac_btn new"><i class="fa fa-plus"></i>NEW</a>
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
                     <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>

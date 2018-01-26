@@ -25,14 +25,17 @@ $(document).ready(function() {
         var checkedIds = getCheckedIds();
         if(checkedIds.length == 1){
             $('#edit-selected-btn').prop('disabled', false);
+            $('#edit-selected-btn').removeClass('disabled');
         }
         else{
             $('#edit-selected-btn').prop('disabled', true);
+            $('#edit-selected-btn').addClass('disabled');
         }
     }
 
     $body.on('click', '#edit-selected-btn', function () {
-        console.log("edit clicked");
+        var id = getCheckedIds()[0];
+        window.location = BASEURL + 'admin/' + type + '/update/' + id;
     });
 
     $body.on('click', '.activate-checkbox', function () {

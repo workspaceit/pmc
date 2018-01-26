@@ -40,7 +40,7 @@ public class CommonService {
             case "venue":
                 entityClassName = "Venue";
                 break;
-            case "admin":
+            case "user":
                 entityClassName = "Admin";
                 break;
             default:
@@ -74,7 +74,7 @@ public class CommonService {
             case "venue":
                 entityClassName = "Venue";
                 break;
-            case "admin":
+            case "user":
                 entityClassName = "Admin";
                 break;
             default:
