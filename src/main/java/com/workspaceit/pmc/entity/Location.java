@@ -73,6 +73,9 @@ public class Location {
     @JoinColumn(name = "location_id",referencedColumnName ="id")
     Set<LocationBackgroundImage> locationBackgroundImages;
 
+    @Column(name = "active")
+    private Boolean active;
+
     public int getId() {
         return id;
     }
@@ -199,6 +202,14 @@ public class Location {
 
     public void setLocationBackgroundImages(Set<LocationBackgroundImage> locationBackgroundImages) {
         this.locationBackgroundImages = locationBackgroundImages;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

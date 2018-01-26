@@ -99,6 +99,9 @@ public class Advertiser {
     @JoinColumn(name = "advertiser_id")
     private Set<AdvertisersOtherImage> otherImages;
 
+    @Column(name = "active")
+    private Boolean active;
+
     public int getId() {
         return id;
     }
@@ -249,6 +252,26 @@ public class Advertiser {
 
     public void setOtherImages(Set<AdvertisersOtherImage> otherImages) {
         this.otherImages = otherImages;
+    }
+
+    public boolean isAllLocationSelected() {
+        return isAllLocationSelected;
+    }
+
+    public void setAllLocationSelected(boolean allLocationSelected) {
+        isAllLocationSelected = allLocationSelected;
+    }
+
+    public boolean isAllEventSelected() {
+        return isAllEventSelected;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

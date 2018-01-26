@@ -84,6 +84,9 @@ public class Event {
             inverseJoinColumns = {@JoinColumn(name = "advertiser_id")})
     private Set<Advertiser> advertisers = new HashSet<>();
 
+    @Column(name = "active")
+    private Boolean active;
+
     public int getId() {
         return id;
     }
@@ -194,5 +197,13 @@ public class Event {
 
     public void setEventPrivate(Boolean eventPrivate) {
         this.eventPrivate = eventPrivate;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
