@@ -1138,3 +1138,9 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
 .dtble table.dataTable tbody th, table.dataTable tbody td {
     padding: 5px 10px;
 }
+
+.cs_action_btn .ac_btn.new {
+    background: #67ba54;
+    color: #fff;
+    border: 1px solid #67ba54;
+}

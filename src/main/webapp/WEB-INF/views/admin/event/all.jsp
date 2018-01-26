@@ -10,12 +10,14 @@
                 <h1>Event List </h1>
                 <%--<hr>--%>
                 <div class="cs_action_btn">
+                    <input type="hidden" id="type" value="event">
                     <a href="<c:url value="/admin/event/add"/>" class="ac_btn new"><i class="fa fa-plus"></i>NEW</a>
-                    <button class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
-                    <button class="ac_btn"><i class="fa fa-check"></i>ACTIVATE</button>
+                    <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
+                    <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
+                    <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
                     <button class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
-                <div class="dtble">
+                <div class="table-responsive dtble">
                     <table id="event-datatable" class=" table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                             <tr>
@@ -49,7 +51,7 @@
                                     <input type="checkbox" class="select-checkbox" value="${event.id}">
                                 </td>
                                 <td class="des-clm">
-                                    <p class="text-left">${event.name}</p>
+                                    <p class="text-left" id="title-${event.id}">${event.name}</p>
                                 </td>
                                 <td class="des-clm">
                                     <p class="text-left">${event.venue.name}</p>
@@ -63,7 +65,12 @@
                                     <fmt:formatDate value="${event.endsAt}" pattern="yyyy-MM-DD hh:mm:ss a"/>
                                 </td>
                                 <td class="date-clm">
-                                    <input type="checkbox">
+                                    <c:if test = "${event.active}">
+                                        <input type="checkbox" class="activate-checkbox" checked value="${event.id}">
+                                    </c:if>
+                                    <c:if test = "${!event.active}">
+                                        <input type="checkbox" class="activate-checkbox" value="${event.id}">
+                                    </c:if>
                                 </td>
                                 <td class="action-clm text-center">
                                     <a href="<c:url value="/admin/event/update/${event.id}" />" class="btn btn-success">
@@ -87,23 +94,8 @@
                     }],
                     "order": [[1, 'asc']]
                 });
-
-                $('#select-all-checkbox').click(function () {
-                    var isSelected = $(this).prop('checked');
-                    if(isSelected){
-                        $('.select-checkbox').prop('checked', true);
-                        console.log($('.select-checkbox:checked').map(function(){return $(this).val();}).get());
-                    }
-                    else {
-                        $('.select-checkbox').prop('checked', false);
-                    }
-                });
-                
-                function enableOrDisableEditButton() {
-
-                }
-                
             });
         </script>
+        <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>
     </jsp:body>
 </t:genericpage>
