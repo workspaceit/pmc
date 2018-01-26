@@ -62,6 +62,9 @@ public class Photographer {
 
     private Set<Event> events = new HashSet<Event>();
 
+    @Column(name = "active")
+    private Boolean active;
+
     public int getId() {
         return id;
     }
@@ -148,6 +151,14 @@ public class Photographer {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

@@ -54,6 +54,9 @@ public class Admin {
             inverseJoinColumns = {@JoinColumn(name = "admin_role_id")})
     private Set<AdminRole> adminRoles = new HashSet<>();
 
+    @Column(name = "active")
+    private Boolean active;
+
     public int getId() {
         return id;
     }
@@ -134,6 +137,14 @@ public class Admin {
 
     public void setAdminRoles(Set<AdminRole> adminRoles) {
         this.adminRoles = adminRoles;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override
