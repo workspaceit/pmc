@@ -169,6 +169,7 @@ public class AdminService {
         admin.setUserName(adminCreateForm.getUserName());
         admin.setEmail(adminCreateForm.getEmail());
         admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
+        admin.setActive(true);
         return admin;
     }
     private void populateAdminByAdminForm(Admin admin, AdminCreateForm adminCreateForm){

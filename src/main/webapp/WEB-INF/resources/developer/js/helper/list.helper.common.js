@@ -23,13 +23,11 @@ $(document).ready(function() {
 
     function enableOrDisableEditButton() {
         var checkedIds = getCheckedIds();
-        if(checkedIds.length == 1){
+        if(checkedIds.length === 1){
             $('#edit-selected-btn').prop('disabled', false);
-            $('#edit-selected-btn').removeClass('disabled');
         }
         else{
             $('#edit-selected-btn').prop('disabled', true);
-            $('#edit-selected-btn').addClass('disabled');
         }
     }
 

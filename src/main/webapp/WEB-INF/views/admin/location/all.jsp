@@ -54,6 +54,7 @@
                                 <td class="des-clm">
                                     <input type="checkbox" class="select-checkbox" value="${location.id}">
                                 </td>
+
                                 <td class="img-clm text-center">
                                     <c:set value="" var="imgSrc" />
                                     <c:choose>
