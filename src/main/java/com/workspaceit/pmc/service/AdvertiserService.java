@@ -78,6 +78,7 @@ public class AdvertiserService {
         advertiser.setIsAllLocationSelected(advertiserForm.getIsAllLocationSelected());
         advertiser.setAllEventSelected(advertiserForm.getIsAllEventSelected());
         advertiser.setActive(true);
+        advertiser.setDeleted(false);
 
         if(!advertiserForm.getIsAllLocationSelected()) {
             List<Location> locations = this.locationService.getAll(advertiserForm.getLocationIds());

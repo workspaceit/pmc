@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.constant.ENTITY_STATE;
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.dao.AdvertisementDao;
 import com.workspaceit.pmc.entity.Admin;
@@ -44,6 +45,7 @@ public class AdvertisementService {
     public Advertisement create(int advertiserId, ADVERTISEMENT_TYPE adType, Admin admin){
         Advertisement advertisement = new Advertisement();
         advertisement.setAdvertiserId(advertiserId);
+        advertisement.setState(ENTITY_STATE.ACTIVE);
         advertisement.setAdType(adType);
         advertisement.setCreatedBy(admin);
 

@@ -83,10 +83,6 @@ var ADV_IMG_TYPE = {
     _SMS_POPUP_VIDEO_TOKEN:"smsPopUpVideo"
 };
 
-function addQuantity(){
-
-}
-
 function injectHiddenTokenFieldsForAdvertiser(){
     for(var index in ADV_IMG_TYPE){
         var tokenElem = $("<input>", {type:"hidden",id: ADV_IMG_TYPE[index], "value": ""});
@@ -450,7 +446,7 @@ function submitCreateOrUpdate(btnAction){
            case "create":
                createAdvertiser(function(response){
                    notifyUser("advertiserInfoErrorCount",response,false);
-                   advertiserAfterSaveAction(globalBtnAction,response.id);
+                  // advertiserAfterSaveAction(globalBtnAction,response.id);
                });
                break;
            case "update":

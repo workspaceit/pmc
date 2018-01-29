@@ -20,14 +20,17 @@ public class AdvertiserDao extends BaseDao {
         return (Advertiser)session.createQuery("FROM Advertiser a " +
                                                         "LEFT JOIN FETCH a.otherImages " +
                                                         "LEFT JOIN FETCH a.events " +
-                                                        "LEFT JOIN FETCH a.locations WHERE a.id=:id  ")
+                                                        "LEFT JOIN FETCH a.locations " +
+                                                        "WHERE a.id=:id ")
                 .setParameter("id",id)
                 .setMaxResults(1)
                 .uniqueResult();
     }
     public List<Advertiser> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Advertiser ORDER BY id desc")
+        return session.createQuery("FROM Advertiser a " +
+                                      "WHERE a.deleted=false  " +
+                                      "ORDER BY id desc")
                 .list();
     }
 
@@ -45,13 +48,14 @@ public class AdvertiserDao extends BaseDao {
 
     public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a where a.name LIKE :searchTerm ORDER BY " +
-                "CASE " +
-                "   WHEN a.name=:txt THEN 0" +
-                "   WHEN a.name LIKE :ptxt THEN 1" +
-                "   WHEN a.name LIKE :txtp THEN 3" +
-                "   ELSE 2 " +
-                "END, a.name ASC, id DESC");
+        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a " +
+                                            "where a.name LIKE :searchTerm ORDER BY " +
+                                            "CASE " +
+                                            "   WHEN a.name=:txt THEN 0" +
+                                            "   WHEN a.name LIKE :ptxt THEN 1" +
+                                            "   WHEN a.name LIKE :txtp THEN 3" +
+                                            "   ELSE 2 " +
+                                            "END, a.name ASC, id DESC");
         query.setParameter("searchTerm", "%"+searchTerm+"%");
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");
@@ -61,21 +65,24 @@ public class AdvertiserDao extends BaseDao {
     public List<Advertiser> getByEventId(int eventId){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Advertiser a "+
-                "LEFT JOIN FETCH a.events event WHERE event.id=:eventId  ")
+                                      "LEFT JOIN FETCH a.events event " +
+                                      "WHERE event.id=:eventId  ")
                 .setParameter("eventId",eventId)
                 .list();
     }
     public List<Advertiser> getByLocationId(int locationId){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Advertiser a "+
-                "LEFT JOIN FETCH a.locations location WHERE location.id=:locationId  ")
+                                      "LEFT JOIN FETCH a.locations location " +
+                                      "WHERE location.id=:locationId  ")
                 .setParameter("locationId",locationId)
                 .list();
     }
     public List<Advertiser> getByEventId(int eventId,boolean includeAllSelected){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Advertiser a "+
-                "LEFT JOIN FETCH a.events event WHERE event.id=:eventId or a")
+                                      "LEFT JOIN FETCH a.events event " +
+                                      "WHERE event.id=:eventId or a")
                 .setParameter("eventId",eventId)
                 .list();
     }

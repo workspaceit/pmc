@@ -18,7 +18,7 @@ public class Section {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "advertisement_id",insertable = false,updatable = false)
+    @Column(name = "advertisement_id")
     private Integer advertisementId;
 
     @Column(name = "price")

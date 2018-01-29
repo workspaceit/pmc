@@ -173,7 +173,7 @@ public class SectionService {
                 advertisement.getId(),
                 slideShowAdsForm.getBannerPrice(),
                 topBannerSectionResources.size(),
-                SECTION_TYPE.TOP_BANNER,
+                SECTION_TYPE.BOTTOM_BANNER,
                 slideShowAdsForm.getBannerRotation(),
                 topBannerSectionResources,
                 admin);

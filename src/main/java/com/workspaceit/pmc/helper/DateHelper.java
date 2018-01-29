@@ -71,6 +71,13 @@ public class DateHelper {
         return  new java.sql.Date(date.getTime());
 
     }
+    public static java.util.Date getStringToUtilDate(String strDate,String format)throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        Date date = dateFormat.parse(strDate);
+
+        return  date;
+
+    }
     public static Timestamp getSQLDateToTimeStamp(Date date){
         return new Timestamp(date.getTime());
 

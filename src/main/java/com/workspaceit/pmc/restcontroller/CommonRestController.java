@@ -3,6 +3,7 @@ package com.workspaceit.pmc.restcontroller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.service.CommonService;
+import com.workspaceit.pmc.util.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Service;
 
 /**
  * Created by anik on 1/26/18.
@@ -52,6 +54,20 @@ public class CommonRestController {
         }
         else{
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Operation Unsuccessful");
+        }
+
+    }
+    @Secured(UserRole._SUPER_ADMIN)
+    @PostMapping("/delete-entity")
+    public ResponseEntity<?> delete(HttpServletRequest request){
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        String type = request.getParameter("type");
+        Boolean deActivated = commonService.delete(id, type);
+        if(deActivated){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Successfully deleted"));
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getMsgInMap("Operation Unsuccessful"));
         }
 
     }

@@ -41,6 +41,7 @@ public class BaseDao {
     public void delete(Object obj){
         Session session = this.getCurrentSession();
         session.delete(obj);
+        session.getTransaction().commit();
     }
 
     protected Session getCurrentSession() {

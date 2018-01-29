@@ -45,6 +45,8 @@ public class Advertiser {
     private String website;
 
 
+    @Column(name = "deleted")
+    private boolean deleted;
 
     @Column(name = "all_locations")
     private boolean isAllLocationSelected;
@@ -272,6 +274,14 @@ public class Advertiser {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

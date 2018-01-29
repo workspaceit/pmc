@@ -20,32 +20,7 @@ public class CommonService {
 
     @Transactional
     public Boolean activateEntity(Integer id, String type){
-        String entityClassName = "";
-        switch (type){
-            case "event":
-                entityClassName = "Event";
-                break;
-            case "photographer":
-                entityClassName = "Photographer";
-                break;
-            case "watermark":
-                entityClassName = "Watermark";
-                break;
-            case "location":
-                entityClassName = "Location";
-                break;
-            case "advertiser":
-                entityClassName = "Advertiser";
-                break;
-            case "venue":
-                entityClassName = "Venue";
-                break;
-            case "user":
-                entityClassName = "Admin";
-                break;
-            default:
-                break;
-        }
+        String entityClassName = getEntityClassName(type);
         if(entityClassName.equals("")){
             return false;
         }
@@ -54,6 +29,23 @@ public class CommonService {
 
     @Transactional
     public Boolean deActivateEntity(Integer id, String type){
+        String entityClassName = getEntityClassName(type);
+        if(entityClassName.equals("")){
+            return false;
+        }
+        return commonDao.deActivate(entityClassName, id);
+    }
+
+    @Transactional(rollbackFor =Exception.class)
+    public Boolean delete(Integer id, String type){
+        String entityClassName = getEntityClassName(type);
+        if(entityClassName.equals("")){
+            return false;
+        }
+        return commonDao.delete(entityClassName, id);
+    }
+
+    private String getEntityClassName(String type){
         String entityClassName = "";
         switch (type){
             case "event":
@@ -80,10 +72,7 @@ public class CommonService {
             default:
                 break;
         }
-        if(entityClassName.equals("")){
-            return false;
-        }
-        return commonDao.deActivate(entityClassName, id);
+        return entityClassName;
     }
 
 }

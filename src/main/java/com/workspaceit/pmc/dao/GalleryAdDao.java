@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,17 @@ public class GalleryAdDao extends BaseDao {
         return session.createQuery("FROM GalleryAd where advertiserId in :advertiserId")
                 .setParameter("advertiserId", Arrays.asList(advertiserId))
                 .list();
+    }
+    public GalleryAd getByAdvertiserId(int advertiserId,Date sDate,Date eDate){
+        Session session = this.getCurrentSession();
+        return (GalleryAd)session.createQuery("select gAd FROM GalleryAd gAd " +
+                                                 "where gAd.advertiserId=:advertiserId " +
+                                                 "and :eDate BETWEEN :currentDate and gAd.topBannerExpiryDate ")
+                .setMaxResults(1)
+                .setParameter("currentDate",new Date())
+                .setParameter("eDate",eDate)
+                .setParameter("advertiserId",advertiserId)
+                .uniqueResult();
     }
 
 }

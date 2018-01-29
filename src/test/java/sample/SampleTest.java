@@ -3,12 +3,15 @@ package sample;
 import com.workspaceit.pmc.config.WebConfig;
 import com.workspaceit.pmc.constant.advertisement.*;
 import com.workspaceit.pmc.dao.AdvertiserDao;
+import com.workspaceit.pmc.dao.CommonDao;
 import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
+import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupAdQuantityPrice;
+import com.workspaceit.pmc.helper.DateHelper;
 import com.workspaceit.pmc.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -36,6 +40,8 @@ public class SampleTest {
     private AdvertiserService advertiserService;
     private PopUpAdsService popUpAdsService;
     private AdvertisementService advertisementService;
+
+    private CommonDao commonDao;
 
     @Autowired
     public void setAdvertisementPricesService(AdvertisementPricesService advertisementPricesService) {
@@ -74,10 +80,31 @@ public class SampleTest {
     public void setAdvertisementService(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
     }
+    @Autowired
+    public void setCommonDao(CommonDao commonDao) {
+        this.commonDao = commonDao;
+    }
+
     @Test
+    @Transactional(rollbackFor = Exception.class)
     public void getAdvertiser(){
-        List<Advertisement> advertisements = this.advertisementService.getByAdvertiserId(4);
-        printAdvertisement(advertisements);
+       /* Advertisement advertisement = this.advertisementService.getById(2);
+        this.commonDao.delete(advertisement);*/
+       /* boolean a = this.commonDao.delete("Advertisement",2);
+        System.out.println(a);*/
+
+        try {
+            Date sDate = new Date();
+            Date eDate =DateHelper.getStringToUtilDate("31/02/2018 00:00:00","dd/MM/yyyy HH:mm:ss");
+            System.out.println(sDate.toString());
+            System.out.println(eDate.toString());
+            GalleryAd galleryAd =  this.galleryAdDao.getByAdvertiserId(1,sDate, eDate);
+            if(galleryAd!=null)
+                System.out.println(galleryAd.getId());
+            System.out.println(galleryAd);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
     public void printAdvertisement(List<Advertisement> advertisements){

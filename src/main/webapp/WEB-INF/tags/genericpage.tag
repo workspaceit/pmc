@@ -57,7 +57,7 @@
         <script src="<s:url value="/resources/developer/js/ErrorMessaging.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/helper/navigation.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/helper/others.js"/>"></script>
-
+        <script src="<s:url value="/resources/developer/js/util/notification-util.js"/>"></script>
         <jsp:invoke fragment="developerScript"/>
 
     </head>

@@ -15,7 +15,7 @@
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
                     <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
                     <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
-                    <button class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
+                    <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
                     <table id="admin-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">

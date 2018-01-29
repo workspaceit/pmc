@@ -6,14 +6,19 @@ import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Map;
 
 @Entity
+
+@SQLDelete(sql = "UPDATE advertisement SET state = 'DELETE' WHERE id = ?", check = ResultCheckStyle.COUNT)
 @Table(name = "advertisement")
 public class Advertisement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,8 +34,8 @@ public class Advertisement {
     @Column(name = "state")
     private ENTITY_STATE state;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "advertisement_id",referencedColumnName = "id",nullable = false)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "advertisement_id",referencedColumnName = "id")
     @MapKey(name = "sectionType")
     private Map<SECTION_TYPE,Section> sections;
 
@@ -44,7 +49,8 @@ public class Advertisement {
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     private Admin createdBy;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
