@@ -29,7 +29,7 @@
                             </th>
 
                             <th class="cstm-table-header">
-                                Event location
+                                Location Name
                             </th>
                             <th class="cstm-table-header">
                                 Address
@@ -54,6 +54,7 @@
                                 <td class="des-clm">
                                     <input type="checkbox" class="select-checkbox" value="${location.id}">
                                 </td>
+
                                 <td class="img-clm text-center">
                                     <c:set value="" var="imgSrc" />
                                     <c:choose>
@@ -101,7 +102,13 @@
 
         <script>
             $(document).ready(function() {
-                $('#location-datatable').DataTable();
+                $('#location-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 1, 6, 7],
+                        "orderable": false,
+                    }],
+                    "order": [[2, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

@@ -18,7 +18,7 @@
                     <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
                     <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive dtble">
                     <table id="advertiser-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
                         <thead>
                         <tr>
@@ -93,7 +93,7 @@
                                 </td>
                                 <td class="action-clm text-center">
                                     <a href="<c:url value="/admin/advertiser/update/${advertiser.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                    <a href="<c:url value="/admin/advertiser/checkout/${advertiser.id}" />" class="btn btn-danger"><i class="fa fa fa-shopping-cart"></i></a>
+                                    <a href="<c:url value="/admin/advertiser/checkout/${advertiser.id}" />" class="btn btn-info"><i class="fa fa fa-shopping-cart"></i></a>
                                 </td>
                             </tr>
                         </d:forEach>
@@ -105,7 +105,13 @@
 
         <script>
             $(document).ready(function() {
-                $('#advertiser-datatable').DataTable();
+                $('#advertiser-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 8, 9],
+                        "orderable": false,
+                    }],
+                    "order": [[1, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

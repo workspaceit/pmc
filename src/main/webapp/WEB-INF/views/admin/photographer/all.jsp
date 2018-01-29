@@ -100,7 +100,13 @@
 
         <script>
             $(document).ready(function() {
-                $('#photographer-datatable').DataTable();
+                $('#photographer-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 1, 6, 7],
+                        "orderable": false,
+                    }],
+                    "order": [[2, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

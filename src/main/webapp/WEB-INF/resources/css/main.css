@@ -1113,7 +1113,7 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     background: #fff;
     transition: all 0.5s ease;
 }
-.cs_action_btn .ac_btn:hover, .cs_action_btn .ac_btn:hover {
+.cs_action_btn .ac_btn:hover:not([disabled]) , .cs_action_btn .ac_btn:hover:not([disabled])  {
     background: #777373;
     border-color: #777373;
     color: #fff;
@@ -1143,4 +1143,14 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     background: #67ba54;
     color: #fff;
     border: 1px solid #67ba54;
+}
+.dtble .img-circle {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+.cs_action_btn button:disabled{
+    cursor: not-allowed !important;
+    background: #cdcdcd;
+    opacity: 0.5;
 }

@@ -70,7 +70,13 @@
         </div>
         <script>
             $(document).ready(function() {
-                $('#venue-datatable').DataTable();
+                $('#venue-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 3, 4],
+                        "orderable": false,
+                    }],
+                    "order": [[1, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

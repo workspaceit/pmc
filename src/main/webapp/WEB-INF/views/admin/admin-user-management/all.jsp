@@ -99,7 +99,13 @@
         </div>
         <script>
             $(document).ready(function() {
-                $('#admin-datatable').DataTable();
+                $('#admin-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 1, 6, 7],
+                        "orderable": false,
+                    }],
+                    "order": [[2, 'asc']]
+                });
 //                $('#admin-datatable').DataTable( {
 //                    "processing": true,
 //                    "columns": [
