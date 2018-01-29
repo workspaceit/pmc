@@ -41,7 +41,7 @@
                                 Zip
                             </th>
 
-                            <th class="cstm-table-header">\
+                            <th class="cstm-table-header">
                                 Run time start
                             </th>
                             <th class="cstm-table-header">
@@ -105,7 +105,13 @@
 
         <script>
             $(document).ready(function() {
-                $('#advertiser-datatable').DataTable();
+                $('#advertiser-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 8, 9],
+                        "orderable": false,
+                    }],
+                    "order": [[1, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

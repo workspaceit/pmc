@@ -116,7 +116,13 @@
         </div>
         <script>
             $(document).ready(function() {
-                $('#watermark-datatable').DataTable();
+                $('#watermark-datatable').DataTable({
+                    "columnDefs": [{
+                        "targets": [0, 10, 11],
+                        "orderable": false,
+                    }],
+                    "order": [[1, 'asc']]
+                });
             });
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>
