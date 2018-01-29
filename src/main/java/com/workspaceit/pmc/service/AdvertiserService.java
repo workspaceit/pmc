@@ -167,9 +167,14 @@ public class AdvertiserService {
         return this.advertiserDao.getAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Advertiser> getActiveAdvertisers(){
+        return this.advertiserDao.getActiveAdvertisers();
+    }
+
     @Transactional
-    public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
-        return this.advertiserDao.getSuggestedAdvertisers(searchTerm);
+    public List<Advertiser> getSuggestedAdvertisers(String searchTerm, Boolean active){
+        return this.advertiserDao.getSuggestedAdvertisers(searchTerm, active);
     }
 
 

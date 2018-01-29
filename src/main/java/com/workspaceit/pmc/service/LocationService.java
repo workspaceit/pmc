@@ -56,6 +56,11 @@ public class LocationService {
     }
 
     @Transactional
+    public List<Location> getActiveLocations(){
+        return this.locationDao.getActiveLocations();
+    }
+
+    @Transactional
     public List<Location> getAll(Integer[] ids){
         return this.locationDao.getAll(ids);
     }
@@ -194,7 +199,7 @@ public class LocationService {
         location.setZip(locationForm.getZip());
         location.setPhone(locationForm.getPhone());
         location.setHasSlideshow(locationForm.getHasSlideshow());
-
+        location.setActive(true);
         this.setSlidShowSettings(location,locationForm);
 
 

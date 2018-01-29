@@ -63,6 +63,12 @@ public class AdminDao extends BaseDao {
                 .list();
     }
 
+    public List<Admin> getActiveAdmins(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Admin WHERE active=true ORDER BY id DESC")
+                .list();
+    }
+
     public Admin getById(int id){
         Session session = this.openSession();
         try {

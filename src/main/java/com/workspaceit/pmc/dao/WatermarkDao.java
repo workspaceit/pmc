@@ -16,9 +16,9 @@ import java.util.List;
 @Repository
 public class WatermarkDao extends BaseDao {
 
-    public List<Watermark> getSuggestedWatermarks(String searchTerm){
+    public List<Watermark> getSuggestedWatermarks(String searchTerm, Boolean active){
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("SELECT DISTINCT(w) FROM Watermark w where w.name LIKE :searchTerm ORDER BY " +
+        Query query = session.createQuery("SELECT DISTINCT(w) FROM Watermark w where active=:active AND w.name LIKE :searchTerm ORDER BY " +
                 "CASE " +
                 "   WHEN w.name=:txt THEN 0" +
                 "   WHEN w.name LIKE :ptxt THEN 1" +
@@ -29,12 +29,19 @@ public class WatermarkDao extends BaseDao {
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");
         query.setParameter("txtp", "%" +searchTerm);
+        query.setParameter("active", active);
         return query.list();
     }
 
     public List<Watermark> getAll(){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Watermark ORDER BY id DESC")
+                .list();
+    }
+
+    public List<Watermark> getActiveWatermarks(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Watermark WHERE active=true ORDER BY id DESC")
                 .list();
     }
 

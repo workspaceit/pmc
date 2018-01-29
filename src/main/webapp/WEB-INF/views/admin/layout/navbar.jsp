@@ -14,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="color: #f4e6fd;font-family: 'Exo', sans-serif;fview allont-size: 31px;font-weight: 500;" href="<s:url value="/"/>">
+            <a class="navbar-brand" style="color: #f4e6fd;font-family: 'Exo', sans-serif;fview allont-size: 31px;font-weight: 500;" href="<s:url value="/admin/dashboard"/>">
                 <img style="display:inline;" width="140" src="<s:url value="/resources/images/logo2.png"/>" class="small-logo">
             </a>
         </div>

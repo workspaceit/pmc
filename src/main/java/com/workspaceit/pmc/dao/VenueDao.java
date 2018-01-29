@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public class VenueDao extends BaseDao{
 
-    public List<Venue> getSuggestedVenues(String searchTerm){
+    public List<Venue> getSuggestedVenues(String searchTerm, Boolean active){
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("SELECT DISTINCT(v) FROM Venue v where v.name LIKE :searchTerm ORDER BY " +
+        Query query = session.createQuery("SELECT DISTINCT(v) FROM Venue v WHERE active=:active AND v.name LIKE :searchTerm ORDER BY " +
                 "CASE " +
                 "   WHEN v.name=:txt THEN 0" +
                 "   WHEN v.name LIKE :ptxt THEN 1" +
@@ -26,6 +26,7 @@ public class VenueDao extends BaseDao{
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");
         query.setParameter("txtp", "%" +searchTerm);
+        query.setParameter("active", active);
         return query.list();
     }
 
@@ -34,6 +35,13 @@ public class VenueDao extends BaseDao{
         return session.createQuery("FROM Venue ORDER BY id DESC")
                 .list();
     }
+
+    public List<Venue> getActiveVenues(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Venue WHERE active=true ORDER BY id DESC")
+                .list();
+    }
+
     public Venue getById(int id){
         Session session = this.getCurrentSession();
         return (Venue)session.createQuery("FROM Venue where id=:id")

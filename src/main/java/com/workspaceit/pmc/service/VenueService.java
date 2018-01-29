@@ -39,13 +39,19 @@ public class VenueService {
         this.locationService = locationService;
     }
 
+    @Transactional
     public List<Venue> getAll(){
         return this.venueDao.getAll();
     }
 
+    @Transactional
+    public List<Venue> getActiveVenues(){
+        return this.venueDao.getActiveVenues();
+    }
+
     @Transactional(rollbackFor = Exception.class)
-    public List<Venue> getSuggestedVenues(String searchTerm){
-        return this.venueDao.getSuggestedVenues(searchTerm);
+    public List<Venue> getSuggestedVenues(String searchTerm, Boolean active){
+        return this.venueDao.getSuggestedVenues(searchTerm, active);
     }
 
     public Venue getById(int id){
@@ -100,6 +106,7 @@ public class VenueService {
 
         venue.setName(venueForm.getName());
         venue.setCreatedBy(adminService.getAdminByEmail(venueForm.getUserEmail()));
+        venue.setActive(true);
         try {
             venue.setLocation(locationService.getLocation(Integer.parseInt(venueForm.getLocation_id())));
         }catch (Exception ex){}

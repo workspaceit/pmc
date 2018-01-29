@@ -47,8 +47,13 @@ public class WatermarkService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public List<Watermark> getSuggestedWatermarks(String searchTerm){
-        return this.watermarkDao.getSuggestedWatermarks(searchTerm);
+    public List<Watermark> getActiveWatermarks(){
+        return this.watermarkDao.getActiveWatermarks();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Watermark> getSuggestedWatermarks(String searchTerm, Boolean active){
+        return this.watermarkDao.getSuggestedWatermarks(searchTerm, active);
     }
 
     @Transactional
@@ -73,6 +78,7 @@ public class WatermarkService {
 
         System.out.println("logoImgName"+logoImgName);
         watermark.setLogoImage(logoImgName);
+        watermark.setActive(true);
 
 
         this.create(watermark);

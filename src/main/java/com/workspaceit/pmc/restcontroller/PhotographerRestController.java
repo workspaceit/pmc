@@ -196,7 +196,7 @@ public class PhotographerRestController {
     @GetMapping("/auto-suggest")
     public ResponseEntity<?> getSuggestedPhotographers(@RequestParam("searchTerm") String searchTerm){
         try {
-            List<Photographer> photographers = photographerService.getSuggestedPhotographers(searchTerm);
+            List<Photographer> photographers = photographerService.getSuggestedPhotographers(searchTerm, true);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographers);
         }
         catch (Exception e){
