@@ -11,10 +11,12 @@ public class AdvertisementDao extends BaseDao {
     public Advertisement getById(Integer id){
         Session session = this.openSession();
         try{
-            return (Advertisement)session.createQuery("FROM Advertisement  WHERE id=:id")
-                    .setParameter("id",id)
-                    .setMaxResults(1)
-                    .uniqueResult();
+            return (Advertisement)session.createQuery("SELECT adv FROM Advertisement adv " +
+                    "inner join fetch adv.sections  " +
+                    "WHERE id=:id")
+                .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
         }finally {
             if(session!=null)session.close();
         }
@@ -22,7 +24,9 @@ public class AdvertisementDao extends BaseDao {
     public List<Advertisement> getByAdvertiserId(Integer advertiserId){
         Session session = this.openSession();
         try{
-            return (List<Advertisement>)session.createQuery("FROM Advertisement  WHERE advertiser_id=:advertiser_id")
+            return (List<Advertisement>)session.createQuery("SELECT distinct adv FROM Advertisement adv " +
+                    "inner join fetch adv.sections as section  " +
+                    "WHERE advertiser_id=:advertiser_id")
                     .setParameter("advertiser_id",advertiserId)
                     .list();
         }finally {

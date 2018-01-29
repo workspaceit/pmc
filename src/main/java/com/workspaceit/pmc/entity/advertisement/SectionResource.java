@@ -25,6 +25,9 @@ public class SectionResource {
     @Column(name = "file_type")
     private FILE_TYPE fileType;
 
+    @Column(name = "mime_type")
+    private String mimeType;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
@@ -62,6 +65,14 @@ public class SectionResource {
         this.fileType = fileType;
     }
 
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -72,6 +83,7 @@ public class SectionResource {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -81,6 +93,7 @@ public class SectionResource {
         if (sectionId != null ? !sectionId.equals(that.sectionId) : that.sectionId != null) return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (fileType != that.fileType) return false;
+        if (mimeType != null ? !mimeType.equals(that.mimeType) : that.mimeType != null) return false;
         return createdAt != null ? createdAt.equals(that.createdAt) : that.createdAt == null;
     }
 
@@ -90,7 +103,20 @@ public class SectionResource {
         result = 31 * result + (sectionId != null ? sectionId.hashCode() : 0);
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
+        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SectionResource{" +
+                "id=" + id +
+                ", sectionId=" + sectionId +
+                ", fileName='" + fileName + '\'' +
+                ", fileType=" + fileType +
+                ", mimeType='" + mimeType + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

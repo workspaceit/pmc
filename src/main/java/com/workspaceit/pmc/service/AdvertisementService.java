@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @Service
@@ -26,11 +28,7 @@ public class AdvertisementService {
         this.advertisementDao.insert(advertisement);
         return advertisement;
     }
-    @Transactional(rollbackFor = Exception.class)
-    public Advertisement getById(Advertisement advertisement){
-        this.advertisementDao.insert(advertisement);
-        return advertisement;
-    }
+
     @Transactional
     public Advertisement getById(int id){
         return this.advertisementDao.getById(id);
@@ -39,6 +37,16 @@ public class AdvertisementService {
     @Transactional
     public List<Advertisement> getByAdvertiserId(int advertiserId){
         return this.advertisementDao.getByAdvertiserId(advertiserId);
+    }
+    @Transactional
+    public Map<ADVERTISEMENT_TYPE,Advertisement> getMapByAdvertiserId(int advertiserId){
+        Map<ADVERTISEMENT_TYPE,Advertisement> advertisementMap = new HashMap<>();
+        List<Advertisement> advertisements  =  this.advertisementDao.getByAdvertiserId(advertiserId);
+        for (Advertisement advertisement:advertisements) {
+            advertisementMap.put(advertisement.getAdType(),advertisement);
+        }
+
+        return advertisementMap;
     }
 
     @Transactional(rollbackFor = Exception.class)

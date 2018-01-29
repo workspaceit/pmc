@@ -291,11 +291,53 @@ public class Advertiser {
 
         Advertiser that = (Advertiser) o;
 
-        return (id == that.id);
+        if (id != that.id) return false;
+        if (deleted != that.deleted) return false;
+        if (isAllLocationSelected != that.isAllLocationSelected) return false;
+        if (isAllEventSelected != that.isAllEventSelected) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (city != null ? !city.equals(that.city) : that.city != null) return false;
+        if (zip != null ? !zip.equals(that.zip) : that.zip != null) return false;
+        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
+        if (website != null ? !website.equals(that.website) : that.website != null) return false;
+        if (otherImage != null ? !otherImage.equals(that.otherImage) : that.otherImage != null) return false;
+        if (runtimeStarts != null ? !runtimeStarts.equals(that.runtimeStarts) : that.runtimeStarts != null)
+            return false;
+        if (runtimeEnds != null ? !runtimeEnds.equals(that.runtimeEnds) : that.runtimeEnds != null) return false;
+        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
+        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
+        if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
+        if (events != null ? !events.equals(that.events) : that.events != null) return false;
+        if (locations != null ? !locations.equals(that.locations) : that.locations != null) return false;
+        if (otherImages != null ? !otherImages.equals(that.otherImages) : that.otherImages != null) return false;
+        return active != null ? active.equals(that.active) : that.active == null;
     }
 
     @Override
     public int hashCode() {
-        return this.id;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (zip != null ? zip.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (website != null ? website.hashCode() : 0);
+        result = 31 * result + (deleted ? 1 : 0);
+        result = 31 * result + (isAllLocationSelected ? 1 : 0);
+        result = 31 * result + (isAllEventSelected ? 1 : 0);
+        result = 31 * result + (otherImage != null ? otherImage.hashCode() : 0);
+        result = 31 * result + (runtimeStarts != null ? runtimeStarts.hashCode() : 0);
+        result = 31 * result + (runtimeEnds != null ? runtimeEnds.hashCode() : 0);
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (events != null ? events.hashCode() : 0);
+        result = 31 * result + (locations != null ? locations.hashCode() : 0);
+        result = 31 * result + (otherImages != null ? otherImages.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
+        return result;
     }
 }

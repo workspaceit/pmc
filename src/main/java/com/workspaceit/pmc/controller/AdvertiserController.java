@@ -1,10 +1,11 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
-import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
-import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.*;
 import com.workspaceit.pmc.entity.*;
+import com.workspaceit.pmc.entity.advertisement.Advertisement;
+import com.workspaceit.pmc.entity.advertisement.Section;
+import com.workspaceit.pmc.entity.advertisement.SectionResource;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
@@ -24,6 +25,7 @@ import java.util.*;
 @Controller
 @RequestMapping(ControllerUriPrefix.ADMIN+"/advertiser")
 public class AdvertiserController {
+    private AdvertisementService advertisementService;
     private AdvertiserService advertiserService;
     private LocationService locationService;
     private StateService stateService;
@@ -51,6 +53,10 @@ public class AdvertiserController {
         }
 
         this.setDurations(durations);
+    }
+    @Autowired
+    public void setAdvertisementService(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
     }
 
     @Autowired
@@ -163,6 +169,61 @@ public class AdvertiserController {
         return model;
     }
 
+    @RequestMapping("/update-new/{id}")
+    public ModelAndView updateNew(@PathVariable("id") int advertiserId){
+
+        Advertiser advertiser =  this.advertiserService.getById(advertiserId);
+
+        if(advertiser==null){
+            return new ModelAndView("redirect:"+"/admin/advertiser/all");
+        }
+
+        Map<ADVERTISEMENT_TYPE,Advertisement>  advertisements =  this.advertisementService.getMapByAdvertiserId(advertiser.getId());
+
+        List<Location> locations = this.locationService.getAll();
+        List<State> states = this.stateService.getAll();
+        List<City> cities = this.cityService.getAllNameAcs();
+        List<Event> events = this.eventService.getAll();
+
+
+        Advertisement galleryAd = advertisements.get(ADVERTISEMENT_TYPE.GALLERY);
+        Advertisement slideshowAd = advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW);
+        Advertisement popupAdSms = advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS);
+        Advertisement popupAdEmail = advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL);
+
+
+        ModelAndView model = new ModelAndView("admin/advertiser-new/edit");
+
+
+        model.addObject("advertiser",advertiser);
+        model.addObject("advertisements",advertisements);
+
+        model.addObject("events",events);
+        model.addObject("locations",locations);
+        model.addObject("states",states);
+        model.addObject("cities",cities);
+        model.addObject("durations",durations);
+
+
+        model.addObject("galleryAd",galleryAd);
+        model.addObject("slideshowAd",slideshowAd);
+        model.addObject("popupAdSms",popupAdSms);
+        model.addObject("popupAdEmail",popupAdEmail);
+
+
+
+          /*For location Modal Page*/
+        model.addObject("fadeInList",this.fadeInList);
+        model.addObject("fadeOutList",this.fadeOutList);
+
+         /* Number format settings values */
+        model.addObject("currencyCode","USD");
+        model.addObject("currencySymbol","$");
+        model.addObject("maxFractionDigits",2);
+
+        return model;
+    }
+
     @RequestMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") int advertiserId){
 
@@ -207,6 +268,9 @@ public class AdvertiserController {
 
         return model;
     }
+
+
+
     @RequestMapping("/checkout/{advertiserId}")
     public ModelAndView invoice(@PathVariable("advertiserId") int advertiserId){
 

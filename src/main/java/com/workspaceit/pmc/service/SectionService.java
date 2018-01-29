@@ -156,27 +156,28 @@ public class SectionService {
         List<SectionResource> topBannerSectionResources = getSectionResource(slideShowAdsForm.getSlideShowAdsBannerTokens(),FILE_TYPE.IMAGE);
         List<SectionResource> videoSectionResources = new LinkedList<>();
 
-        SectionResource tmpVideoSecResource =  getSectionResource(slideShowAdsForm.getSlideShowAdsVideoToken(),FILE_TYPE.IMAGE);
+        SectionResource tmpVideoSecResource =  getSectionResource(slideShowAdsForm.getSlideShowAdsVideoToken(),FILE_TYPE.VIDEO);
 
         videoSectionResources.add(tmpVideoSecResource);
-
-
-        Section videoSection = this.getSection(advertisement.getId(),
-                slideShowAdsForm.getVideoPrice(),
-                videoSectionResources.size(),
-                SECTION_TYPE.TOP_BANNER,
-                slideShowAdsForm.getVideoRotation(),
-                videoSectionResources,
-                admin);
 
         Section topBannerSection = this.getSection(
                 advertisement.getId(),
                 slideShowAdsForm.getBannerPrice(),
                 topBannerSectionResources.size(),
-                SECTION_TYPE.BOTTOM_BANNER,
+                SECTION_TYPE.TOP_BANNER,
                 slideShowAdsForm.getBannerRotation(),
                 topBannerSectionResources,
                 admin);
+
+        Section videoSection = this.getSection(advertisement.getId(),
+                slideShowAdsForm.getVideoPrice(),
+                videoSectionResources.size(),
+                SECTION_TYPE.BOTTOM_BANNER,
+                slideShowAdsForm.getVideoRotation(),
+                videoSectionResources,
+                admin);
+
+
 
 
 

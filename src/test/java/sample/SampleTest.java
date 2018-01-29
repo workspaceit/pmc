@@ -86,6 +86,21 @@ public class SampleTest {
     }
 
     @Test
+    @Transactional
+    public void advertimentTest(){
+        List<Advertisement>  advertisements =  this.advertisementService.getByAdvertiserId(39);
+        for (Advertisement advertisement:advertisements) {
+            System.out.println(advertisement);
+            System.out.println(advertisement.getSections().get(SECTION_TYPE.LOGO));
+            System.out.println(advertisement.getSections().get(SECTION_TYPE.BACKGROUND));
+            System.out.println(advertisement.getSections().get(SECTION_TYPE.BANNER));
+            System.out.println(advertisement.getSections().get(SECTION_TYPE.TOP_BANNER));
+            System.out.println(advertisement.getSections().get(SECTION_TYPE.BOTTOM_BANNER));
+        }
+
+    }
+
+    //@Test
     @Transactional(rollbackFor = Exception.class)
     public void getAdvertiser(){
        /* Advertisement advertisement = this.advertisementService.getById(2);

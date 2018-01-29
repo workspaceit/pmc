@@ -1,0 +1,2 @@
+ALTER TABLE  `sec_resource` ADD  `mime_type` VARCHAR( 100 ) NOT NULL AFTER  `file_type` ;
+ALTER TABLE  `sec_resource` CHANGE  `mime_type`  `mime_type` VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL ;

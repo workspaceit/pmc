@@ -180,7 +180,7 @@ public class Section {
                 ", expireDate=" + expireDate +
                 ", sectionResource=" + sectionResource +
                 ", createdAt=" + createdAt +
-                ", createdBy=" + createdBy +
+                //", createdBy=" + createdBy +
                 '}';
     }
 }
