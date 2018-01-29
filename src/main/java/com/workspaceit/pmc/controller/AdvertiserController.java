@@ -126,10 +126,10 @@ public class AdvertiserController {
 
     @RequestMapping("/add")
     public ModelAndView add(){
-        List<Location> locations = this.locationService.getAll();
+        List<Location> locations = this.locationService.getActiveLocations();
         List<State> states = this.stateService.getAll();
         List<City> cities = this.cityService.getAllNameAcs();
-        List<Event> events = this.eventService.getAll();
+        List<Event> events = this.eventService.getActiveEvents();
         Map<GalleryAdsConstant,AdvertisementPrices> galleryAdsPrices = this.advertisementPricesService.getGalleryAdPrice();
         Map<SlideshowAdsConstant,AdvertisementPrices> slideshowAdPrice = this.advertisementPricesService.getSlideshowAdPrice();
         Map<PopupAdConstant,AdvertisementPrices> popupAdPrice = this.advertisementPricesService.getPopupAdPrice();

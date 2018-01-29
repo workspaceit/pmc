@@ -289,7 +289,7 @@ public class AdvertiserRestController {
     @GetMapping("/auto-suggest")
     public ResponseEntity<?> getSuggestedWatermarks(@RequestParam("searchTerm") String searchTerm){
         try {
-            List<Advertiser> advertisers = advertiserService.getSuggestedAdvertisers(searchTerm);
+            List<Advertiser> advertisers = advertiserService.getSuggestedAdvertisers(searchTerm, true);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertisers);
         }
         catch (Exception e){

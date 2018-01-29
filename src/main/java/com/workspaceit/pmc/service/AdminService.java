@@ -176,6 +176,7 @@ public class AdminService {
         admin.setPhoneNumber(adminCreateForm.getPhoneNumber());
         admin.setUserName(adminCreateForm.getUserName());
         admin.setEmail(adminCreateForm.getEmail());
+        admin.setActive(true);
         admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
     }
     @Transactional(rollbackFor = Exception.class)

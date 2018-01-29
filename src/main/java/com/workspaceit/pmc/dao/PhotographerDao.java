@@ -19,6 +19,13 @@ public class PhotographerDao extends BaseDao {
         return session.createQuery("FROM Photographer ORDER BY id DESC")
                 .list();
     }
+
+    public List<Photographer> getActivePhotographers(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Photographer WHERE active=true ORDER BY id DESC")
+                .list();
+    }
+
     public List<Photographer> getAll(Integer[] ids){
         List<Photographer> photographers = null;
         if(ids.length > 0) {
@@ -67,9 +74,10 @@ public class PhotographerDao extends BaseDao {
                 .uniqueResult();
     }
 
-    public List<Photographer> getSuggestedPhotographers(String searchTerm){
+    public List<Photographer> getSuggestedPhotographers(String searchTerm, Boolean active){
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("SELECT DISTINCT(p) FROM Photographer p where p.fullName LIKE :searchTerm ORDER BY " +
+        Query query = session.createQuery("SELECT DISTINCT(p) FROM Photographer p WHERE active=:active AND " +
+                "p.fullName LIKE :searchTerm ORDER BY " +
                 "CASE " +
                 "   WHEN p.fullName=:txt THEN 0" +
                 "   WHEN p.fullName LIKE :ptxt THEN 1" +
@@ -80,6 +88,7 @@ public class PhotographerDao extends BaseDao {
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");
         query.setParameter("txtp", "%" +searchTerm);
+        query.setParameter("active", active);
         return query.list();
     }
 }

@@ -57,8 +57,15 @@ public class EventService {
     public Event getById(int id){
         return this.eventDao.getById(id);
     }
+
+    @Transactional
     public List<Event> getAll(){
         return this.eventDao.getAll();
+    }
+
+    @Transactional
+    public List<Event> getActiveEvents(){
+        return this.eventDao.getActiveEvents();
     }
 
     @Transactional
@@ -105,6 +112,7 @@ public class EventService {
         event.setEventPhoto(eventImageName);
         event.setEventPrivate(eventForm.getIsPrivate());
         event.setCreatedBy(admin);
+        event.setActive(true);
         return event;
     }
 

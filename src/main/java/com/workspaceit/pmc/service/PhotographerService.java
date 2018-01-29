@@ -56,9 +56,15 @@ public class PhotographerService {
     public Photographer getById(int id){
         return this.photographerDao.getById(id);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public List<Photographer> getAll(){
         return this.photographerDao.getAll();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Photographer> getActivePhotographers(){
+        return this.photographerDao.getActivePhotographers();
     }
 
     @Transactional
@@ -85,6 +91,7 @@ public class PhotographerService {
         photographer.setPhoneNumber(photographerForm.getPhoneNumber());
         photographer.setProfilePhoto(profilePictureName);
         photographer.setCreatedBy(admin);
+        photographer.setActive(true);
         photographerDao.insert(photographer);
         /**
          * Remove temporary file after insert
@@ -166,7 +173,7 @@ public class PhotographerService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public List<Photographer> getSuggestedPhotographers(String searchTerm){
-        return this.photographerDao.getSuggestedPhotographers(searchTerm);
+    public List<Photographer> getSuggestedPhotographers(String searchTerm, Boolean active){
+        return this.photographerDao.getSuggestedPhotographers(searchTerm, active);
     }
 }

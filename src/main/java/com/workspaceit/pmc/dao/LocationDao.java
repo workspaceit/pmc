@@ -17,6 +17,13 @@ public class LocationDao extends BaseDao{
         return session.createQuery("FROM Location ORDER BY id DESC")
                 .list();
     }
+
+    public List<Location> getActiveLocations(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Location WHERE active=true ORDER BY id DESC")
+                .list();
+    }
+
     public List<Location> getAll(Integer[] ids){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Location where id in :ids")

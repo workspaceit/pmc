@@ -89,7 +89,7 @@ public class WatermarkRestController {
     @GetMapping("/auto-suggest")
     public ResponseEntity<?> getSuggestedWatermarks(@RequestParam("searchTerm") String searchTerm){
         try {
-            List<Watermark> watermarks = watermarkService.getSuggestedWatermarks(searchTerm);
+            List<Watermark> watermarks = watermarkService.getSuggestedWatermarks(searchTerm, true);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(watermarks);
         }
         catch (Exception e){

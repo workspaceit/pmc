@@ -33,6 +33,12 @@ public class AdvertiserDao extends BaseDao {
                                       "ORDER BY id desc")
                 .list();
     }
+    public List<Advertiser> getActiveAdvertisers(){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Advertiser WHERE active=true ORDER BY id desc")
+                .list();
+    }
+
 
     public List<Advertiser> getAll(Integer[] ids){
         List<Advertiser> advertisers = null;
@@ -46,20 +52,21 @@ public class AdvertiserDao extends BaseDao {
         return advertisers;
     }
 
-    public List<Advertiser> getSuggestedAdvertisers(String searchTerm){
+    public List<Advertiser> getSuggestedAdvertisers(String searchTerm, Boolean active){
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a " +
-                                            "where a.name LIKE :searchTerm ORDER BY " +
-                                            "CASE " +
-                                            "   WHEN a.name=:txt THEN 0" +
-                                            "   WHEN a.name LIKE :ptxt THEN 1" +
-                                            "   WHEN a.name LIKE :txtp THEN 3" +
-                                            "   ELSE 2 " +
-                                            "END, a.name ASC, id DESC");
+
+        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a where active=:active a.name LIKE :searchTerm ORDER BY " +
+                "CASE " +
+                "   WHEN a.name=:txt THEN 0" +
+                "   WHEN a.name LIKE :ptxt THEN 1" +
+                "   WHEN a.name LIKE :txtp THEN 3" +
+                "   ELSE 2 " +
+                "END, a.name ASC, id DESC");
         query.setParameter("searchTerm", "%"+searchTerm+"%");
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");
         query.setParameter("txtp", "%" +searchTerm);
+        query.setParameter("active", active);
         return query.list();
     }
     public List<Advertiser> getByEventId(int eventId){

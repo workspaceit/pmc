@@ -78,7 +78,7 @@ public class VenueRestController {
     @GetMapping("/auto-suggest")
     public ResponseEntity<?> getSuggestedVenues(@RequestParam("searchTerm") String searchTerm){
         try {
-            List<Venue> venues = venueService.getSuggestedVenues(searchTerm);
+            List<Venue> venues = venueService.getSuggestedVenues(searchTerm, true);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(venues);
         }
         catch (Exception e){
