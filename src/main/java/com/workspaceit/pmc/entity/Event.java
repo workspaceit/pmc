@@ -87,6 +87,9 @@ public class Event {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     public int getId() {
         return id;
     }
@@ -201,5 +204,13 @@ public class Event {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

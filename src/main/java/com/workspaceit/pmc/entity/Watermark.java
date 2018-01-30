@@ -80,6 +80,9 @@ public class Watermark {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     public int getId() {
         return id;
     }
@@ -208,4 +211,60 @@ public class Watermark {
         this.active = active;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Watermark watermark = (Watermark) o;
+
+        if (id != watermark.id) return false;
+        if (name != null ? !name.equals(watermark.name) : watermark.name != null) return false;
+        if (type != watermark.type) return false;
+        if (logoName != null ? !logoName.equals(watermark.logoName) : watermark.logoName != null) return false;
+        if (logoImage != null ? !logoImage.equals(watermark.logoImage) : watermark.logoImage != null) return false;
+        if (size != watermark.size) return false;
+        if (fade != null ? !fade.equals(watermark.fade) : watermark.fade != null) return false;
+        if (watermarkText != null ? !watermarkText.equals(watermark.watermarkText) : watermark.watermarkText != null)
+            return false;
+        if (font != null ? !font.equals(watermark.font) : watermark.font != null) return false;
+        if (placement != watermark.placement) return false;
+        if (color != null ? !color.equals(watermark.color) : watermark.color != null) return false;
+        if (createdAt != null ? !createdAt.equals(watermark.createdAt) : watermark.createdAt != null) return false;
+        if (updatedAt != null ? !updatedAt.equals(watermark.updatedAt) : watermark.updatedAt != null) return false;
+        if (createdBy != null ? !createdBy.equals(watermark.createdBy) : watermark.createdBy != null) return false;
+        if (events != null ? !events.equals(watermark.events) : watermark.events != null) return false;
+        if (active != null ? !active.equals(watermark.active) : watermark.active != null) return false;
+        return deleted != null ? deleted.equals(watermark.deleted) : watermark.deleted == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (logoName != null ? logoName.hashCode() : 0);
+        result = 31 * result + (logoImage != null ? logoImage.hashCode() : 0);
+        result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + (fade != null ? fade.hashCode() : 0);
+        result = 31 * result + (watermarkText != null ? watermarkText.hashCode() : 0);
+        result = 31 * result + (font != null ? font.hashCode() : 0);
+        result = 31 * result + (placement != null ? placement.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (events != null ? events.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
+        result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
+        return result;
+    }
 }

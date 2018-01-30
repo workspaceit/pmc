@@ -1,13 +1,10 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.entity.Watermark;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,7 +32,7 @@ public class WatermarkDao extends BaseDao {
 
     public List<Watermark> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Watermark ORDER BY id DESC")
+        return session.createQuery("FROM Watermark w where w.deleted = false ORDER BY w.id DESC")
                 .list();
     }
 

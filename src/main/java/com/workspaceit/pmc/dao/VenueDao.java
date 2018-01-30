@@ -32,7 +32,7 @@ public class VenueDao extends BaseDao{
 
     public List<Venue> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Venue ORDER BY id DESC")
+        return session.createQuery("FROM Venue v where v.deleted = false ORDER BY v.id DESC")
                 .list();
     }
 

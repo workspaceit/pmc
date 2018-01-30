@@ -107,6 +107,7 @@ public class VenueService {
         venue.setName(venueForm.getName());
         venue.setCreatedBy(adminService.getAdminByEmail(venueForm.getUserEmail()));
         venue.setActive(true);
+        venue.setDeleted(false);
         try {
             venue.setLocation(locationService.getLocation(Integer.parseInt(venueForm.getLocation_id())));
         }catch (Exception ex){}

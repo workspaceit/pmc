@@ -113,6 +113,7 @@ public class EventService {
         event.setEventPrivate(eventForm.getIsPrivate());
         event.setCreatedBy(admin);
         event.setActive(true);
+        event.setDeleted(false);
         return event;
     }
 

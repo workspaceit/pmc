@@ -50,11 +50,14 @@ $(document).ready(function() {
     });
 
     $body.on('click', '#delete-selected-btn', function () {
-        var ids = getCheckedIds();
-        for(var i= 0; i < ids.length; i++) {
-            var id = ids[i];
-            deleteEntity(id, false);
-        }
+
+        bindDeleteModalButtonAction(function(){
+            var ids = getCheckedIds();
+            for(var i= 0; i < ids.length; i++) {
+                var id = ids[i];
+                deleteEntityFromServer(id, false);
+            }
+        });
     });
 
     $body.on('click', '#activate-selected-btn', function () {
@@ -151,8 +154,8 @@ $(document).ready(function() {
 
 });
 
+function deleteEntityFromServer(id,  multiple){
 
-function deleteEntity(id,  multiple) {
     var data = {
         'id': id,
         'type': type
@@ -185,4 +188,28 @@ function deleteEntity(id,  multiple) {
             }
         }
     });
+}
+function deleteEntity(id,  multiple) {
+    bindDeleteModalButtonAction(function(){
+        console.log("YES "+id);
+        deleteEntityFromServer(id,  multiple);
+    });
+}
+function bindDeleteModalButtonAction(yesBtnFn){
+    $("#delete-content-yes").unbind("click");
+    $("#delete-content-no").unbind("click");
+
+    $("#delete-content-yes").click(function(){
+        yesBtnFn();
+        closeDeleteEntityModal();
+    });
+    $("#delete-content-no").click(function(){
+        closeDeleteEntityModal();
+    });
+    $("#delete-content").modal("show");
+}
+function closeDeleteEntityModal(){
+    $("#delete-content").modal("hide");
+    $("#delete-content-no").unbind("click");
+    $("#delete-content-yes").unbind("click");
 }

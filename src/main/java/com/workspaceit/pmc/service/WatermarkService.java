@@ -76,10 +76,10 @@ public class WatermarkService {
             logoImgName = this.fileService.copyFile(logoImgToken);
         }
 
-        System.out.println("logoImgName"+logoImgName);
+
         watermark.setLogoImage(logoImgName);
         watermark.setActive(true);
-
+        watermark.setDeleted(false);
 
         this.create(watermark);
 

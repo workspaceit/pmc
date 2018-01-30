@@ -27,9 +27,13 @@ public class CommonDao extends BaseDao {
         return result == 1;
     }
 
+    /**
+     * Keep the data by set deleted column to false / 0 and activate false/0
+     * All deleted data are also not active
+     * */
     public boolean delete(String entityName, Integer id) {
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("UPDATE " + entityName + " SET deleted=true WHERE id=:id");
+        Query query = session.createQuery("UPDATE " + entityName + " SET deleted=true,active=false  WHERE id=:id");
         query.setParameter("id", id);
         int result = query.executeUpdate();
         return result == 1;

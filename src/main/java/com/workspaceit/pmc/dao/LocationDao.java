@@ -14,13 +14,13 @@ import java.util.List;
 public class LocationDao extends BaseDao{
     public List<Location> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Location ORDER BY id DESC")
+        return session.createQuery("FROM Location l where l.deleted = false  ORDER BY  l.id DESC")
                 .list();
     }
 
     public List<Location> getActiveLocations(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Location WHERE active=true ORDER BY id DESC")
+        return session.createQuery("FROM Location l WHERE active=true ORDER BY  l.id DESC")
                 .list();
     }
 

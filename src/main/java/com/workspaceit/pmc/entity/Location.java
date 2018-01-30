@@ -76,6 +76,9 @@ public class Location {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     public int getId() {
         return id;
     }
@@ -212,6 +215,15 @@ public class Location {
         this.active = active;
     }
 
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -238,12 +250,33 @@ public class Location {
         if (createdAt != null ? !createdAt.equals(location.createdAt) : location.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(location.updatedAt) : location.updatedAt != null) return false;
         if (createdBy != null ? !createdBy.equals(location.createdBy) : location.createdBy != null) return false;
-        return locationBackgroundImages != null ? locationBackgroundImages.equals(location.locationBackgroundImages) : location.locationBackgroundImages == null;
+        if (locationBackgroundImages != null ? !locationBackgroundImages.equals(location.locationBackgroundImages) : location.locationBackgroundImages != null)
+            return false;
+        if (active != null ? !active.equals(location.active) : location.active != null) return false;
+        return deleted != null ? deleted.equals(location.deleted) : location.deleted == null;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (zip != null ? zip.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (locationLogo != null ? locationLogo.hashCode() : 0);
+        result = 31 * result + (hasSlideshow != null ? hasSlideshow.hashCode() : 0);
+        result = 31 * result + (durationSpeed != null ? durationSpeed.hashCode() : 0);
+        result = 31 * result + (breakTime != null ? breakTime.hashCode() : 0);
+        result = 31 * result + (fadeInTime != null ? fadeInTime.hashCode() : 0);
+        result = 31 * result + (fadeOutTime != null ? fadeOutTime.hashCode() : 0);
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (locationBackgroundImages != null ? locationBackgroundImages.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
+        result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -265,6 +298,10 @@ public class Location {
                 ", updatedAt=" + updatedAt +
                 ", createdBy=" + createdBy +
                 ", locationBackgroundImages=" + locationBackgroundImages +
+                ", active=" + active +
+                ", deleted=" + deleted +
                 '}';
     }
+
+
 }

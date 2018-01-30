@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-
+        <%@include file="../others/delete-modal.jsp"%>
         <script>
             $(document).ready(function() {
                 $('#photographer-datatable').DataTable({

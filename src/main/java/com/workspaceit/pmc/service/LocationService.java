@@ -96,6 +96,9 @@ public class LocationService {
         }
 
         location.setLocationLogo(logoImgName);
+        location.setActive(true);
+        location.setDeleted(false);
+
         this.create(location);
 
         try{

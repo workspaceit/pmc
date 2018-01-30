@@ -15,7 +15,7 @@
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
                     <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
                     <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
-                    <button class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
+                    <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
                     <table id="event-datatable" class=" table table-bordered table-hover table-responsive cstm-admin-table">
@@ -76,7 +76,7 @@
                                     <a href="<c:url value="/admin/event/update/${event.id}" />" class="btn btn-success">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <!--<a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>-->
+                                    <a href="javascript:void(0)" onclick="deleteEntity(${event.id},false)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -85,6 +85,7 @@
                 </div>
             </div>
         </div>
+        <%@include file="../others/delete-modal.jsp"%>
         <script>
             $(document).ready(function() {
                 $('#event-datatable').DataTable({
