@@ -99,9 +99,9 @@
                             <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" disabled="disabled" >
                                     <c:forEach var="duration" items="${durations}" >
                                         <c:set var="durationOptionsSelected" value=""></c:set>
-                                      <%--  <c:if test="${popupAdSms.duration == duration}">
+                                        <c:if test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).duration == duration}">
                                             <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
-                                        </c:if>--%>
+                                        </c:if>
                                         <option value="${duration}" ${durationOptionsSelected}>${duration}s</option>
                                     </c:forEach>
                               </select>
@@ -201,9 +201,9 @@
                             <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" disabled="disabled" >
                                 <c:forEach var="duration" items="${durations}" >
                                     <c:set var="durationOptionsSelected" value=""></c:set>
-                                    <%--<c:if test="${popupAdEmail.duration == duration}">
+                                    <c:if test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).duration == duration}">
                                         <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
-                                    </c:if>--%>
+                                    </c:if>
                                     <option value="${duration}" ${durationOptionsSelected} >${duration}s</option>
                                 </c:forEach>
                           </select>

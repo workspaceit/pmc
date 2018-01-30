@@ -52,6 +52,9 @@ public class Section {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
+    @Column(name = "duration")
+    private Integer duration;
+
     public int getId() {
         return id;
     }
@@ -132,6 +135,14 @@ public class Section {
         this.createdBy = createdBy;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -150,7 +161,8 @@ public class Section {
         if (sectionResource != null ? !sectionResource.equals(section.sectionResource) : section.sectionResource != null)
             return false;
         if (createdAt != null ? !createdAt.equals(section.createdAt) : section.createdAt != null) return false;
-        return createdBy != null ? createdBy.equals(section.createdBy) : section.createdBy == null;
+        if (createdBy != null ? !createdBy.equals(section.createdBy) : section.createdBy != null) return false;
+        return duration != null ? duration.equals(section.duration) : section.duration == null;
     }
 
     @Override
@@ -165,22 +177,8 @@ public class Section {
         result = 31 * result + (sectionResource != null ? sectionResource.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (duration != null ? duration.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Section{" +
-                "id=" + id +
-                ", advertisementId=" + advertisementId +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", rotation=" + rotation +
-                ", sectionType=" + sectionType +
-                ", expireDate=" + expireDate +
-                ", sectionResource=" + sectionResource +
-                ", createdAt=" + createdAt +
-                //", createdBy=" + createdBy +
-                '}';
-    }
 }

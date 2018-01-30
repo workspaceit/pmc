@@ -37,6 +37,7 @@ public class ServiceResponse {
         return this.formError.size()>0;
     }
     public void bindValidationError(BindingResult result){
+
         if(result.hasErrors()) {
             /**
              * To generate unique error result
@@ -92,11 +93,13 @@ public class ServiceResponse {
         return formError;
     }
 
-    public void setValidationError(String params, String msg){
+    public ServiceResponse setValidationError(String params, String msg){
         Map<String,String> errorObj = new HashMap<>();
         errorObj.put("params",params);
         errorObj.put("msg",msg);
-     this.formError.add(errorObj);
+        this.formError.add(errorObj);
+
+        return this;
     }
 
 

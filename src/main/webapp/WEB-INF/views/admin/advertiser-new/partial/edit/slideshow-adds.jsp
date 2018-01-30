@@ -1,5 +1,4 @@
 <%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.FILE_TYPE" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,7 +13,7 @@
                 <div class="" style="margin-left: auto;float:right;">
                     <span id="slideShowBannerExpiryDateLbl" class="date_view">
                         <c:if test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate!=null}" >
-                            <fmt:formatDate value="${slideshowAd.sections.get(SECTION_TYPE.BANNER).expireDate}" type="date" />
+                            <fmt:formatDate value="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate}" type="date" />
                         </c:if>
                     </span>
                     <c:set var="slideShowBannerRotateActive" value="" ></c:set>
@@ -35,7 +34,7 @@
                 <div class="date-small pull-right" style="display: none;">
                     <c:set var="tbExpDate" value="" />
                     <c:if test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate!=null}" >
-                        <fmt:formatDate value="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate}" pattern="MM/dd/yyyy" />
+                        <fmt:formatDate var="tbExpDate" value="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate}" pattern="MM/dd/yyyy" />
                     </c:if>
                     <input id="slideShowBannerExpiryDate" type="text" class="form-control" value="${tbExpDate}"/>
                     <i class="fa fa-calendar"></i>
@@ -74,9 +73,9 @@
 
                                     <c:forEach var="duration" items="${durations}" >
                                         <c:set var="durationOptions" value=""></c:set>
-                                       <%-- <c:if test="${slideshowAd.bannerDuration == duration}">
+                                        <c:if test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).duration == duration}">
                                             <c:set var="durationOptions" value="selected=\"selected\""></c:set>
-                                        </c:if>--%>
+                                        </c:if>
                                         <option value="${duration}" ${durationOptions} >${duration}s</option>
                                     </c:forEach>
                               </select>
@@ -123,7 +122,7 @@
                 <div class="date-small pull-right" style="display: none;" >
                     <c:set var="bbExpDate" value="" />
                     <c:if test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate!=null}" >
-                        <fmt:formatDate value="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate}" pattern="MM/dd/yyyy" />
+                        <fmt:formatDate var="bbExpDate" value="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate}" pattern="MM/dd/yyyy" />
                     </c:if>
 
                     <input id="slideShowVideoExpiryDate" type="text" class="form-control" value="${bbExpDate}"/>
@@ -158,9 +157,9 @@
 
                                     <c:forEach var="duration" items="${durations}" >
                                         <c:set var="durationOptions" value=""></c:set>
-                                       <%-- <c:if test="${slideshowAd.videoDuration == duration}">
+                                       <c:if test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).duration == duration}">
                                             <c:set var="durationOptions" value="selected=\"selected\""></c:set>
-                                        </c:if>--%>
+                                        </c:if>
                                         <option value="${duration}" ${durationOptions} >${duration}s</option>
                                     </c:forEach>
                               </select>

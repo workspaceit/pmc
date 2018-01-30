@@ -33,7 +33,7 @@ public class GalleryAdsValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return GalleryAdsUpdateForm.class.equals(aClass);
+        return GalleryAdsForm.class.equals(aClass);
     }
 
     @Override
@@ -75,8 +75,11 @@ public class GalleryAdsValidator implements Validator {
     private void checkValidGallery(Integer id, Errors errors) {
         GalleryAd galleryAd = this.galleryAdService.getById(id);
         if(galleryAd==null){
-            ValidationUtils.rejectIfEmpty(errors,"id","GalleryAd not found by id :"+id);
-            return;
+            if(errors.getObjectName().equals("advertiserAndAllCompositeUpdateForm")){
+                errors.rejectValue("galleryAds.id","GalleryAd not found by id :"+id);
+            }else{
+                errors.rejectValue("id","GalleryAd not found by id :"+id);
+            }
         }
 
     }

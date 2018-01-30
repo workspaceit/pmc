@@ -69,7 +69,6 @@ function updateAdvertiser(){
             422: function(response) {
                 console.log("Error from Create");
                 console.log(response);
-                validateAll();
             }
         },
         success: function(response) {

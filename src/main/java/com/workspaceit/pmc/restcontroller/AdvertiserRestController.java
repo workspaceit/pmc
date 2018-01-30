@@ -217,7 +217,7 @@ public class AdvertiserRestController {
         }
 
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
+        return ResponseEntity.status(HttpStatus.OK).body(advertiser);
     }
 
     @PostMapping(value = "/update-all/{id}")
@@ -247,9 +247,11 @@ public class AdvertiserRestController {
 
 
         this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);
-        this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
-        this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
-        this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
+
+        /** All Update disabled as per discusstion with tahsin vhai */
+        //this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
+        //this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
+        //this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
 
         if (bindingResult.hasErrors()) {
             serviceResponse.bindValidationError(bindingResult);
@@ -257,12 +259,17 @@ public class AdvertiserRestController {
         }
 
         try {
-            int galleryAdId = advertiserAndAllCompositeForm.getGalleryAds().getId();
+            Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
+
+            /*int galleryAdId = advertiserAndAllCompositeForm.getGalleryAds().getId();
             int slideShowAdId = advertiserAndAllCompositeForm.getSlideShowAds().getId();
             int smsPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getSmsId();
-            int emailPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getEmailId();
+            int emailPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getEmailId();*/
 
-            Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
+
+            /** All Update disabled as per discusstion with tahsin vhai */
+
+            /*
             this.galleryAdService.update(galleryAdId,
                                         advertiser,
                                         advertiserAndAllCompositeForm.getGalleryAds(),
@@ -276,11 +283,11 @@ public class AdvertiserRestController {
                                             emailPopUpAdId,
                                             advertiser,
                                             advertiserAndAllCompositeForm.getPopupAds(),
-                                            currentUser);
+                                            currentUser);*/
 
         } catch (EntityNotFound entityNotFound) {
 
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.setMsg("id",entityNotFound.getMessage()).getFormError());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.setValidationError("id",entityNotFound.getMessage()).getFormError());
 
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Advertiser successfully created");

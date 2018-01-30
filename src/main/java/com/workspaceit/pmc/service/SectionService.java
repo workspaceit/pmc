@@ -5,17 +5,22 @@ import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.dao.SectionDao;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
+import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +45,14 @@ public class SectionService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    public void  update(int id, Advertiser advertiser, GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound{
+
+        Section section = this.getSection(id);
+
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public void create(Advertisement advertisement,GalleryAdsForm galleryAdsForm,Admin admin){
 
 
@@ -61,16 +74,20 @@ public class SectionService {
         Section logoSection = this.getSection(advertisement.getId(),
                                             null,
                                             logoSectionResources.size(),
+                                            null,
                                             SECTION_TYPE.LOGO,
                                             AdvertiseRotationSettings.STATIC,
+                                            null,
                                             logoSectionResources,
                                             admin);
 
         Section bgSection = this.getSection(advertisement.getId(),
                                             galleryAdsForm.getBgPrice(),
                                             bgSectionResources.size(),
+                                            null,
                                             SECTION_TYPE.BACKGROUND,
                                             AdvertiseRotationSettings.STATIC,
+                                            null,
                                             bgSectionResources,
                                             admin);
 
@@ -78,8 +95,10 @@ public class SectionService {
                                             advertisement.getId(),
                                             galleryAdsForm.getTopBannerPrice(),
                                             topBannerSectionResources.size(),
+                                            null,
                                             SECTION_TYPE.TOP_BANNER,
                                             galleryAdsForm.getTopBannerRotation(),
+                                            galleryAdsForm.getTopBannerExpiryDate(),
                                             topBannerSectionResources,
                                             admin);
 
@@ -87,8 +106,10 @@ public class SectionService {
                                             advertisement.getId(),
                                             galleryAdsForm.getBottomBannerPrice(),
                                             bottomBannerSectionResources.size(),
+                                            null,
                                             SECTION_TYPE.BOTTOM_BANNER,
                                             galleryAdsForm.getBottomBannerRotation(),
+                                            galleryAdsForm.getBottomBannerExpiryDate(),
                                             bottomBannerSectionResources,
                                             admin);
 
@@ -112,7 +133,7 @@ public class SectionService {
         List<SectionResource> emailSecResources = getSectionResource(popupAdsForm.getEmailPopupBanner(),FILE_TYPE.IMAGE);
 
 
-        SectionResource tmpSmsVideoSecResource =  getSectionResource(popupAdsForm.getEmailPopupVideo(),FILE_TYPE.VIDEO);
+        SectionResource tmpSmsVideoSecResource =  getSectionResource(popupAdsForm.getSmsPopupVideo(),FILE_TYPE.VIDEO);
         SectionResource tmpEmailVideoSecResource =  getSectionResource(popupAdsForm.getEmailPopupVideo(),FILE_TYPE.VIDEO);
 
         smsSecResources.add(tmpSmsVideoSecResource);
@@ -120,23 +141,27 @@ public class SectionService {
 
 
         Section emailSection = this.getSection(
-                popSmsAdv.getId(),
-                popupAdsForm.getEmailAdPrice(),
-                emailSecResources.size(),
-                SECTION_TYPE.BANNER,
-                popupAdsForm.getEmailRotation(),
-                emailSecResources,
-                admin);
+                                                popSmsAdv.getId(),
+                                                popupAdsForm.getEmailAdPrice(),
+                                                emailSecResources.size(),
+                                                popupAdsForm.getEmailPopupVideoDuration(),
+                                                SECTION_TYPE.BANNER,
+                                                popupAdsForm.getEmailRotation(),
+                                                popupAdsForm.getEmailExpiryDate(),
+                                                emailSecResources,
+                                                admin);
 
 
         Section smsBannerSection = this.getSection(
-                popEmailAdv.getId(),
-                popupAdsForm.getEmailAdPrice(),
-                emailSecResources.size(),
-                SECTION_TYPE.BANNER,
-                popupAdsForm.getEmailRotation(),
-                smsSecResources,
-                admin);
+                                                popEmailAdv.getId(),
+                                                popupAdsForm.getEmailAdPrice(),
+                                                emailSecResources.size(),
+                                                popupAdsForm.getSmsPopupVideoDuration(),
+                                                SECTION_TYPE.BANNER,
+                                                popupAdsForm.getEmailRotation(),
+                                                popupAdsForm.getSmsExpiryDate(),
+                                                smsSecResources,
+                                                admin);
 
 
 
@@ -161,21 +186,25 @@ public class SectionService {
         videoSectionResources.add(tmpVideoSecResource);
 
         Section topBannerSection = this.getSection(
-                advertisement.getId(),
-                slideShowAdsForm.getBannerPrice(),
-                topBannerSectionResources.size(),
-                SECTION_TYPE.TOP_BANNER,
-                slideShowAdsForm.getBannerRotation(),
-                topBannerSectionResources,
-                admin);
+                                            advertisement.getId(),
+                                            slideShowAdsForm.getBannerPrice(),
+                                            topBannerSectionResources.size(),
+                                            slideShowAdsForm.getSlideShowBannerDuration(),
+                                            SECTION_TYPE.TOP_BANNER,
+                                            slideShowAdsForm.getBannerRotation(),
+                                            slideShowAdsForm.getBannerExpiryDate(),
+                                            topBannerSectionResources,
+                                            admin);
 
         Section videoSection = this.getSection(advertisement.getId(),
-                slideShowAdsForm.getVideoPrice(),
-                videoSectionResources.size(),
-                SECTION_TYPE.BOTTOM_BANNER,
-                slideShowAdsForm.getVideoRotation(),
-                videoSectionResources,
-                admin);
+                                            slideShowAdsForm.getVideoPrice(),
+                                            videoSectionResources.size(),
+                                            slideShowAdsForm.getSlideShowVideoDuration(),
+                                            SECTION_TYPE.BOTTOM_BANNER,
+                                            slideShowAdsForm.getVideoRotation(),
+                                            slideShowAdsForm.getVideoExpiryDate(),
+                                            videoSectionResources,
+                                            admin);
 
 
 
@@ -201,8 +230,10 @@ public class SectionService {
     private Section getSection(Integer advertisementId,
                                Float price,
                                Integer quantity,
+                               Integer duration,
                                SECTION_TYPE sectionType,
                                AdvertiseRotationSettings rotation,
+                               Date expireDate,
                                List<SectionResource> sectionResources,
                                Admin createdBy){
 
@@ -211,10 +242,35 @@ public class SectionService {
         section.setAdvertisementId(advertisementId);
         section.setPrice(price);
         section.setQuantity(quantity);
+        section.setDuration(duration);
         section.setSectionType(sectionType);
         section.setRotation(rotation);
+        section.setExpireDate(expireDate);
         section.setSectionResource(sectionResources);
         section.setCreatedBy(createdBy);
+
+        return section;
+
+    }
+    private Section getSection(Section section,
+                               Integer advertisementId,
+                               Float price,
+                               Integer quantity,
+                               Integer duration,
+                               SECTION_TYPE sectionType,
+                               AdvertiseRotationSettings rotation,
+                               Date expireDate,
+                               List<SectionResource> sectionResources){
+
+
+        if(advertisementId!=null) section.setAdvertisementId(advertisementId);
+        if(price!=null) section.setPrice(price);
+        if(quantity!=null) section.setQuantity(quantity);
+        if(duration!=null) section.setDuration(duration);
+        if(sectionType!=null) section.setSectionType(sectionType);
+        if(rotation!=null) section.setRotation(rotation);
+        if(expireDate!=null) section.setExpireDate(expireDate);
+        if(sectionResources!=null) section.setSectionResource(sectionResources);
 
         return section;
 
@@ -232,11 +288,26 @@ public class SectionService {
     }
     private SectionResource getSectionResource(Integer token,FILE_TYPE fileType){
         String logoFileName = this.fileService.copyFile(token);
+        String mimeType = this.fileService.getMimeTypeByToken(token);
         SectionResource sectionResource = new SectionResource();
 
         sectionResource.setFileType(fileType);
         sectionResource.setFileName(logoFileName);
+        sectionResource.setMimeType(mimeType);
 
         return sectionResource;
+    }
+
+    @Transactional
+    private Section getSection(Integer id) throws EntityNotFound {
+
+        Section section = this.sectionDao.getById(id);
+
+        if(section==null){
+            throw new EntityNotFound("section not found by id:"+id);
+        }
+
+        return section;
+
     }
 }
