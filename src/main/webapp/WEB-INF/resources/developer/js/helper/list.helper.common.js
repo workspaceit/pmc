@@ -1,6 +1,8 @@
+var $body = $('body');
+var type = $('#type').val();
+
 $(document).ready(function() {
-    var $body = $('body');
-    var type = $('#type').val();
+
 
     function getCheckedIds(){
         return $('.select-checkbox:checked').map(function(){return $(this).val();}).get();
@@ -128,40 +130,7 @@ $(document).ready(function() {
             }
         });
     }
-    function deleteEntity(id,  multiple) {
-        var data = {
-            'id': id,
-            'type': type
-        };
-        var title = $('#title-' + id).html();
-        $.ajax({
-            url: BASEURL+'api/common/delete-entity',
-            data: data,
-            type: 'POST',
-            traditional: true,
-            statusCode: {
-                401: function (response) {
-                    if(!multiple){
 
-                    }
-                },
-                422: function (response) {
-
-                    if(!multiple){
-                        showServerErrorMessage(title,response.responseJSON.msg);
-                    }
-                }
-            },
-            success: function(data){
-                $('#title-' + id).parents("tr").fadeOut(500,function(){
-                    $('#title-' + id).parents("tr").remove();
-                });
-                if(!multiple){
-                    showSuccessMessage(title,data.msg);
-                }
-            }
-        });
-    }
 
     function showEnableMessage(id){
         var title = $('#title-' + id).html();
@@ -181,3 +150,39 @@ $(document).ready(function() {
     }
 
 });
+
+
+function deleteEntity(id,  multiple) {
+    var data = {
+        'id': id,
+        'type': type
+    };
+    var title = $('#title-' + id).html();
+    $.ajax({
+        url: BASEURL+'api/common/delete-entity',
+        data: data,
+        type: 'POST',
+        traditional: true,
+        statusCode: {
+            401: function (response) {
+                if(!multiple){
+
+                }
+            },
+            422: function (response) {
+
+                if(!multiple){
+                    showServerErrorMessage(title,response.responseJSON.msg);
+                }
+            }
+        },
+        success: function(data){
+            $('#title-' + id).parents("tr").fadeOut(500,function(){
+                $('#title-' + id).parents("tr").remove();
+            });
+            if(!multiple){
+                showSuccessMessage(title,data.msg);
+            }
+        }
+    });
+}

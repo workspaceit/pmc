@@ -1,0 +1,1 @@
+ALTER TABLE  `photographers` ADD  `deleted` TINYINT( 1 ) NOT NULL AFTER  `active` ;

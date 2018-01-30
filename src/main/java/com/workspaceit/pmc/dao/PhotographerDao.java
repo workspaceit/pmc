@@ -16,7 +16,7 @@ public class PhotographerDao extends BaseDao {
 
     public List<Photographer> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Photographer ORDER BY id DESC")
+        return session.createQuery("FROM Photographer p where p.deleted = false ORDER BY id DESC")
                 .list();
     }
 

@@ -84,6 +84,7 @@ public class PhotographerService {
         }
 
         Photographer photographer = new Photographer();
+
         photographer.setFullName(photographerForm.getFullName());
         photographer.setUserName(photographerForm.getUserName());
         photographer.setEmail(photographerForm.getEmail());
@@ -92,6 +93,8 @@ public class PhotographerService {
         photographer.setProfilePhoto(profilePictureName);
         photographer.setCreatedBy(admin);
         photographer.setActive(true);
+        photographer.setDeleted(false);
+
         photographerDao.insert(photographer);
         /**
          * Remove temporary file after insert

@@ -87,8 +87,13 @@ public class PhotographerValidator implements Validator {
     }
     private void uniqueEmailCheck(String email,Errors errors){
         Photographer photographer = this.photographerService.getByEmail(email);
-        if(photographer!=null){
-            errors.rejectValue("email", "Email already taken");
+        if(photographer!=null ){
+            String tmpMsg = "Email already taken";
+
+            if(photographer.getDeleted()){
+                tmpMsg+=" but account was deleted";
+            }
+            errors.rejectValue("email", tmpMsg);
         }
     }
     private void emailUsedByOthersCheck(int id,String email,Errors errors){

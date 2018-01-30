@@ -15,7 +15,7 @@
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
                     <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
                     <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
-                    <button class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
+                    <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
                     <table id="photographer-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
@@ -88,7 +88,7 @@
                             </td>
                             <td class="action-clm text-center">
                                 <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteEntity(${photographer.id},false)"  class="btn btn-danger"><i  class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         </d:forEach>
