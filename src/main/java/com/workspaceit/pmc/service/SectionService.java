@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
@@ -10,6 +11,7 @@ import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.util.FileToken;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
@@ -19,10 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Column;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Transactional
 @Service
@@ -43,11 +42,32 @@ public class SectionService {
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
-
     @Transactional(rollbackFor = Exception.class)
-    public void  update(int id, Advertiser advertiser, GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound{
+    public void  update(Advertisement advertisement, GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound{
+       Integer logoToken =  galleryAdsForm.getLogoToken();
 
-        Section section = this.getSection(id);
+       Section logoSection =  advertisement.getSections().get(SECTION_TYPE.LOGO);
+
+       FileToken fileToken = new FileToken(logoToken,FILE_TYPE.IMAGE);
+
+
+       logoSection =  this.getSection(logoSection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                fileToken,
+                null,
+                null);
+
+
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void  update(Section section, GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound{
+
+
 
 
     }
@@ -253,24 +273,34 @@ public class SectionService {
 
     }
     private Section getSection(Section section,
-                               Integer advertisementId,
                                Float price,
                                Integer quantity,
                                Integer duration,
                                SECTION_TYPE sectionType,
                                AdvertiseRotationSettings rotation,
                                Date expireDate,
-                               List<SectionResource> sectionResources){
+                               FileToken newSingleFileToken,
+                               Integer[] newTokens,
+                               Integer[] deletedToken){
 
 
-        if(advertisementId!=null) section.setAdvertisementId(advertisementId);
         if(price!=null) section.setPrice(price);
         if(quantity!=null) section.setQuantity(quantity);
         if(duration!=null) section.setDuration(duration);
         if(sectionType!=null) section.setSectionType(sectionType);
         if(rotation!=null) section.setRotation(rotation);
         if(expireDate!=null) section.setExpireDate(expireDate);
-        if(sectionResources!=null) section.setSectionResource(sectionResources);
+
+
+        if(newSingleFileToken!=null){
+            List<SectionResource> sectionResources = new LinkedList<>();
+
+            SectionResource sectionResource = getSectionResource(newSingleFileToken.getSingleToken(),newSingleFileToken.getFileType());
+            sectionResources.add(sectionResource);
+
+            section.setSectionResource(sectionResources);
+        }
+
 
         return section;
 
@@ -298,7 +328,7 @@ public class SectionService {
         return sectionResource;
     }
 
-    @Transactional
+
     private Section getSection(Integer id) throws EntityNotFound {
 
         Section section = this.sectionDao.getById(id);
