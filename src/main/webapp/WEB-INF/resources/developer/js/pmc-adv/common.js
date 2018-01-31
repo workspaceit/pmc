@@ -18,11 +18,8 @@ var dropZoneElements = {
      slideShowBanner : {},
      slideShowVideo : {},
 
-     popupEmailBanner : {},
-     popupEmailVideo : {},
-
-     popUpSmsBanner : {},
-     popUpSmsVideo : {}
+     popUpEmailBannerOrVideo : {},
+     popUpSmsBannerOrVideo : {}
 };
 
 
@@ -92,76 +89,248 @@ function injectHiddenTokenFieldsForAdvertiser(){
 
 
 $(document).ready(function(){
-    dropZoneElements.advertiserOtherImages  = configAdvertBdImgDropZone("advertiserOtherImages","other-images",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
-    });
+    dropZoneElements.advertiserOtherImages  = configAdvertBdImgDropZone(
+                                                {
+                                                     elementId:"advertiserOtherImages",
+                                                     param:"other-images",
+                                                     maxFile:6,
+                                                     maxFileSize:1,
+                                                     success:function(response){
+                                                         storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
+                                                     },
+                                                     afterServerFileRemove:function(response){
+                                                         removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
+                                                     }
+                                                });
 
     /*Gallery Ads*/
-    dropZoneElements.galleryLogoImage = configAdvertBdImgDropZone("advLogo","logo-image",1,1,function(response){
-        emptyToken(ADV_IMG_TYPE._LOGO_TOKEN);
-        storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
-    });
+    dropZoneElements.galleryLogoImage = configAdvertBdImgDropZone(
+                            {
+                                elementId:"advLogo",
+                                param:"logo-image",
+                                maxFile:1,
+                                maxFileSize:1,
+                                success:function(response){
+                                    emptyToken(ADV_IMG_TYPE._LOGO_TOKEN);
+                                    storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
+                                },
+                                afterServerFileRemove:function(response){
+                                    removeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
+                                }
+                            });
 
-    dropZoneElements.galleryBackgroundImage = configAdvertBdImgDropZone("advBackgroundImage","background-image",5,1,function(response){
-        storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
-    });
+    dropZoneElements.galleryBackgroundImage = configAdvertBdImgDropZone({
+                                                        elementId:"advBackgroundImage",
+                                                        param:"background-image",
+                                                        maxFile:5,
+                                                        maxFileSize:1,
+                                                        success:function(response){
+                                                            storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
+                                                        },
+                                                        afterServerFileRemove:function(response){
+                                                            removeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
+                                                        }
+                                                    });
 
-    dropZoneElements.galleryTopBanner = configAdvertBdImgDropZone("advTopBannerImage","top-banner",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
-    });
+    dropZoneElements.galleryTopBanner = configAdvertBdImgDropZone({
+                                                            elementId:"advTopBannerImage",
+                                                            param:"top-banner",
+                                                            maxFile:6,
+                                                            maxFileSize:1,
+                                                            success:function(response){
+                                                                storeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
+                                                            },
+                                                            afterServerFileRemove:function(response){
+                                                                removeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
+                                                            }
+                                                        });
 
-    dropZoneElements.galleryBottomBanner = configAdvertBdImgDropZone("advBottomBannerImage","bottom-banner",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
-    });
+    dropZoneElements.galleryBottomBanner = configAdvertBdImgDropZone({
+                                                        elementId:"advBottomBannerImage",
+                                                        param:"bottom-banner",
+                                                        maxFile:6,
+                                                        maxFileSize:1,
+                                                        success:function(response){
+                                                            storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
+                                                        },
+                                                        afterServerFileRemove:function(response){
+                                                            removeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
+                                                        }
+                                                    });
     /*Slide show Ads*/
-    dropZoneElements.slideShowBanner = configAdvertBdImgDropZone("advSlideShowBanner","slide-show-banner",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
-    });
+    dropZoneElements.slideShowBanner = configAdvertBdImgDropZone({
+                                            elementId:"advSlideShowBanner",
+                                            param:"slide-show-banner",
+                                            maxFile:6,
+                                            maxFileSize:1,
+                                            success:function(response){
+                                                storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                                            },
+                                            afterServerFileRemove:function(response){
+                                                removeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                                            }
+                                        });
 
-    dropZoneElements.slideShowVideo = configAdvertBdImgDropZone("advSlideShowVideo","slide-show-video",1,3,function(response){
-        emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-        storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-    });
+    dropZoneElements.slideShowVideo = configAdvertBdImgDropZone({
+                                        elementId:"advSlideShowVideo",
+                                        param:"slide-show-video",
+                                        maxFile:1,
+                                        maxFileSize:3,
+                                        success:function(response){
+                                            emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
+                                            storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
+                                        },
+                                        afterServerFileRemove:function(response){
+                                            removeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
+                                        }
+                                    });
     /*PopUp Ads*/
-    dropZoneElements.popupEmailBanner = configAdvertBdImgDropZone("advEmailPopUpBanner","email-popup-banner",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
+    dropZoneElements.popUpSmsBannerOrVideo = configAdvertBdImgDropZone({
+        elementId:"advSmsPopUpBanner",
+        param:"sms-popup-banner-or-video",
+        maxFile:6,
+        maxFileSize:3,
+        success:function(response,file){
+            if(isVideoFile(file)){
+                emptyToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
+                storeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
+            }else if(isImageFile(file)){
+                storeToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN,response.token);
+            }
+        },
+        afterServerFileRemove:function(response,file){
+            var key = "";
+            if(isVideoFile(file)){
+                key = ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN;
+            }else if(isImageFile(file)){
+                key = ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN;
+            }
+            removeToken(key,response.token);
+        },
+        afterAddFile:function(elem){
+
+            elem.on("maxfilesexceeded", function(file) {
+
+            });
+            elem.on("addedfile", function(file) {
+                /** Video or Image
+                 * Image could be multiple
+                 * Or One Video
+                 * */
+
+                file._removeLink.addEventListener("click", function() {
+                    var key = "";
+                    if(isVideoFile(file)){
+                        key = ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN;
+                    }else if(isImageFile(file)){
+                        key = ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN;
+                    }
+                    removeFileByToken(file.token,
+                        function(response){
+                            removeToken(key,response.token);
+                        });
+
+                    elem.removeFile(file);
+                });
+
+
+
+
+                /** Single Video file */
+                if(isVideoFile(file)){
+                    /** Remove all file before add */
+                    var files = dropZoneElements.popUpSmsBannerOrVideo.files;
+                    for(var i=0;i<files.length-1;i++){
+                        var tmpFile  = files[i];
+                        tmpFile._removeLink.click();
+                    }
+                }else{
+                    /** Remove previously added video file */
+                    var tmpFile = dropZoneElements.popUpSmsBannerOrVideo.files[0];
+                    if(tmpFile!=undefined && tmpFile.type.indexOf("video")>=0){
+                        tmpFile._removeLink.click();
+                    }
+                }
+
+                if(this.files.length > this.options.maxFiles){
+                    showServerErrorMessage("Maximum file limit is "+this.options.maxFiles,"tc",4000);
+                    this.files[this.files.length-1]._removeLink.click();
+                    this.removeFile(file);
+                }
+
+            });
+        }
+    });
+    dropZoneElements.popUpEmailBannerOrVideo = configAdvertBdImgDropZone({
+        elementId:"advEmailPopUpBanner",
+        param:"email-popup-banner",
+        maxFile:6,
+        maxFileSize:1,
+        success:function(response,file){
+            if(isVideoFile(file)){
+                emptyToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
+                storeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
+            }else if(isImageFile(file)){
+                storeToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN,response.token);
+            }
+        },
+        afterServerFileRemove:function(response){
+            var key = "";
+            if(isVideoFile(file)){
+                key = ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN;
+            }else if(isImageFile(file)){
+                key = ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN;
+            }
+            removeToken(key,response.token);
+        },
+        afterAddFile:function(elem){
+
+            elem.on("maxfilesexceeded", function(file) {
+
+            });
+            elem.on("addedfile", function(file) {
+                /** Video or Image
+                 * Image could be multiple
+                 * Or One Video
+                 * */
+
+                if(file.type.indexOf("video")>=0){
+                    var files = dropZoneElements.popUpEmailBannerOrVideo.files;
+                    for(var i=0;i<files.length-1;i++){
+                        var tmpFile  = files[i];
+                        tmpFile._removeLink.click();
+                    }
+                }else{
+                    var tmpFile = dropZoneElements.popUpEmailBannerOrVideo.files[0];
+                    if(tmpFile!=undefined && tmpFile.type.indexOf("video")>=0){
+                        tmpFile._removeLink.click();
+                    }
+                }
+
+
+                file._removeLink.addEventListener("click", function() {
+                    var key = "";
+                    if(isVideoFile(file)){
+                        key = ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN;
+                    }else if(isImageFile(file)){
+                        key = ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN;
+                    }
+
+                    removeFileByToken(
+                        file.token,
+                        function(response){
+                            removeToken(key,response.token);
+                        }
+                    );
+
+                    elem.removeFile(file);
+                });
+            });
+        }
     });
 
-    dropZoneElements.popupEmailVideo = configAdvertBdImgDropZone("advEmailPopUpVideo","email-popup-video",1,3,function(response){
-        emptyToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
-        storeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN,response.token);
-    });
+   
 
-    dropZoneElements.popUpSmsBanner = configAdvertBdImgDropZone("advSmsPopUpBanner","sms-popup-banner",6,1,function(response){
-        storeToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
-    });
-
-    dropZoneElements.popUpSmsVideo = configAdvertBdImgDropZone("advSmsPopUpVideo","sms-popup-video",1,3,function(response){
-        emptyToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
-        storeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
-    },function(response){
-        removeToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN,response.token);
-    });
 
 
     /**Advertiser Info Date picker*/
@@ -309,7 +478,14 @@ function showHideEventSelectBox(){
         $("#eventIds").parent().show();
     }
 }
-function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess,fnError){
+function configAdvertBdImgDropZone(data){
+    var elementId = data.elementId;
+    var param=data.param;
+    var maxFile=data.maxFile;
+    var maxFileSize=data.maxFileSize;
+    var fnSuccess=data.success;
+    var afterServerFileRemove=data.afterServerFileRemove;
+    var addFileFn=data.afterAddFile;
     var advImgDropZone = new Dropzone("#"+elementId,
         {
             url: BASEURL+"file/upload/adv/"+param,
@@ -321,28 +497,48 @@ function configAdvertBdImgDropZone(elementId,param,maxFile,maxFileSize,fnSuccess
             previewTemplate:$("#dropZonePreview").html(),
             init:function(){
 
-                this.on("maxfilesexceeded", function(file) {
-                    this.removeAllFiles();
-                    this.addFile(file);
-                });
-                this.on("addedfile", function(file) {
-                    file._removeLink.addEventListener("click", function() {
-                        console.log(file);
-                        removeFileByToken(file.token,fnError);
-                        advImgDropZone.removeFile(file);
+                /** If function is overridden */
+                if(addFileFn != undefined && typeof addFileFn == "function"){
+                    addFileFn(this);
+                }else{
+                    /** Default behaviour */
+
+                    this.on("maxfilesexceeded", function(file) {
+
                     });
-                });
+                    this.on("addedfile", function(file) {
+                        file._removeLink.addEventListener("click", function() {
+                            console.log(file);
+                            removeFileByToken(file.token,afterServerFileRemove,file);
+                            advImgDropZone.removeFile(file);
+                        });
+
+                        if(advImgDropZone.files.length > maxFile){
+                            if(maxFile==1){
+                                advImgDropZone.files[0]._removeLink.click();
+                                this.removeAllFiles();
+                            }else{
+                                showServerErrorMessage("Maximum file limit is "+maxFile,"tc",4000);
+                                advImgDropZone.files[advImgDropZone.files-1]._removeLink.click();
+                                advImgDropZone.removeFile(file);
+                            }
+                        }
+
+
+                    });
+                }
+
 
             },
             error:function(file,response){
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                $("#"+elementId).find(".dz-error-message span").html(msg);
+                $("#"+elementId).find(".dz-error-message span").html(msg).addClass("text-danger");
             },
             success:function(file,response){
 
                 file.token = response.token;
                 console.log(file);
-                fnSuccess(response);
+                fnSuccess(response,file);
             }
         }
     );
@@ -363,7 +559,7 @@ function initSubmitAdvertiserData(btnAction,submitType){
 }
 function advertiserAfterSaveAction(btnAction,id){
     if(id==undefined){
-        id=-1;
+        id=0;
     }
     var urlStr =BASEURL+"admin";
     switch(btnAction){
@@ -446,7 +642,7 @@ function submitCreateOrUpdate(btnAction){
            case "create":
                createAdvertiser(function(response){
                    notifyUser("advertiserInfoErrorCount",response,false);
-                  // advertiserAfterSaveAction(globalBtnAction,response.id);
+                   advertiserAfterSaveAction(globalBtnAction,response.id);
                });
                break;
            case "update":

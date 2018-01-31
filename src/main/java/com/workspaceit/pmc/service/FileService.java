@@ -79,8 +79,11 @@ public class FileService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public String copyFile(Integer token){
-		TempFile tempFile = tempFileDao.getByToken(token);
 		String fileName = "";
+		if(token==null){
+			return "";
+		}
+		TempFile tempFile = tempFileDao.getByToken(token);
 		if(tempFile==null){
 			return fileName;
 		}
@@ -93,8 +96,13 @@ public class FileService {
 	}
 	@Transactional
 	public String getMimeTypeByToken(Integer token){
-		TempFile tempFile = tempFileDao.getByToken(token);
 		String fileMimeType = "";
+		if(token==null){
+			return fileMimeType;
+		}
+
+		TempFile tempFile = tempFileDao.getByToken(token);
+
 		if(tempFile==null){
 			return fileMimeType;
 		}

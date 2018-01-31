@@ -308,6 +308,9 @@ public class SectionService {
 
     private List<SectionResource> getSectionResource(Integer[] tokens,FILE_TYPE fileType){
         List<SectionResource> sectionResources = new LinkedList<>();
+        if(tokens==null){
+            return sectionResources;
+        }
         for(Integer token:tokens){
            SectionResource tmpSectionResources =  this.getSectionResource(token,fileType);
 

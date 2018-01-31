@@ -123,13 +123,10 @@ public class FileUploadController{
                 fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
                 imgContentType = this.videoAllowedMimeType;
                 break;
-            case "sms-popup-banner":
+            case "sms-popup-banner-or-video":
                 fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
                 imgContentType = this.imgAllowedMimeType;
-                break;
-            case "sms-popup-video":
-                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
-                imgContentType = this.videoAllowedMimeType;
+                imgContentType.addAll(this.videoAllowedMimeType);
                 break;
             default:
                 fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB

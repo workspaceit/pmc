@@ -32,6 +32,8 @@ public class PopUpAdsValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         PopupAdsForm  popupAdsForm = (PopupAdsForm)obj;
 
+
+
     }
     public void validate(Object obj, Errors errors,String... params) {
         PopupAdsForm popupAdsForm = (PopupAdsForm)obj;
@@ -40,7 +42,30 @@ public class PopUpAdsValidator implements Validator {
             switch (param) {
                 case "advertiserId":
                     this.checkValidAdvertiserId(popupAdsForm.getAdvertiserId(), errors);
+                    break;
+                case "sms-banner-or-video":
+                    Integer smsVideoToken =  popupAdsForm.getSmsPopupVideo();
+                    Integer[] smsBannerTokens =  popupAdsForm.getSmsPopupBanner();
+                    this.checkSmsBannerOrVideo(smsVideoToken,smsBannerTokens,errors);
+                    break;
+                case "email-banner-or-video":
+                    Integer emailVideoToken =  popupAdsForm.getEmailPopupVideo();
+                    Integer[] emailBannerTokens =  popupAdsForm.getEmailPopupBanner();
+                    this.checkEmailBannerOrVideo(emailVideoToken,emailBannerTokens,errors);
+                    break;
             }
+        }
+    }
+    public void checkSmsBannerOrVideo(Integer smsVideoToken,Integer[] smsBannerTokens,Errors errors){
+
+        if(smsVideoToken==null && (smsBannerTokens==null ||smsBannerTokens.length==0)){
+            errors.rejectValue("smsPopupBanner","Video or banner required");
+        }
+    }
+    public void checkEmailBannerOrVideo(Integer emailVideoToken,Integer[] emailBannerTokens,Errors errors){
+
+        if(emailVideoToken==null && (emailBannerTokens==null || emailBannerTokens.length==0)){
+            errors.rejectValue("emailPopupBanner","Video or banner required");
         }
     }
     public void validateUpdate(Object obj, Errors errors){

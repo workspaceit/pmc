@@ -135,7 +135,7 @@ function removeToken(key,token){
     var ls = new TempFileTokenStorage();
     ls.setToken(key,JSON.stringify(tokens))
 }
-function removeFileByToken(token, fn){
+function removeFileByToken(token, fn,file){
     if(token == undefined){
         return;
     }
@@ -152,7 +152,7 @@ function removeFileByToken(token, fn){
             }
         },success: function(data){
             console.log(data);
-            fn(data);
+            fn(data,file);
         }
     });
 }

@@ -115,9 +115,8 @@ public class AdvertisementRestController {
         }
 
         this.popupAdsValidator.validate(pupAdsCreateForm, bindingResult,"smsPopupBanner",
-                "smsPopupVideo",
-                "emailPopupBanner",
-                "emailPopupVideo");
+                                                                                "sms-banner-or-video",
+                                                                                "email-banner-or-video");
         serviceResponse.bindValidationError(bindingResult);
 
         /**

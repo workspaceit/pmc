@@ -18,37 +18,33 @@ public class PopupAdsCreateForm extends PopupAdsForm {
     }
 
     @Override
-    @NotNull(message = "Sms Popup Banner is required")
+
     public Integer[] getSmsPopupBanner() {
         return super.getSmsPopupBanner();
     }
 
     @Override
-    @NotNull(message = "Sms Popup Video is required")
     public Integer getSmsPopupVideo() {
         return super.getSmsPopupVideo();
     }
 
     @Override
-    @NotNull(message = "Email Popup Video is required")
     public Integer[] getEmailPopupBanner() {
         return super.getEmailPopupBanner();
     }
 
-    @Override
-    @NotNull(message = "Email Popup Video duration is required")
     public Integer getEmailPopupVideo() {
         return super.getEmailPopupVideo();
     }
 
     @Override
-    @NotNull(message = "Email Popup Video duration is required")
+    @NotNull(message = "Email Popup duration is required")
     public Integer getEmailPopupVideoDuration() {
         return super.getEmailPopupVideoDuration();
     }
 
     @Override
-    @NotNull(message = "Sms Popup Video duration is required")
+    @NotNull(message = "Sms Popup duration is required")
     public Integer getSmsPopupVideoDuration() {
         return super.getSmsPopupVideoDuration();
     }
