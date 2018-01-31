@@ -122,7 +122,7 @@ $(document).ready(function(){
     dropZoneElements.galleryBackgroundImage = configAdvertBdImgDropZone({
                                                         elementId:"advBackgroundImage",
                                                         param:"background-image",
-                                                        maxFile:5,
+                                                        maxFile:1,
                                                         maxFileSize:1,
                                                         success:function(response){
                                                             storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
@@ -513,14 +513,15 @@ function configAdvertBdImgDropZone(data){
                             advImgDropZone.removeFile(file);
                         });
 
-                        if(advImgDropZone.files.length > maxFile){
+                        if(this.files.length > maxFile){
                             if(maxFile==1){
-                                advImgDropZone.files[0]._removeLink.click();
-                                this.removeAllFiles();
+                                console.log(this.files);
+                                this.files[0]._removeLink.click();
+                                console.log(this.files);
                             }else{
                                 showServerErrorMessage("Maximum file limit is "+maxFile,"tc",4000);
-                                advImgDropZone.files[advImgDropZone.files-1]._removeLink.click();
-                                advImgDropZone.removeFile(file);
+                                this.files[advImgDropZone.files-1]._removeLink.click();
+                                this.removeFile(file);
                             }
                         }
 

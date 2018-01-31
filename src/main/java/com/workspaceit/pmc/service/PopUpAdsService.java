@@ -57,6 +57,14 @@ public class PopUpAdsService {
         String emailVideoType = (emailVideoName==null ||emailVideoName.equals(""))?"":FileHelper.getMimeType(emailVideoName);
         String smsVideoType= (smsVideoName==null ||smsVideoName.equals(""))?"":FileHelper.getMimeType(smsVideoName);
 
+        if(popupAdsForm.getSmsPopupVideo()!=null && popupAdsForm.getSmsPopupVideo()>0){
+           smsPopupAdQuantity++;
+        }
+
+        if(popupAdsForm.getEmailPopupVideo()!=null && popupAdsForm.getEmailPopupVideo()>0){
+            emailPopupAdQuantity++;
+        }
+
         PopupAd smsPopupAdBanner =  new PopupAd();
 
         smsPopupAdBanner.setAdvertiserId(advertiser.getId());
