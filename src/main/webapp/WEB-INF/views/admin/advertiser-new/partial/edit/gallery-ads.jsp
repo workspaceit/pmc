@@ -15,7 +15,7 @@
                     </c:forEach>
                 </div>
 
-                <div id="advLogo"  class="panel-body" style="display: none;" >
+                <div id="advLogo"  class="panel-body"  >
                     <div class="dz-default dz-message">
                         <span>Change logo</span>
                     </div>
@@ -51,7 +51,7 @@
                     </c:forEach>
                 </div>
 
-                <div id="advBackgroundImage"  class="panel-body" style="display: none;" >
+                <div id="advBackgroundImage"  class="panel-body"     >
 
                     <div class="dz-default dz-message">
                         <span>Change background</span>
@@ -124,7 +124,7 @@
                         <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" style="display: none;" >Delete</a>
                     </div>
                 </c:forEach>
-                <div id="advTopBannerImage"  class="panel-body" style="display: none;" >
+                <div id="advTopBannerImage"  class="panel-body"  >
                     <div class="dz-default dz-message">
                         <span>Add image</span>
 
@@ -191,7 +191,7 @@
                         <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" style="display: none;" >Delete</a>
                     </div>
                 </c:forEach>
-                <div id="advBottomBannerImage"   class="panel-body" style="display: none;" >
+                <div id="advBottomBannerImage"   class="panel-body" >
                     <div class="dz-default dz-message">
                         <span>Add image</span>
                     </div>

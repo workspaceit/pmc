@@ -60,7 +60,7 @@
         </c:forEach>
 
 
-        <div id="advSlideShowBanner"  class="panel-body" style="display: none;" >
+        <div id="advSlideShowBanner"  class="panel-body" >
             <div class="dz-default dz-message">
                 <span>Click here to upload</span>
 
@@ -143,7 +143,7 @@
         </c:forEach>
 
 
-        <div id="advSlideShowVideo"  class="panel-body" style="display: none;" >
+        <div id="advSlideShowVideo"  class="panel-body" >
             <div class="dz-default dz-message">
                 <span>Click here to upload</span>
             </div>

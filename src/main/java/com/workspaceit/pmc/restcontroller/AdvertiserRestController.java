@@ -265,8 +265,13 @@ public class AdvertiserRestController {
             try{
                 Map<ADVERTISEMENT_TYPE,Advertisement> advertisements =  this.advertisementService.getMapByAdvertiserId(advertiser.getId());
                 this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.GALLERY),advertiserAndAllCompositeForm.getGalleryAds());
-            }catch (Exception ex){
+                this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW),advertiserAndAllCompositeForm.getSlideShowAds());
+                this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS),
+                                           advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),
+                                            advertiserAndAllCompositeForm.getPopupAds());
 
+            }catch (Exception ex){
+                ex.printStackTrace();
             }
 
 

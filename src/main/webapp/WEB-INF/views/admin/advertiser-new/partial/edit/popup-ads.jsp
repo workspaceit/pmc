@@ -70,7 +70,7 @@
 
 
         </c:forEach>
-        <div id="advSmsPopUpBanner"  class="panel-body" style="display: none;" >
+        <div id="advSmsPopUpBanner"  class="panel-body"  >
             <div class="dz-default dz-message">
                 <span>Click here to upload banner image</span>
 
@@ -175,7 +175,7 @@
 
 
         </c:forEach>
-        <div id="advEmailPopUpBanner"  class="panel-body" style="display: none;" >
+        <div id="advEmailPopUpBanner"  class="panel-body"  >
             <div class="dz-default dz-message">
                 <span>Click here to upload banner image</span>
             </div>
