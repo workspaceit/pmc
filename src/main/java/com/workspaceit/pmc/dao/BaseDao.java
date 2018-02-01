@@ -38,6 +38,13 @@ public class BaseDao {
         Session session = this.getCurrentSession();
         session.update(obj);
     }
+
+    public void updateAll(Collection<? extends Object> entities){
+        Session session = this.getCurrentSession();
+        for (Object entity:entities) {
+            session.update(entity);
+        }
+    }
     public void delete(Object obj){
         Session session = this.getCurrentSession();
         session.delete(obj);

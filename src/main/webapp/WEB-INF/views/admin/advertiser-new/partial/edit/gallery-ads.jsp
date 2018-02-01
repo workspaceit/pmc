@@ -1,5 +1,4 @@
 <%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <div class="tab-pane" id="tab_default_2">
     <div class="row clearfix">

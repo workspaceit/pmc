@@ -1,12 +1,10 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.dao.SectionDao;
 import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Column;
 import java.util.*;
 
 @Transactional
@@ -42,25 +39,88 @@ public class SectionService {
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
+
     @Transactional(rollbackFor = Exception.class)
-    public void  update(Advertisement advertisement, GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound{
-       Integer logoToken =  galleryAdsForm.getLogoToken();
+    public void  update(Advertisement advertisement, GalleryAdsUpdateForm galleryAdsForm) throws EntityNotFound{
+        /** New File */
+        Integer logoToken =  galleryAdsForm.getLogoToken();
+        Integer bgToken =  galleryAdsForm.getBgImgTokens();
+        Integer[] tBannerNewToken = galleryAdsForm.getTopBannerImgTokens();
+        Integer[] bBannerNewToken = galleryAdsForm.getBottomBannerImgTokens();
 
-       Section logoSection =  advertisement.getSections().get(SECTION_TYPE.LOGO);
+        FileToken logoNewFileToken = new FileToken(logoToken,FILE_TYPE.IMAGE);
+        FileToken bgNewFileToken = new FileToken(bgToken,FILE_TYPE.IMAGE);
+        List<FileToken> tBannerNewFileToken = new LinkedList<>();
+        List<FileToken> bBannerNewFileToken = new LinkedList<>();
 
-       FileToken fileToken = new FileToken(logoToken,FILE_TYPE.IMAGE);
+
+        /** Removed File */
+        Integer[] tBannerRmIds = galleryAdsForm.getRemoveTopBannerIds();
+        Integer[] bBannerRmIds = galleryAdsForm.getRemoveBottomBannerIds();
 
 
-       logoSection =  this.getSection(logoSection,
+        /** All gallery section */
+        List<Section> gallerySections = new LinkedList<>();
+        Section logoSection =  advertisement.getSections().get(SECTION_TYPE.LOGO);
+        Section bgSection = advertisement.getSections().get(SECTION_TYPE.BACKGROUND);
+        Section tBannerSection = advertisement.getSections().get(SECTION_TYPE.TOP_BANNER);
+        Section bBannerSection = advertisement.getSections().get(SECTION_TYPE.BOTTOM_BANNER);
+
+
+        for(Integer token :tBannerNewToken){
+           tBannerNewFileToken.add(new FileToken(token,FILE_TYPE.IMAGE));
+        }
+
+        for(Integer token :bBannerNewToken){
+            bBannerNewFileToken.add(new FileToken(token,FILE_TYPE.IMAGE));
+        }
+
+        logoSection =  this.getSection(logoSection,
                 null,
                 null,
                 null,
                 null,
                 null,
                 null,
-                fileToken,
-                null,
+               logoNewFileToken,
                 null);
+
+        bgSection =  this.getSection(bgSection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                bgNewFileToken,
+                null);
+
+        tBannerSection =  this.getSection(tBannerSection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                tBannerNewFileToken);
+
+        bBannerSection=  this.getSection(bBannerSection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                bBannerNewFileToken);
+
+        gallerySections.add(logoSection);
+        gallerySections.add(bgSection);
+        gallerySections.add(tBannerSection);
+        gallerySections.add(bBannerSection);
+
+        this.update(gallerySections);
 
 
     }
@@ -71,7 +131,14 @@ public class SectionService {
 
 
     }
-
+    @Transactional(rollbackFor = Exception.class)
+    public void  update(List<Section> sections) throws EntityNotFound{
+        this.sectionDao.updateAll(sections);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void  update(Section section) throws EntityNotFound{
+        this.sectionDao.update(section);
+    }
     @Transactional(rollbackFor = Exception.class)
     public void create(Advertisement advertisement,GalleryAdsForm galleryAdsForm,Admin admin){
 
@@ -280,8 +347,7 @@ public class SectionService {
                                AdvertiseRotationSettings rotation,
                                Date expireDate,
                                FileToken newSingleFileToken,
-                               Integer[] newTokens,
-                               Integer[] deletedToken){
+                               List<FileToken> newTokens){
 
 
         if(price!=null) section.setPrice(price);
@@ -313,8 +379,7 @@ public class SectionService {
         }
         for(Integer token:tokens){
            SectionResource tmpSectionResources =  this.getSectionResource(token,fileType);
-
-            sectionResources.add(tmpSectionResources);
+           sectionResources.add(tmpSectionResources);
         }
 
         return sectionResources;

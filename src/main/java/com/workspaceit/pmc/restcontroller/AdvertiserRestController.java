@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mi_rafi on 1/4/18.
@@ -260,6 +261,15 @@ public class AdvertiserRestController {
 
         try {
             Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
+
+            try{
+                Map<ADVERTISEMENT_TYPE,Advertisement> advertisements =  this.advertisementService.getMapByAdvertiserId(advertiser.getId());
+                this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.GALLERY),advertiserAndAllCompositeForm.getGalleryAds());
+            }catch (Exception ex){
+
+            }
+
+
 
             /*int galleryAdId = advertiserAndAllCompositeForm.getGalleryAds().getId();
             int slideShowAdId = advertiserAndAllCompositeForm.getSlideShowAds().getId();
