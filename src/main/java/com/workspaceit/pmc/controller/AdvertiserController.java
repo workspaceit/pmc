@@ -169,8 +169,8 @@ public class AdvertiserController {
         return model;
     }
 
-    @RequestMapping("/update-new/{id}")
-    public ModelAndView updateNew(@PathVariable("id") int advertiserId){
+    @RequestMapping("/update/{id}")
+    public ModelAndView update(@PathVariable("id") int advertiserId){
 
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
 
@@ -224,8 +224,8 @@ public class AdvertiserController {
         return model;
     }
 
-    @RequestMapping("/update/{id}")
-    public ModelAndView update(@PathVariable("id") int advertiserId){
+    @RequestMapping("/update-old/{id}")
+    public ModelAndView updateOld(@PathVariable("id") int advertiserId){
 
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
 

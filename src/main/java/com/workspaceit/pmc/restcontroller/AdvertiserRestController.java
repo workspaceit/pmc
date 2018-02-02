@@ -198,24 +198,23 @@ public class AdvertiserRestController {
         }
         Advertiser advertiser = this.advertiserService.create(advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
 
+
+        /** Old Implementation */
+        /*
         this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
         this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
         this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+        */
+        /** new Implementation */
 
-        try{
+        Advertisement galleryAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.GALLERY,currentUser);
+        Advertisement slideShowAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.SLIDESHOW,currentUser);
+        Advertisement popupSmsAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_SMS,currentUser);
+        Advertisement popupEmailAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_EMAIL,currentUser);
 
-            Advertisement galleryAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.GALLERY,currentUser);
-            Advertisement slideShowAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.SLIDESHOW,currentUser);
-            Advertisement popupSmsAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_SMS,currentUser);
-            Advertisement popupEmailAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_EMAIL,currentUser);
-
-            this.sectionService.create(galleryAd,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
-            this.sectionService.create(slideShowAd,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
-            this.sectionService.create(popupSmsAd,popupEmailAd,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
-
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+        this.sectionService.create(galleryAd,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
+        this.sectionService.create(slideShowAd,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
+        this.sectionService.create(popupSmsAd,popupEmailAd,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
 
 
         return ResponseEntity.status(HttpStatus.OK).body(advertiser);
