@@ -1,8 +1,8 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
-import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
-import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
+import com.workspaceit.pmc.constant.advertisement.*;
+import com.workspaceit.pmc.entity.advertisement.Advertisement;
+import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
@@ -21,9 +21,16 @@ import java.util.Map;
 public class AdvertisementPriceAndQuantityService {
     public final static String priceMapKey = "prices";
     public final static String quantityMapKey = "quantities";
+    private AdvertisementService advertisementService;
+
     private GalleryAdService galleryAdService;
     private SlideShowService slideShowService;
     private PopUpAdsService  popUpAdsService;
+
+    @Autowired
+    public void setAdvertisementService(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
+    }
 
     @Autowired
     public void setGalleryAdService(GalleryAdService galleryAdService) {
@@ -39,7 +46,7 @@ public class AdvertisementPriceAndQuantityService {
     }
 
     @Transactional
-    public Map<String,Object> getSoldPriceAndQuantity(int advertiserId){
+    public Map<String,Object> getOLDSoldPriceAndQuantity(int advertiserId){
 
         GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
         SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
@@ -155,5 +162,86 @@ public class AdvertisementPriceAndQuantityService {
         Map<Object,Integer> quantities = (Map<Object,Integer>)priceAndQuantity.get(quantityMapKey);
         float totalPrice = this.calculateTotal(prices,quantities);
         return totalPrice;
+    }
+    @Transactional
+    public Map<String,Object> getSoldPriceAndQuantity(int advertiserId){
+        Map<String,Object> priceAndQuantity = new HashMap<>();
+
+        Map<ADVERTISEMENT_TYPE,Advertisement> advertisements =  this.advertisementService.getMapByAdvertiserId(advertiserId);
+
+        Advertisement galleryAd =  advertisements.get(ADVERTISEMENT_TYPE.GALLERY);
+        Advertisement slideShowAd = advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW);
+        Advertisement popupEmailAd = advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL);
+        Advertisement popupSmsAd = advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS);
+
+        Map<Object,Float> prices = new HashMap<>();
+        Map<Object,Integer> quantities = new HashMap<>();
+
+        prices.put(GalleryAdsConstant.BACKGROUND_IMAGE,0f);
+        prices.put(GalleryAdsConstant.TOP_AD_BANNER,0f);
+        prices.put(GalleryAdsConstant.BOTTOM_AD_BANNER,0f);
+
+        prices.put(SlideshowAdsConstant.BANNER,0f);
+        prices.put(SlideshowAdsConstant.VIDEO,0f);
+
+        prices.put(PopupAdConstant.SMS,0f);
+        prices.put(PopupAdConstant.EMAIL,0f);
+
+
+        quantities.put(GalleryAdsConstant.BACKGROUND_IMAGE,0);
+        quantities.put(GalleryAdsConstant.TOP_AD_BANNER,0);
+        quantities.put(GalleryAdsConstant.BOTTOM_AD_BANNER,0);
+
+        quantities.put(SlideshowAdsConstant.BANNER,0);
+        quantities.put(SlideshowAdsConstant.VIDEO,0);
+
+        quantities.put(PopupAdConstant.SMS,0);
+        quantities.put(PopupAdConstant.EMAIL,0);
+
+
+
+        if(galleryAd!=null){
+            Section bgSection =  galleryAd.getSections().get(SECTION_TYPE.BACKGROUND);
+            Section tBannerSection =  galleryAd.getSections().get(SECTION_TYPE.TOP_BANNER);
+            Section bBannerSection =  galleryAd.getSections().get(SECTION_TYPE.BOTTOM_BANNER);
+
+            prices.put(GalleryAdsConstant.BACKGROUND_IMAGE,(bgSection != null)?bgSection.getPrice():0);
+            prices.put(GalleryAdsConstant.TOP_AD_BANNER,(tBannerSection != null)?tBannerSection.getPrice():0);
+            prices.put(GalleryAdsConstant.BOTTOM_AD_BANNER,(bBannerSection != null)?bBannerSection.getPrice():0);
+
+            quantities.put(GalleryAdsConstant.BACKGROUND_IMAGE,(bgSection != null)?bgSection.getQuantity():0);
+            quantities.put(GalleryAdsConstant.TOP_AD_BANNER,(tBannerSection != null)?tBannerSection.getQuantity():0);
+            quantities.put(GalleryAdsConstant.BOTTOM_AD_BANNER,(bBannerSection != null)?bBannerSection.getQuantity():0);
+        }
+
+
+        if(slideShowAd!=null){
+            Section tBannerSection = slideShowAd.getSections().get(SECTION_TYPE.TOP_BANNER);
+            Section bBannerSection = slideShowAd.getSections().get(SECTION_TYPE.BOTTOM_BANNER);
+
+            prices.put(SlideshowAdsConstant.BANNER,(tBannerSection != null)?tBannerSection.getPrice():0);
+            prices.put(SlideshowAdsConstant.VIDEO,(bBannerSection != null)?bBannerSection.getPrice():0);
+
+            quantities.put(SlideshowAdsConstant.BANNER,(tBannerSection != null)?tBannerSection.getQuantity():0);
+            quantities.put(SlideshowAdsConstant.VIDEO,(bBannerSection != null)?bBannerSection.getQuantity():0);
+        }
+        if(popupSmsAd!=null){
+            Section smsBanner = popupSmsAd.getSections().get(SECTION_TYPE.BANNER);
+            prices.put(PopupAdConstant.SMS,(smsBanner != null)?smsBanner.getPrice():0);
+            quantities.put(PopupAdConstant.SMS,(smsBanner != null)?smsBanner.getQuantity():0);
+        }
+        if(popupEmailAd!=null){
+            Section emailBanner = popupEmailAd.getSections().get(SECTION_TYPE.BANNER);
+            prices.put(PopupAdConstant.EMAIL,(emailBanner != null)?emailBanner.getPrice():0);
+            quantities.put(PopupAdConstant.EMAIL,(emailBanner != null)?emailBanner.getQuantity():0);
+        }
+
+
+
+        priceAndQuantity.put(priceMapKey,prices);
+        priceAndQuantity.put(quantityMapKey,quantities);
+
+        return priceAndQuantity;
+
     }
 }

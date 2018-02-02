@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.PopupAdConstant" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.FILE_TYPE" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
@@ -70,7 +69,7 @@
 
 
         </c:forEach>
-        <div id="advSmsPopUpBanner"  class="panel-body"  >
+        <div id="advSmsPopUpBanner"  class="panel-body" style="display: none"  >
             <div class="dz-default dz-message">
                 <span>Click here to upload banner image</span>
 
@@ -86,13 +85,6 @@
             </c:if>
         </c:forEach>
 
-
-        <div id="advSmsPopUpVideo"  class="panel-body" style="display: none;" >
-            <div class="dz-default dz-message">
-                <span>Click here to upload video</span>
-
-            </div>
-        </div>
         <p class="text-danger" id="errorObj_smsPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
@@ -175,7 +167,7 @@
 
 
         </c:forEach>
-        <div id="advEmailPopUpBanner"  class="panel-body"  >
+        <div id="advEmailPopUpBanner"  class="panel-body" style="display: none"  >
             <div class="dz-default dz-message">
                 <span>Click here to upload banner image</span>
             </div>
@@ -190,11 +182,6 @@
             </c:if>
         </c:forEach>
 
-        <div id="advEmailPopUpVideo"  class="panel-body" style="display: none;" >
-            <div class="dz-default dz-message">
-                <span>Click here to upload video</span>
-            </div>
-        </div>
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:

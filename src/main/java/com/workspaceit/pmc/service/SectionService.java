@@ -134,8 +134,39 @@ public class SectionService {
         gallerySections.add(bBannerSection);
 
         this.update(gallerySections);
-        if(tBannerRmIds!=null && tBannerRmIds.length>0){
-            this.sectionResourceService.delete(tBannerRmIds);
+
+        List<Integer> tBrmIds = (tBannerRmIds!=null) ? Arrays.asList(tBannerRmIds):new ArrayList<>();
+        List<Integer> bBrmIds = (bBannerRmIds!=null) ? Arrays.asList(bBannerRmIds):new ArrayList<>();
+
+        List<SectionResource> rmSecResource = new ArrayList<>();
+        List<SectionResource> tBannerSectionRes =  tBannerSection.getSectionResource();
+        List<SectionResource> bBannerSectionRes =  bBannerSection.getSectionResource();
+
+        System.out.println("tBannerSectionRes.size() "+tBannerSectionRes.size());
+        for(SectionResource secRes:tBannerSectionRes){
+            if(tBrmIds.contains(secRes.getId())){
+                rmSecResource.add(secRes);
+            }
+        }
+
+        /** Remove from  of oneToMany association  section first
+         *  Cascade All re-save if delete object exist in List of section
+         * */
+        tBannerSectionRes.removeAll(rmSecResource);
+        System.out.println("bBannerSectionRes.size() "+bBannerSectionRes.size());
+        for(SectionResource secRes:bBannerSectionRes){
+            if(bBrmIds.contains(secRes.getId())){
+                rmSecResource.add(secRes);
+            }
+        }
+
+        /** Remove from  of oneToMany association  section first
+         *  Cascade All re-save if delete object exist in List of section
+         * */
+        bBannerSectionRes.removeAll(rmSecResource);
+        System.out.println("rmSecResource.size() "+rmSecResource.size());
+        if(rmSecResource.size()>0){
+            this.sectionResourceService.delete(rmSecResource);
         }
 
     }
@@ -191,8 +222,29 @@ public class SectionService {
         slideShowSections.add(bBannerSection);
 
         this.update(slideShowSections);
-        if(tBannerRmIds!=null && tBannerRmIds.length>0){
-            this.sectionResourceService.delete(tBannerRmIds);
+
+
+        /** Remove section resource*/
+
+        List<Integer> tBrmIds = (tBannerRmIds!=null) ? Arrays.asList(tBannerRmIds):new ArrayList<>();
+
+        List<SectionResource> rmSecResource = new ArrayList<>();
+        List<SectionResource> tBannerSectionRes =  tBannerSection.getSectionResource();
+
+        for(SectionResource secRes:tBannerSectionRes){
+            if(tBrmIds.contains(secRes.getId())){
+                rmSecResource.add(secRes);
+            }
+        }
+
+        /** Remove from  of oneToMany association  section first
+         *  Cascade All re-save if delete object exist in List of section
+         * */
+        tBannerSectionRes.removeAll(rmSecResource);
+
+
+        if(rmSecResource.size()>0){
+            this.sectionResourceService.delete(rmSecResource);
         }
 
     }
@@ -406,11 +458,11 @@ public class SectionService {
 
         Section smsSection = this.getSection(
                                             popSmsAdv.getId(),
-                                            popupAdsForm.getEmailAdPrice(),
-                                            emailSecResources.size(),
+                                            popupAdsForm.getSmsAdPrice(),
+                                            smsSecResources.size(),
                                             popupAdsForm.getSmsPopupVideoDuration(),
                                             SECTION_TYPE.BANNER,
-                                            popupAdsForm.getEmailRotation(),
+                                            popupAdsForm.getSmsRotation(),
                                             popupAdsForm.getSmsExpiryDate(),
                                             smsSecResources,
                                             admin);
