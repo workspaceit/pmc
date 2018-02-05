@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      /*  http.authorizeRequests()//.antMatchers("/").permitAll()
+        http.authorizeRequests()//.antMatchers("/").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ROLE_superadmin')")
                 .and()
                .formLogin().loginPage("/login").failureUrl("/login?error").loginProcessingUrl("/j_spring_security_check")
@@ -86,13 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .csrf().disable();*/
+                .csrf().disable();
 
-        http.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();
+
     }
 
     @Bean
