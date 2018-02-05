@@ -9,10 +9,10 @@ import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
-import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
-import com.workspaceit.pmc.entity.advertisement.popup.PopupAdQuantityPrice;
 import com.workspaceit.pmc.helper.DateHelper;
 import com.workspaceit.pmc.service.*;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +136,21 @@ public class SampleTest {
         System.out.print(advertisement.getSections().get(secType).getId()+" ");
         System.out.print(advertisement.getSections().get(secType).getPrice()+" ");
         System.out.println(advertisement.getSections().get(secType).getQuantity());
+    }
+    @Test
+    public void obtainAccessToken() {
+        String clientId = "my-trusted-client";
+        String username ="john";
+        String password ="123456";
+         Map<String, String> params = new HashMap<>();
+        params.put("grant_type", "password");
+        params.put("client_id", clientId);
+        params.put("username", username);
+        params.put("password", password);
+        Response response = RestAssured.given().auth().preemptive()
+                .basic(clientId, "secret").and().with().params(params).when()
+                .post("http://localhost:8080/oauth/token");
+       System.out.println(response.asString());
     }
   //  @Test
     public void create() {

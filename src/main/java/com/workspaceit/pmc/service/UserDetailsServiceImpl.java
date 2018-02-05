@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly=true)
     public UserDetails loadUserByUsername(final String s)
             throws UsernameNotFoundException {
-
+        System.out.println("SPRING LOGING SERVICE");
         Admin admin = adminService.getAdminByEmail(s);
         if(admin==null){
             throw new UsernameNotFoundException("User not found");
