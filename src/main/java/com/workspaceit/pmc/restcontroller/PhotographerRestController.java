@@ -111,7 +111,7 @@ public class PhotographerRestController {
                                                 @Valid PhotographerForm photographerForm,
                                                 BindingResult bindingResult,
                                                 @PathVariable("id")  Integer id){
-        User user =  (User)authentication.getPrincipal();
+        Admin currentUser =  (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
          * Basic Validation
@@ -136,7 +136,7 @@ public class PhotographerRestController {
 
         Photographer photographer = null;
         try {
-            photographer = this.photographerService.updatePassword(id,photographerForm.getPassword(),user);
+            photographer = this.photographerService.updatePassword(id,photographerForm.getPassword(),currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
         }

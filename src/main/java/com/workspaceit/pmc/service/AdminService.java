@@ -67,6 +67,9 @@ public class AdminService {
     public Admin getAdminByEmail(String email){
         return adminDao.getByEmail(email);
     }
+    public Admin getAdminByEmailOrUserName(String emailOrUserName){
+        return adminDao.getByEmailOrUserName(emailOrUserName);
+    }
 
     public Admin getAdminByEmail(String email, Admin admin){
         return adminDao.getByEmail(email, admin);

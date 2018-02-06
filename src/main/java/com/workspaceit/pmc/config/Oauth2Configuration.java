@@ -15,56 +15,86 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
-@EnableAuthorizationServer
-public class Oauth2Configuration extends AuthorizationServerConfigurerAdapter {
+public class Oauth2Configuration {
+
+    private static InMemoryTokenStore tokenStore = new InMemoryTokenStore();
+    private static final String SERVER_RESOURCE_ID = "oauth2-server";
 
 
-    @Autowired
-    public PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private TokenStore tokenStore;
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private ClientDetailsService customClientDetailsService;
 
-    @Autowired
-    @Qualifier("userDetailsService")
-    UserDetailsService userDetailsService;
+    /*@Configuration
+    @EnableResourceServer
+    protected static class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+        @Override
+        public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+            resources.tokenStore(tokenStore).resourceId(SERVER_RESOURCE_ID);
+        }
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests().anyRequest().permitAll();
+                   // .antMatchers("/auth/api/**").authenticated()
+                   // .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        }
+    }*/
+    @Configuration
+    @EnableAuthorizationServer
+    protected static class AuthServer extends AuthorizationServerConfigurerAdapter {
 
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
 
-                .withClient("my-trusted-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_superadmin")
-                .scopes("read", "write", "trust")
-                .secret("$2a$10$CB454JLAnGhfH9pRQaSJHebfuik3TaCkaAgopXvTAPZfzhHvtmvFi")
-                .autoApprove(true)
-                .accessTokenValiditySeconds(120).//Access token is only valid for 2 minutes.
-                refreshTokenValiditySeconds(600);//Refresh token is only valid for 10 minutes.
-    }
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
+        PasswordEncoder passwordEncoder;
+        private AuthenticationManager authenticationManager;
+        private UserDetailsService photographerDetailsService;
 
-    }
+        @Autowired
+        public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+            this.passwordEncoder = passwordEncoder;
+        }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.allowFormAuthenticationForClients()
-                .passwordEncoder(passwordEncoder);
-    }
+        @Autowired
+        @Qualifier("authenticationManagerBean")
+        public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+            this.authenticationManager = authenticationManager;
+        }
+
+        @Autowired
+        @Qualifier("photographerDetailsService")
+        public void setPhotographerDetailsService(UserDetailsService photographerDetailsService) {
+            this.photographerDetailsService = photographerDetailsService;
+        }
+
+        @Override
+       public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+           clients.inMemory()
+
+                   .withClient("pmc-app-client")
+                   .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+                   .authorities("ROLE_superadmin")
+                   .scopes("read", "write", "trust")
+                   .secret(passwordEncoder.encode("f6c3d96bc05036e738f0899ba149f447924b3a09"))
+                   .accessTokenValiditySeconds(60*60*24)
+                   .resourceIds(SERVER_RESOURCE_ID);
+       }
+
+       @Override
+       public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+           endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager).userDetailsService(photographerDetailsService);
+
+       }
+
+       @Override
+       public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+           oauthServer.allowFormAuthenticationForClients()
+                   .passwordEncoder(passwordEncoder);
+       }
+
+   }
 
 }

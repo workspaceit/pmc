@@ -24,58 +24,22 @@ import java.util.*;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    AdminService adminService;
 
-//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-//        Admin admin = adminService.getAdminByEmail(s);
-//        System.out.println(admin);
-//        if(admin != null) {
-//            Collection<GrantedAuthority> authorities = admin.getAdminRoles().stream()
-//                    .map(adminRole -> new SimpleGrantedAuthority(adminRole.getRole()))
-//                    .collect(Collectors.toCollection(ArrayList::new));
-//            return new User(s, admin.getPassword(), true, true, true, true, authorities);
-//        }
-//        else {
-//            throw new UsernameNotFoundException("User Not Found");
-//        }
-//    }
-    @Transactional(readOnly=true)
-    public UserDetails loadUserByUsername(final String s)
-            throws UsernameNotFoundException {
-        System.out.println("SPRING LOGING SERVICE");
-        Admin admin = adminService.getAdminByEmail(s);
+    private AdminService adminService;
+
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
+    public UserDetails loadUserByUsername(final String s)  throws UsernameNotFoundException{
+        Admin admin = this.adminService.getAdminByEmailOrUserName(s);
         if(admin==null){
             throw new UsernameNotFoundException("User not found");
         }
 
-        Set<AdminRole> roles = admin.getAdminRoles();
-//        for(AdminRole adminRole: roles){
-//            System.out.println(adminRole.toString());
-//        }
-
 
         return new AdminUserDetails(admin);
-
     }
 
-    // Converts Admin user to
-    // org.springframework.security.core.userdetails.User
-    private User buildUserForAuthentication(Admin admin, List<GrantedAuthority> authorities) {
-        return new User(admin.getEmail(), admin.getPassword(),
-                true, true, true, true, authorities);
-    }
-
-    private List<GrantedAuthority> buildUserAuthority(Set<AdminRole> adminRoles) {
-        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-        // Build user's authorities
-        for (AdminRole adminRole: adminRoles) {
-            setAuths.add(new SimpleGrantedAuthority("ROLE_" + adminRole.getRole()));
-        }
-        List<GrantedAuthority> result = new ArrayList<GrantedAuthority>(setAuths);
-        for(GrantedAuthority authority: result){
-            System.out.println(authority.getAuthority());
-        }
-        return result;
-    }
 }

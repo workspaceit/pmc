@@ -43,6 +43,9 @@ public class PhotographerService {
     public Photographer getByEmail(String email){
         return this.photographerDao.getByEmail(email);
     }
+    public Photographer getByEmailOrUserName(String emailOrUsername){
+        return this.photographerDao.getByEmailOrUserName(emailOrUsername);
+    }
     public Photographer getByIdAndEmail(int id,String email){
         return this.photographerDao.getByIdAndEmail(id,email);
     }
@@ -160,7 +163,7 @@ public class PhotographerService {
         return photographer;
     }
     @Transactional(rollbackFor = Exception.class)
-    public Photographer updatePassword(int id,String password,User user)throws EntityNotFound{
+    public Photographer updatePassword(int id,String password,Admin user)throws EntityNotFound{
         Photographer photographer =  this.getPhotographer(id);
         photographer.setPassword(CypherHelper.getbCryptPassword(password));
         this.update(photographer);

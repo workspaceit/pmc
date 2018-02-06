@@ -50,6 +50,13 @@ public class PhotographerDao extends BaseDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+    public Photographer getByEmailOrUserName(String emailOrUserName){
+        Session session = this.getCurrentSession();
+        return (Photographer)session.createQuery("FROM Photographer WHERE email=:emailOrUserName OR userName=:emailOrUserName")
+                .setParameter("emailOrUserName",emailOrUserName)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
     public Photographer getByIdAndEmail(int id,String email){
         Session session = this.getCurrentSession();
         return (Photographer)session.createQuery("FROM Photographer WHERE email=:email AND id !=:id")
