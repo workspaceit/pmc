@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -29,7 +31,7 @@ public class Oauth2Configuration {
 
 
 
-    /*@Configuration
+    @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         @Override
@@ -38,22 +40,23 @@ public class Oauth2Configuration {
         }
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().permitAll();
-                   // .antMatchers("/auth/api/**").authenticated()
-                   // .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+            http.antMatcher("/auth/api/**")
+                    .authorizeRequests()
+                    .antMatchers("/auth/api/**").access("hasRole('photographer')")
+                    .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         }
-    }*/
+    }
     @Configuration
     @EnableAuthorizationServer
     protected static class AuthServer extends AuthorizationServerConfigurerAdapter {
 
 
 
-        PasswordEncoder passwordEncoder;
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         private AuthenticationManager authenticationManager;
         private UserDetailsService photographerDetailsService;
 
-        @Autowired
+        //@Autowired
         public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
             this.passwordEncoder = passwordEncoder;
         }
