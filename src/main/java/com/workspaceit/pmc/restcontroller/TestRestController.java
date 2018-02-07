@@ -7,7 +7,9 @@ import com.workspaceit.pmc.service.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by anik on 2/6/18.
@@ -30,10 +32,13 @@ public class TestRestController {
         this.venueService = venueService;
     }
 
-    @GetMapping("/location/")
-    public List<Location> get() {
-        List<Location> locations = locationService.getAll();
-        return locations;
+    @GetMapping("/location/{limit}/{offset}/")
+    public Map<String, Object> get(@PathVariable int limit, @PathVariable int offset) {
+        List<Location> locations = locationService.getAll(limit, offset);
+        Map<String, Object> res = new HashMap<>();
+        res.put("count", locationService.getLocationCount());
+        res.put("locations", locations);
+        return res;
     }
 
     @GetMapping("/venue/")
