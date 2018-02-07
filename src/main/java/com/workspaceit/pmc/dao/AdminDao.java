@@ -30,6 +30,19 @@ public class AdminDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+
+    public Admin getByEmailOrUserName(String emailOrUserName){
+        Session session = this.openSession();
+        try{
+            return (Admin)session.createQuery("FROM Admin  WHERE email = :emailOrUserName OR userName = :emailOrUserName")
+                    .setParameter("emailOrUserName",emailOrUserName)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
+
     public Admin getByEmail(String email, Admin admin){
         Session session = this.openSession();
         try{
