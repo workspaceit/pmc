@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -13,7 +14,9 @@ import java.util.Date;
  */
 
 @Entity
-//@Where(clause="active=true")
+@FilterDef(name = "activeVenues")
+@Filter(name = "activeVenues", condition = "deleted = false AND active = true")
+@JsonIgnoreProperties({"active", "deleted", "createdAt", "updatedAt"})
 @Table(name = "venues")
 public class Venue {
 
@@ -37,13 +40,11 @@ public class Venue {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @JsonIgnore
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;

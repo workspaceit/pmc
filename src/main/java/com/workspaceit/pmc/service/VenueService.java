@@ -49,6 +49,11 @@ public class VenueService {
         return this.venueDao.getActiveVenues();
     }
 
+    @Transactional
+    public List<Venue> getActiveVenuesByLocation(Integer locationId){
+        return this.venueDao.getActiveVenuesByLocation(locationId);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public List<Venue> getSuggestedVenues(String searchTerm, Boolean active){
         return this.venueDao.getSuggestedVenues(searchTerm, active);
