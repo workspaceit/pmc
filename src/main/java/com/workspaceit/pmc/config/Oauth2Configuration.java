@@ -56,11 +56,6 @@ public class Oauth2Configuration {
         private AuthenticationManager authenticationManager;
         private UserDetailsService photographerDetailsService;
 
-        //@Autowired
-        public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-            this.passwordEncoder = passwordEncoder;
-        }
-
         @Autowired
         @Qualifier("authenticationManagerBean")
         public void setAuthenticationManager(AuthenticationManager authenticationManager) {
@@ -76,7 +71,6 @@ public class Oauth2Configuration {
         @Override
        public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
            clients.inMemory()
-
                    .withClient("pmc-app-client")
                    .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                    .authorities("ROLE_superadmin")
