@@ -65,8 +65,8 @@ public class PersistenceConfig {
 //                        env.getHbm2ddl());
                 setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
                 setProperty("hibernate.globally_quoted_identifiers","true");
-                setProperty("hibernate.jdbc.batch_size","10");
-           /*     setProperty("hibernate.show_sql","true");
+        /*        setProperty("hibernate.jdbc.batch_size","10");
+                setProperty("hibernate.show_sql","true");
                 setProperty("hibernate.format_sql","true");
                 setProperty("hibernate.use_sql_comments","true");*/
             }
