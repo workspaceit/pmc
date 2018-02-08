@@ -1,11 +1,11 @@
 package com.workspaceit.pmc.config;
 
+import com.workspaceit.pmc.config.security.filter.CustomTokenEndpointAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +17,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-import javax.ws.rs.HttpMethod;
 
 @Configuration
 public class Oauth2Configuration {
@@ -44,17 +44,18 @@ public class Oauth2Configuration {
         public void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/auth/api/**")
                     .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
                     .antMatchers("/auth/api/**").access("hasRole('photographer')")
                     .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         }
+
+
     }
     @Configuration
     @EnableAuthorizationServer
     protected static class AuthServer extends AuthorizationServerConfigurerAdapter {
 
 
-
+        private OAuth2RequestFactory oAuth2RequestFactory;
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         private AuthenticationManager authenticationManager;
         private UserDetailsService photographerDetailsService;
@@ -85,16 +86,24 @@ public class Oauth2Configuration {
 
        @Override
        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-           endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager).userDetailsService(photographerDetailsService);
+           this.oAuth2RequestFactory = endpoints.getOAuth2RequestFactory();
+           endpoints.tokenStore(tokenStore)
+                   .authenticationManager(authenticationManager)
+                   .userDetailsService(photographerDetailsService);
 
        }
+
+
 
        @Override
        public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+
            oauthServer.allowFormAuthenticationForClients()
-                   .passwordEncoder(passwordEncoder);
+                   .passwordEncoder(passwordEncoder)
+           .addTokenEndpointAuthenticationFilter(new CustomTokenEndpointAuthenticationFilter(this.authenticationManager,this.oAuth2RequestFactory ));
        }
 
-   }
+
+    }
 
 }
