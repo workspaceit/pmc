@@ -64,6 +64,11 @@ public class EventService {
     }
 
     @Transactional
+    public List<Event> getAll(int limit,int offset){
+        return this.eventDao.getAll(limit,offset);
+    }
+
+    @Transactional
     public List<Event> getActiveEvents(){
         return this.eventDao.getActiveEvents();
     }
