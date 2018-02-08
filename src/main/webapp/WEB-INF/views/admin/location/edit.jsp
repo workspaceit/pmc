@@ -85,7 +85,7 @@
                                                 <div class="dz-default dz-message">
                                                     <div class="droper">
                                                         <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
-                                                        <p class="dropext">Click or Drop your file to chnage logo</p>
+                                                        <p class="dropext">Click or Drop your file to change logo</p>
                                                     </div>
                                                     <p id="errorObj_profilePictureToken"></p>
                                                 </div>
@@ -270,15 +270,6 @@
         <input type="hidden" id="venueBgRemoveIds" value="" />
         <input type="hidden" id="venueLogoToken" value="" />
         <input type="hidden" id="venueBgImgTokens" value="" />
-
-        <script>
-
-
-
-
-
-
-        </script>
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
 

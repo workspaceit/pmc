@@ -3,6 +3,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="d" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper">
@@ -25,32 +26,16 @@
                                 <input type="checkbox" id="select-all-checkbox">
                             </th>
                             <th class="cstm-table-header">
+                                Date
+                            </th>
+                            <th class="cstm-table-header">
                                 Title
                             </th>
                             <th class="cstm-table-header">
                                 Type
                             </th>
-
                             <th class="cstm-table-header">
-                                Logo Name
-                            </th>
-                            <th class="cstm-table-header">
-                                Size
-                            </th>
-                            <th class="cstm-table-header">
-                                Fade
-                            </th>
-                            <th class="cstm-table-header">
-                                Watermark Text
-                            </th>
-                            <th class="cstm-table-header">
-                                Font Id
-                            </th>
-                            <th class="cstm-table-header">
-                                Placement
-                            </th>
-                            <th class="cstm-table-header">
-                                color
+                                Preview
                             </th>
                             <th class="cstm-table-header">
                                 Enabled
@@ -67,33 +52,16 @@
                                 <input type="checkbox" class="select-checkbox" value="${wm.id}">
                             </td>
                             <td class="des-clm">
+                                <p class="text-left"><fmt:formatDate pattern='yyyy-MM-dd hh:mm a' value="${wm.createdAt}"/></p>
+                            </td>
+                            <td class="des-clm">
                                 <p id="title-${wm.id}" class="text-left">${wm.name}</p>
                             </td>
                             <td class="des-clm">
                                 <p class="text-left">${wm.type}</p>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.logoName}</span>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.size}</span>
-                            </td>
-
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.fade}</span>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.watermarkText}</span>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.font}</span>
-                            </td>
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.placement}</span>
-                            </td>
-
-                            <td class="date-clm">
-                                <span class="cstm-date-txt">${wm.color}</span>
+                                <span class="cstm-date-txt">Preview here</span>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">
@@ -119,10 +87,10 @@
             $(document).ready(function() {
                 $('#watermark-datatable').DataTable({
                     "columnDefs": [{
-                        "targets": [0, 10, 11],
+                        "targets": [0, 4, 5, 6],
                         "orderable": false,
                     }],
-                    "order": [[1, 'asc']]
+                    "order": [[2, 'asc']]
                 });
             });
         </script>
