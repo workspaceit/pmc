@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.workspaceit.pmc.entity.Photographer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,6 +32,12 @@ public class PhotographerUserDetails extends Photographer implements UserDetails
         return authorities;
     }
 
+    @JsonIgnore
+    @Override
+    public String getName() {
+        return this.getUsername();
+    }
+    @JsonIgnore
     @Override
     public String getUsername() {
         return super.getEmail();

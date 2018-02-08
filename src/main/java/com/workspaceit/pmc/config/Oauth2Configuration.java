@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import javax.ws.rs.HttpMethod;
+
 @Configuration
 public class Oauth2Configuration {
 
@@ -42,6 +44,7 @@ public class Oauth2Configuration {
         public void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/auth/api/**")
                     .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
                     .antMatchers("/auth/api/**").access("hasRole('photographer')")
                     .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         }

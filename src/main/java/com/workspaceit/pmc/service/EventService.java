@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by mi_rafi on 1/3/18.
@@ -67,6 +64,21 @@ public class EventService {
     public List<Event> getAll(int limit,int offset){
         return this.eventDao.getAll(limit,offset);
     }
+    @Transactional
+    public Integer getActiveEventCount(){
+        return this.eventDao.getActiveEventCount();
+    }
+    @Transactional
+    public Map<String,Object> getAllWithCountInMap(int limit,int offset){
+
+        Map<String,Object> response = new HashMap<>();
+
+        response.put("count",this.getActiveEventCount());
+        response.put("events",this.getAll(limit,offset));
+
+        return response;
+    }
+
 
     @Transactional
     public List<Event> getActiveEvents(){
