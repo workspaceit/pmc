@@ -35,7 +35,8 @@ public class TestRestController {
     }
 
     @GetMapping("/locations/{limit}/{offset}/")
-    public ResponseEntity<?> get(@PathVariable int limit, @PathVariable int offset) {
+    public ResponseEntity<?> get(@PathVariable int limit, @PathVariable int offset) throws InterruptedException {
+//        Thread.sleep(500000);
         List<Location> locations = locationService.getActiveLocations(limit, offset);
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("count", locationService.getLocationCount());
