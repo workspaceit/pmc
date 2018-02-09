@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.config;
+package com.workspaceit.pmc.config.security;
 
 import com.workspaceit.pmc.config.security.handler.AuthSuccessHandler;
 import com.workspaceit.pmc.config.security.provider.PhotographerAuthProvider;
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthSuccessHandler authSuccessHandler;
 
     @Autowired
-    @Qualifier("userDetailsService")
+    @Qualifier("adminDetailsService")
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.adminAuthProvider);
+//        auth.authenticationProvider(this.adminAuthProvider);
         auth.authenticationProvider(this.photographerAuthProvider);
     }
 
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_superadmin')")
+                    .antMatchers("/admin/**").access("hasRole('ROLE_superadmin')")
                 .and()
                     .formLogin()
                         .loginPage("/login")
@@ -78,11 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .usernameParameter("email").passwordParameter("password")
                         .successHandler(authSuccessHandler)
                 .and()
-                .logout().logoutSuccessUrl("/login?logout")
+                    .authenticationProvider(this.adminAuthProvider)
+                    .logout().logoutSuccessUrl("/login?logout")
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
+                    .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .csrf().disable();
+                    .csrf().disable();
 
 
     }

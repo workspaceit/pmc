@@ -3,6 +3,7 @@ package com.workspaceit.pmc.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.workspaceit.pmc.config.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,7 +23,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.workspaceit.pmc")
-@Import({ SecurityConfig.class })
+//@Import({ SecurityConfig.class })
 public class WebConfig implements WebMvcConfigurer {
 
     Environment env;
