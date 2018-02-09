@@ -1,7 +1,9 @@
 package com.workspaceit.pmc.validation.admin;
 
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.service.AdminService;
+import com.workspaceit.pmc.service.PhotographerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -16,19 +18,46 @@ import org.springframework.validation.Validator;
 public class AdminValidator implements Validator {
 
     private AdminService adminService;
+    private PhotographerService photographerService;
 
     @Autowired
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
 
-    private void uniqueEmailCheck(String email,Errors errors){
+    @Autowired
+    public void setPhotographerService(PhotographerService photographerService) {
+        this.photographerService = photographerService;
+    }
+
+    private void uniqueEmailCheck(String email, Errors errors){
         Admin admin = this.adminService.getAdminByEmail(email);
         if(admin!=null){
             errors.rejectValue("email", "Email already taken");
         }
     }
+    private void uniquePhotographerEmailCheck(String email,Errors errors){
+        Photographer photographer = this.photographerService.getByEmail(email);
+        if(photographer!=null ){
+            String tmpMsg = "Email already taken by a Photographer : '"+photographer.getFullName()+"'";
 
+            if(photographer.getDeleted()){
+                tmpMsg+=" but account was deleted";
+            }
+            errors.rejectValue("email", tmpMsg);
+        }
+    }
+    private void uniquePhotographerUserNameCheck(String userName,Errors errors){
+        Photographer photographer = this.photographerService.getByUserName(userName);
+        if(photographer!=null ){
+            String tmpMsg = "Username already taken by a Photographer : '"+photographer.getFullName()+"'";
+
+            if(photographer.getDeleted()){
+                tmpMsg+=" but account was deleted";
+            }
+            errors.rejectValue("userName", tmpMsg);
+        }
+    }
     private void uniqueUserNameCheck(String userName,Errors errors){
         Admin admin = this.adminService.getByUserName(userName);
         if(admin!=null){
@@ -47,16 +76,27 @@ public class AdminValidator implements Validator {
     }
     @Override
     public void validate(Object obj, Errors errors) {
-        AdminCreateForm adminrForm = (AdminCreateForm) obj;
+        AdminCreateForm adminForm = (AdminCreateForm) obj;
 
-        String email = adminrForm.getEmail();
-        String userName = adminrForm.getUserName();
-        String password = adminrForm.getPassword();
-        String conPassword = adminrForm.getConfirmPassword();
+        String email = adminForm.getEmail();
+        String userName = adminForm.getUserName();
+        String password = adminForm.getPassword();
+        String conPassword = adminForm.getConfirmPassword();
 
         this.uniqueEmailCheck(email, errors);
         this.uniqueUserNameCheck(userName, errors);
         this.passwordMatchCheck(password, conPassword, errors);
+
+        this.checkWithPhotographer(adminForm , errors);
+    }
+
+    private void checkWithPhotographer(AdminCreateForm adminForm , Errors errors){
+        if(!errors.hasFieldErrors("email")){
+            this.uniquePhotographerEmailCheck(adminForm.getEmail(), errors);
+        }
+        if(!errors.hasFieldErrors("userName")) {
+            this.uniquePhotographerUserNameCheck(adminForm.getUserName(), errors);
+        }
     }
     public void validateUpdate(Object obj, Errors errors) {
         AdminForm adminForm = (AdminEditForm)obj;
