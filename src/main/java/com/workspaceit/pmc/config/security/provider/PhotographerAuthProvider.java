@@ -44,7 +44,9 @@ public class PhotographerAuthProvider implements AuthenticationProvider {
         if(!passwordMatched){
             throw new BadCredentialsException("Invalid username or password");
         }
-
+        if(!photographer.isEnabled()){
+            throw new BadCredentialsException("Account is not active");
+        }
         return new UsernamePasswordAuthenticationToken(photographer,null,photographer.getAuthorities());
     }
 

@@ -63,7 +63,10 @@ public class AdminService {
         }
     }
 
-    
+    public boolean isUniqueEmail(String email){
+        Admin admin = this.getAdminByEmail(email);
+        return (admin==null);
+    }
     public Admin getAdminByEmail(String email){
         return adminDao.getByEmail(email);
     }

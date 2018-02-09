@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.config;
+package com.workspaceit.pmc.config.security;
 
 /**
  * Created by anik on 12/22/17.

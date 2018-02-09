@@ -22,7 +22,7 @@ public class AdminUserDetails extends Admin implements UserDetails {
         super.setImage(admin.getImage());
         super.setPhoneNumber(admin.getPhoneNumber());
         super.setAdminRoles(admin.getAdminRoles());
-        super.setCreatedBy("");
+        super.setActive(admin.getActive());
         super.setCreatedAt(admin.getCreatedAt());
     }
 
@@ -49,21 +49,21 @@ public class AdminUserDetails extends Admin implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return super.getActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return super.getActive();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return super.getActive();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return super.getActive();
     }
 }

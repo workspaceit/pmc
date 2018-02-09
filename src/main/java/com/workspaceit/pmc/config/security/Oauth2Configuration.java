@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.config;
+package com.workspaceit.pmc.config.security;
 
 import com.workspaceit.pmc.config.security.filter.CustomTokenEndpointAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,35 +73,35 @@ public class Oauth2Configuration {
         }
 
         @Override
-       public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-           clients.inMemory()
-                   .withClient("pmc-app-client")
-                   .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                   .authorities("ROLE_superadmin")
-                   .scopes("read", "write", "trust")
-                   .secret(passwordEncoder.encode("f6c3d96bc05036e738f0899ba149f447924b3a09"))
-                   .accessTokenValiditySeconds(60*60*24)
-                   .resourceIds(SERVER_RESOURCE_ID);
-       }
+        public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+            clients.inMemory()
+                    .withClient("pmc-app-client")
+                    .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+                    .authorities("ROLE_superadmin")
+                    .scopes("read", "write", "trust")
+                    .secret(passwordEncoder.encode("f6c3d96bc05036e738f0899ba149f447924b3a09"))
+                    .accessTokenValiditySeconds(60*60*24)
+                    .resourceIds(SERVER_RESOURCE_ID);
+        }
 
-       @Override
-       public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-           this.oAuth2RequestFactory = endpoints.getOAuth2RequestFactory();
-           endpoints.tokenStore(tokenStore)
-                   .authenticationManager(authenticationManager)
-                   .userDetailsService(photographerDetailsService);
+        @Override
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+            this.oAuth2RequestFactory = endpoints.getOAuth2RequestFactory();
+            endpoints.tokenStore(tokenStore)
+                    .authenticationManager(authenticationManager)
+                    .userDetailsService(photographerDetailsService);
 
-       }
+        }
 
 
 
-       @Override
-       public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        @Override
+        public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 
-           oauthServer.allowFormAuthenticationForClients()
-                   .passwordEncoder(passwordEncoder)
-           .addTokenEndpointAuthenticationFilter(new CustomTokenEndpointAuthenticationFilter(this.authenticationManager,this.oAuth2RequestFactory ));
-       }
+            oauthServer.allowFormAuthenticationForClients()
+                    .passwordEncoder(passwordEncoder)
+                    .addTokenEndpointAuthenticationFilter(new CustomTokenEndpointAuthenticationFilter(this.authenticationManager,this.oAuth2RequestFactory ));
+        }
 
 
     }

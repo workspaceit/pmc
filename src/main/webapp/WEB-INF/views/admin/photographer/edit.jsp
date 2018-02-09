@@ -30,11 +30,11 @@
                         </div>
                         <div class="form-group">
                             <label>User Name</label>
-                            <input id=userName class="form-control" value="${photographer.userName}" >
+                            <input id=userName disabled="disabled" class="form-control" value="${photographer.userName}" >
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input id="email" class="form-control" value="${photographer.email}" >
+                            <input id="email" disabled="disabled" class="form-control" value="${photographer.email}" >
                         </div>
                         <div class="form-group">
                             <label>Password</label>

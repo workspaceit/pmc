@@ -1,8 +1,9 @@
-package com.workspaceit.pmc.service;
+package com.workspaceit.pmc.config.security.service;
 
 import com.workspaceit.pmc.auth.AdminUserDetails;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.AdminRole;
+import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +22,8 @@ import java.util.*;
  * Created by anik on 12/22/17.
  */
 
-@Service("userDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService {
+@Service("adminDetailsService")
+public class AdminDetailsServiceImpl implements UserDetailsService {
 
 
     private AdminService adminService;

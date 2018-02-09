@@ -1,7 +1,9 @@
 package com.workspaceit.pmc.validation.validator;
 
 import com.workspaceit.pmc.dao.PhotographerDao;
+import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.PhotographerService;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,16 @@ import org.springframework.validation.Validator;
 public class PhotographerValidator implements Validator {
 
     private PhotographerService photographerService;
+    private AdminService adminService;
 
     @Autowired
     public void setPhotographerService(PhotographerService photographerService) {
         this.photographerService = photographerService;
+    }
+
+    @Autowired
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @Override
@@ -40,6 +48,18 @@ public class PhotographerValidator implements Validator {
         this.uniqueEmailCheck(email,errors);
         this.uniqueUserNameCheck(userName,errors);
         this.passwordMatchCheck(password,conPassword,errors);
+
+        this.checkWithAdmin(photographerForm,errors);
+
+
+    }
+    private void checkWithAdmin(PhotographerForm photographerForm, Errors errors){
+        if(!errors.hasFieldErrors("email")){
+            this.uniqueAdminEmailCheck(photographerForm.getEmail(),errors);
+        }
+        if(!errors.hasFieldErrors("userName")){
+            this.uniqueAdminUserNameCheck(photographerForm.getUserName(),errors);
+        }
     }
     public void validate(Object obj, Errors errors,String... params) {
         PhotographerForm photographerForm = (PhotographerForm)obj;
@@ -53,9 +73,15 @@ public class PhotographerValidator implements Validator {
             switch(param){
                 case "email":
                     this.uniqueEmailCheck(email,errors);
+                    if(!errors.hasFieldErrors("email")){
+                        this.uniqueAdminEmailCheck(email,errors);
+                    }
                     break;
                 case "userName":
                     this.uniqueUserNameCheck(userName,errors);
+                    if(!errors.hasFieldErrors("userName")){
+                        this.uniqueAdminUserNameCheck(photographerForm.getUserName(),errors);
+                    }
                     break;
                 case "password":
                     this.passwordMatchCheck(password,conPassword,errors);
@@ -75,9 +101,15 @@ public class PhotographerValidator implements Validator {
             switch(param){
                 case "email":
                     this.emailUsedByOthersCheck(id,email,errors);
+                    if(!errors.hasFieldErrors("email")){
+                        this.uniqueAdminEmailCheck(email,errors);
+                    }
                     break;
                 case "userName":
                     this.userNameUsedByOthersCheck(id,userName,errors);
+                    if(!errors.hasFieldErrors("userName")){
+                        this.uniqueAdminUserNameCheck(photographerForm.getUserName(),errors);
+                    }
                     break;
                 case "password":
                     this.passwordMatchCheck(password,conPassword,errors);
@@ -96,6 +128,18 @@ public class PhotographerValidator implements Validator {
             errors.rejectValue("email", tmpMsg);
         }
     }
+    /** For login issue
+     *  Oauth login and web login
+     *  Same email and username can't be in both entity 'Photographer and Admin'
+     * */
+    private void uniqueAdminEmailCheck(String email,Errors errors){
+        Admin admin = this.adminService.getAdminByEmail(email);
+
+        if(admin!=null){
+            String tmpMsg = "Email already taken by an Admin : '"+admin.getName()+"'";
+            errors.rejectValue("email", tmpMsg);
+        }
+    }
     private void emailUsedByOthersCheck(int id,String email,Errors errors){
         Photographer photographer = this.photographerService.getByIdAndEmail(id,email);
         if(photographer!=null){
@@ -106,6 +150,18 @@ public class PhotographerValidator implements Validator {
         Photographer photographer = this.photographerService.getByUserName(userName);
         if(photographer!=null){
             errors.rejectValue("userName", "User name already taken");
+        }
+    }
+    /** For login issue
+     *  Oauth login and web login
+     *  Same email or username can't be in both entity 'Photographer and Admin'
+     * */
+    private void uniqueAdminUserNameCheck(String username,Errors errors){
+        Admin admin = this.adminService.getByUserName(username);
+
+        if(admin!=null){
+            String tmpMsg = "Username already taken by an Admin : '"+admin.getName()+"'";
+            errors.rejectValue("userName", tmpMsg);
         }
     }
     private void userNameUsedByOthersCheck(int id,String userName,Errors errors){

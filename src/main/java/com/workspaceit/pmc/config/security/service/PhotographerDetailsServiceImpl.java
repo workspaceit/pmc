@@ -24,8 +24,9 @@ public class PhotographerDetailsServiceImpl implements UserDetailsService{
     public UserDetails loadUserByUsername(String emailOrUserName) throws UsernameNotFoundException {
         Photographer photographer =  this.photographerService.getByEmailOrUserName(emailOrUserName);
         if(photographer==null){
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Invalid username or password");
         }
+
         return new PhotographerUserDetails(photographer);
     }
 }

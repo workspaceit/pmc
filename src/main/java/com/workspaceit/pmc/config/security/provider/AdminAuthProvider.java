@@ -1,6 +1,5 @@
 package com.workspaceit.pmc.config.security.provider;
 
-import com.workspaceit.pmc.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,7 +20,7 @@ public class AdminAuthProvider implements AuthenticationProvider {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    @Qualifier("userDetailsService")
+    @Qualifier("adminDetailsService")
     public void setAdminUserDetailsService(UserDetailsService adminUserDetailsService) {
         this.adminUserDetailsService = adminUserDetailsService;
     }
@@ -45,6 +44,10 @@ public class AdminAuthProvider implements AuthenticationProvider {
 
         if(!passwordMatched){
             throw new BadCredentialsException("Invalid username or password");
+        }
+
+        if(!admin.isEnabled()){
+            throw new BadCredentialsException("Account is not active");
         }
 
         return new UsernamePasswordAuthenticationToken(admin,null,admin.getAuthorities());
