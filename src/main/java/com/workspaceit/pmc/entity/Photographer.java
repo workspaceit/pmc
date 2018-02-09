@@ -65,6 +65,7 @@ public class Photographer {
     @Column(name = "active")
     private Boolean active;
 
+    @JsonIgnore
     @Column(name = "deleted")
     private Boolean deleted;
 

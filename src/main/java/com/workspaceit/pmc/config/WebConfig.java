@@ -87,5 +87,4 @@ public class WebConfig implements WebMvcConfigurer {
 
         WebMvcConfigurer.super.configureMessageConverters(converters);
     }
-
 }

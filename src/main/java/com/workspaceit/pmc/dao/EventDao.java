@@ -18,6 +18,11 @@ public class EventDao extends BaseDao {
         return session.createQuery("FROM Event e where  e.deleted = false ORDER BY e.id DESC")
                 .list();
     }
+    public Integer getActiveEventCount(){
+        Session session = this.getCurrentSession();
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e").uniqueResult()).intValue();
+        return count;
+    }
     public List<Event> getAll(int limit,int offset){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Event e where  e.active = true ORDER BY e.id DESC")
