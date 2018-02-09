@@ -5,6 +5,8 @@ import com.workspaceit.pmc.entity.Venue;
 import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.service.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,19 +34,28 @@ public class TestRestController {
         this.venueService = venueService;
     }
 
-    @GetMapping("/location/{limit}/{offset}/")
-    public Map<String, Object> get(@PathVariable int limit, @PathVariable int offset) {
-        List<Location> locations = locationService.getAll(limit, offset);
-        Map<String, Object> res = new HashMap<>();
-        res.put("count", locationService.getLocationCount());
-        res.put("locations", locations);
-        return res;
+    @GetMapping("/locations/{limit}/{offset}/")
+    public ResponseEntity<?> get(@PathVariable int limit, @PathVariable int offset) {
+        List<Location> locations = locationService.getActiveLocations(limit, offset);
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("count", locationService.getLocationCount());
+        responseData.put("locations", locations);
+        return ResponseEntity.status(HttpStatus.OK).body(responseData);
     }
 
-    @GetMapping("/venue/")
-    public List<Venue> getVenuesByLocation(@RequestParam("locationId") Integer locationId) {
-        List<Venue> venues = venueService.getActiveVenuesByLocation(locationId);
-        return venues;
+    @GetMapping("locations/{locationId}")
+    public Location getLocationById(@PathVariable Integer locationId){
+        return locationService.getById(locationId);
+    }
+
+    @GetMapping("/venues/{limit}/{offset}/")
+    public Map<String, Object> getVenuesByLocation(@RequestParam("locationId") Integer locationId, @PathVariable Integer limit,
+                                           @PathVariable Integer offset) {
+        List<Venue> venues = venueService.getActiveVenuesByLocation(locationId, limit, offset);
+        Map<String, Object> res = new HashMap<>();
+        res.put("count", venueService.getActiveVenueCountByLocation(locationId));
+        res.put("venues", venues);
+        return res;
     }
 
 }

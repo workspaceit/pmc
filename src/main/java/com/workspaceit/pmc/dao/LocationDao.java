@@ -34,9 +34,22 @@ public class LocationDao extends BaseDao{
         return locations;
     }
 
+    public List<Location> getActiveLocations(Integer limit, Integer offset) {
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeLocations");
+        Query query = session.createQuery("FROM Location l order by l.name");
+        query.setMaxResults(limit);
+        query.setFirstResult(offset);
+        List<Location> locations = query.list();
+        session.disableFilter("activeLocations");
+        return locations;
+    }
+
     public Integer getActiveLocationCount(){
         Session session = this.getCurrentSession();
+        session.enableFilter("activeLocations");
         int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(l) FROM Location l").uniqueResult()).intValue();
+        session.disableFilter("activeLocations");
         return count;
     }
 

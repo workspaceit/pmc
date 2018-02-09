@@ -1,11 +1,10 @@
 package com.workspaceit.pmc.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.*;
 
 /**
@@ -13,6 +12,8 @@ import java.util.*;
  */
 
 @Entity
+@FilterDef(name = "activeLocations")
+@Filter(name = "activeLocations", condition = "deleted = false AND active = true")
 @Table(name = "locations")
 public class Location {
 

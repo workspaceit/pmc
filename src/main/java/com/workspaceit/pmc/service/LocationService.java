@@ -66,6 +66,11 @@ public class LocationService {
     }
 
     @Transactional
+    public List<Location> getActiveLocations(Integer limit, Integer offset){
+        return this.locationDao.getActiveLocations(limit, offset);
+    }
+
+    @Transactional
     public List<Location> getAll(Integer[] ids){
         return this.locationDao.getAll(ids);
     }

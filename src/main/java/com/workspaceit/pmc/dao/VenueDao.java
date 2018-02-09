@@ -36,14 +36,33 @@ public class VenueDao extends BaseDao{
                 .list();
     }
 
-    public List<Venue> getActiveVenuesByLocation(Integer locationId){
+    public List<Venue> getActiveVenuesByLocation(Integer locationId, Integer limit, Integer offset){
         Session session = this.getCurrentSession();
         session.enableFilter("activeVenues");
-        Query query = session.createQuery("FROM Venue v where v.location.id=:locationId ORDER BY v.id DESC");
+        Query query = session.createQuery("FROM Venue v where v.location.id=:locationId ORDER BY v.name");
         query.setParameter("locationId", locationId);
+        query.setMaxResults(limit);
+        query.setFirstResult(offset);
         List<Venue> venues = query.list();
         session.disableFilter("activeVenues");
         return venues;
+    }
+
+    public Integer getActiveVenueCountByLocation(Integer locationId){
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeVenues");
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(v) FROM Venue v WHERE v.location.id=:locationId")
+                .setParameter("locationId", locationId).uniqueResult()).intValue();
+        session.disableFilter("activeVenues");
+        return count;
+    }
+
+    public Integer getActiveVenueCount(){
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeVenues");
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(v) FROM Venue v").uniqueResult()).intValue();
+        session.disableFilter("activeVenues");
+        return count;
     }
 
     public List<Venue> getActiveVenues(){

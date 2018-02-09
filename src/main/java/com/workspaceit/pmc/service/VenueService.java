@@ -50,8 +50,18 @@ public class VenueService {
     }
 
     @Transactional
-    public List<Venue> getActiveVenuesByLocation(Integer locationId){
-        return this.venueDao.getActiveVenuesByLocation(locationId);
+    public List<Venue> getActiveVenuesByLocation(Integer locationId, Integer limit, Integer offset){
+        return this.venueDao.getActiveVenuesByLocation(locationId, limit, offset);
+    }
+
+    @Transactional
+    public Integer getActiveVenueCount(){
+        return venueDao.getActiveVenueCount();
+    }
+
+    @Transactional
+    public Integer getActiveVenueCountByLocation(Integer locationId){
+        return venueDao.getActiveVenueCountByLocation(locationId);
     }
 
     @Transactional(rollbackFor = Exception.class)
