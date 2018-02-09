@@ -20,7 +20,7 @@ public class EventDao extends BaseDao {
     }
     public Integer getActiveEventCount(){
         Session session = this.getCurrentSession();
-        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e").uniqueResult()).intValue();
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e where e.active = true ").uniqueResult()).intValue();
         return count;
     }
     public List<Event> getAll(int limit,int offset){
