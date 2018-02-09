@@ -39,7 +39,7 @@ public class VenueDao extends BaseDao{
     public List<Venue> getActiveVenuesByLocation(Integer locationId, Integer limit, Integer offset){
         Session session = this.getCurrentSession();
         session.enableFilter("activeVenues");
-        Query query = session.createQuery("FROM Venue v where v.location.id=:locationId ORDER BY v.name");
+        Query query = session.createQuery("FROM Venue v WHERE v.location.id=:locationId ORDER BY v.id DESC");
         query.setParameter("locationId", locationId);
         query.setMaxResults(limit);
         query.setFirstResult(offset);
