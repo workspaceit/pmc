@@ -31,8 +31,10 @@ public class CustomTokenEndpointAuthenticationFilter extends TokenEndpointAuthen
              Object user = authResult.getPrincipal();
 
              if(user instanceof AdminUserDetails){
+                 System.out.println("************ ERROR: ADMIN LOGIN FROM PHOTOGRAPHER ***********************");
                  new SecurityContextLogoutHandler().logout(request, null, null);
-                 throw new BadCredentialsException("Admin login not allowed here. Use admin panel");
+                 throw new BadCredentialsException("Invalid username or password");
+
              }
 
     }
