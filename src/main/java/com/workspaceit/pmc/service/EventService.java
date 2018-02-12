@@ -100,18 +100,18 @@ public class EventService {
         return event;
     }
 
-    public List<Event> getActiveEventsByLocation(Integer locationId, Integer limit, Integer offset) {
-        return eventDao.getActiveEventsByLocation(locationId, limit, offset);
+    public List<Event> getActiveEventsByLocation(Integer locationId, Date date, Integer limit, Integer offset) {
+        return eventDao.getActiveEventsByLocation(locationId, date, limit, offset);
     }
 
-    public Integer getActiveEventCountByLocation(Integer locationId){
+    public Integer getActiveEventCountByLocation(Integer locationId, Date date){
         return eventDao.getActiveEventCountByLocation(locationId);
     }
 
-    public Map<String, Object> getEventsByLocationWithCount(Integer locationId, Integer limit, Integer offset){
+    public Map<String, Object> getEventsByLocationWithCount(Integer locationId, Date date, Integer limit, Integer offset){
         Map<String,Object> eventData = new HashMap<>();
-        eventData.put("count", this.getActiveEventCountByLocation(locationId));
-        eventData.put("events", this.getActiveEventsByLocation(locationId, limit, offset));
+        eventData.put("count", this.getActiveEventCountByLocation(locationId, date));
+        eventData.put("events", this.getActiveEventsByLocation(locationId, date, limit, offset));
         return eventData;
     }
 

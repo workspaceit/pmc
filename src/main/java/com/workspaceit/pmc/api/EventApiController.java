@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +38,11 @@ public class EventApiController {
     }
 
     @GetMapping("/{limit}/{offset}")
-    public ResponseEntity<?> getEventsByLocation(@RequestParam("locationId") Integer locationId, @PathVariable Integer limit,
-                                                   @PathVariable Integer offset) {
-        Map<String, Object> responseData = eventService.getEventsByLocationWithCount(locationId, limit, offset);
+    public ResponseEntity<?> getEventsByLocation(@RequestParam("locationId") Integer locationId,
+                                                  @PathVariable Integer limit,
+                                                 @PathVariable Integer offset) {
+        Date d = new Date();
+        Map<String, Object> responseData = eventService.getEventsByLocationWithCount(locationId, d, limit, offset);
         return ResponseEntity.status(HttpStatus.OK).body(responseData);
     }
 
