@@ -100,6 +100,21 @@ public class EventService {
         return event;
     }
 
+    public List<Event> getActiveEventsByLocation(Integer locationId, Integer limit, Integer offset) {
+        return eventDao.getActiveEventsByLocation(locationId, limit, offset);
+    }
+
+    public Integer getActiveEventCountByLocation(Integer locationId){
+        return eventDao.getActiveEventCountByLocation(locationId);
+    }
+
+    public Map<String, Object> getEventsByLocationWithCount(Integer locationId, Integer limit, Integer offset){
+        Map<String,Object> eventData = new HashMap<>();
+        eventData.put("count", this.getActiveEventCountByLocation(locationId));
+        eventData.put("events", this.getActiveEventsByLocation(locationId, limit, offset));
+        return eventData;
+    }
+
     private Event getEventFromEventForm(EventForm eventForm) throws EntityNotFound {
         Event event = new Event();
 

@@ -34,20 +34,7 @@ public class TestRestController {
         this.venueService = venueService;
     }
 
-    @GetMapping("/locations/{limit}/{offset}/")
-    public ResponseEntity<?> get(@PathVariable int limit, @PathVariable int offset) throws InterruptedException {
-//        Thread.sleep(500000);
-        List<Location> locations = locationService.getActiveLocations(limit, offset);
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("count", locationService.getLocationCount());
-        responseData.put("locations", locations);
-        return ResponseEntity.status(HttpStatus.OK).body(responseData);
-    }
 
-    @GetMapping("locations/{locationId}")
-    public Location getLocationById(@PathVariable Integer locationId){
-        return locationService.getById(locationId);
-    }
 
     @GetMapping("/venues/{limit}/{offset}/")
     public Map<String, Object> getVenuesByLocation(@RequestParam("locationId") Integer locationId, @PathVariable Integer limit,
