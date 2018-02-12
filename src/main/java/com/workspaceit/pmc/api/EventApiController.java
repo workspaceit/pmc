@@ -34,4 +34,12 @@ public class EventApiController {
         return ResponseEntity.status(HttpStatus.OK).body(events);
 
     }
+
+    @GetMapping("/{limit}/{offset}")
+    public ResponseEntity<?> getEventsByLocation(@RequestParam("locationId") Integer locationId, @PathVariable Integer limit,
+                                                   @PathVariable Integer offset) {
+        Map<String, Object> responseData = eventService.getEventsByLocationWithCount(locationId, limit, offset);
+        return ResponseEntity.status(HttpStatus.OK).body(responseData);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Event;
+import com.workspaceit.pmc.entity.Venue;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -55,4 +56,26 @@ public class EventDao extends BaseDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+
+    public List<Event> getActiveEventsByLocation(Integer locationId, Integer limit, Integer offset) {
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeEvents");
+        Query query = session.createQuery("FROM Event e WHERE e.location.id=:locationId ORDER BY e.id DESC");
+        query.setParameter("locationId", locationId);
+        query.setMaxResults(limit);
+        query.setFirstResult(offset);
+        List<Event> events = query.list();
+        session.disableFilter("activeEvents");
+        return events;
+    }
+
+    public Integer getActiveEventCountByLocation(Integer locationId){
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeEvents");
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e WHERE e.location.id=:locationId")
+                .setParameter("locationId", locationId).uniqueResult()).intValue();
+        session.disableFilter("activeEvents");
+        return count;
+    }
+
 }
