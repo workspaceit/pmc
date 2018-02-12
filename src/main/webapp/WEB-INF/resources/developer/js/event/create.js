@@ -45,6 +45,7 @@ $(document).ready(function () {
         var endDateOnly = $('#endDate').val();
         var endTime = $('#endTime').val();
         var isPrivate = $("input[name='private']:checked").val();
+        var locationId = $("#locationIds").val();
         var venueId = $('#venueId').val();
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
@@ -55,6 +56,7 @@ $(document).ready(function () {
             'eventName': eventName,
             'startDate': startDate,
             'endDate' : endDate,
+            'locationId':locationId,
             'venueId': venueId,
             'photographerIds': photographerIds,
             'advertiserIds': advertiserIds,
@@ -108,6 +110,7 @@ $(document).ready(function () {
         var endDateOnly = $('#endDate').val();
         var endTime = $('#endTime').val();
         var isPrivate = $("input[name='private']:checked").val();
+        var locationId = $("#locationIds").val();
         var venueId = $('#venueId').val();
         var photographerIds = $('#photographer-select2').val();
         var advertiserIds = $('#advertiser-select2').val();
@@ -121,6 +124,7 @@ $(document).ready(function () {
             'eventName': eventName,
             'startDate': startDate,
             'endDate' : endDate,
+            'locationId': locationId,
             'venueId': venueId,
             'photographerIds': photographerIds,
             'advertiserIds': advertiserIds,
@@ -197,9 +201,38 @@ $(document).ready(function () {
             }
         }
     });
-    var $venueSelect2 = $("#venueId").select2({
+    var locationSelect2 = $("#locationIds").select2({
         placeholder: 'Select a Location',
 //                    minimumInputLength: 1,
+        width: 'resolve',
+        ajax: {
+            url: BASEURL + 'api/location/auto-suggest/',
+            type: "GET",
+            quietMillis: 100,
+            data: function (query) {
+                var term = "";
+                if (query.term != undefined) {
+                    term = query.term;
+                }
+                return {
+                    searchTerm: term
+                };
+            },
+            processResults: function (data, params) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            'text': item.name,
+                            'id': item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+    var $venueSelect2 = $("#venue").select2({
+        placeholder: 'Select a Location',
+                        minimumInputLength: 1,
         width: 'resolve',
         ajax: {
             url: BASEURL + 'api/venue/auto-suggest/',
@@ -304,11 +337,28 @@ $(document).ready(function () {
         },
         startDate: endDate
     });
+
+
+    /** Location modal location submit function call back */
+
+    overrideSubmitLocation(
+        function (response) {
+
+            var newOption = new Option(response.name, response.id, false, true);
+            locationSelect2.append(newOption).trigger('change');
+        }
+    );
     // $('#startTime').timepicker();
+
+
+
+
+
     $(".choose-btn > .btn").click(function () {
         $(".choose-btn > .btn").removeClass("active");
         $(this).addClass("active");
     });
+
 
 
     $('#btn-add-venue').click(function () {

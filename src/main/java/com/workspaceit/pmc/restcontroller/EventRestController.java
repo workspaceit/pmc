@@ -70,7 +70,7 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         Event event = this.eventService.create(eventForm);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(event);
     }
 
     @Secured(UserRole._SUPER_ADMIN)

@@ -27,6 +27,7 @@ public class EventController {
     private WatermarkService watermarkService;
     private EventService eventService;
     private LocationService locationService;
+    private StateService stateService;
 
     /** For Location modal*/
     private List<Double> fadeInList;
@@ -57,6 +58,11 @@ public class EventController {
     }
 
     @Autowired
+    public void setStateService(StateService stateService) {
+        this.stateService = stateService;
+    }
+
+    @Autowired
     public void setFadeInList(List<Double> fadeInList) {
         this.fadeInList = fadeInList;
     }
@@ -72,32 +78,44 @@ public class EventController {
         this.durations = durations;
     }
 
-    @RequestMapping(value = "/add")
-    public ModelAndView add(){
-        List<Location> locations = this.locationService.getAll();
-        ModelAndView model = new ModelAndView("admin/event/add");
-        model.addObject("locations",locations);
-        return model;
-    }
 
     @RequestMapping(value = "/all")
     public ModelAndView all(){
         List<Event> events = this.eventService.getAll();
+
+
         ModelAndView model = new ModelAndView("admin/event/all");
         model.addObject("events", events);
+
+        return model;
+    }
+
+    @RequestMapping(value = "/add")
+    public ModelAndView add(){
+        List<Location> locations = this.locationService.getAll();
+        List<State> states = this.stateService.getAll();
+
+        ModelAndView model = new ModelAndView("admin/event/add");
+        model.addObject("locations",locations);
 
         /*For location Modal Page*/
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
         model.addObject("durations",durations);
+        model.addObject("states",states);
 
         return model;
     }
+
+
 
     @RequestMapping(value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") int id){
         Event event = this.eventService.getById(id);
         List<Location> locations = this.locationService.getAll();
+        List<State> states = this.stateService.getAll();
+
+
         ModelAndView model = new ModelAndView("admin/event/edit");
         model.addObject("event", event);
         model.addObject("locations",locations);
@@ -106,6 +124,7 @@ public class EventController {
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
         model.addObject("durations",durations);
+        model.addObject("states",states);
 
         return model;
     }

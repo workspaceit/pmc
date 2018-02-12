@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             <div class="btn-container-top">
-                <button class="btn btn-action-top" onclick="submitLocationDataFromModal()">Save</button>
+                <button id="locationModalSaveBtn" class="btn btn-action-top" >Save</button>
                 <%--<button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
                 <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
                 <button class="btn btn-action-top">Cancel</button>--%>

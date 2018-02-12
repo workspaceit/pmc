@@ -23,13 +23,13 @@ function locationAfterSaveAction(btnAction){
     }
     window.location =BASEURL+urlStr;
 }
-
-
+var GLOBAL_venueLogoImgDropZone;
+var GLOBAL_venueBgImgDropZone;
 // alternative to DOMContentLoaded
 $(document).ready(function(){
     //Drop Zone Binding
-    configVenueLogoDropZone();
-    configVenueBdImgDropZone();
+    GLOBAL_venueLogoImgDropZone = configVenueLogoDropZone();
+    GLOBAL_venueBgImgDropZone = configVenueBdImgDropZone();
 
     //Injecting necessary hidden elements
     // to store uploaded file token
@@ -147,6 +147,8 @@ function configVenueLogoDropZone(){
             }
         }
     );
+
+    return venueLogoImgDropZone;
 }
 function configVenueBdImgDropZone(){
     var venueBgImgDropZone = new Dropzone("div#venueBgImg",
@@ -189,6 +191,8 @@ function configVenueBdImgDropZone(){
             }
         }
     );
+
+    return venueBgImgDropZone;
 }
 
 function getSlideShowSettingsStatus(){

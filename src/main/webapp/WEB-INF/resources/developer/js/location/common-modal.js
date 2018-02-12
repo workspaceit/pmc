@@ -1,6 +1,16 @@
 ifNotScriptLoadedAtPageThrowException('/developer/js/location/common.js','location/common-modal.js');
 ifNotScriptLoadedAtPageThrowException('/developer/js/temp-file/common.js','location/common-modal.js');
 
+$('#locationModalSaveBtn').on("click",function(){
+    submitLocationDataFromModal();
+});
+
+function overrideSubmitLocation(afterSuccessFn){
+    $('#locationModalSaveBtn').unbind("click");
+    $('#locationModalSaveBtn').on("click",function(){
+        submitLocationDataFromModal(afterSuccessFn);
+    });
+}
 
 function submitLocationDataFromModal(afterSuccessFn){
     var name = $('#location_name').val();
@@ -47,22 +57,26 @@ function submitLocationDataFromModal(afterSuccessFn){
             }
         },
         success: function(response) {
+            $("#addLocation").modal("hide");
+
             emptyVenueLogoToken();
             emptyBgImgTokens();
-            $("#addLocation").find("input:text").val("");
+            $("#addLocation").find("input:text,:input[type=number]").val("");
             $("#addLocation").find("select").each(function(){
-
                 $(this).val($(this).find("option:first").val());
             });
+
+            GLOBAL_venueLogoImgDropZone.removeAllFiles();
+            GLOBAL_venueBgImgDropZone.removeAllFiles();
+
 
             if(afterSuccessFn!= undefined && typeof  afterSuccessFn == 'function'){
                 afterSuccessFn(response);
             }else{
 
-                var locationId = 0;
-                var locationName = name;
+                var locationId = response.id;
+                var locationName = response.name;
                 $('<option value="'+locationId+'">'+locationName+'</option>').appendTo("#locationIds");
-                $("#addLocation").modal("hide");
             }
         }
     });

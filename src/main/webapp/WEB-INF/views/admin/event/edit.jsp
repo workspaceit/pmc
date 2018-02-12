@@ -73,7 +73,7 @@
                                                 <c:if test="${event.eventPrivate eq false}">
                                                     <input id="input1" name="private" value="false" checked type="radio"/>
                                                     <input id="input2" name="private" value="true" type="radio"/>
-                                                </c:if>
+                                                 </c:if>
                                                 <label for="input1">Public</label>
                                                 <label for="input2">Private</label>
                                                 <span class="slider"></span>
@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Choose Location</label>
-                                            <select id="venueId" name="venueId" style="width: 100%;" tabindex="-1"
+                                            <select id="locationIds" name="locationIds" style="width: 100%;" tabindex="-1"
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
                                                 <option value="${event.location.id}">${event.location.name}</option>
                                             </select>
@@ -328,14 +328,11 @@
             </div>
         </div>
 
+        <%--end photographer add modal--%>
+
         <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <%@include file="/WEB-INF/views/admin/location/modal-inner-html/add-location.jsp" %>
         </div>
-
-
-
-
-        <%--end photographer add modal--%>
 
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <link href="<s:url value="/resources/css/select2.css"/>" rel="stylesheet"/>

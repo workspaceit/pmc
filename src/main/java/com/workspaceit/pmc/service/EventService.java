@@ -24,7 +24,9 @@ public class EventService {
     private AdvertiserService advertiserService;
     private PhotographerService photographerService;
     private VenueService venueService;
+    private LocationService locationService;
     private FileService fileService;
+
 
     @Autowired
     public void setEventDao(EventDao eventDao) {
@@ -46,6 +48,12 @@ public class EventService {
     public void setVenueService(VenueService venueService) {
         this.venueService = venueService;
     }
+
+    @Autowired
+    public void setLocationService(LocationService locationService) {
+        this.locationService = locationService;
+    }
+
     @Autowired
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
@@ -118,7 +126,9 @@ public class EventService {
     private Event getEventFromEventForm(EventForm eventForm) throws EntityNotFound {
         Event event = new Event();
 
-        Venue venue =  venueService.getVenue(eventForm.getVenueId());
+        //Venue venue =  venueService.getVenue(eventForm.getVenueId());
+
+        Location location = this.locationService.getById(eventForm.getLocationId());
         List<Watermark> watermarks = watermarkService.getAll(eventForm.getWatermarkIds());
         List<Photographer> photographers = photographerService.getAll(eventForm.getPhotographerIds());
         List<Advertiser> advertisers = advertiserService.getAll(eventForm.getAdvertiserIds());
@@ -130,7 +140,10 @@ public class EventService {
         event.setName(eventForm.getEventName());
         event.setStartsAt(eventForm.getStartDate());
         event.setEndsAt(eventForm.getEndDate());
-        event.setVenue(venue);
+        event.setLocation(location);
+        //event.setVenue(venue);
+
+
         if(photographers != null) {
             event.setPhotographers(new HashSet<>(photographers));
         }
@@ -151,7 +164,8 @@ public class EventService {
     @Transactional
     public Event update(Integer eventId, EventForm eventForm) throws EntityNotFound {
         Event event = eventDao.getById(eventId);
-        Venue venue =  venueService.getVenue(eventForm.getVenueId());
+        //Venue venue =  venueService.getVenue(eventForm.getVenueId());
+        Location location = this.locationService.getById(eventForm.getLocationId());
         List<Watermark> watermarks = watermarkService.getAll(eventForm.getWatermarkIds());
         List<Photographer> photographers = photographerService.getAll(eventForm.getPhotographerIds());
         List<Advertiser> advertisers = advertiserService.getAll(eventForm.getAdvertiserIds());
@@ -163,7 +177,8 @@ public class EventService {
         event.setName(eventForm.getEventName());
         event.setStartsAt(eventForm.getStartDate());
         event.setEndsAt(event.getEndsAt());
-        event.setVenue(venue);
+        //event.setVenue(venue);
+        event.setLocation(location);
         event.setEventPrivate(eventForm.getIsPrivate());
 
         if(photographers != null) {
