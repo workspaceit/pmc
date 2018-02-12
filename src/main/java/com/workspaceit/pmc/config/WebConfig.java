@@ -17,8 +17,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebMvc
@@ -70,6 +73,18 @@ public class WebConfig implements WebMvcConfigurer {
         }
         return list;
     }
+
+
+    @Bean(name="durationList")
+    public  Set<Integer> Durations(){
+        Set<Integer> durations = new HashSet<>();
+        for(int i=1;i<=5;i++){
+            durations.add(i);
+        }
+
+        return durations;
+    }
+
     public MappingJackson2HttpMessageConverter jacksonMessageConverter(){
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 

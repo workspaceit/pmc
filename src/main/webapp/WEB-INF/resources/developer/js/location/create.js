@@ -3,6 +3,7 @@
  */
 
 
+
 function submitLocationData(btnAction){
     var name = $('#name').val();
     var address = $('#address').val();

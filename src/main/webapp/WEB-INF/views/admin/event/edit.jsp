@@ -84,11 +84,10 @@
                                             <label>Choose Location</label>
                                             <select id="venueId" name="venueId" style="width: 100%;" tabindex="-1"
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
-                                                <option value="${event.venue.id}">${event.venue.name}</option>
+                                                <option value="${event.location.id}">${event.location.name}</option>
                                             </select>
-                                            <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"
-                                                    data-target="#add-new-venue-modal" style="margin-top: 15px;"><i
-                                                    class="fa fa-plus" aria-hidden="true"></i>Add new Location
+                                            <button type="button" class="btn btn-primary btn-sm-new"  data-toggle="modal" data-target="#addLocation" style="margin-top: 15px;"><i class="fa fa-plus" aria-hidden="true"></i>  Add Location</button>
+
                                             </button>
                                         </div>
                                     </div>
@@ -235,7 +234,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addLocation">Add new Venue</h4>
+                        <h4 class="modal-title" >Add new Venue</h4>
                     </div>
                     <div class="modal-body clearfix">
                         <div class="btn-container-top">
@@ -255,7 +254,7 @@
                                             <label>
                                                 <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">Location</a>
                                             </label>
-                                            <select class="js-example-placeholder-multiple js-states form-control" id="location">
+                                            <select class="js-example-placeholder-multiple js-states form-control" id="location"> locationIds
                                                 <c:forEach var="location" items="${locations}">
                                                     <option value="${location.id}">${location.name}</option>
                                                 </c:forEach>
@@ -328,6 +327,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <%@include file="/WEB-INF/views/admin/location/modal-inner-html/add-location.jsp" %>
+        </div>
+
+
+
+
         <%--end photographer add modal--%>
 
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -344,5 +351,10 @@
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/event/create.js"/>" ></script>
+
+        <%-- Add location modal dependency --%>
+        <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
     </jsp:body>
 </t:genericpage>
