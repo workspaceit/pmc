@@ -17,6 +17,8 @@ import java.util.Set;
  */
 
 @Entity
+@FilterDef(name = "activeEvents")
+@Filter(name = "activeEvents", condition = "deleted = false AND active = true")
 @Table(name = "events")
 public class Event {
 
@@ -37,9 +39,13 @@ public class Event {
     @Column(name = "is_private")
     private Boolean eventPrivate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venue_id", referencedColumnName = "id", nullable = true)
     private Venue venue;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+    private Location location;
 
     @Column(name = "event_photo")
     private String eventPhoto;
@@ -128,6 +134,14 @@ public class Event {
 
     public void setEventPhoto(String eventPhoto) {
         this.eventPhoto = eventPhoto;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Venue getVenue() {

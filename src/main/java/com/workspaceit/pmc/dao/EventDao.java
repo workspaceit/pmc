@@ -2,7 +2,9 @@ package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Event;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,20 +17,25 @@ public class EventDao extends BaseDao {
 
     public List<Event> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Event e where  e.deleted = false ORDER BY e.id DESC")
+        return session.createQuery("FROM Event e WHERE  e.deleted = false ORDER BY e.id DESC")
                 .list();
     }
     public Integer getActiveEventCount(){
         Session session = this.getCurrentSession();
-        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e where e.active = true ").uniqueResult()).intValue();
+        session.enableFilter("activeEvents");
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e").uniqueResult()).intValue();
+        session.disableFilter("activeEvents");
         return count;
     }
-    public List<Event> getAll(int limit,int offset){
+    public List<Event> getActiveEvents(int limit,int offset){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Event e where  e.active = true ORDER BY e.id DESC")
-                .setFirstResult(offset*limit)
-                .setMaxResults(limit)
-                .list();
+        session.enableFilter("activeEvents");
+        Query query = session.createQuery("FROM Event e WHERE  e.active = true ORDER BY e.id DESC");
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        List<Event> events = query.list();
+        session.disableFilter("activeEvents");
+        return events;
     }
     public List<Event> getActiveEvents(){
         Session session = this.getCurrentSession();
@@ -37,7 +44,7 @@ public class EventDao extends BaseDao {
     }
     public List<Event> getAll(Integer[] ids){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Event where id in :ids")
+        return session.createQuery("FROM Event WHERE id in :ids")
                 .setParameter("ids", Arrays.asList(ids))
                 .list();
     }

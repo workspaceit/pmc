@@ -62,20 +62,19 @@ public class EventService {
 
     @Transactional
     public List<Event> getAll(int limit,int offset){
-        return this.eventDao.getAll(limit,offset);
+        return this.eventDao.getActiveEvents(limit,offset);
     }
+
     @Transactional
     public Integer getActiveEventCount(){
         return this.eventDao.getActiveEventCount();
     }
+
     @Transactional
     public Map<String,Object> getAllWithCountInMap(int limit,int offset){
-
         Map<String,Object> response = new HashMap<>();
-
         response.put("count",this.getActiveEventCount());
         response.put("events",this.getAll(limit,offset));
-
         return response;
     }
 

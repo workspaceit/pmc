@@ -4,16 +4,13 @@ import com.workspaceit.pmc.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/test/api/event")
+@RequestMapping("/test/api/events")
 @CrossOrigin
 public class EventApiController {
     private EventService eventService;
@@ -23,20 +20,17 @@ public class EventApiController {
         this.eventService = eventService;
     }
 
-    @RequestMapping("/get-all/{limit}/{offset}")
+    @RequestMapping("/{limit}/{offset}")
     public ResponseEntity<?> getAll(@PathVariable("limit") int limit,@PathVariable("offset") int offset){
         Map<String,Object> events = this.eventService.getAllWithCountInMap(limit,offset);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(events);
-
     }
+
     @RequestMapping("/get-count")
     public ResponseEntity<?> getCount(){
         Integer count = this.eventService.getActiveEventCount();
         Map<String,Object> events = new HashMap<>();
         events.put("count",count);
-
         return ResponseEntity.status(HttpStatus.OK).body(events);
 
     }
