@@ -24,8 +24,11 @@ public class EventForm {
     @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date endDate;
 
-    @NotNull(message = "Please select a venue")
+    //@NotNull(message = "Please select a venue")
     private Integer venueId;
+
+    @NotNull(message = "Please select a location")
+    private Integer locationId;
 
     private Integer[] photographerIds = new Integer[]{};
     private Integer[] advertiserIds = new Integer[]{};
@@ -67,6 +70,14 @@ public class EventForm {
 
     public void setVenueId(Integer venueId) {
         this.venueId = venueId;
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     public Integer[] getPhotographerIds() {

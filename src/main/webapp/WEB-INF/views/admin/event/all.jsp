@@ -28,9 +28,6 @@
                                     Event Name
                                 </th>
                                 <th class="cstm-table-header">
-                                    Venue
-                                </th>
-                                <th class="cstm-table-header">
                                     Starts At
                                 </th>
                                 <th class="cstm-table-header">
@@ -52,9 +49,6 @@
                                 </td>
                                 <td class="des-clm">
                                     <p class="text-left" id="title-${event.id}">${event.name}</p>
-                                </td>
-                                <td class="des-clm">
-                                    <p class="text-left">${event.venue.name}</p>
                                 </td>
                                 <td class="date-clm">
                                     <span class="cstm-date-txt">
@@ -90,7 +84,7 @@
             $(document).ready(function() {
                 $('#event-datatable').DataTable({
                     "columnDefs": [{
-                        "targets": [0, 5, 6],
+                        "targets": [0,4,5],
                         "orderable": false,
                     }],
                     "order": [[1, 'asc']]

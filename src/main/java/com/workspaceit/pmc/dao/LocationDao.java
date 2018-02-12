@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.dao;
 
+import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.Location;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
@@ -66,5 +67,23 @@ public class LocationDao extends BaseDao{
                 .setParameter("id",id)
                 .setMaxResults(1)
                 .uniqueResult();
+    }
+
+    public List<Location> getSuggestedLocations(String searchTerm, Boolean active){
+        Session session = this.getCurrentSession();
+
+        Query query = session.createQuery("SELECT DISTINCT(l) FROM Location l where l.active=:active and l.name LIKE :searchTerm ORDER BY " +
+                "CASE " +
+                "   WHEN l.name=:txt THEN 0" +
+                "   WHEN l.name LIKE :ptxt THEN 1" +
+                "   WHEN l.name LIKE :txtp THEN 3" +
+                "   ELSE 2 " +
+                "END, l.name ASC, id DESC");
+        query.setParameter("searchTerm", "%"+searchTerm+"%");
+        query.setParameter("txt", searchTerm);
+        query.setParameter("ptxt", searchTerm + "%");
+        query.setParameter("txtp", "%" +searchTerm);
+        query.setParameter("active", active);
+        return query.list();
     }
 }

@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
@@ -67,11 +68,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Choose Location</label>
-                                            <select id="venueId" name="venueId" style="width: 100%;" tabindex="-1"
+                                            <select id="locationIds" name="locationIds" style="width: 100%;" tabindex="-1"
                                                     class="form-control select2-hidden-accessible" aria-hidden="true">
                                             </select>
                                             <button type="button" class="btn btn-primary btn-sm-new" data-toggle="modal"
-                                                    data-target="#add-new-venue-modal" style="margin-top: 15px;"><i
+                                                    data-target="#addLocation" style="margin-top: 15px;"><i
                                                     class="fa fa-plus" aria-hidden="true"></i>Add new Location
                                             </button>
                                         </div>
@@ -202,7 +203,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="addLocation">Add new Venue</h4>
+                        <h4 class="modal-title" >Add new Venue</h4>
                     </div>
                     <div class="modal-body clearfix">
                         <div class="btn-container-top">
@@ -296,6 +297,13 @@
             </div>
         </div>
         <%--end photographer add modal--%>
+
+
+        <%--Location add modal--%>
+        <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <%@include file="/WEB-INF/views/admin/location/modal-inner-html/add-location.jsp" %>
+        </div>
+
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <link href="<s:url value="/resources/css/select2.css"/>" rel="stylesheet"/>
         <link href="<s:url value="/resources/css/daterangepicker.css"/>" rel="stylesheet"/>
@@ -310,5 +318,11 @@
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/event/create.js"/>" ></script>
+
+        <%-- Add location modal dependency --%>
+        <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
+
     </jsp:body>
 </t:genericpage>

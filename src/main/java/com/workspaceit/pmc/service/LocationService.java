@@ -262,4 +262,10 @@ public class LocationService {
         this.locationDao.update(location);
     }
 
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Location> getSuggestedLocations(String keyword){
+        return this.locationDao.getSuggestedLocations(keyword,true);
+    }
+
 }

@@ -11,6 +11,7 @@ import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,18 +43,9 @@ public class AdvertiserController {
     private List<Double> fadeInList;
     private List<Double>fadeOutList;
 
-    /*Value are inserted in @PostConstruct function*/
     private Set<Integer> durations;
 
-    @PostConstruct
-    private void initConfig(){
-        Set<Integer> durations = new HashSet<>();
-        for(int i=1;i<=5;i++){
-            durations.add(i);
-        }
 
-        this.setDurations(durations);
-    }
     @Autowired
     public void setAdvertisementService(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
@@ -125,7 +117,8 @@ public class AdvertiserController {
         this.advertiserTransactionService = advertiserTransactionService;
     }
 
-    //Do not autowired check initConfig()
+    @Autowired
+    @Qualifier("durationList")
     public void setDurations(Set<Integer> durations) {
         this.durations = durations;
     }
@@ -255,11 +248,11 @@ public class AdvertiserController {
         model.addObject("locations",locations);
         model.addObject("states",states);
         model.addObject("cities",cities);
-        model.addObject("durations",durations);
 
           /*For location Modal Page*/
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
+        model.addObject("durations",durations);
 
          /* Number format settings values */
         model.addObject("currencyCode","USD");

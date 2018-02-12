@@ -55,7 +55,7 @@ public class AdvertiserDao extends BaseDao {
     public List<Advertiser> getSuggestedAdvertisers(String searchTerm, Boolean active){
         Session session = this.getCurrentSession();
 
-        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a where active=:active a.name LIKE :searchTerm ORDER BY " +
+        Query query = session.createQuery("SELECT DISTINCT(a) FROM Advertiser a where a.active=:active and a.name LIKE :searchTerm ORDER BY " +
                 "CASE " +
                 "   WHEN a.name=:txt THEN 0" +
                 "   WHEN a.name LIKE :ptxt THEN 1" +

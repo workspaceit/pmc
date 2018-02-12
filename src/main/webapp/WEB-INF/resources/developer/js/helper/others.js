@@ -9,3 +9,6 @@ function isScriptLoadedAtPage(uri) {
     }
     return false;
 }
+function ifNotScriptLoadedAtPageThrowException(uri,scriptName) {
+    if (!isScriptLoadedAtPage(uri)) throw "must loaded script '"+uri+"' before "+scriptName+". "+scriptName+" depends on this script";
+}
