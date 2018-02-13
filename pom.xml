@@ -197,6 +197,18 @@
             <version>5.0.0.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>5.2.13.Final</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-annotations</artifactId>-->
+            <!--<version>3.4.0.GA</version>-->
+        <!--</dependency>-->
+
     </dependencies>
     <build>
         <plugins>
@@ -206,6 +218,9 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArguments>
+                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                    </compilerArguments>
                 </configuration>
             </plugin>
         </plugins>

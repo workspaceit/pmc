@@ -1,8 +1,8 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.Venue;
+import com.workspaceit.pmc.entity.Event_;
+import com.workspaceit.pmc.entity.Photographer;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,14 +63,28 @@ public class EventDao extends BaseDao {
                 .uniqueResult();
     }
 
-    public List<Event> getActiveEventsByLocation(Integer locationId, Date date, Integer limit, Integer offset) {
+    public List<Event> getActiveEventsByCriteria(Integer locationId, Date filterDate, Photographer photographer,
+                                                 Integer limit, Integer offset) {
         Session session = this.getCurrentSession();
         session.enableFilter("activeEvents");
+
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = builder.createQuery(Event.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
-        criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
-        Query<Event> query =session.createQuery(criteriaQuery);
+
+        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join(Event_.photographers);
+
+        criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
+
+        if(locationId != null) {
+            criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
+        }
+        if(filterDate != null) {
+            criteriaQuery.where(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
+            criteriaQuery.where(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
+        }
+
+        Query<Event> query = session.createQuery(criteriaQuery);
         query.setMaxResults(limit);
         query.setFirstResult(offset);
         List<Event> events = query.list();
@@ -77,20 +92,30 @@ public class EventDao extends BaseDao {
         return events;
     }
 
-    public Integer getActiveEventCountByLocation(Integer locationId){
+    public Integer getActiveEventCountByCriteria(Integer locationId, Date filterDate, Photographer photographer){
         Session session = this.getCurrentSession();
         session.enableFilter("activeEvents");
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
-        criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
+
+        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join(Event_.photographers);
+
+        criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
+
+        if(locationId != null) {
+            criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
+        }
+        if(filterDate != null) {
+            criteriaQuery.where(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
+            criteriaQuery.where(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
+        }
         criteriaQuery.select(builder.count(eventRoot.get("id")));
 
         Query<Long> query =session.createQuery(criteriaQuery);
         int count = query.getSingleResult().intValue();
         session.disableFilter("activeEvents");
-
         return count;
 
         /*Session session = this.getCurrentSession();
