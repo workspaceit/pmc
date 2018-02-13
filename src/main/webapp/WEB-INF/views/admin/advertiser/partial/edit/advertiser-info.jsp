@@ -77,10 +77,10 @@
                             <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${otherImage.image}" />" class="img-thumbnail" width="150">
                             <br>
                             <%--ID_KEY._ADV_OTHER_IMAGE is global vaiable from update.js --%>
-                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" style="display: none;" >Delete</a>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" >Delete</a>
                         </div>
                     </c:forEach>
-                    <div id="advertiserOtherImages"  class="panel-body" style="display: none;" >
+                    <div id="advertiserOtherImages"  class="panel-body"  >
                         <div class="dz-default dz-message">
                             <div class="droper">
                                 <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>

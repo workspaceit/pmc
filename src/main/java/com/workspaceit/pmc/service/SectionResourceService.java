@@ -69,7 +69,7 @@ public class SectionResourceService {
 
         this.delete(deletedSectionResources);
 
-        return sectionResources;
+        return deletedSectionResources;
     }
 
 

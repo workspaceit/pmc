@@ -1,8 +1,11 @@
 package com.workspaceit.pmc.validation.advertisement.gallery;
 
 
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
+import com.workspaceit.pmc.service.AdvertisementService;
 import com.workspaceit.pmc.service.AdvertiserService;
 import com.workspaceit.pmc.service.GalleryAdService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +22,16 @@ import org.springframework.validation.Validator;
 public class GalleryAdsValidator implements Validator {
 
     private AdvertiserService advertiserService;
-    private GalleryAdService galleryAdService;
+    private AdvertisementService advertisementService;
 
     @Autowired
     public void setAdvertiserService(AdvertiserService advertiserService) {
         this.advertiserService = advertiserService;
     }
     @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
+    public void setAdvertisementService(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
     }
-
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -73,8 +75,8 @@ public class GalleryAdsValidator implements Validator {
         }
     }
     private void checkValidGallery(Integer id, Errors errors) {
-        GalleryAd galleryAd = this.galleryAdService.getById(id);
-        if(galleryAd==null){
+        Advertisement galleryAd = this.advertisementService.getById(id);
+        if(galleryAd==null || !galleryAd.getAdType().equals(ADVERTISEMENT_TYPE.GALLERY)){
             if(errors.getObjectName().equals("advertiserAndAllCompositeUpdateForm")){
                 errors.rejectValue("galleryAds.id","GalleryAd not found by id :"+id);
             }else{

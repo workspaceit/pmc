@@ -353,7 +353,7 @@ public class SectionService {
 
 
         Integer smsBQ = (smsBannerSection.getSectionResource()==null)?0:smsBannerSection.getSectionResource().size();
-        Integer emailBQ = (emailBannerSection.getSectionResource()==null)?0:smsBannerSection.getSectionResource().size();
+        Integer emailBQ = (emailBannerSection.getSectionResource()==null)?0:emailBannerSection.getSectionResource().size();
 
         smsBannerSection.setQuantity(smsBQ);
         emailBannerSection.setQuantity(emailBQ);

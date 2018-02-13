@@ -295,7 +295,7 @@ public class AdvertiserController {
         ModelAndView model = new ModelAndView("admin/advertiser/checkout");
 
         model.addObject("transactionId",transactionId);
-
+        model.addObject("advertiser",advertiser);
 
         /* Price and quantity */
         model.addObject("prices",prices);

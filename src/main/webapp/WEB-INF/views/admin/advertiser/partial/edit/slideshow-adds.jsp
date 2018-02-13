@@ -52,7 +52,7 @@
                     <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
                     <br>
                         <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
-                    <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${secResource.id})" style="display: none;" >Delete</a>
+                    <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${secResource.id})" >Delete</a>
 
                 </div>
             </c:if>

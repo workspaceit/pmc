@@ -131,7 +131,7 @@
                         <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
                         <br>
                             <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" style="display: none;" >Delete</a>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" >Delete</a>
                     </div>
                 </c:forEach>
                 <div id="advTopBannerImage"  class="panel-body"    >
@@ -200,7 +200,7 @@
                         <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}" />" class="img-thumbnail" width="150">
                         <br>
                             <%--ID_KEY._GALLERY_BOTTOM_BANNER is global vaiable from update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" style="display: none;" >Delete</a>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" >Delete</a>
                     </div>
                 </c:forEach>
                 <div id="advBottomBannerImage"   class="panel-body"  >
