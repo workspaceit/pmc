@@ -108,18 +108,20 @@ public class EventService {
         return event;
     }
 
-    public List<Event> getActiveEventsByLocation(Integer locationId, Date date, Integer limit, Integer offset) {
-        return eventDao.getActiveEventsByLocation(locationId, date, limit, offset);
+    public List<Event> getActiveEventsByCriteria(Integer locationId, Date filterDate,  Photographer photographer,
+                                                 Integer limit, Integer offset) {
+        return eventDao.getActiveEventsByCriteria(locationId, filterDate, photographer, limit, offset);
     }
 
-    public Integer getActiveEventCountByLocation(Integer locationId, Date date){
-        return eventDao.getActiveEventCountByLocation(locationId);
+    public Integer getActiveEventCountByCriteria(Integer locationId, Date date, Photographer photographer){
+        return eventDao.getActiveEventCountByCriteria(locationId, date , photographer);
     }
 
-    public Map<String, Object> getEventsByLocationWithCount(Integer locationId, Date date, Integer limit, Integer offset){
+    public Map<String, Object> getEventsByCriteriaWithCount(Integer locationId, Date filterDate, Photographer photographer,
+                                                            Integer limit, Integer offset){
         Map<String,Object> eventData = new HashMap<>();
-        eventData.put("count", this.getActiveEventCountByLocation(locationId, date));
-        eventData.put("events", this.getActiveEventsByLocation(locationId, date, limit, offset));
+        eventData.put("count", this.getActiveEventCountByCriteria(locationId, filterDate , photographer));
+        eventData.put("events", this.getActiveEventsByCriteria(locationId, filterDate, photographer, limit, offset));
         return eventData;
     }
 
