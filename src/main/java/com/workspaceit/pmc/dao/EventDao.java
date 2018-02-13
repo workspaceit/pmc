@@ -1,17 +1,13 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Event_;
 import com.workspaceit.pmc.entity.Photographer;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -72,7 +68,7 @@ public class EventDao extends BaseDao {
         CriteriaQuery<Event> criteriaQuery = builder.createQuery(Event.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
 
-        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join(Event_.photographers);
+        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join("photographers", JoinType.LEFT);
 
         criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
 
@@ -100,7 +96,7 @@ public class EventDao extends BaseDao {
         CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
 
-        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join(Event_.photographers);
+        Join<Event, Photographer> eventPhotographerJoin = eventRoot.join("photographers", JoinType.LEFT);
 
         criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
 
