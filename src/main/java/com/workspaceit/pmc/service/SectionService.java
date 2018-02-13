@@ -67,6 +67,7 @@ public class SectionService {
         List<FileToken> bBannerNewFileToken = new LinkedList<>();
 
 
+
         /** Removed File */
         Integer[] tBannerRmIds = galleryAdsForm.getRemoveTopBannerIds();
         Integer[] bBannerRmIds = galleryAdsForm.getRemoveBottomBannerIds();
@@ -99,7 +100,7 @@ public class SectionService {
                 null);
 
         bgSection =  this.populateIfChange(bgSection,
-                null,
+                galleryAdsForm.getBgPrice(),
                 null,
                 null,
                 null,
@@ -142,7 +143,7 @@ public class SectionService {
         List<SectionResource> tBannerSectionRes =  tBannerSection.getSectionResource();
         List<SectionResource> bBannerSectionRes =  bBannerSection.getSectionResource();
 
-        System.out.println("tBannerSectionRes.size() "+tBannerSectionRes.size());
+
         for(SectionResource secRes:tBannerSectionRes){
             if(tBrmIds.contains(secRes.getId())){
                 rmSecResource.add(secRes);
@@ -153,7 +154,7 @@ public class SectionService {
          *  Cascade All re-save if delete object exist in List of section
          * */
         tBannerSectionRes.removeAll(rmSecResource);
-        System.out.println("bBannerSectionRes.size() "+bBannerSectionRes.size());
+
         for(SectionResource secRes:bBannerSectionRes){
             if(bBrmIds.contains(secRes.getId())){
                 rmSecResource.add(secRes);
@@ -164,11 +165,22 @@ public class SectionService {
          *  Cascade All re-save if delete object exist in List of section
          * */
         bBannerSectionRes.removeAll(rmSecResource);
-        System.out.println("rmSecResource.size() "+rmSecResource.size());
+
         if(rmSecResource.size()>0){
             this.sectionResourceService.delete(rmSecResource);
         }
 
+        Integer logoQ = (logoSection.getSectionResource()==null)?0:logoSection.getSectionResource().size();
+        Integer bgQ = (bgSection.getSectionResource()==null)?0:bgSection.getSectionResource().size();
+        Integer tbQ = (tBannerSection.getSectionResource()==null)?0:tBannerSection.getSectionResource().size();
+        Integer bbQ = (bBannerSection.getSectionResource()==null)?0:bBannerSection.getSectionResource().size();
+
+        logoSection.setQuantity(logoQ);
+        bgSection.setQuantity(bgQ);
+        tBannerSection.setQuantity(tbQ);
+        bBannerSection.setQuantity(bbQ);
+
+        this.update(gallerySections);
     }
 
 
@@ -247,6 +259,13 @@ public class SectionService {
             this.sectionResourceService.delete(rmSecResource);
         }
 
+        Integer tBQ = (tBannerSection.getSectionResource()==null)?0:tBannerSection.getSectionResource().size();
+        Integer bBQ = (bBannerSection.getSectionResource()==null)?0:bBannerSection.getSectionResource().size();
+
+        tBannerSection.setQuantity(tBQ);
+        bBannerSection.setQuantity(bBQ);
+
+        this.update(slideShowSections);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -270,7 +289,7 @@ public class SectionService {
         Integer[] smsBannerRmIds = popupAdsUpdateForm.getRemoveSmsBannerIds();
         Integer[] emailBannerRmIds = popupAdsUpdateForm.getRemoveEmailBannerIds();
 
-        /** All slide show section */
+        /** All popup show section */
         List<Section> popupAdSections = new LinkedList<>();
         Section smsBannerSection = smsAdv.getSections().get(SECTION_TYPE.BANNER);
         Section emailBannerSection = emailAdv.getSections().get(SECTION_TYPE.BANNER);
@@ -307,54 +326,59 @@ public class SectionService {
         popupAdSections.add(emailBannerSection);
 
 
-
-
-
-
-
-
         /** Update Section and remove section resource */
 
         this.update(popupAdSections);
         /** Single video or Multiple images*/
 
-
-        if(smsVideoNewFileToken!=null){
-            this.sectionResourceService.delete(smsBannerSection.getSectionResource());
-        }
-        if(emailVideoNewFileToken!=null){
-            this.sectionResourceService.delete(emailBannerSection.getSectionResource());
-        }
-
+        List<SectionResource> smsSectionResources = smsBannerSection.getSectionResource();
+        List<SectionResource> emailSectionResources = emailBannerSection.getSectionResource();
 
 
         if(smsBannerNewFileToken.size()>0){
-            List<SectionResource> sectionResources = smsBannerSection.getSectionResource();
-            if(sectionResources!=null){
-                this.sectionResourceService.delete(sectionResources,FILE_TYPE.VIDEO);
-            }
-
+            this.deleteResourceAndRemoveFromList(smsSectionResources,FILE_TYPE.VIDEO);
         }
 
         if(emailBannerNewFileToken.size()>0){
-            List<SectionResource> sectionResources = emailBannerSection.getSectionResource();
-            if(sectionResources!=null){
-                this.sectionResourceService.delete(sectionResources,FILE_TYPE.VIDEO);
-            }
-
+            this.deleteResourceAndRemoveFromList(emailSectionResources,FILE_TYPE.VIDEO);
         }
 
 
         if(smsBannerRmIds!=null && smsBannerRmIds.length>0){
-            this.sectionResourceService.delete(smsBannerRmIds);
+            this.deleteResourceAndRemoveFromList(smsSectionResources,smsBannerRmIds);
         }
         if(emailBannerRmIds!=null && emailBannerRmIds.length>0){
-            this.sectionResourceService.delete(emailBannerRmIds);
+            this.deleteResourceAndRemoveFromList(emailSectionResources,emailBannerRmIds);
         }
 
+
+        Integer smsBQ = (smsBannerSection.getSectionResource()==null)?0:smsBannerSection.getSectionResource().size();
+        Integer emailBQ = (emailBannerSection.getSectionResource()==null)?0:smsBannerSection.getSectionResource().size();
+
+        smsBannerSection.setQuantity(smsBQ);
+        emailBannerSection.setQuantity(emailBQ);
+
+        /** Update Section and remove section resource */
+
+        this.update(popupAdSections);
 
     }
 
+    private void deleteResourceAndRemoveFromList(List<SectionResource> sectionResources,FILE_TYPE fileType){
+        List<SectionResource> tmpSectionResources = null;
+        if(sectionResources!=null){
+            tmpSectionResources = this.sectionResourceService.delete(sectionResources,fileType);
+        }
+        if(tmpSectionResources!=null && tmpSectionResources.size()>0){
+            sectionResources.removeAll(tmpSectionResources);
+        }
+    }
+    private void deleteResourceAndRemoveFromList(List<SectionResource> sectionResources,Integer[] removeIds){
+        List<SectionResource> tmpSecResources = this.sectionResourceService.getById(removeIds);
+        this.sectionResourceService.delete(tmpSecResources);
+        sectionResources.removeAll(tmpSecResources);
+
+    }
     @Transactional(rollbackFor = Exception.class)
     public void  update(List<Section> sections) throws EntityNotFound{
         this.sectionDao.updateAll(sections);
@@ -377,9 +401,15 @@ public class SectionService {
         SectionResource tmpLogoSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getLogoToken(),FILE_TYPE.IMAGE);
         SectionResource tmpBGSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getBgImgTokens(),FILE_TYPE.IMAGE);
 
+        if(tmpLogoSectionResource.getFileName()!=null && !tmpLogoSectionResource.getFileName().trim().equals("")){
 
-        logoSectionResources.add(tmpLogoSectionResource);
-        bgSectionResources.add(tmpBGSectionResource);
+            logoSectionResources.add(tmpLogoSectionResource);
+        }
+        if(tmpBGSectionResource.getFileName()!=null && !tmpBGSectionResource.getFileName().trim().equals("")){
+
+            bgSectionResources.add(tmpBGSectionResource);
+        }
+
 
 
         Section logoSection = this.getSection(advertisement.getId(),
@@ -409,7 +439,7 @@ public class SectionService {
                                             null,
                                             SECTION_TYPE.TOP_BANNER,
                                             galleryAdsForm.getTopBannerRotation(),
-                                            galleryAdsForm.getTopBannerExpiryDate(),
+                                            (topBannerSectionResources.size()>0)?galleryAdsForm.getTopBannerExpiryDate():null,
                                             topBannerSectionResources,
                                             admin);
 
@@ -420,7 +450,7 @@ public class SectionService {
                                             null,
                                             SECTION_TYPE.BOTTOM_BANNER,
                                             galleryAdsForm.getBottomBannerRotation(),
-                                            galleryAdsForm.getBottomBannerExpiryDate(),
+                                            (bottomBannerSectionResources.size()>0)?galleryAdsForm.getBottomBannerExpiryDate():null,
                                             bottomBannerSectionResources,
                                             admin);
 
@@ -463,7 +493,7 @@ public class SectionService {
                                             popupAdsForm.getSmsPopupVideoDuration(),
                                             SECTION_TYPE.BANNER,
                                             popupAdsForm.getSmsRotation(),
-                                            popupAdsForm.getSmsExpiryDate(),
+                (smsSecResources.size()>0)?popupAdsForm.getSmsExpiryDate():null,
                                             smsSecResources,
                                             admin);
 
@@ -474,7 +504,7 @@ public class SectionService {
                                             popupAdsForm.getEmailPopupVideoDuration(),
                                             SECTION_TYPE.BANNER,
                                             popupAdsForm.getEmailRotation(),
-                                            popupAdsForm.getEmailExpiryDate(),
+                (emailSecResources.size()>0)?popupAdsForm.getEmailExpiryDate():null,
                                             emailSecResources,
                                             admin);
 
@@ -501,7 +531,9 @@ public class SectionService {
 
         SectionResource tmpVideoSecResource =  this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsVideoToken(),FILE_TYPE.VIDEO);
 
-        videoSectionResources.add(tmpVideoSecResource);
+        if(tmpVideoSecResource.getFileName()!=null && !tmpVideoSecResource.getFileName().trim().equals("")){
+            videoSectionResources.add(tmpVideoSecResource);
+        }
 
         Section topBannerSection = this.getSection(
                                             advertisement.getId(),
@@ -510,7 +542,7 @@ public class SectionService {
                                             slideShowAdsForm.getSlideShowBannerDuration(),
                                             SECTION_TYPE.TOP_BANNER,
                                             slideShowAdsForm.getBannerRotation(),
-                                            slideShowAdsForm.getBannerExpiryDate(),
+                (topBannerSectionResources.size()>0)?slideShowAdsForm.getBannerExpiryDate():null,
                                             topBannerSectionResources,
                                             admin);
 
@@ -520,7 +552,7 @@ public class SectionService {
                                             slideShowAdsForm.getSlideShowVideoDuration(),
                                             SECTION_TYPE.BOTTOM_BANNER,
                                             slideShowAdsForm.getVideoRotation(),
-                                            slideShowAdsForm.getVideoExpiryDate(),
+                (videoSectionResources.size()>0)?slideShowAdsForm.getVideoExpiryDate():null,
                                             videoSectionResources,
                                             admin);
 
@@ -590,7 +622,7 @@ public class SectionService {
 
         List<SectionResource> sectionResources = section.getSectionResource();
 
-        if(sectionResources==null){
+        if(sectionResources==null || sectionResources.size()==0){
             sectionResources =  new LinkedList<>();
         }
 

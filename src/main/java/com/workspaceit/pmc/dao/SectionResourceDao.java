@@ -16,7 +16,12 @@ public class SectionResourceDao  extends BaseDao{
                 .setParameter("id", Arrays.asList(id))
                 .list();
     }
-
+    public List<SectionResource> getById(List<Integer> id){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM SectionResource where id in :id")
+                .setParameter("id", Arrays.asList(id))
+                .list();
+    }
     public SectionResource getById(Integer id){
         Session session = this.getCurrentSession();
         return (SectionResource)session.createQuery("FROM SectionResource where id = :id")

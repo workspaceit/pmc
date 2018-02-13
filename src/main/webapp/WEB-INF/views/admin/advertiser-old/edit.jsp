@@ -3,7 +3,6 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <t:genericpage>
     <jsp:attribute name="developerScript">
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -23,6 +22,7 @@
         <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/update.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
 
     </jsp:attribute>
@@ -67,37 +67,19 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <%@include file="/WEB-INF/views/admin/advertiser-new/partial/edit/advertiser-info.jsp" %>
-                            <%@include file="/WEB-INF/views/admin/advertiser-new/partial/edit/gallery-ads.jsp" %>
-                            <%@include file="/WEB-INF/views/admin/advertiser-new/partial/edit/slideshow-adds.jsp" %>
-                            <%@include file="/WEB-INF/views/admin/advertiser-new/partial/edit/popup-ads.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser-old/partial/edit/advertiser-info.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser-old/partial/edit/gallery-ads.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser-old/partial/edit/slideshow-adds.jsp" %>
+                            <%@include file="/WEB-INF/views/admin/advertiser-old/partial/edit/popup-ads.jsp" %>
                         </div>
                     </div>
                 </div>
+            </div>
+                <%-- Add Location Modal --%>
+            <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <%@include file="/WEB-INF/views/admin/location/modal-inner-html/add-location.jsp" %>
             </div>
 
-            <!-- /.container-fluid -->
-            <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" >Add Location</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="btn-container-top">
-                                <button class="btn btn-action-top" onclick="submitLocationDataFromModal()">Save</button>
-                                <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                                <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                                <button class="btn btn-action-top">Cancel</button>
-                            </div>
-                            <div class="form-group">
-                                <%@  include file="/WEB-INF/views/admin/location/pertial/form-body-for-modal.jsp" %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
                 <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
@@ -122,7 +104,6 @@
         <input type="hidden" id="slideshowAdId" value="${slideshowAd.id}" />
         <input type="hidden" id="popupSmsAdId" value="${popupAdSms.id}" />
         <input type="hidden" id="popupEmailAdId" value="${popupAdEmail.id}" />
-
 
 
 

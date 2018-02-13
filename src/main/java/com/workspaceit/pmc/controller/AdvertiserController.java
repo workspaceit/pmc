@@ -185,7 +185,7 @@ public class AdvertiserController {
         Advertisement popupAdEmail = advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL);
 
 
-        ModelAndView model = new ModelAndView("admin/advertiser-new/edit");
+        ModelAndView model = new ModelAndView("admin/advertiser/edit");
 
 
         model.addObject("advertiser",advertiser);
@@ -223,7 +223,7 @@ public class AdvertiserController {
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
 
         if(advertiser==null){
-            return new ModelAndView("redirect:"+"/admin/advertiser/all");
+            return new ModelAndView("redirect:"+"/admin/advertiser-old/all");
         }
 
         List<Location> locations = this.locationService.getAll();
@@ -275,10 +275,6 @@ public class AdvertiserController {
 
         AdvertiserTransaction advertiserTransaction =  this.advertiserTransactionService.getLastByAdvertiserId(advertiser.getId());
 
-        GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
-        SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
-        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
-        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
 
         /* Price and quantity */
         Map<String,Object>   priceAndQuantity = this.advertisementPriceAndQuantityService.getSoldPriceAndQuantity(advertiserId);
@@ -299,11 +295,7 @@ public class AdvertiserController {
         ModelAndView model = new ModelAndView("admin/advertiser/checkout");
 
         model.addObject("transactionId",transactionId);
-        model.addObject("advertiser",advertiser);
-        model.addObject("galleryAd",galleryAd);
-        model.addObject("slideshowAd",slideshowAd);
-        model.addObject("popupAdSms",popupAdSms);
-        model.addObject("popupAdEmail",popupAdEmail);
+
 
         /* Price and quantity */
         model.addObject("prices",prices);
