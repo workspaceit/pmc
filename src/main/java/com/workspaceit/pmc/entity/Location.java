@@ -32,6 +32,10 @@ public class Location {
     @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = true)
     private State state;
 
+    @ManyToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id", nullable = true)
+    private City city;
+
     @Column(name = "zip")
     private String zip;
 
@@ -110,6 +114,14 @@ public class Location {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getZip() {
@@ -236,6 +248,7 @@ public class Location {
         if (name != null ? !name.equals(location.name) : location.name != null) return false;
         if (address != null ? !address.equals(location.address) : location.address != null) return false;
         if (state != null ? !state.equals(location.state) : location.state != null) return false;
+        if (city != null ? !city.equals(location.city) : location.city != null) return false;
         if (zip != null ? !zip.equals(location.zip) : location.zip != null) return false;
         if (phone != null ? !phone.equals(location.phone) : location.phone != null) return false;
         if (locationLogo != null ? !locationLogo.equals(location.locationLogo) : location.locationLogo != null)
@@ -263,6 +276,7 @@ public class Location {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (zip != null ? zip.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (locationLogo != null ? locationLogo.hashCode() : 0);
@@ -287,6 +301,7 @@ public class Location {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", state=" + state +
+                ", city=" + city +
                 ", zip='" + zip + '\'' +
                 ", phone='" + phone + '\'' +
                 ", locationLogo='" + locationLogo + '\'' +

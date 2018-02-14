@@ -29,12 +29,24 @@
                             <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                         </label>
                         <select id="location_stateId" class="form-control">
+                            <option value="" >Please select an state</option>
                             <c:forEach var="state" items="${states}">
                                 <option value="${state.id}" >${state.name}</option>
                             </c:forEach>
 
                         </select>
                         <p class="text-danger" id="errorObjLocation_stateId"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label>
+                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
+                        </label>
+                        <select id="location_cityId" class="form-control">
+
+                        </select>
+                        <p class="text-danger" id="errorObjLocation_cityId"></p>
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12">

@@ -24,6 +24,10 @@ public class LocationForm {
     @Min(value = 1,message = "State Id is required")
     private Integer stateId;
 
+    @NotNull(message = "City Id is required")
+    @Min(value = 1,message = "City Id is required")
+    private Integer cityId;
+
     @NotBlank(message = "Zip is required")
     @Length(max = 10,message = "Value too large")
     private String zip;
@@ -76,6 +80,14 @@ public class LocationForm {
 
     public void setStateId(Integer stateId) {
         this.stateId = stateId;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
     public String getZip() {
@@ -172,6 +184,7 @@ public class LocationForm {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
         if (stateId != null ? !stateId.equals(that.stateId) : that.stateId != null) return false;
+        if (cityId != null ? !cityId.equals(that.stateId) : that.cityId != null) return false;
         if (zip != null ? !zip.equals(that.zip) : that.zip != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (hasSlideshow != null ? !hasSlideshow.equals(that.hasSlideshow) : that.hasSlideshow != null) return false;
@@ -190,6 +203,7 @@ public class LocationForm {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (stateId != null ? stateId.hashCode() : 0);
+        result = 31 * result + (cityId != null ? cityId.hashCode() : 0);
         result = 31 * result + (zip != null ? zip.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (hasSlideshow != null ? hasSlideshow.hashCode() : 0);
@@ -209,6 +223,7 @@ public class LocationForm {
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", stateId=" + stateId +
+                ", cityId=" + cityId +
                 ", zip='" + zip + '\'' +
                 ", phone='" + phone + '\'' +
                 ", hasSlideshow=" + hasSlideshow +

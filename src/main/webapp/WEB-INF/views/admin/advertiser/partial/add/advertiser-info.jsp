@@ -11,19 +11,7 @@
                     <label>Address</label>
                     <input id="address" class="form-control" value="" >
                 </div>
-                <div class="row clearfix">
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label>City</label>
-                            <div>
-                                <select id="cityId" class="form-control">
-                                    <c:forEach var="city" items="${cities}">
-                                        <option value="${city.id}"  >${city.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
                     <!-- <div class="col-md-3 col-xs-12">
                         <div class="form-group">
                         <label>
@@ -38,16 +26,32 @@
                         </div>
                     </div>
                     </div> -->
+                <div class="row clearfix">
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
                             <label style="width:100%;">
                                 <label>State</label>
+                                <option value="" >Select State</option>
                                 <select id="stateId" class="form-control" >
                                     <c:forEach var="state" items="${states}" >
                                         <option value="${state.id}" >${state.name}</option>
                                     </c:forEach>
                                 </select>
                             </label>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label>City</label>
+                            <div>
+                                <select id="cityId" class="form-control">
+                                    <c:forEach var="city" items="${cities}">
+                                        <option value="${city.id}"  >${city.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-xs-12">
