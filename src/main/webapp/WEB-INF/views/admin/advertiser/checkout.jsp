@@ -286,6 +286,28 @@
                                                         currencySymbol="${currencySymbol}"
                                                         maxFractionDigits="${maxFractionDigits}" /></td>
                                         </tr>
+                                        <c:set var="checkoutBtnDisable" value="" />
+                                        <c:if test="${amountReturn>0}">
+                                            <c:set var="checkoutBtnDisable" value="disabled='disabled'" />
+                                            <tr style="overflow:hidden;">
+                                                <td class="no-line"></td>
+                                                <td class="no-line"></td>
+                                                <td class="no-line text-center text-danger"><strong>Amount payable</strong></td>
+                                                <td class="no-line text-right text-danger" id="amountReturn" data-price="${amountReturn}">
+                                                    <b>
+                                                        <fmt:formatNumber
+                                                            value="${amountReturn}"
+                                                            type="currency"
+                                                            currencyCode="${currencyCode}"
+                                                            currencySymbol="${currencySymbol}"
+                                                            maxFractionDigits="${maxFractionDigits}" />
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
+
+
                                         <tr style="overflow:hidden;">
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
@@ -314,7 +336,7 @@
                 </div>
 
                 <div class="row text-center" style="background-color: #ffffff;margin-bottom:20px" >
-                    <button onclick="submitCheckoutData()" class="btn btn-success btn-lg">Checkout</button>
+                    <button ${checkoutBtnDisable} onclick="submitCheckoutData()" class="btn btn-success btn-lg">Checkout</button>
                 </div>
             </div>
 
