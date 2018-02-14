@@ -13,7 +13,7 @@ public class AdvertisementDao extends BaseDao {
         try{
             return (Advertisement)session.createQuery("SELECT adv FROM Advertisement adv " +
                     "inner join fetch adv.sections  " +
-                    "WHERE id=:id")
+                    "WHERE adv.id=:id")
                 .setParameter("id",id)
                 .setMaxResults(1)
                 .uniqueResult();

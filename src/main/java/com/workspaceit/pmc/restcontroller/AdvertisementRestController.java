@@ -114,9 +114,7 @@ public class AdvertisementRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
-        this.popupAdsValidator.validate(pupAdsCreateForm, bindingResult,"smsPopupBanner",
-                                                                                "sms-banner-or-video",
-                                                                                "email-banner-or-video");
+        this.popupAdsValidator.validate(pupAdsCreateForm, bindingResult);
         serviceResponse.bindValidationError(bindingResult);
 
         /**

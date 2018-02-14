@@ -33,7 +33,10 @@ public class SectionResourceService {
     public List<SectionResource> getById(Integer[] id){
        return this.sectionResourceDao.getById(id);
     }
-
+    @Transactional
+    public List<SectionResource> getById(List<Integer> id){
+        return this.sectionResourceDao.getById(id);
+    }
     @Transactional
     public SectionResource getById(Integer id){
         return this.sectionResourceDao.getById(id);
@@ -44,15 +47,16 @@ public class SectionResourceService {
         List<SectionResource> sectionResourceList = this.getById(id);
         this.sectionResourceDao.deleteAll(sectionResourceList);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<SectionResource> sectionResources){
         this.sectionResourceDao.deleteAll(sectionResources);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(List<SectionResource> sectionResources, FILE_TYPE fileType){
+    public List<SectionResource> delete(List<SectionResource> sectionResources, FILE_TYPE fileType){
         if(sectionResources==null){
-            return;
+            return null;
         }
         List<SectionResource> deletedSectionResources = new LinkedList<>();
 
@@ -62,9 +66,10 @@ public class SectionResourceService {
 
             }
         }
-        sectionResources.removeAll(deletedSectionResources);
 
         this.delete(deletedSectionResources);
+
+        return deletedSectionResources;
     }
 
 

@@ -79,9 +79,7 @@ public class Advertiser {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-
-
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "event_advertisers", joinColumns = {
             @JoinColumn(name = "advertiser_id", nullable = false) },

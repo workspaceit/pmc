@@ -20,13 +20,12 @@ public class SlideShowAdsCreateForm extends SlideShowAdsForm {
 
 
     @Override
-    @NotNull(message = "Slide Show Ads Banner required")
+
     public Integer[] getSlideShowAdsBannerTokens() {
         return super.getSlideShowAdsBannerTokens();
     }
 
     @Override
-    @NotNull(message = "Slide Show Ads Video required")
     public Integer getSlideShowAdsVideoToken() {
         return super.getSlideShowAdsVideoToken();
     }
@@ -44,12 +43,14 @@ public class SlideShowAdsCreateForm extends SlideShowAdsForm {
     }
 
     @Override
+    @NotNull(message = "Expire date required")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     public Date getVideoExpiryDate() {
         return super.getVideoExpiryDate();
     }
 
     @Override
+    @NotNull(message = "Expire date required")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     public Date getBannerExpiryDate() {
         return super.getBannerExpiryDate();

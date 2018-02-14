@@ -1,5 +1,6 @@
 <%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
+<%@page import="com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant" %>
+
 <div class="tab-pane" id="tab_default_2">
     <div class="row clearfix">
         <div class="col-md-6">
@@ -8,14 +9,10 @@
                     <h4 class="panel-title pull-left">Logo</h4>
                 </div>
                 <div>
-                    <c:forEach var="secResource" items="${galleryAd
-                                                            .sections
-                                                            .get(SECTION_TYPE.LOGO).sectionResource}" >
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                    </c:forEach>
+                    <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${galleryAd.logo}"/>" class="img-thumbnail" width="150">
                 </div>
 
-                <div id="advLogo"  class="panel-body" style="display: none;"  >
+                <div id="advLogo"  class="panel-body" style="display: none;" >
                     <div class="dz-default dz-message">
                         <span>Change logo</span>
                     </div>
@@ -42,16 +39,10 @@
                     </div> -->
                 </div>
                 <div>
-                    <c:forEach var="secResource" items="${galleryAd
-                                                            .sections
-                                                            .get(SECTION_TYPE.BACKGROUND)
-                                                            .sectionResource}" >
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-
-                    </c:forEach>
+                    <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${galleryAd.backgroundImage}"/>" class="img-thumbnail" width="150">
                 </div>
 
-                <div id="advBackgroundImage"  class="panel-body" style="display: none;"     >
+                <div id="advBackgroundImage"  class="panel-body" style="display: none;" >
 
                     <div class="dz-default dz-message">
                         <span>Change background</span>
@@ -60,7 +51,7 @@
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
                 <div class="panel-footer text-right"><h4 style="font-weight: bold;">
                     Price: $ <input disabled="disabled" type="text" class="form-control"
-                                  value="${galleryAd.sections.get(SECTION_TYPE.BACKGROUND).price}" style="display:inline;width:100px;height:30px;"/>
+                                  value="${galleryAd.galleryQuantityPrice.get(GalleryAdsConstant.BACKGROUND_IMAGE).price}" style="display:inline;width:100px;height:30px;"/>
                 </h4>
                 </div>
 
@@ -76,20 +67,15 @@
                     <div class="col-md-6 col-xs-6 pull-right">
 
                         <div class="" style="margin-left: auto;float:right;">
-
-                            <span id="topBannerExpiryDateLbl" class="date_view">
-                                <c:if test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate!=null}" >
-                                    <fmt:formatDate value="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate}" type="date" />
-                                </c:if>
-                            </span>
+                            <span id="topBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.topBannerExpiryDate}" type="date" /></span>
 
                             <c:set var="topBannerRotateActive" value="" ></c:set>
                             <c:set var="topBannerStaticActive" value="" ></c:set>
                             <c:choose>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.ROTATE }" >
+                                <c:when test="${galleryAd.topBannerRotate == AdvertiseRotationSettings.ROTATE }" >
                                     <c:set var="topBannerRotateActive" value="active" ></c:set>
                                 </c:when>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.STATIC}">
+                                <c:when test="${galleryAd.topBannerRotate == AdvertiseRotationSettings.STATIC}">
                                     <c:set var="topBannerStaticActive" value="active" ></c:set>
                                 </c:when>
                             </c:choose>
@@ -100,31 +86,23 @@
                             </div>
 
                         </div>
-
                         <div class="date-small pull-right" style="display: none;">
-                            <c:set var="tpExpDate" value=""/>
-                            <c:if test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate!=null}" >
-                                <fmt:formatDate var="tpExpDate" value="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate}" pattern="MM/dd/yyyy" />
-                            </c:if>
-
-                            <input id="topBannerExpiryDate" type="text" class="form-control" value="${tpExpDate}" />
-
+                            <input id="topBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${galleryAd.topBannerExpiryDate}" pattern="MM/dd/yyyy" />" />
                             <i class="fa fa-calendar"></i>
                         </div>
                     </div>
                     <div class="btn-group pull-right">
                     </div>
                 </div>
-
-                <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
+                <c:forEach var="adTopBanner" items="${galleryAd.adsTopBanners}" >
                     <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
+                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${adTopBanner.image}"/>" class="img-thumbnail" width="150">
                         <br>
                             <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" style="display: none;" >Delete</a>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${adTopBanner.id})" style="display: none;" >Delete</a>
                     </div>
                 </c:forEach>
-                <div id="advTopBannerImage"  class="panel-body" style="display: none;"   >
+                <div id="advTopBannerImage"  class="panel-body" style="display: none;" >
                     <div class="dz-default dz-message">
                         <span>Add image</span>
 
@@ -135,7 +113,7 @@
                 <div class="panel-footer text-right">
                     <h4 style="font-weight: bold;">
                         Price: $ <input disabled="disabled" type="text"
-                                      class="form-control" value="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).price}" style="display:inline;width:100px;height:30px;"/>
+                                      class="form-control" value="${galleryAd.galleryQuantityPrice.get(GalleryAdsConstant.TOP_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/>
 
                       </h4>
                 </div>
@@ -149,20 +127,15 @@
                     <div class="col-md-6 col-xs-6 pull-right">
 
                         <div class="" style="margin-left: auto;float:right;">
-                            <span id="bottomBannerExpiryDateLbl" class="date_view">
-                                 <c:if test="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate!=null}" >
-                                     <fmt:formatDate value="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate}" type="date" />
-                                 </c:if>
-                            </span>
+                            <span id="bottomBannerExpiryDateLbl" class="date_view"><fmt:formatDate value="${galleryAd.bottomBannerExpiryDate}" type="date" /></span>
 
                             <c:set var="bottomBannerRotateActive" value="" ></c:set>
                             <c:set var="bottomBannerStaticActive" value="" ></c:set>
                             <c:choose>
-
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.ROTATE }" >
+                                <c:when test="${galleryAd.bottomBannerRotate == AdvertiseRotationSettings.ROTATE }" >
                                     <c:set var="bottomBannerRotateActive" value="active" ></c:set>
                                 </c:when>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.STATIC}">
+                                <c:when test="${galleryAd.bottomBannerRotate == AdvertiseRotationSettings.STATIC}">
                                     <c:set var="bottomBannerStaticActive" value="active" ></c:set>
                                 </c:when>
                             </c:choose>
@@ -173,25 +146,21 @@
 
                         </div>
                         <div class="date-small pull-right" style="display: none;">
-                            <c:set var="bbExpDate" />
-                            <c:if test="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate!=null}" >
-                                <fmt:formatDate var="bbExpDate" value="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).expireDate}" pattern="MM/dd/yyyy" />
-                            </c:if>
-                            <input id="bottomBannerExpiryDate" type="text" class="form-control" value="${bbExpDate}" />
+                            <input id="bottomBannerExpiryDate" type="text" class="form-control" value="<fmt:formatDate value="${galleryAd.bottomBannerExpiryDate}" pattern="MM/dd/yyyy" />" />
                             <i class="fa fa-calendar"></i>
                         </div>
                     </div>
 
                 </div>
-                <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).sectionResource}" >
+                <c:forEach var="bottomBanner" items="${galleryAd.bottomBanners}" >
                     <div>
-                        <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}" />" class="img-thumbnail" width="150">
+                        <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${bottomBanner.image}" />" class="img-thumbnail" width="150">
                         <br>
                             <%--ID_KEY._GALLERY_BOTTOM_BANNER is global vaiable from update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" style="display: none;" >Delete</a>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${bottomBanner.id})" style="display: none;" >Delete</a>
                     </div>
                 </c:forEach>
-                <div id="advBottomBannerImage"   class="panel-body" style="display: none;"  >
+                <div id="advBottomBannerImage"   class="panel-body" style="display: none;" >
                     <div class="dz-default dz-message">
                         <span>Add image</span>
                     </div>
@@ -200,7 +169,7 @@
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>
                 <div class="panel-footer text-right">
                     <h4 style="font-weight: bold;">
-                        Price: $ <input disabled="disabled" type="text" class="form-control" value="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).price}" style="display:inline;width:100px;height:30px;"/>
+                        Price: $ <input disabled="disabled" type="text" class="form-control" value="${galleryAd.galleryQuantityPrice.get(GalleryAdsConstant.BOTTOM_AD_BANNER).price}" style="display:inline;width:100px;height:30px;"/>
 
                      </h4>
                 </div>

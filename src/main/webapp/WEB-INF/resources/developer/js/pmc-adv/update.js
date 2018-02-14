@@ -67,13 +67,13 @@ function updateAdvertiser(){
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                console.log("Error from Create");
+                notifyUser("advertiserInfoErrorCount",response,false);
                 console.log(response);
             }
         },
         success: function(response) {
             notifyUser("advertiserInfoErrorCount",response,false);
-            advertiserAfterSaveAction(globalBtnAction);
+            advertiserAfterSaveAction(globalBtnAction,id);
         }
     });
 }

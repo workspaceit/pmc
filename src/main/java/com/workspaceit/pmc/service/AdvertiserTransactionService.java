@@ -84,7 +84,7 @@ public class AdvertiserTransactionService {
         float total = this.advertisementPriceAndQuantityService.getTotal(advertiserId);
         float subtotal = total - checkoutCreateForm.getDiscount();
 
-        List<Map<String,String>> errors = this.checkoutValidator.validatationForService(checkoutCreateForm,total,0);
+        List<Map<String,String>> errors = this.checkoutValidator.validationForService(checkoutCreateForm,total,0);
         if(errors.size()>0){
             throw new ServiceException(errors);
         }
@@ -114,7 +114,7 @@ public class AdvertiserTransactionService {
 
         AdvertiserTransaction advertiserTransaction = this.getAdvertiserTransaction(id);
 
-        List<Map<String,String>> errors = this.checkoutValidator.validatationForService(checkoutForm,total,advertiserTransaction.getTotalPaid());
+        List<Map<String,String>> errors = this.checkoutValidator.validationForService(checkoutForm,total,advertiserTransaction.getTotalPaid());
         if(errors.size()>0){
             System.out.println(errors);
             throw new ServiceException(errors);

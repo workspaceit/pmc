@@ -20,7 +20,7 @@ public class CheckoutValidator implements Validator {
         CheckoutForm checkoutForm = (CheckoutForm)o;
 
     }
-    public List<Map<String, String>> validatationForService(CheckoutForm checkoutForm,float total,float previouslyPaidAmount) {
+    public List<Map<String, String>> validationForService(CheckoutForm checkoutForm, float total, float previouslyPaidAmount) {
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
         float totalPayable = total- previouslyPaidAmount;

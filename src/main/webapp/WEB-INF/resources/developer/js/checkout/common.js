@@ -48,6 +48,9 @@ function printTotalInHtml(){
 }
 function printDueInHtml(){
     var checkAmount  = calculateAdvertisementPriceTotal();
+    if(checkAmount.dueAmount<0){
+        checkAmount.dueAmount = 0;
+    }
     setDueAmount(checkAmount.dueAmount);
 }
 function setDueAmount(dueAmount){
@@ -65,15 +68,6 @@ function validateAndCorrect(){
     var checkAmount  = calculateAdvertisementPriceTotal();
     var totalPayable = checkAmount.subTotal- checkAmount.prevPaidAmount;
 
-    if(checkAmount.discount<0){
-        setDiscountAmount(0);
-        checkAmount  = calculateAdvertisementPriceTotal();
-    }
-
-    if(checkAmount.totalPaidAmount<0){
-        setCurrentPaymentAmount(0);
-        checkAmount  = calculateAdvertisementPriceTotal();
-    }
     /**Discount can't be greater then payable amount*/
     if(checkAmount.discount>totalPayable){
         checkAmount.discount = totalPayable;
@@ -87,6 +81,20 @@ function validateAndCorrect(){
         checkAmount.totalPaidAmount = checkAmount.totalAfterDiscount - checkAmount.prevPaidAmount;
         setCurrentPaymentAmount(checkAmount.totalPaidAmount);
     }
+
+    /** After edit if amount gets less then paid amount */
+    if(checkAmount.discount<0){
+        setDiscountAmount(0);
+        checkAmount  = calculateAdvertisementPriceTotal();
+    }
+
+    if(checkAmount.totalPaidAmount<0){
+        setCurrentPaymentAmount(0);
+        checkAmount  = calculateAdvertisementPriceTotal();
+    }
+
+
+
 
 }
 
