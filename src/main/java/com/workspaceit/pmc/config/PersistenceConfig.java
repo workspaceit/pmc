@@ -32,7 +32,7 @@ public class PersistenceConfig {
         sessionFactory.setPackagesToScan(
                 new String[] { "com.workspaceit.pmc.entity" });
         sessionFactory.setHibernateProperties(hibernateProperties());
-        sessionFactory.setAnnotatedPackages(new String[] {"com.workspaceit.pmc.entity"});
+//        sessionFactory.setAnnotatedPackages(new String[] {"com.workspaceit.pmc.entity"});
         return sessionFactory;
     }
 
