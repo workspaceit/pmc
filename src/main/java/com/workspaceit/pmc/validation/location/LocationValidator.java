@@ -1,8 +1,10 @@
 package com.workspaceit.pmc.validation.location;
 
 import com.workspaceit.pmc.dao.PhotographerDao;
+import com.workspaceit.pmc.entity.City;
 import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.entity.State;
+import com.workspaceit.pmc.service.CityService;
 import com.workspaceit.pmc.service.StateService;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,15 @@ import javax.validation.constraints.NotNull;
 public class LocationValidator implements Validator {
 
     private StateService stateService;
+    private CityService cityService;
 
     @Autowired
     public void setStateService(StateService stateService) {
         this.stateService = stateService;
     }
+
+    @Autowired
+    public void setCityService(CityService cityService){this.cityService = cityService;}
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -37,6 +43,8 @@ public class LocationValidator implements Validator {
 
         LocationForm locationForm = (LocationForm)obj;
         State state = stateService.getById(locationForm.getStateId());
+
+        City city = cityService.getById(locationForm.getCityId());
 
         Boolean hasSlideshow = locationForm.getHasSlideshow();
         if(hasSlideshow!=null && hasSlideshow){
@@ -56,6 +64,10 @@ public class LocationValidator implements Validator {
 
         if(state==null){
             errors.rejectValue("stateId","State not found with id : "+locationForm.getStateId());
+        }
+
+        if(city==null){
+            errors.rejectValue("cityId","City not found with id : "+locationForm.getCityId());
         }
 
     }

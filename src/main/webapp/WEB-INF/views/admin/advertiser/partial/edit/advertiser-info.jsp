@@ -12,6 +12,24 @@
                     <input id="address" class="form-control" value="${advertiser.address}" >
                 </div>
                 <div class="row clearfix">
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label style="width:100%;">
+                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
+                                <select id="stateId" class="form-control" >
+                                    <option value="" >Select State</option>
+                                    <c:set var="stateOptionSelected" value="" ></c:set>
+                                    <c:forEach var="state" items="${states}" >
+                                        <c:if test="${state.id == advertiser.state.id }" >
+                                            <c:set var="stateOptionSelected" value="selected=\"selected\"" ></c:set>
+                                        </c:if>
+                                        <option value="${state.id}" ${stateOptionSelected}>${state.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
                             <label>
@@ -29,23 +47,6 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label style="width:100%;">
-                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
-                                <select id="stateId" class="form-control" >
-                                    <c:set var="stateOptionSelected" value="" ></c:set>
-                                    <c:forEach var="state" items="${states}" >
-                                        <c:if test="${state.id == advertiser.state.id }" >
-                                            <c:set var="stateOptionSelected" value="selected=\"selected\"" ></c:set>
-                                        </c:if>
-                                        <option value="${state.id}" ${stateOptionSelected}>${state.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </label>
                         </div>
                     </div>
                     <div class="col-md-4 col-xs-12">

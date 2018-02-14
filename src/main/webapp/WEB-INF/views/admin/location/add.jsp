@@ -39,10 +39,21 @@
                                                 <label>
                                                     <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                                                 </label>
-                                                <select id="stateId" class="form-control">
+                                                <select id="stateId" class="form-control" >
+                                                    <option value="" >Select State</option>
                                                     <c:forEach var="state" items="${states}">
                                                         <option value="${state.id}" >${state.name}</option>
                                                     </c:forEach>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">City</a>
+                                                </label>
+                                                <select id="cityId" class="form-control">
 
                                                 </select>
                                             </div>
@@ -187,6 +198,7 @@
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
 
 
     </jsp:body>

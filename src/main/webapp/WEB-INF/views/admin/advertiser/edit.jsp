@@ -5,7 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <t:genericpage>
-    <jsp:attribute name="developerScript">
+<jsp:attribute name="developerScript">
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <!-- select2 js -->
         <!-- Select2 css -->
@@ -15,16 +15,15 @@
         <script src="<s:url value="/resources/js/select2.js"/>"></script>
         <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
-        <%--<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />--%>
+    <%--<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />--%>
 
-        <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
+    <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/update.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
-
     </jsp:attribute>
     <jsp:body>
         <div id="page-wrapper">
@@ -125,6 +124,7 @@
 
 
 
+        <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
 
     </jsp:body>
 
