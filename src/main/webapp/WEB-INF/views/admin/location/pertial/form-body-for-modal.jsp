@@ -21,30 +21,7 @@
             </div>
 
             <div class="row clearfix">
-                <!-- <div class="col-md-3">
-                    <div class="form-group">
-                    <label>
-                    <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
-                    </label>
-                    <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                        <option>Miami</option>
-                        <option>Florida</option>
-                        <option>California</option>
-                    </select>
-                    </div>
-                </div> -->
-                <!-- <div class="col-md-3">
-                    <div class="form-group">
-                    <label>
-                    <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-venue">Venue</a>
-                    </label>
-                    <select class="js-example-placeholder-multiple js-states form-control" multiple="multiple">
-                        <option>Los Angeles</option>
-                        <option>Houston</option>
-                        <option>Las Vegas</option>
-                    </select>
-                </div>
-                </div> -->
+
 
                 <div class="col-md-6 col-xs-12">
                     <div class="form-group">
@@ -77,24 +54,16 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left ">Venue logo</h4>
-                    <%--<div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default active">File</button>
-                        <button type="button" class="btn btn-default">URL</button>
-                    </div>--%>
+
                 </div>
                 <div class="file-tab panel-body">
-                    <%--<label class="btn btn-primary btn-file btn-sm-new">
-                        <span>Browse</span>
-                        <!-- The file is stored here. -->
-                        <input type="file" name="image-file">
-                    </label>
-                    <button type="button" class="btn btn-danger btn-sm-new">Delete image</button>
---%>
-                    <div id="venueLogoImg" >
 
+                    <div id="venueLogoImg" >
                         <div class="dz-default dz-message">
-                            <span>Drop files here to upload</span>
-                            <p id="errorObjLocation_profilePictureToken"></p>
+                            <div class="droper">
+                                <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                <p class="dropext">Click or Drop your files here</p>
+                            </div>
                         </div>
                     </div>
 
@@ -120,10 +89,11 @@
                     </div>
                 </div>
                 <div id="venueBgImg" >
-
                     <div class="dz-default dz-message">
-                        <span>Drop files here to upload</span>
-                        <p id="errorObjLocation_profilePictureToken"></p>
+                        <div class="droper">
+                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                            <p class="dropext">Click or Drop your files here</p>
+                        </div>
                     </div>
                 </div>
 

@@ -80,7 +80,6 @@
                                 <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
                                 <p class="dropext">Click or Drop your files here</p>
                             </div>
-                            <p id="errorObj_"></p>
                         </div>
                     </div>
                 </div>

@@ -137,7 +137,8 @@ function configVenueLogoDropZone(){
             },
             error:function(file,response){
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                $("#profileImg").find(".dz-error-message span").html(msg);
+                $("#venueLogoImg").find(".dz-error-message span").html(msg).addClass("text-danger");
+
             },
             success:function(file,response){
 
@@ -181,7 +182,7 @@ function configVenueBdImgDropZone(){
             },
             error:function(file,response){
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                $("#profileImg").find(".dz-error-message span").html(msg);
+                $("#venueBgImg").find(".dz-error-message span").html(msg).addClass("text-danger");;
             },
             success:function(file,response){
 
