@@ -3,6 +3,8 @@ package com.workspaceit.pmc.controller;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
+import com.workspaceit.pmc.entity.City;
+import com.workspaceit.pmc.service.CityService;
 import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequestMapping(value = ControllerUriPrefix.ADMIN+"/location")
 public class LocationController {
     private StateService stateService;
+    private CityService cityService;
     private LocationService locationService;
     private List<Double> fadeInList;
     private List<Double>fadeOutList;
@@ -28,6 +31,11 @@ public class LocationController {
     @Autowired
     public void setStateService(StateService stateService) {
         this.stateService = stateService;
+    }
+
+    @Autowired
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
     }
 
     @Autowired
@@ -65,12 +73,13 @@ public class LocationController {
     public ModelAndView update(@PathVariable("id") int id){
         Location location = this.locationService.getById(id);
         List<State> states = this.stateService.getAll();
-
+        List<City>  cities = this.cityService.getAllCityByZip(location.getState().getId());
         if(location==null){
             return new ModelAndView("redirect:"+"/admin/location/all");
         }
         ModelAndView model = new ModelAndView("admin/location/edit");
         model.addObject("states",states);
+        model.addObject("cities",cities);
         model.addObject("location",location);
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);

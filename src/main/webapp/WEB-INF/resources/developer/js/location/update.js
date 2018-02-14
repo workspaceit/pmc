@@ -27,6 +27,7 @@ function submitUpdatedData(btnAction){
     var name = $('#name').val();
     var address = $('#address').val();
     var stateId = $('#stateId').val();
+    var cityId = $('#cityId').val();
     var zip = $('#zip').val();
     var phone = $('#phone').val();
     var locationLogo = $('#locationLogo').val();
@@ -43,6 +44,7 @@ function submitUpdatedData(btnAction){
         name: name,
         address: address,
         stateId: stateId,
+        cityId: cityId,
         zip: zip,
         phone: phone,
         locationLogo: locationLogo,

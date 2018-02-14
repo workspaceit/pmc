@@ -22,6 +22,9 @@ public class City {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "state_id")
+    private int stateId;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
@@ -47,9 +50,14 @@ public class City {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
+    }
+    public int getStateId() {
+        return stateId;
+    }
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
     }
 
     public Date getCreatedAt() {

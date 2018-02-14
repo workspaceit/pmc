@@ -4,6 +4,7 @@ import com.workspaceit.pmc.dao.LocationDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
+import com.workspaceit.pmc.entity.City;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.validation.location.LocationForm;
@@ -21,6 +22,7 @@ import java.util.List;
 public class LocationService {
     private LocationDao locationDao;
     private StateService stateService;
+    private CityService cityService;
     private FileService fileService;
     private  LocationBackgroundImageService locationBackgroundImageService;
     private FileUtil fileUtil;
@@ -28,6 +30,11 @@ public class LocationService {
     @Autowired
     protected void setLocationDao(LocationDao locationDao) {
         this.locationDao = locationDao;
+    }
+
+    @Autowired
+    protected void setCityService(CityService cityService) {
+        this.cityService = cityService;
     }
 
     @Autowired
@@ -184,13 +191,17 @@ public class LocationService {
         location.setName(locationForm.getName());
         location.setAddress(locationForm.getAddress());
         State currentState = (location.getState()==null) ?new State():location.getState();
+        City currentCity = (location.getCity()==null) ?new City():location.getCity();
 
         if(currentState.getId() != locationForm.getStateId()){
             State state = this.stateService.getById(locationForm.getStateId());
             location.setState(state);
         }
 
-
+        if(currentCity.getId() != locationForm.getCityId()){
+            City city = this.cityService.getById(locationForm.getCityId());
+            location.setCity(city);
+        }
 
         location.setZip(locationForm.getZip());
         location.setPhone(locationForm.getPhone());
@@ -213,6 +224,9 @@ public class LocationService {
 
         State state = this.stateService.getById(locationForm.getStateId());
         location.setState(state);
+
+        City city = this.cityService.getById(locationForm.getCityId());
+        location.setCity(city);
 
         location.setZip(locationForm.getZip());
         location.setPhone(locationForm.getPhone());

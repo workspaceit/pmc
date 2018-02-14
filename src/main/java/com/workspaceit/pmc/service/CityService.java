@@ -27,4 +27,7 @@ public class CityService {
     public City getById(int id){
         return this.cityDao.getById(id);
     }
+    public List<City> getAllCityByZip(int state_id){
+        return this.cityDao.getAllCityByZip(state_id);
+    }
 }

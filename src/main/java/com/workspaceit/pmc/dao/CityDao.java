@@ -25,4 +25,10 @@ public class CityDao extends BaseDao {
                 .setParameter("id",id)
                 .uniqueResult();
     }
+
+    public List<City> getAllCityByZip(int state_id){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM City where stateId=:state_id ORDER BY name asc").setParameter("state_id",state_id)
+                .list();
+    }
 }

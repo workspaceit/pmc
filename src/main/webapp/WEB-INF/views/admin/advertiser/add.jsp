@@ -101,6 +101,7 @@
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
 
     </jsp:body>
 
