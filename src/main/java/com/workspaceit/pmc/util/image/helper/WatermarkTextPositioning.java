@@ -1,14 +1,14 @@
 package com.workspaceit.pmc.util.image.helper;
 
-import com.workspaceit.pmc.util.image.cosntant.IMAGE_PLACEMENT;
+import com.workspaceit.pmc.util.image.cosntant.WATERMARK_PLACEMENT;
 import com.workspaceit.pmc.util.image.cosntant.ImagePosition;
 
-public class ImagePositioning {
+public class WatermarkTextPositioning {
     private int WIDTH_PADDING=5;
     private int TOP_HEIGHT_PADDING =50;
     private int BOTTOM_HEIGHT_PADDING =20;
     private int TEXT_SIZE_THRASHOLD=10;
-    public ImagePosition getPosition(IMAGE_PLACEMENT placement,int height,int width,int textHeight,int textWidth){
+    public ImagePosition getPosition(WATERMARK_PLACEMENT placement, int srcImgHeight, int srcImgWidth, int textHeight, int textWidth){
         ImagePosition position = new ImagePosition();
         int x=0,y=0;
         switch (placement){
@@ -17,24 +17,24 @@ public class ImagePositioning {
                 y = TOP_HEIGHT_PADDING;
                 break;
             case TOP_RIGHT:
-                x = width - (textWidth+WIDTH_PADDING);
+                x = srcImgWidth - (textWidth+WIDTH_PADDING);
                 y = TOP_HEIGHT_PADDING;
                 break;
             case TOP_CENTER:
-                x = ( width - (textWidth+WIDTH_PADDING) ) / 2;
+                x = ( srcImgWidth - (textWidth+WIDTH_PADDING) ) / 2;
                 y = TOP_HEIGHT_PADDING;
                 break;
             case BOTTOM_LEFT:
                 x = WIDTH_PADDING;
-                y = height - BOTTOM_HEIGHT_PADDING;
+                y = srcImgHeight - BOTTOM_HEIGHT_PADDING;
                 break;
             case BOTTOM_RIGHT:
-                x = width - (textWidth+WIDTH_PADDING);
-                y = height - BOTTOM_HEIGHT_PADDING;
+                x = srcImgWidth - (textWidth+WIDTH_PADDING);
+                y = srcImgHeight - BOTTOM_HEIGHT_PADDING;
                 break;
             case BOTTOM_CENTER:
-                x = ( width - (textWidth+WIDTH_PADDING) ) / 2;
-                y = height - BOTTOM_HEIGHT_PADDING;
+                x = ( srcImgWidth - (textWidth+WIDTH_PADDING) ) / 2;
+                y = srcImgHeight - BOTTOM_HEIGHT_PADDING;
                 break;
         }
         position.setX(x);

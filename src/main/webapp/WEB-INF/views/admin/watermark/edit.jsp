@@ -1,7 +1,7 @@
-<%@ page import="com.workspaceit.pmc.entity.Placement" %>
+<%@ page import="com.workspaceit.pmc.constant.watermark.Placement" %>
 <%@ page import="com.workspaceit.pmc.entity.Font" %>
-<%@ page import="com.workspaceit.pmc.entity.Size" %>
-<%@ page import="com.workspaceit.pmc.entity.WatermarkType" %>
+<%@ page import="com.workspaceit.pmc.constant.watermark.Size" %>
+<%@ page import="com.workspaceit.pmc.constant.watermark.WatermarkType" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

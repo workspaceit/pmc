@@ -1,13 +1,13 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.constant.watermark.Placement;
+import com.workspaceit.pmc.constant.watermark.Size;
+import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
