@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.util.image.cosntant;
+package com.workspaceit.pmc.constant.watermark;
 
 public class ImagePosition {
     private int x;

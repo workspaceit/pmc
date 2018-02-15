@@ -8,12 +8,18 @@ import com.workspaceit.pmc.entity.State;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.util.FileUtil;
+import com.workspaceit.pmc.util.WatermarkUtil;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
 import com.workspaceit.pmc.validation.location.LocationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,6 +31,7 @@ public class WatermarkService {
 
     private FileService fileService;
     private FileUtil fileUtil;
+    private WatermarkUtil watermarkUtil;
 
     @Autowired
     private WatermarkDao watermarkDao;
@@ -38,8 +45,10 @@ public class WatermarkService {
         this.fileUtil = fileUtil;
     }
 
-
-
+    @Autowired
+    public void setWatermarkUtil(WatermarkUtil watermarkUtil) {
+        this.watermarkUtil = watermarkUtil;
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public List<Watermark> getAll(){
@@ -91,6 +100,19 @@ public class WatermarkService {
 
 
         return watermark;
+    }
+
+    public byte[] getImageWithWaterMark(int id) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Watermark watermark =  this.getById(id);
+        BufferedImage watermarkedImage =  this.watermarkUtil.addWatermarkLogo("/home/mi/Pictures/water mark/sample1.jpg",watermark);
+
+        ImageIO.write( watermarkedImage, "png", outputStream );
+        outputStream.flush();
+
+        System.out.println("outputStream "+outputStream.size());
+
+        return outputStream.toByteArray();
     }
 
     public void create(Watermark watermark){
