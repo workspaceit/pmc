@@ -267,4 +267,27 @@ public class Watermark {
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Watermark{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", logoName='" + logoName + '\'' +
+                ", logoImage='" + logoImage + '\'' +
+                ", size=" + size +
+                ", fade=" + fade +
+                ", watermarkText='" + watermarkText + '\'' +
+                ", font=" + font +
+                ", placement=" + placement +
+                ", color='" + color + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdBy=" + createdBy +
+                ", events=" + events +
+                ", active=" + active +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

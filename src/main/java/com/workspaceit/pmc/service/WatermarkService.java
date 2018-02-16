@@ -1,25 +1,23 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.dao.LocationDao;
+import com.workspaceit.pmc.config.Environment;
+import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.dao.WatermarkDao;
-import com.workspaceit.pmc.entity.Admin;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.State;
-import com.workspaceit.pmc.entity.Watermark;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.util.WatermarkUtil;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
-import com.workspaceit.pmc.validation.location.LocationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -29,15 +27,36 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class WatermarkService {
 
+
+    private ServletContext servletContext;
+
+    private Environment environment;
+
     private FileService fileService;
+    private EventImageService eventImageService;
     private FileUtil fileUtil;
     private WatermarkUtil watermarkUtil;
 
-    @Autowired
     private WatermarkDao watermarkDao;
+
+    @Autowired
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
     @Autowired
     protected void setFileService(FileService fileService) {
         this.fileService = fileService;
+    }
+
+    @Autowired
+    public void setEventImageService(EventImageService eventImageService) {
+        this.eventImageService = eventImageService;
     }
 
     @Autowired
@@ -48,6 +67,11 @@ public class WatermarkService {
     @Autowired
     public void setWatermarkUtil(WatermarkUtil watermarkUtil) {
         this.watermarkUtil = watermarkUtil;
+    }
+
+    @Autowired
+    public void setWatermarkDao(WatermarkDao watermarkDao) {
+        this.watermarkDao = watermarkDao;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -70,10 +94,19 @@ public class WatermarkService {
         return this.watermarkDao.getAll(ids);
     }
 
+
     public Watermark getById(int id){
         return this.watermarkDao.getById(id);
     }
 
+    @Transactional
+    public Watermark getWatermark(int id) throws EntityNotFound{
+        Watermark watermark = this.watermarkDao.getById(id);
+        if(watermark==null){
+            throw new EntityNotFound("Entity not found by id :"+id);
+        }
+        return watermark;
+    }
     @Transactional(rollbackFor = Exception.class)
     public Watermark create(WatermarkForm watermarkForm){
         Watermark watermark = getWatermarkFromWatermarkForm(watermarkForm);
@@ -102,16 +135,43 @@ public class WatermarkService {
         return watermark;
     }
 
-    public byte[] getImageWithWaterMark(int id) throws IOException {
+    @Transactional
+    public byte[] getImageWithWaterMark(WatermarkForm watermarkForm) throws IOException,EntityNotFound {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Watermark watermark =  this.getById(id);
-        BufferedImage watermarkedImage =  this.watermarkUtil.addWatermarkLogo("/home/mi/Pictures/water mark/sample1.jpg",watermark);
 
-        ImageIO.write( watermarkedImage, "png", outputStream );
+        BufferedImage watermarkedImage = null;
+        URL originalImgPath = this.servletContext.getResource("WEB-INF/resources"+environment.getWatermarkSamplePreviewImgUri());
+        System.out.println("logoPath.getPath() "+originalImgPath.getPath());
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgPath.getPath(),"29723734117772.png",watermarkForm);
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
         outputStream.flush();
+        return outputStream.toByteArray();
+    }
+    @Transactional
+    public byte[] getImageWithWaterMark(int eventImageId,int watermarkId) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        EventImage eventImage = this.eventImageService.getEventImage(eventImageId);
+        Watermark watermark =  this.getWatermark(watermarkId);
+        WatermarkType watermarkType = watermark.getType();
 
-        System.out.println("outputStream "+outputStream.size());
+        BufferedImage watermarkedImage = null;
 
+        if(watermarkType!=null && watermarkType.equals(WatermarkType.image)){
+            watermarkedImage =  this.watermarkUtil.addWatermarkLogo(environment.getCommonFilePath()+"/"+eventImage.getImage(),watermark);
+
+        }else if(watermarkType!=null && watermarkType.equals(WatermarkType.text)){
+            watermarkedImage =  this.watermarkUtil.addWatermarkText(environment.getCommonFilePath()+"/"+eventImage.getImage(),watermark);
+        }
+
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
         return outputStream.toByteArray();
     }
 

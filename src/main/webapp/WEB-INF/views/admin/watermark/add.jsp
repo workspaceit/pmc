@@ -125,6 +125,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="url-tab panel-body" >
+
+                    <div class="col-md-3">
+                        <div class="form-group timepick">
+                            <img src="<s:url value="/resources${previewSampleUri}"/>" />
+                        </div>
+                    </div>
+
             </div>
         </div>
 

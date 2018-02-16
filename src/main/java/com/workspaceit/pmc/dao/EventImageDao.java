@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.dao;
 
+import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.EventImage;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,13 @@ public class EventImageDao extends BaseDao {
         query.setMaxResults(limit);
         List<EventImage> eventImages = query.getResultList();
         return  eventImages;
+    }
+    public EventImage getById(int id){
+        Session session = this.getCurrentSession();
+        return (EventImage)session.createQuery("FROM EventImage  WHERE id=:id")
+                .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
     }
 
 }

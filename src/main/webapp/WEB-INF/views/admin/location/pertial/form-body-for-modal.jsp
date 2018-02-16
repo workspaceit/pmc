@@ -33,7 +33,6 @@
                             <c:forEach var="state" items="${states}">
                                 <option value="${state.id}" >${state.name}</option>
                             </c:forEach>
-
                         </select>
                         <p class="text-danger" id="errorObjLocation_stateId"></p>
                     </div>
