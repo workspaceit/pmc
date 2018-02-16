@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "event_images")
+@JsonIgnoreProperties({"event"})
 public class EventImage {
 
     @Id
@@ -35,8 +37,8 @@ public class EventImage {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @Column(name = "is_slideshow")
-    private Boolean isSlideshow;
+    @Column(name = "in_slideshow")
+    private Boolean inSlideshow;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,14 +52,10 @@ public class EventImage {
 
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
-    private Admin createdBy;
-
-    @ManyToMany(mappedBy = "photographers")
-    private Set<Event> events = new HashSet<Event>();
+    private Photographer createdBy;
 
     @ManyToMany(mappedBy = "eventImages", fetch = FetchType.LAZY)
     private Set<SentSlideshow> sentSlideshows = new HashSet<SentSlideshow>();
-
 
     public int getId() {
         return id;
@@ -99,12 +97,20 @@ public class EventImage {
         isActive = active;
     }
 
-    public Boolean getSlideshow() {
-        return isSlideshow;
+    public Boolean getInSlideshow() {
+        return inSlideshow;
     }
 
-    public void setSlideshow(Boolean slideshow) {
-        isSlideshow = slideshow;
+    public void setInSlideshow(Boolean inSlideshow) {
+        this.inSlideshow = inSlideshow;
+    }
+
+    public Set<SentSlideshow> getSentSlideshows() {
+        return sentSlideshows;
+    }
+
+    public void setSentSlideshows(Set<SentSlideshow> sentSlideshows) {
+        this.sentSlideshows = sentSlideshows;
     }
 
     public Date getCreatedAt() {
@@ -123,19 +129,12 @@ public class EventImage {
         this.updatedAt = updatedAt;
     }
 
-    public Admin getCreatedBy() {
+    public Photographer getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Admin createdBy) {
+    public void setCreatedBy(Photographer createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
 }

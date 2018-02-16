@@ -1,0 +1,1 @@
+ALTER TABLE  `event_images` CHANGE  `image`  `image` VARCHAR( 500 ) NOT NULL ;
