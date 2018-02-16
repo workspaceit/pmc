@@ -20,7 +20,7 @@ public class ImageHelper {
         File srcFile =  new File(filePath);
         BufferedImage bufferedImage = ImageIO.read(srcFile);
         return Thumbnails.of(bufferedImage)
-                .size(height, width)
+                .size(width,height )
                 .asBufferedImage();
 
     }

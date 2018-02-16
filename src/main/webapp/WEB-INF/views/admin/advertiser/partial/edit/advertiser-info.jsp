@@ -18,9 +18,8 @@
                             <label style="width:100%;">
                                 <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                                 <select id="stateId" class="form-control" >
-                                    <option value="" >Select State</option>
-                                    <c:set var="stateOptionSelected" value="" ></c:set>
                                     <c:forEach var="state" items="${states}" >
+                                        <c:set var="stateOptionSelected" value="" ></c:set>
                                         <c:if test="${state.id == advertiser.state.id }" >
                                             <c:set var="stateOptionSelected" value="selected=\"selected\"" ></c:set>
                                         </c:if>
@@ -37,12 +36,11 @@
                             </label>
                             <div>
                                 <select id="cityId" class="form-control">
-                                    <c:set var="cityOptionSelected" value="" ></c:set>
                                     <c:forEach var="city" items="${cities}">
+                                        <c:set var="cityOptionSelected" value="" ></c:set>
                                         <c:if test="${advertiser.city.id == city.id}">
                                             <c:set var="cityOptionSelected" value="selected=\"selected\"" ></c:set>
                                         </c:if>
-
                                         <option value="${city.id}" ${cityOptionSelected} >${city.name}</option>
                                     </c:forEach>
                                 </select>

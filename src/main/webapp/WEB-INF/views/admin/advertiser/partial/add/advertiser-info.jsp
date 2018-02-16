@@ -31,7 +31,6 @@
                         <div class="form-group">
                             <label style="width:100%;">
                                 <label>State</label>
-                                <option value="" >Select State</option>
                                 <select id="stateId" class="form-control" >
                                     <c:forEach var="state" items="${states}" >
                                         <option value="${state.id}" >${state.name}</option>

@@ -248,7 +248,7 @@ public class AdvertiserRestController {
 
         this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);
 
-        /** All Update disabled as per discusstion with tahsin vhai */
+
         //this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
         //this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
         //this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
@@ -275,8 +275,6 @@ public class AdvertiserRestController {
             int smsPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getSmsId();
             int emailPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getEmailId();*/
 
-
-            /** All Update disabled as per discusstion with tahsin vhai */
 
             /*
             this.galleryAdService.update(galleryAdId,

@@ -20,11 +20,11 @@ public class LocationForm {
     @Length(max = 200,message = "Value too large")
     private String address;
 
-    @NotNull(message = "State Id is required")
+    @NotNull(message = "State is required")
     @Min(value = 1,message = "State Id is required")
     private Integer stateId;
 
-    @NotNull(message = "City Id is required")
+    @NotNull(message = "City is required")
     @Min(value = 1,message = "City Id is required")
     private Integer cityId;
 
