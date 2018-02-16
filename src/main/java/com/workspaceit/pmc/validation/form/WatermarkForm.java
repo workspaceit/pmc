@@ -1,9 +1,9 @@
 package com.workspaceit.pmc.validation.form;
 
 import com.workspaceit.pmc.entity.Font;
-import com.workspaceit.pmc.entity.Placement;
-import com.workspaceit.pmc.entity.Size;
-import com.workspaceit.pmc.entity.WatermarkType;
+import com.workspaceit.pmc.constant.watermark.Placement;
+import com.workspaceit.pmc.constant.watermark.Size;
+import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import org.hibernate.validator.constraints.NotBlank;
 
 

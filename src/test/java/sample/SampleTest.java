@@ -85,7 +85,8 @@ public class SampleTest {
         this.commonDao = commonDao;
     }
 
-    @Test
+
+   // @Test
     @Transactional
     public void advertimentTest(){
         List<Advertisement>  advertisements =  this.advertisementService.getByAdvertiserId(39);

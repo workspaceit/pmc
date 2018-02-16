@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -36,6 +38,17 @@ public class WebConfig implements WebMvcConfigurer {
         this.env = env;
     }
 
+
+
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        //Here we add our custom-configured HttpMessageConverter
+        converters.add(jacksonMessageConverter());
+        converters.add(byteArrayHttpMessageConverter());
+        WebMvcConfigurer.super.configureMessageConverters(converters);
+    }
+
     @Bean
     public InternalResourceViewResolver resolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -48,6 +61,18 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
         registry.addResourceHandler("/photographer-profile-img/**").addResourceLocations("file://"+this.env.getPhotographerProfilePath()+"/");
         registry.addResourceHandler("/common/**").addResourceLocations("file://"+this.env.getCommonFilePath()+"/");
+    }
+    @Bean
+    public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+        arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
+        return arrayHttpMessageConverter;
+    }
+
+    private List<MediaType> getSupportedMediaTypes() {
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.IMAGE_PNG);
+        return list;
     }
     @Bean
     public CommonsMultipartResolver multipartResolver() {
@@ -96,11 +121,5 @@ public class WebConfig implements WebMvcConfigurer {
 
         return messageConverter;
 
-    }
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //Here we add our custom-configured HttpMessageConverter
-        converters.add(jacksonMessageConverter());
-
-        WebMvcConfigurer.super.configureMessageConverters(converters);
     }
 }

@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.entity;
+package com.workspaceit.pmc.constant.watermark;
 
 /**
  * Created by shawon on 1/8/18.
