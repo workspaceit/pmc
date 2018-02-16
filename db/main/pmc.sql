@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 02, 2018 at 01:35 PM
--- Server version: 5.6.39
+-- Generation Time: Feb 16, 2018 at 06:04 AM
+-- Server version: 5.5.59-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -112,7 +112,29 @@ CREATE TABLE IF NOT EXISTS `advertisement` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `advertisement`
+--
+
+INSERT INTO `advertisement` (`id`, `advertiser_id`, `ad_type`, `state`, `created_at`, `created_by`) VALUES
+(1, 1, 'GALLERY', 'ACTIVE', '2018-02-02 17:12:38', 132),
+(2, 1, 'SLIDESHOW', 'ACTIVE', '2018-02-02 17:12:39', 132),
+(3, 1, 'POPUP_SMS', 'ACTIVE', '2018-02-02 17:12:39', 132),
+(4, 1, 'POPUP_EMAIL', 'ACTIVE', '2018-02-02 17:12:39', 132),
+(5, 2, 'GALLERY', 'ACTIVE', '2018-02-02 17:16:57', 132),
+(6, 2, 'SLIDESHOW', 'ACTIVE', '2018-02-02 17:16:57', 132),
+(7, 2, 'POPUP_SMS', 'ACTIVE', '2018-02-02 17:16:57', 132),
+(8, 2, 'POPUP_EMAIL', 'ACTIVE', '2018-02-02 17:16:57', 132),
+(9, 3, 'GALLERY', 'ACTIVE', '2018-02-02 17:26:53', 132),
+(10, 3, 'SLIDESHOW', 'ACTIVE', '2018-02-02 17:26:53', 132),
+(11, 3, 'POPUP_SMS', 'ACTIVE', '2018-02-02 17:26:53', 132),
+(12, 3, 'POPUP_EMAIL', 'ACTIVE', '2018-02-02 17:26:53', 132),
+(13, 4, 'GALLERY', 'ACTIVE', '2018-02-14 17:17:32', 132),
+(14, 4, 'SLIDESHOW', 'ACTIVE', '2018-02-14 17:17:32', 132),
+(15, 4, 'POPUP_SMS', 'ACTIVE', '2018-02-14 17:17:32', 132),
+(16, 4, 'POPUP_EMAIL', 'ACTIVE', '2018-02-14 17:17:32', 132);
 
 -- --------------------------------------------------------
 
@@ -138,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `advertisement_prices` (
 
 INSERT INTO `advertisement_prices` (`id`, `type`, `description`, `price`, `created_at`, `updated_at`, `created_by`) VALUES
 (1, 'GALLERY_BACKGROUND_IMAGE', 'Gallery Background Image', 50, '2018-01-16 00:00:00', '2018-01-22 16:39:15', 132),
-(2, 'GALLERY_TOP_AD_BANNER', 'Gallery Top Ad Banner', 102, '2018-01-16 00:00:00', '2018-01-22 16:39:25', 132),
+(2, 'GALLERY_TOP_AD_BANNER', 'Gallery Top Ad Banner', 100, '2018-01-16 00:00:00', '2018-02-07 13:20:14', 132),
 (3, 'GALLERY_BOTTOM_AD_BANNER', 'Gallery Bottom Ad Banner', 110, '2018-01-16 00:00:00', '2018-01-22 16:39:36', 132),
 (8, 'SLIDESHOW_BANNER', 'Slideshow ad banner', 4, NULL, '2018-01-22 17:49:11', NULL),
 (9, 'SLIDESHOW_VIDEO', 'Slideshow ad video', 43, NULL, '2018-01-22 17:49:01', NULL),
@@ -173,7 +195,17 @@ CREATE TABLE IF NOT EXISTS `advertisers` (
   PRIMARY KEY (`id`),
   KEY `city_id` (`city_id`),
   KEY `state_id` (`state_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `advertisers`
+--
+
+INSERT INTO `advertisers` (`id`, `name`, `address`, `city_id`, `state_id`, `zip`, `phone`, `website`, `all_locations`, `all_events`, `other_image`, `runtime_starts`, `runtime_ends`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
+(1, 'aaaaaaa', 'aasadsadas', 1, 1, 'saaaa', 'adsdasdsad', 'https://wsdsadd.df', 1, 1, NULL, '2018-02-02', '2018-02-02', '2018-02-02 17:12:38', '2018-02-02 17:12:38', 132, 0, 1),
+(2, 'gfd', 'dssddsf', 225, 52, 'fsdf', 'fdsfdsf', 'https://rtrt.gfr', 1, 1, NULL, '2018-02-23', '2018-02-14', '2018-02-02 17:16:57', '2018-02-02 17:16:57', 132, 0, 0),
+(3, 'asdsds', 'adsdsad', 117, 51, 'sdsd', 'sdsdsd', 'http://dfdsf.dd', 1, 1, NULL, '2018-02-02', '2018-02-02', '2018-02-02 17:26:52', '2018-02-14 17:59:44', 132, 1, 0),
+(4, 'aa', 'aa', 225, 52, 'aa', 'aa', 'http://ss.ff', 0, 0, NULL, '2018-02-14', '2018-02-14', '2018-02-14 17:17:32', '2018-02-14 17:17:32', 132, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +221,15 @@ CREATE TABLE IF NOT EXISTS `advertisers_other_image` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `advertisers_other_image`
+--
+
+INSERT INTO `advertisers_other_image` (`id`, `advertiser_id`, `image`, `created_at`, `created_by`) VALUES
+(1, 1, '4282413993512.png', '2018-02-02 17:12:38', 132),
+(2, 2, '4464868773931.png', '2018-02-02 17:16:57', 132);
 
 -- --------------------------------------------------------
 
@@ -208,7 +248,16 @@ CREATE TABLE IF NOT EXISTS `advertiser_transaction` (
   `created_by` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `advertiser_transaction`
+--
+
+INSERT INTO `advertiser_transaction` (`id`, `advertiser_id`, `subtotal`, `total`, `total_paid`, `total_due`, `discount`, `created_by`, `created_at`) VALUES
+(1, 1, 520.00, 531.00, 0.00, 520.00, 11.00, 132, '2018-02-02 17:13:13'),
+(2, 3, 300.00, 314.00, 10.00, 290.00, 14.00, 132, '2018-02-02 17:39:55'),
+(3, 4, 0.00, 0.00, 0.00, 0.00, 0.00, 132, '2018-02-14 17:17:56');
 
 -- --------------------------------------------------------
 
@@ -226,7 +275,34 @@ CREATE TABLE IF NOT EXISTS `advertiser_transaction_details` (
   `created_by` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+
+--
+-- Dumping data for table `advertiser_transaction_details`
+--
+
+INSERT INTO `advertiser_transaction_details` (`id`, `advertiser_transaction_id`, `item`, `price`, `quantity`, `total`, `created_by`, `created_at`) VALUES
+(1, 1, 'Gallery Background Image', 50.00, 1, 50.00, NULL, '2018-02-02 17:13:13'),
+(2, 1, 'Gallery Top Ad Banner', 102.00, 2, 204.00, NULL, '2018-02-02 17:13:13'),
+(3, 1, 'Gallery Bottom Ad Banner', 110.00, 2, 220.00, NULL, '2018-02-02 17:13:13'),
+(4, 1, 'Slide show Ad Banner', 4.00, 1, 4.00, NULL, '2018-02-02 17:13:13'),
+(5, 1, 'Slide show Ad Video', 43.00, 1, 43.00, NULL, '2018-02-02 17:13:13'),
+(6, 1, 'Popup Sms Ad', 3.00, 2, 6.00, NULL, '2018-02-02 17:13:13'),
+(7, 1, 'Popup Email Ad', 2.00, 2, 4.00, NULL, '2018-02-02 17:13:13'),
+(8, 2, 'Gallery Background Image', 50.00, 1, 50.00, NULL, '2018-02-02 17:39:55'),
+(9, 2, 'Gallery Top Ad Banner', 102.00, 1, 102.00, NULL, '2018-02-02 17:39:55'),
+(10, 2, 'Gallery Bottom Ad Banner', 110.00, 1, 110.00, NULL, '2018-02-02 17:39:55'),
+(11, 2, 'Slide show Ad Banner', 4.00, 1, 4.00, NULL, '2018-02-02 17:39:55'),
+(12, 2, 'Slide show Ad Video', 43.00, 1, 43.00, NULL, '2018-02-02 17:39:55'),
+(13, 2, 'Popup Sms Ad', 3.00, 1, 3.00, NULL, '2018-02-02 17:39:55'),
+(14, 2, 'Popup Email Ad', 2.00, 1, 2.00, NULL, '2018-02-02 17:39:55'),
+(15, 3, 'Gallery Background Image', 50.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(16, 3, 'Gallery Top Ad Banner', 100.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(17, 3, 'Gallery Bottom Ad Banner', 110.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(18, 3, 'Slide show Ad Banner', 4.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(19, 3, 'Slide show Ad Video', 43.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(20, 3, 'Popup Sms Ad', 3.00, 0, 0.00, NULL, '2018-02-14 17:17:56'),
+(21, 3, 'Popup Email Ad', 2.00, 0, 0.00, NULL, '2018-02-14 17:17:56');
 
 -- --------------------------------------------------------
 
@@ -252,20 +328,311 @@ CREATE TABLE IF NOT EXISTS `base` (
 CREATE TABLE IF NOT EXISTS `cities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `state_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+  KEY `created_by` (`created_by`),
+  KEY `state_id` (`state_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=292 ;
 
 --
 -- Dumping data for table `cities`
 --
 
-INSERT INTO `cities` (`id`, `name`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 'Philadelphia', '2018-01-03 00:00:00', '0000-00-00 00:00:00', NULL),
-(2, 'San Diego', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL);
+INSERT INTO `cities` (`id`, `name`, `state_id`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 'Philadelphia', 1, '2018-01-03 00:00:00', '2018-02-02 00:00:00', NULL),
+(2, 'San Diego', 0, '2018-02-02 00:00:00', '2018-02-02 00:00:00', NULL),
+(3, 'New York', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(4, 'Los Angeles', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(5, 'Chicago', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(6, 'Houston', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(7, 'Philadelphia', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(8, 'Phoenix', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(9, 'San Antonio', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(10, 'Diego', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(11, 'Dallas', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(12, 'San Jose', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(13, 'Austin', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(14, 'Jacksonville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(15, 'Indianapolis', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(16, 'San Francisco', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(17, 'Columbus', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(18, 'Fort Worth', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(19, 'Charlotte', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(20, 'Detroit', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(21, 'El Paso', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(22, 'Memphis', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(23, 'Boston', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(24, 'Seattle', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(25, 'Denver', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(26, 'Washington', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(27, 'Nashville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(28, 'Baltimore', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(29, 'Louisville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(30, 'Portland', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(31, 'Oklahoma City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(32, 'Milwaukee', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(33, 'Las Vegas', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(34, 'Albuquerque', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(35, 'Tucson', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(36, 'Fresno', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(37, 'Sacramento', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(38, 'Long Beach', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(39, 'Kansas City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(40, 'Mesa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(41, 'Virginia Beach', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(42, 'Atlanta', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(43, 'Colorado Springs', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(44, 'Raleigh', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(45, 'Omaha', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(46, 'Miami', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(47, 'Oakland', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(48, 'Tulsa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(49, 'Minneapolis', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(50, 'Cleveland', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(51, 'Wichita', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(52, 'Arlington', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(53, 'New Orleans', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(54, 'Bakersfield', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(55, 'Tampa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(56, 'Honolulu', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(57, 'Anaheim', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(58, 'Aurora', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(59, 'Santa Ana', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(60, 'St. Louis', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(61, 'Riverside', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(62, 'Corpus Christi', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(63, 'Pittsburgh', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(64, 'Lexington', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(65, 'Anchorage', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(66, 'Stockton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(67, 'Cincinnati', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(68, 'Saint Paul', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(69, 'Toledo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(70, 'Newark', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(71, 'Greensboro', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(72, 'Plano', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(73, 'Henderson', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(74, 'Lincoln', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(75, 'Buffalo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(76, 'Fort Wayne', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(77, 'Jersey City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(78, 'Chula Vista', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(79, 'Orlando', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(80, 'St. Petersburg', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(81, 'Norfolk', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(82, 'Chandler', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(83, 'Laredo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(84, 'Madison', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(85, 'Durham', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(86, 'Lubbock', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(87, 'Winston-Salem', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(88, 'Garland', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(89, 'Glendale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(90, 'Hialeah', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(91, 'Reno', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(92, 'Baton Rouge', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(93, 'Irvine', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(94, 'Chesapeake', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(95, 'Irving', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(96, 'Scottsdale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(97, 'North Las Vegas', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(98, 'Fremont', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(99, 'Gilbert', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(100, 'San Bernardino', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(101, 'Boise', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(102, 'Birmingham', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(103, 'Rochester', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(104, 'Richmond', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(105, 'Spokane', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(106, 'Des Moines', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(107, 'Montgomery', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(108, 'Modesto', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(109, 'Fayetteville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(110, 'Tacoma', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(111, 'Shreveport', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(112, 'Fontana', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(113, 'Oxnard', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(114, 'Aurora', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(115, 'Moreno Valley', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(116, 'Akron', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(117, 'Yonkers', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(118, 'Columbus', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(119, 'Augusta', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(120, 'Little Rock', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(121, 'Amarillo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(122, 'Mobile', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(123, 'Huntington Beach', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(124, 'Glendale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(125, 'Grand Rapids', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(126, 'Salt Lake City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(127, 'Tallahassee', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(128, 'Huntsville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(129, 'Worcester', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(130, 'Knoxville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(131, 'Grand Prairie', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(132, 'Newport News', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(133, 'Brownsville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(134, 'Santa Clarita', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(135, 'Overland Park', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(136, 'Providence', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(137, 'Jackson', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(138, 'Garden Grove', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(139, 'Oceanside', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(140, 'Chattanooga', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(141, 'Fort Lauderdale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(142, 'Rancho Cucamonga', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(143, 'Santa Rosa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(144, 'Port St. Lucie', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(145, 'Ontario', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(146, 'Tempe', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(147, 'Vancouver', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(148, 'Springfield', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(149, 'Cape Coral', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(150, 'Pembroke Pines', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(151, 'Sioux Falls', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(152, 'Peoria', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(153, 'Lancaster', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(154, 'Elk Grove', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(155, 'Corona', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(156, 'Eugene', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(157, 'Salem', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(158, 'Palmdale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(159, 'Salinas', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(160, 'Springfield', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(161, 'Pasadena', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(162, 'Rockford', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(163, 'Pomona', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(164, 'Hayward', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(165, 'Fort Collins', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(166, 'Joliet', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(167, 'Escondido', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(168, 'Kansas City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(169, 'Torrance', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(170, 'Bridgeport', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(171, 'Alexandria', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(172, 'Sunnyvale', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(173, 'Cary', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(174, 'Lakewood', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(175, 'Hollywood', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(176, 'Paterson', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(177, 'Syracuse', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(178, 'Naperville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(179, 'McKinney', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(180, 'Mesquite', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(181, 'Clarksvlle', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(182, 'Savannah', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(183, 'Dayton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(184, 'Orange', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(185, 'Fullerton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(186, 'Pasadena', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(187, 'Hampton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(188, 'McAllen', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(189, 'Killeen', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(190, 'Warren', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(191, 'West Valley City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(192, 'Columbia', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(193, 'New Haven', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(194, 'Sterling Heights', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(195, 'Olathe', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(196, 'Miramar', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(197, 'Thousand Oaks', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(198, 'Frisco', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(199, 'Cedar Rapids', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(200, 'Topeka', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(201, 'Visalia', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(202, 'Waco', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(203, 'Elizabeth', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(204, 'Bellevue', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(205, 'Gainesville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(206, 'Simi Valley', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(207, 'Charleston', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(208, 'Carrollton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(209, 'Coral Springs', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(210, 'Stamford', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(211, 'Hartford', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(212, 'Concord', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(213, 'Roseville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(214, 'Thornton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(215, 'Kent', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(216, 'Lafayette', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(217, 'Surprise', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(218, 'Denton', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(219, 'Victorville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(220, 'Evansville', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(221, 'Midland', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(222, 'Santa Clara', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(223, 'Athens', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(224, 'Allentown', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(225, 'Abilene', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(226, 'Beaumont', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(227, 'Vallejo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(228, 'Independence', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(229, 'Springfield', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(230, 'Ann Arbor', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(231, 'Provo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(232, 'Peoria', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(233, 'Norman', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(234, 'Berkeley', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(235, 'El Monte', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(236, 'Murfreesboro', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(237, 'Lansing', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(238, 'Columbia', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(239, 'Downey', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(240, 'Costa Mesa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(241, 'Inglewood', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(242, 'Miami Gardens', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(243, 'Manchester', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(244, 'Elgin', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(245, 'Wilmington', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(246, 'Waterbury', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(247, 'Fargo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(248, 'Arvada', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(249, 'Carlsbad', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(250, 'Westminster', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(251, 'Rochester', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(252, 'Gresham', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(253, 'Clearwater', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(254, 'Lowell', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(255, 'West Jordan', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(256, 'Pueblo', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(257, 'San Buenaventura (Ventura)', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(258, 'Fairfield', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(259, 'West Covina', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(260, 'Billings', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(261, 'Murrieta', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(262, 'High Point', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(263, 'Round Rock', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(264, 'Richmond', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(265, 'Cambridge', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(266, 'Norwalk', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(267, 'Odessa', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(268, 'Antioch', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(269, 'Temecula', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(270, 'Green Bay', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(271, 'Everett', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(272, 'Wichita Falls', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(273, 'Burbank', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(274, 'Palm Bay', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(275, 'Centennial', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(276, 'Daly City', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(277, 'Richardson', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(278, 'Pompano Beach', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(279, 'Broken Arrow', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(280, 'North Charleston', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(281, 'West Palm Beach', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(282, 'Boulder', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(283, 'Rialto', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(284, 'Santa Maria', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(285, 'El Cajon', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(286, 'Davenport', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(287, 'Erie', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(288, 'Las Cruces', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(289, 'South Bend', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(290, 'Flint', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL),
+(291, 'Kenosha', 0, '2018-01-03 00:00:00', '2018-01-03 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -279,7 +646,8 @@ CREATE TABLE IF NOT EXISTS `events` (
   `starts_at` datetime NOT NULL,
   `ends_at` datetime NOT NULL,
   `is_private` tinyint(1) NOT NULL,
-  `venue_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
+  `venue_id` int(11) DEFAULT NULL,
   `event_photo` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -288,16 +656,20 @@ CREATE TABLE IF NOT EXISTS `events` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `location_id` (`venue_id`,`created_by`),
-  KEY `venue_id` (`venue_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+  KEY `venue_id` (`venue_id`),
+  KEY `location_id_2` (`location_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`id`, `name`, `starts_at`, `ends_at`, `is_private`, `venue_id`, `event_photo`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
-(3, 'Event 1', '2018-01-03 00:00:00', '2018-01-24 00:00:00', 0, 1, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 0, 0),
-(4, 'Event 2', '2018-01-03 00:00:00', '2018-01-11 00:00:00', 0, 1, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, 0, 0);
+INSERT INTO `events` (`id`, `name`, `starts_at`, `ends_at`, `is_private`, `location_id`, `venue_id`, `event_photo`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
+(3, 'Event 1', '2018-01-04 00:00:00', '2018-02-22 00:00:00', 0, 1, 1, '258919124626853.jpg', '2018-02-12 00:00:00', '2018-02-16 11:58:15', NULL, 1, 0),
+(4, 'Event 2', '2018-01-03 00:00:00', '2018-02-28 00:00:00', 0, 1, 1, '258919124626853.jpg', '2018-02-10 00:00:00', '2018-02-12 00:00:00', NULL, 1, 0),
+(5, 'Event 3', '2018-01-03 00:00:00', '2018-01-11 00:00:00', 0, 1, 1, '258919124626853.jpg', '2018-02-10 00:00:00', '2018-02-12 00:00:00', NULL, 1, 0),
+(6, 'Event 4', '2018-01-03 00:00:00', '2018-02-21 00:00:00', 0, 1, 1, '258919124626853.jpg', '2018-02-10 00:00:00', '2018-02-12 00:00:00', NULL, 1, 0),
+(7, 'Event 5', '2018-01-03 00:00:00', '2018-02-21 00:00:00', 0, 1, 1, '258919124626853.jpg', '2018-02-10 00:00:00', '2018-02-12 00:00:00', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -316,7 +688,7 @@ CREATE TABLE IF NOT EXISTS `event_advertisers` (
   KEY `event_id` (`event_id`,`created_by`),
   KEY `event_id_2` (`event_id`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `event_advertisers`
@@ -328,7 +700,8 @@ INSERT INTO `event_advertisers` (`id`, `event_id`, `advertiser_id`, `created_at`
 (8, 4, 10, NULL, NULL, NULL),
 (9, 3, 10, NULL, NULL, NULL),
 (12, 4, 15, NULL, NULL, NULL),
-(13, 4, 24, NULL, NULL, NULL);
+(13, 4, 24, NULL, NULL, NULL),
+(14, 7, 4, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -339,7 +712,7 @@ INSERT INTO `event_advertisers` (`id`, `event_id`, `advertiser_id`, `created_at`
 CREATE TABLE IF NOT EXISTS `event_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(11) NOT NULL,
-  `image` int(11) NOT NULL,
+  `image` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `watermark_id` int(11) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL,
   `in_slideshow` tinyint(1) NOT NULL,
@@ -350,8 +723,18 @@ CREATE TABLE IF NOT EXISTS `event_images` (
   KEY `created_by` (`created_by`),
   KEY `event_id` (`event_id`),
   KEY `watermark_id` (`watermark_id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `id` (`id`),
+  KEY `event_id_2` (`event_id`),
+  KEY `event_id_3` (`event_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `event_images`
+--
+
+INSERT INTO `event_images` (`id`, `event_id`, `image`, `watermark_id`, `is_active`, `in_slideshow`, `created_at`, `updated_at`, `created_by`) VALUES
+(4, 3, '258919124626853.jpg', NULL, 1, 0, '2018-02-15 00:00:00', '2018-02-15 00:00:00', NULL),
+(5, 3, '258919124626853.jpg', NULL, 1, 0, '2018-02-15 00:00:00', '2018-02-15 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -368,7 +751,15 @@ CREATE TABLE IF NOT EXISTS `event_photographers` (
   PRIMARY KEY (`id`),
   KEY `event_id` (`event_id`,`photographer_id`,`created_by`),
   KEY `photographer_id` (`photographer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `event_photographers`
+--
+
+INSERT INTO `event_photographers` (`id`, `event_id`, `photographer_id`, `created_at`, `created_by`) VALUES
+(2, 4, 1, NULL, NULL),
+(3, 3, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -385,7 +776,16 @@ CREATE TABLE IF NOT EXISTS `event_watermarks` (
   PRIMARY KEY (`id`),
   KEY `event_id` (`event_id`,`watermark_id`,`created_by`),
   KEY `watermark_id` (`watermark_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `event_watermarks`
+--
+
+INSERT INTO `event_watermarks` (`id`, `event_id`, `watermark_id`, `created_at`, `created_by`) VALUES
+(1, 3, 3, NULL, NULL),
+(2, 3, 4, NULL, NULL),
+(3, 3, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -489,6 +889,7 @@ CREATE TABLE IF NOT EXISTS `locations` (
   `name` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `address` text COLLATE utf8_unicode_ci NOT NULL,
   `state_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
   `zip` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `location_logo` text COLLATE utf8_unicode_ci NOT NULL,
@@ -505,21 +906,23 @@ CREATE TABLE IF NOT EXISTS `locations` (
   PRIMARY KEY (`id`),
   KEY `city_id` (`state_id`,`created_by`),
   KEY `state_id` (`state_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` (`id`, `name`, `address`, `state_id`, `zip`, `phone`, `location_logo`, `has_slideshow`, `duration_speed`, `break_time`, `fade_in_time`, `fade_out_time`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
-(1, 'Location1', 'Address', 1, '234', '234234', '23423', 1, 1, 1, 1, 1, '2018-01-09 00:00:00', '2018-01-09 00:00:00', NULL, 1, 0),
-(2, 'Loc2', 'sdf', 2, '234', '234', '19136980333780.png', 1, 435, 345, 1, 2, '2018-01-09 16:07:52', '2018-01-09 16:07:52', NULL, 0, 1),
-(3, 'fdsg', 'fdg', 1, '435', 'fdsg', '19453247125865.png', 1, 4, 4, 1, 1, '2018-01-09 16:13:29', '2018-01-09 16:13:29', NULL, 1, 1),
-(4, 'Loc 2', 'asd', 1, 'sad', 'asd', '20550395407420.png', 1, 12, 21, 1, 1, '2018-01-09 16:31:33', '2018-01-09 16:31:33', NULL, 1, 1),
-(5, 'New Location1', '1234', 2, 'aa', 'dsfdferfhbdf', '4101017069972.jpg', 0, -1, -12, 3, 4, '2018-01-15 12:28:58', '2018-01-15 12:32:21', NULL, 1, 0),
-(6, 'gdrgtdf', 'gbdfgfdf', 1, 'fgdfgdfg', 'dfgdfgdfgfgdf', '5062186928326.jpg', 1, 3, 4, 0, 0, '2018-01-18 11:51:27', '2018-01-18 11:51:27', NULL, 1, 1),
-(7, 'dasdas', 'asdasd', 2, 'asdasd', 'adadsdad', '', 1, 2, 2, 0, 0, '2018-01-18 11:52:13', '2018-01-18 11:52:13', NULL, 1, 1),
-(8, 'wewewe', 'ewqewe', 3, 'ewewqe', 'qwewe', '6382421638855.jpeg', 1, -12, -11, 3, 2, '2018-01-18 12:09:10', '2018-01-18 12:10:59', NULL, 1, 0);
+INSERT INTO `locations` (`id`, `name`, `address`, `state_id`, `city_id`, `zip`, `phone`, `location_logo`, `has_slideshow`, `duration_speed`, `break_time`, `fade_in_time`, `fade_out_time`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
+(1, 'Location 1', 'Address', 1, 1, '234', '234234', '258919124626853.jpg', 1, 1, 1, 1, 1, '2018-01-09 00:00:00', '2018-01-09 00:00:00', NULL, 1, 0),
+(2, 'Loc2', 'sdf', 2, 1, '234', '234', '19136980333780.png', 1, 435, 345, 1, 2, '2018-01-09 16:07:52', '2018-01-09 16:07:52', NULL, 0, 1),
+(3, 'fdsg', 'fdg', 1, 1, '435', 'fdsg', '19453247125865.png', 1, 4, 4, 1, 1, '2018-01-09 16:13:29', '2018-01-09 16:13:29', NULL, 1, 1),
+(4, 'Loc 2', 'asd', 1, 1, 'sad', 'asd', '20550395407420.png', 1, 12, 21, 1, 1, '2018-01-09 16:31:33', '2018-01-09 16:31:33', NULL, 1, 1),
+(5, 'New Location1', '1234', 2, 1, 'aa', 'dsfdferfhbdf', '258919124626853.jpg', 0, -1, -12, 3, 4, '2018-01-15 12:28:58', '2018-01-15 12:32:21', NULL, 1, 0),
+(6, 'An', 'gbdfgfdf', 1, 1, 'fgdfgdfg', 'dfgdfgdfgfgdf', '258919124626853.jpg', 1, 3, 4, 0, 0, '2018-01-18 11:51:27', '2018-01-18 11:51:27', NULL, 1, 1),
+(7, 'dasdas', 'asdasd', 2, 1, 'asdasd', 'adadsdad', '19136980333780.png', 1, 2, 2, 0, 0, '2018-01-18 11:52:13', '2018-01-18 11:52:13', NULL, 1, 1),
+(8, 'wewewe', 'ewqewe', 3, 1, 'ewewqe', 'qwewe', '6382421638855.jpeg', 1, -12, -11, 3, 2, '2018-01-18 12:09:10', '2018-01-18 12:10:59', NULL, 1, 0),
+(9, 'Location10', 'Address', 1, 1, '234', '234234', '258919124626853.jpg', 1, 1, 1, 1, 1, '2018-01-09 00:00:00', '2018-01-09 00:00:00', NULL, 1, 0),
+(10, 'asdas', 'asdasd', 1, 1, 'a2112', '43423', '10656325134110.jpg', 1, 21, 213, 0, 0, '2018-02-14 19:02:56', '2018-02-14 19:02:56', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -538,22 +941,19 @@ CREATE TABLE IF NOT EXISTS `location_advertisers` (
   KEY `event_id` (`location_id`,`created_by`),
   KEY `event_id_2` (`location_id`),
   KEY `advertiser_id` (`advertiser_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=190 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=191 ;
 
 --
 -- Dumping data for table `location_advertisers`
 --
 
 INSERT INTO `location_advertisers` (`id`, `location_id`, `advertiser_id`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 1, 3, NULL, NULL, NULL),
-(2, 2, 3, NULL, NULL, NULL),
-(3, 3, 3, NULL, NULL, NULL),
-(4, 4, 3, NULL, NULL, NULL),
 (167, 5, 11, NULL, NULL, NULL),
 (168, 5, 10, NULL, NULL, NULL),
 (186, 8, 12, NULL, NULL, NULL),
 (187, 7, 24, NULL, NULL, NULL),
-(189, 8, 19, NULL, NULL, NULL);
+(189, 8, 19, NULL, NULL, NULL),
+(190, 9, 4, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -569,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `location_bg_images` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `location_id` (`location_id`,`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `location_bg_images`
@@ -583,7 +983,8 @@ INSERT INTO `location_bg_images` (`id`, `image`, `location_id`, `created_at`, `c
 (5, '19448373514769.png', 3, '2018-01-09 16:13:29', NULL),
 (6, '20553620236102.png', 4, '2018-01-09 16:31:33', NULL),
 (7, '4133700040871.jpg', 5, '2018-01-15 12:28:58', NULL),
-(8, '6304605685343.jpg', 8, '2018-01-18 12:10:59', NULL);
+(8, '6304605685343.jpg', 8, '2018-01-18 12:10:59', NULL),
+(9, '10659042229049.jpg', 10, '2018-02-14 19:02:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -627,7 +1028,7 @@ INSERT INTO `photographers` (`id`, `full_name`, `phone_number`, `user_name`, `em
 (12, 'Shuvo', '11', 'shuvo', 'shuvo11@q', '$2a$10$Wk45sjPG8cd0Agsld5oB7ewt9/eHNggFoNEo.Qz6ncSkC9dtxRp4K', '97926921713467.jpg', '2018-01-10 11:28:47', '2018-01-10 14:01:00', 132, 1, 0),
 (13, 'Baba Rafi', '420', '2131312', '43423423@dfgtsdf', '$2a$10$8cmOBL0FZuZOnndLdbGRM.v5M/aYJ.Sypqq0hxRTrw5VGjjhVEyd6', '', '2018-01-10 15:10:27', '2018-01-10 16:23:34', 132, 1, 1),
 (14, 'New', '4', 'New1', 'ng!kjh@jkh.vom', '$2a$10$Z8XJ17qvbYVPBuRyrU5ckuIG8SiGopHv0whes5BKXKjXdqCPVkCIS', '5378074457433.png', '2018-01-15 12:49:47', '2018-01-17 18:29:24', 132, 1, 1),
-(15, 'aaaa', '2233', 'saaaa', 'asa@fsdf.gtft', '$2a$10$Je5dTMxz8mm2GRsrC2dCr.VzW/CR3k4zs3CPJiZxn0v/c8VwqDjt6', '6900805543438.png', '2018-01-17 18:33:58', '2018-01-18 12:19:41', 132, 1, 0),
+(15, 'aaaa', '2233', 'saaaa', 'p@pmc.com', '$2a$10$CB454JLAnGhfH9pRQaSJHebfuik3TaCkaAgopXvTAPZfzhHvtmvFi', '6900805543438.png', '2018-01-17 18:33:58', '2018-01-18 12:19:41', 132, 1, 0),
 (16, 'lalalala', '456684', 'lalala', 'lala@lala.lala', '$2a$10$N7FKjB0.DaOtxqvJIcp28e1wV/OnvvPBF0jyu9TS8HqtBbQcA3fGm', '6878053746830.jpg', '2018-01-18 12:14:04', '2018-01-18 12:19:14', 132, 0, 1);
 
 -- --------------------------------------------------------
@@ -704,7 +1105,45 @@ CREATE TABLE IF NOT EXISTS `section` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `advertisement_id` (`advertisement_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+
+--
+-- Dumping data for table `section`
+--
+
+INSERT INTO `section` (`id`, `advertisement_id`, `price`, `quantity`, `duration`, `rotation`, `section_type`, `expire_date`, `created_by`, `created_at`) VALUES
+(1, 1, NULL, 1, NULL, 'STATIC', 'LOGO', NULL, 132, '2018-02-02 17:12:39'),
+(2, 1, 50.00, 1, NULL, 'STATIC', 'BACKGROUND', NULL, 132, '2018-02-02 17:12:39'),
+(3, 1, 102.00, 2, NULL, 'ROTATE', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(4, 1, 110.00, 2, NULL, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(5, 2, 43.00, 1, 1, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(6, 2, 4.00, 1, 1, 'ROTATE', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(7, 4, 2.00, 2, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(8, 3, 3.00, 2, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:12:39'),
+(9, 5, NULL, 1, NULL, 'STATIC', 'LOGO', NULL, 132, '2018-02-02 17:16:58'),
+(10, 5, 50.00, 1, NULL, 'STATIC', 'BACKGROUND', NULL, 132, '2018-02-02 17:16:58'),
+(11, 5, 102.00, 2, NULL, 'ROTATE', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(12, 5, 110.00, 1, NULL, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(13, 6, 43.00, 1, 1, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(14, 6, 4.00, 1, 1, 'ROTATE', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(15, 8, 2.00, 1, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(16, 7, 3.00, 1, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:16:58'),
+(17, 9, NULL, 1, NULL, 'STATIC', 'LOGO', NULL, 132, '2018-02-02 17:26:53'),
+(18, 9, 50.00, 1, NULL, 'STATIC', 'BACKGROUND', NULL, 132, '2018-02-02 17:26:53'),
+(19, 9, 102.00, 1, NULL, 'ROTATE', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(20, 9, 110.00, 1, NULL, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(21, 10, 43.00, 1, 1, 'ROTATE', 'BOTTOM_BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(22, 10, 4.00, 1, 1, 'STATIC', 'TOP_BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(23, 12, 2.00, 1, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(24, 11, 3.00, 1, 1, 'ROTATE', 'BANNER', '2018-02-02', 132, '2018-02-02 17:26:53'),
+(25, 13, NULL, 0, NULL, 'STATIC', 'LOGO', NULL, 132, '2018-02-14 17:17:32'),
+(26, 13, 50.00, 0, NULL, 'STATIC', 'BACKGROUND', NULL, 132, '2018-02-14 17:17:32'),
+(27, 13, 100.00, 0, NULL, 'ROTATE', 'TOP_BANNER', NULL, 132, '2018-02-14 17:17:32'),
+(28, 13, 110.00, 0, NULL, 'ROTATE', 'BOTTOM_BANNER', NULL, 132, '2018-02-14 17:17:32'),
+(29, 14, 43.00, 0, 1, 'ROTATE', 'BOTTOM_BANNER', NULL, 132, '2018-02-14 17:17:33'),
+(30, 14, 4.00, 0, 1, 'ROTATE', 'TOP_BANNER', NULL, 132, '2018-02-14 17:17:33'),
+(31, 16, 2.00, 0, 1, 'ROTATE', 'BANNER', NULL, 132, '2018-02-14 17:17:33'),
+(32, 15, 3.00, 0, 1, 'ROTATE', 'BANNER', NULL, 132, '2018-02-14 17:17:33');
 
 -- --------------------------------------------------------
 
@@ -721,7 +1160,42 @@ CREATE TABLE IF NOT EXISTS `sec_resource` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `section_id` (`section_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+
+--
+-- Dumping data for table `sec_resource`
+--
+
+INSERT INTO `sec_resource` (`id`, `section_id`, `file_name`, `file_type`, `mime_type`, `created_at`) VALUES
+(1, 1, '4297790964727.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(2, 2, '4305225358635.png', 'IMAGE', 'image/png', '2018-02-02 17:12:39'),
+(3, 3, '4299977631983.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(4, 3, '4302033016132.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(5, 4, '4310209485304.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(6, 4, '4313957957271.png', 'IMAGE', 'image/png', '2018-02-02 17:12:39'),
+(7, 5, '4336228408780.mp4', 'VIDEO', 'video/mp4', '2018-02-02 17:12:39'),
+(8, 6, '4320675442509.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(9, 7, '4360965812706.png', 'IMAGE', 'image/png', '2018-02-02 17:12:39'),
+(10, 7, '4364606792629.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:12:39'),
+(11, 8, '4347466356758.png', 'IMAGE', 'image/png', '2018-02-02 17:12:39'),
+(12, 8, '4351155702004.png', 'IMAGE', 'image/png', '2018-02-02 17:12:39'),
+(13, 9, '4497126976167.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:16:58'),
+(14, 10, '4511606936835.png', 'IMAGE', 'image/png', '2018-02-02 17:16:58'),
+(15, 11, '4517416817097.png', 'IMAGE', 'image/png', '2018-02-02 17:16:58'),
+(16, 11, '4521720035825.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:16:58'),
+(17, 12, '4583184400337.mp4', 'IMAGE', 'video/mp4', '2018-02-02 17:16:58'),
+(18, 13, '4609384231640.mp4', 'VIDEO', 'video/mp4', '2018-02-02 17:16:58'),
+(19, 14, '4602051720365.png', 'IMAGE', 'image/png', '2018-02-02 17:16:58'),
+(20, 15, '4624240352267.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:16:58'),
+(21, 16, '4618979646364.mp4', 'VIDEO', 'video/mp4', '2018-02-02 17:16:58'),
+(22, 17, '5154638141240.png', 'IMAGE', 'image/png', '2018-02-02 17:26:53'),
+(23, 18, '5173576428837.jpg', 'IMAGE', 'image/jpeg', '2018-02-02 17:26:53'),
+(24, 19, '5179245465459.png', 'IMAGE', 'image/png', '2018-02-02 17:26:53'),
+(25, 20, '5187959976927.png', 'IMAGE', 'image/png', '2018-02-02 17:26:53'),
+(26, 21, '5207882166455.mp4', 'VIDEO', 'video/mp4', '2018-02-02 17:26:53'),
+(27, 22, '5195252418553.png', 'IMAGE', 'image/png', '2018-02-02 17:26:53'),
+(28, 23, '5219861186047.mp4', 'VIDEO', 'video/mp4', '2018-02-02 17:26:53'),
+(29, 24, '5212934150649.png', 'IMAGE', 'image/png', '2018-02-02 17:26:53');
 
 -- --------------------------------------------------------
 
@@ -831,7 +1305,7 @@ CREATE TABLE IF NOT EXISTS `states` (
   `created_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=53 ;
 
 --
 -- Dumping data for table `states`
@@ -840,7 +1314,55 @@ CREATE TABLE IF NOT EXISTS `states` (
 INSERT INTO `states` (`id`, `name`, `code`, `created_at`, `updated_at`, `created_by`) VALUES
 (1, 'Alaska', 'AK', NULL, NULL, NULL),
 (2, 'Arkansas', 'AR', NULL, NULL, NULL),
-(3, 'Arizona', 'AZ', NULL, NULL, NULL);
+(3, 'Arizona', 'AZ', NULL, NULL, NULL),
+(5, 'California', 'CA', NULL, NULL, NULL),
+(6, 'Colorado', 'CO', NULL, NULL, NULL),
+(7, 'Connecticut', 'CT', NULL, NULL, NULL),
+(8, 'Delaware', 'DE', NULL, NULL, NULL),
+(9, 'District of Columbia', 'DC', NULL, NULL, NULL),
+(10, 'Florida', 'FL', NULL, NULL, NULL),
+(11, 'Georgia', 'GA', NULL, NULL, NULL),
+(12, 'Hawaii', 'HI', NULL, NULL, NULL),
+(13, 'Idaho', 'ID', NULL, NULL, NULL),
+(14, 'Illinois', 'IL', NULL, NULL, NULL),
+(15, 'Indiana', 'IN', NULL, NULL, NULL),
+(16, 'Iowa', 'IA', NULL, NULL, NULL),
+(17, 'Kansas', 'KS', NULL, NULL, NULL),
+(18, 'Kentucky', 'KY', NULL, NULL, NULL),
+(19, 'Louisiana', 'LA', NULL, NULL, NULL),
+(20, 'Maine', 'ME', NULL, NULL, NULL),
+(21, 'Montana', 'MT', NULL, NULL, NULL),
+(22, 'Nebraska', 'NE', NULL, NULL, NULL),
+(23, 'Nevada', 'NV', NULL, NULL, NULL),
+(24, 'New Hampshire', 'NH', NULL, NULL, NULL),
+(25, 'New Jersey', 'NJ', NULL, NULL, NULL),
+(26, 'New Mexico', 'NM', NULL, NULL, NULL),
+(27, 'New York', 'NY', NULL, NULL, NULL),
+(28, 'North Carolina', 'NC', NULL, NULL, NULL),
+(29, 'North Dakota', 'ND', NULL, NULL, NULL),
+(30, 'Ohio', 'OH', NULL, NULL, NULL),
+(31, 'Oklahoma', 'OK', NULL, NULL, NULL),
+(32, 'Oregon', 'OR', NULL, NULL, NULL),
+(33, 'Maryland', 'MD', NULL, NULL, NULL),
+(34, 'Massachusetts', 'MA', NULL, NULL, NULL),
+(35, 'Michigan', 'MI', NULL, NULL, NULL),
+(36, 'Minnesota', 'MN', NULL, NULL, NULL),
+(37, 'Mississippi', 'MS', NULL, NULL, NULL),
+(38, 'Missouri', 'MO', NULL, NULL, NULL),
+(39, 'Pennsylvania', 'PA', NULL, NULL, NULL),
+(40, 'Rhode Island', 'RI', NULL, NULL, NULL),
+(41, 'South Carolina', 'SC', NULL, NULL, NULL),
+(42, 'South Dakota', 'SD', NULL, NULL, NULL),
+(43, 'Tennessee', 'TN', NULL, NULL, NULL),
+(44, 'Texas', 'TX', NULL, NULL, NULL),
+(45, 'Utah', 'UT', NULL, NULL, NULL),
+(46, 'Vermont', 'VT', NULL, NULL, NULL),
+(47, 'Virginia', 'VA', NULL, NULL, NULL),
+(48, 'Washington', 'WA', NULL, NULL, NULL),
+(49, 'West Virginia', 'WV', NULL, NULL, NULL),
+(50, 'Wisconsin', 'WI', NULL, NULL, NULL),
+(51, 'Wyoming', 'WY', NULL, NULL, NULL),
+(52, 'Alabama', 'AL', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -854,7 +1376,7 @@ CREATE TABLE IF NOT EXISTS `temp_file` (
   `path` text NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1506 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1542 ;
 
 --
 -- Dumping data for table `temp_file`
@@ -2164,7 +2686,40 @@ INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
 (1502, 1000336139, '/home/mi/project-file/pmc/tmp/9658123323405.ogv', '2018-02-02 07:25:13'),
 (1503, 1000105582, '/home/mi/project-file/pmc/tmp/9663874032104.png', '2018-02-02 07:25:19'),
 (1504, 1000728039, '/home/mi/project-file/pmc/tmp/9665407668449.png', '2018-02-02 07:25:21'),
-(1505, 1000646507, '/home/mi/project-file/pmc/tmp/9669513304382.ogv', '2018-02-02 07:25:25');
+(1505, 1000646507, '/home/mi/project-file/pmc/tmp/9669513304382.ogv', '2018-02-02 07:25:25'),
+(1506, 1000681635, '/home/anik/project_file/pmc/tmp/4282413993512.png', '2018-02-02 11:11:14'),
+(1507, 1000825771, '/home/anik/project_file/pmc/tmp/4297790964727.jpg', '2018-02-02 11:11:29'),
+(1508, 1000818021, '/home/anik/project_file/pmc/tmp/4299977631983.jpg', '2018-02-02 11:11:31'),
+(1509, 1000039603, '/home/anik/project_file/pmc/tmp/4302033016132.jpg', '2018-02-02 11:11:33'),
+(1510, 1000009520, '/home/anik/project_file/pmc/tmp/4305225358635.png', '2018-02-02 11:11:36'),
+(1511, 1000583159, '/home/anik/project_file/pmc/tmp/4310209485304.jpg', '2018-02-02 11:11:41'),
+(1512, 1000891013, '/home/anik/project_file/pmc/tmp/4313957957271.png', '2018-02-02 11:11:45'),
+(1513, 1000803681, '/home/anik/project_file/pmc/tmp/4320675442509.jpg', '2018-02-02 11:11:52'),
+(1514, 1000412238, '/home/anik/project_file/pmc/tmp/4336228408780.mp4', '2018-02-02 11:12:07'),
+(1515, 1000600771, '/home/anik/project_file/pmc/tmp/4347466356758.png', '2018-02-02 11:12:19'),
+(1516, 1000179252, '/home/anik/project_file/pmc/tmp/4351155702004.png', '2018-02-02 11:12:22'),
+(1517, 1000644111, '/home/anik/project_file/pmc/tmp/4360965812706.png', '2018-02-02 11:12:32'),
+(1518, 1000560159, '/home/anik/project_file/pmc/tmp/4364606792629.jpg', '2018-02-02 11:12:36'),
+(1519, 1000757620, '/home/anik/project_file/pmc/tmp/4464868773931.png', '2018-02-02 11:14:16'),
+(1520, 1000190010, '/home/anik/project_file/pmc/tmp/4497126976167.jpg', '2018-02-02 11:14:48'),
+(1522, 1000880322, '/home/anik/project_file/pmc/tmp/4511606936835.png', '2018-02-02 11:15:03'),
+(1523, 1000173266, '/home/anik/project_file/pmc/tmp/4517416817097.png', '2018-02-02 11:15:09'),
+(1524, 1000343769, '/home/anik/project_file/pmc/tmp/4521720035825.jpg', '2018-02-02 11:15:13'),
+(1527, 1000644765, '/home/anik/project_file/pmc/tmp/4583184400337.mp4', '2018-02-02 11:16:14'),
+(1528, 1000897515, '/home/anik/project_file/pmc/tmp/4602051720365.png', '2018-02-02 11:16:33'),
+(1529, 1000362575, '/home/anik/project_file/pmc/tmp/4609384231640.mp4', '2018-02-02 11:16:41'),
+(1530, 1000704150, '/home/anik/project_file/pmc/tmp/4618979646364.mp4', '2018-02-02 11:16:50'),
+(1531, 1000007673, '/home/anik/project_file/pmc/tmp/4624240352267.jpg', '2018-02-02 11:16:55'),
+(1532, 1000683387, '/home/anik/project_file/pmc/tmp/5154638141240.png', '2018-02-02 11:25:46'),
+(1533, 1000627649, '/home/anik/project_file/pmc/tmp/5173576428837.jpg', '2018-02-02 11:26:05'),
+(1534, 1000840294, '/home/anik/project_file/pmc/tmp/5179245465459.png', '2018-02-02 11:26:10'),
+(1535, 1000170412, '/home/anik/project_file/pmc/tmp/5187959976927.png', '2018-02-02 11:26:19'),
+(1536, 1000215293, '/home/anik/project_file/pmc/tmp/5195252418553.png', '2018-02-02 11:26:26'),
+(1537, 1000595816, '/home/anik/project_file/pmc/tmp/5207882166455.mp4', '2018-02-02 11:26:39'),
+(1538, 1000660546, '/home/anik/project_file/pmc/tmp/5212934150649.png', '2018-02-02 11:26:44'),
+(1539, 1000544408, '/home/anik/project_file/pmc/tmp/5219861186047.mp4', '2018-02-02 11:26:51'),
+(1540, 1000159301, '/home/anik/project_file/pmc/tmp/10656325134110.jpg', '2018-02-14 13:02:24'),
+(1541, 1000416119, '/home/anik/project_file/pmc/tmp/10659042229049.jpg', '2018-02-14 13:02:27');
 
 -- --------------------------------------------------------
 
@@ -2209,7 +2764,7 @@ CREATE TABLE IF NOT EXISTS `venues` (
 --
 
 INSERT INTO `venues` (`id`, `name`, `location_id`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
-(1, 'Venue 1', 1, NULL, NULL, NULL, 1, 0),
+(1, 'Venue 1', 1, '2018-02-07 00:00:00', '2018-02-07 00:00:00', NULL, 1, 0),
 (2, 'Venue 2', 1, NULL, NULL, NULL, 1, 0),
 (3, 'ddf1', 2, '2018-01-10 13:51:52', '2018-01-10 13:52:27', 132, 0, 1),
 (4, 'kkk', 4, '2018-01-10 13:52:39', '2018-01-10 13:52:39', 132, 0, 1),
@@ -2249,11 +2804,11 @@ CREATE TABLE IF NOT EXISTS `watermarks` (
 --
 
 INSERT INTO `watermarks` (`id`, `name`, `type`, `logo_name`, `logo_image`, `size`, `fade`, `watermark_text`, `font_id`, `placement`, `color`, `created_at`, `updated_at`, `created_by`, `active`, `deleted`) VALUES
-(1, '', 'image', 'dfg', '26126512604901.png', 'thumb', 25, '', NULL, 'tl', '', '2018-01-09 18:05:08', '2018-01-09 18:05:08', NULL, 1, 0),
-(2, '', 'image', 'Roy', '92296838259199.jpg', 'small', 6, '', NULL, 'br', '', '2018-01-10 12:27:10', '2018-01-10 12:27:10', NULL, 0, 1),
-(3, '', 'text', 'Roy', '', NULL, NULL, 'Roy', NULL, NULL, 'B3FF57', '2018-01-10 12:28:11', '2018-01-10 12:28:11', NULL, 0, 1),
-(4, '', 'image', 'Rainbow', '5044984895095.jpeg', 'medium', 29, '', NULL, 'bl', '', '2018-01-15 12:36:39', '2018-01-15 12:43:34', NULL, 1, 0),
-(5, '', 'text', 'New 1', '', NULL, NULL, 'New 1', NULL, NULL, 'FFFFFF', '2018-01-15 12:45:14', '2018-01-15 12:46:05', NULL, 0, 1);
+(1, 'ewfwe', 'image', 'dfg', '26126512604901.png', 'thumb', 25, '', NULL, 'tl', '', '2018-01-09 18:05:08', '2018-01-09 18:05:08', NULL, 1, 0),
+(2, 'wat2', 'image', 'Roy', '92296838259199.jpg', 'small', 6, '', NULL, 'br', '', '2018-01-10 12:27:10', '2018-01-10 12:27:10', NULL, 0, 1),
+(3, 'www', 'text', 'Roy', '', NULL, NULL, 'Roy', NULL, NULL, 'B3FF57', '2018-01-10 12:28:11', '2018-01-10 12:28:11', NULL, 1, 1),
+(4, 'ewat', 'image', 'Rainbow', '5044984895095.jpeg', 'medium', 29, '', NULL, 'bl', '', '2018-01-15 12:36:39', '2018-01-15 12:43:34', NULL, 1, 0),
+(5, 'wat', 'text', 'New 1', '', NULL, NULL, 'New 1', NULL, NULL, 'FFFFFF', '2018-01-15 12:45:14', '2018-01-15 12:46:05', NULL, 0, 1);
 
 --
 -- Constraints for dumped tables
@@ -2276,8 +2831,8 @@ ALTER TABLE `events`
 -- Constraints for table `event_images`
 --
 ALTER TABLE `event_images`
-  ADD CONSTRAINT `event_images_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
-  ADD CONSTRAINT `event_images_ibfk_2` FOREIGN KEY (`watermark_id`) REFERENCES `watermarks` (`id`);
+  ADD CONSTRAINT `event_images_ibfk_2` FOREIGN KEY (`watermark_id`) REFERENCES `watermarks` (`id`),
+  ADD CONSTRAINT `event_images_ibfk_3` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
 
 --
 -- Constraints for table `event_photographers`
