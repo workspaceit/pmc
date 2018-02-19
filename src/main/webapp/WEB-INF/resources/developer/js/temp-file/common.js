@@ -157,7 +157,7 @@ function removeFileByToken(token, fn,file){
     });
 }
 
-function commonDropZoneconfig(data){
+function commonDropZoneConfig(data){
     var elementId = data.elementId;
     var param=data.param;
     var maxFile=data.maxFile;
@@ -165,11 +165,13 @@ function commonDropZoneconfig(data){
     var fnSuccess=data.success;
     var afterServerFileRemove=data.afterServerFileRemove;
     var addFileFn=data.afterAddFile;
+    var paramName = (data.paramName!=undefined)?data.paramName:"profileImg";
+
     var dropZoneConfig = new Dropzone("#"+elementId,
         {
-            url: BASEURL+"file/upload/adv/"+param,
+            url: BASEURL+"file/upload/"+param,
             method:"post",
-            paramName:"advImg",
+            paramName:paramName,
             maxFilesize: maxFileSize,
             maxFiles:maxFile,
             addRemoveLinks: true,
@@ -207,8 +209,6 @@ function commonDropZoneconfig(data){
 
                     });
                 }
-
-
             },
             error:function(file,response){
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;

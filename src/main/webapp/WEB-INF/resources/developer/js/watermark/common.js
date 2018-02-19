@@ -264,7 +264,7 @@ function getWatermarkOnSamplePreviewUrl(parameters) {
 }
 
 
-commonDropZoneconfig({
+commonDropZoneConfig({
         elementId:"dummyForDropZone",
         param:"watermark-sample-image",
         maxFile:1,
