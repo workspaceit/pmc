@@ -85,7 +85,22 @@ public class WatermarkUtil {
         BufferedImage sourceImage = addWatermarkText( sourceImagePath,   text,  colorCode, fadeVal,font);
         return sourceImage;
     }
+    public BufferedImage addWatermarkText(String sourceImagePath,
+                                          WatermarkForm watermarkForm) throws IOException {
 
+
+
+        String text = watermarkForm.getWatermarkText();
+        String colorCode = watermarkForm.getColor();
+
+        float fadeVal = 25; //
+
+        // Water mark text don't have fade value in UI
+        // although Max value is 50
+        com.workspaceit.pmc.entity.Font font = watermarkForm.getFont();
+        BufferedImage sourceImage = addWatermarkText( sourceImagePath,   text,  colorCode, fadeVal,font);
+        return sourceImage;
+    }
 
     public BufferedImage addWatermarkText(String sourceImagePath,String text, String colorCode, float fadeVal,
                                           com.workspaceit.pmc.entity.Font font) throws IOException {
@@ -139,13 +154,30 @@ public class WatermarkUtil {
 
         return sourceImage;
     }
-    public BufferedImage addWatermarkLogo(String originalImagePath,String logoFileName,WatermarkForm watermarkForm) throws IOException {
+    public BufferedImage addWatermarkLogo(BufferedImage originalImage,String logoAbsPath,WatermarkForm watermarkForm) throws IOException {
 
         Placement placement =  ( watermarkForm.getPlacement()==null) ?Placement.tc:watermarkForm.getPlacement();
         Size size = ( watermarkForm.getSize()==null) ?Size.thumb:watermarkForm.getSize();
         float fadeVal = watermarkForm.getFade()==null ?0:watermarkForm.getFade().floatValue();
         float opacity = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
-        String logoAbsPath = environment.getTmpFilePath()+"/"+logoFileName;
+
+        BufferedImage thumbnail = this.addWatermarkLogo(originalImage,
+                                                        placement,
+                                                        size,
+                                                        opacity,
+                                                        logoAbsPath);
+
+
+
+        return thumbnail;
+    }
+    public BufferedImage addWatermarkLogo(String originalImagePath,String logoAbsPath,WatermarkForm watermarkForm) throws IOException {
+
+        Placement placement =  ( watermarkForm.getPlacement()==null) ?Placement.tc:watermarkForm.getPlacement();
+        Size size = ( watermarkForm.getSize()==null) ?Size.thumb:watermarkForm.getSize();
+        float fadeVal = watermarkForm.getFade()==null ?0:watermarkForm.getFade().floatValue();
+        float opacity = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
+
 
         BufferedImage thumbnail = addWatermarkLogo(originalImagePath,
                 placement,
@@ -180,6 +212,15 @@ public class WatermarkUtil {
 
 
         BufferedImage originalImage = ImageIO.read(new File(originalImagePath));
+        Positions position = this.watermarkTextPositioning.getPosition(placement);
+        BufferedImage watermarkImage = this.imageHelper.resizeImage(logoAbsPath,size);
+
+
+        BufferedImage thumbnail = addWatermarkLogo(originalImage,placement,size,opacity,logoAbsPath);
+        return thumbnail;
+    }
+    public BufferedImage addWatermarkLogo(BufferedImage originalImage,Placement placement,Size size,float opacity,String logoAbsPath) throws IOException {
+
         Positions position = this.watermarkTextPositioning.getPosition(placement);
         BufferedImage watermarkImage = this.imageHelper.resizeImage(logoAbsPath,size);
 

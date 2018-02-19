@@ -1,8 +1,10 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.validation.watermark.WatermarkValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,24 +28,39 @@ import java.io.IOException;
 public class ImageController {
 
     private WatermarkService watermarkService;
+    private WatermarkValidator watermarkValidator;
 
     @Autowired
     public void setWatermarkService(WatermarkService watermarkService) {
         this.watermarkService = watermarkService;
     }
 
-        /*
-        http://localhost:8080/img/watermarked-preview?name=asd&type=image&logoImgToken=0&logoName=asd&placement=tl&size=thumb&fade=25
-        * */
+    @Autowired
+    public void setWatermarkValidator(WatermarkValidator watermarkValidator) {
+        this.watermarkValidator = watermarkValidator;
+    }
+
+    /*
+            http://localhost:8080/img/watermarked-preview?name=asd&type=image&logoImgToken=0&logoName=asd&placement=tl&size=thumb&fade=25
+            * */
     @ResponseBody
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreview(@Valid WatermarkForm watermarkForm, BindingResult error) throws IOException, EntityNotFound {
         byte[] imageByte = null;
-        try {
 
-            imageByte = watermarkService.getImageWithWaterMark(watermarkForm);
+        this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
+
+        WatermarkType type = watermarkForm.getType();
+
+        if(type!=null && type.equals(WatermarkType.image) && error.getFieldErrorCount("logoImgToken")>0){
+            throw new IOException("Logo required");
+        }
+
+        try {
+            imageByte = watermarkService.getImageWithWaterMark(watermarkForm); // Image or Text
+           // imageByte = watermarkService.getImageWithWaterMark(watermarkForm,true); // Image and text both
         }catch (EntityNotFound ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new byte[]{});
+            throw ex;
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(imageByte);

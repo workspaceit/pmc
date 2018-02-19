@@ -156,3 +156,70 @@ function removeFileByToken(token, fn,file){
         }
     });
 }
+
+function commonDropZoneconfig(data){
+    var elementId = data.elementId;
+    var param=data.param;
+    var maxFile=data.maxFile;
+    var maxFileSize=data.maxFileSize;
+    var fnSuccess=data.success;
+    var afterServerFileRemove=data.afterServerFileRemove;
+    var addFileFn=data.afterAddFile;
+    var dropZoneConfig = new Dropzone("#"+elementId,
+        {
+            url: BASEURL+"file/upload/adv/"+param,
+            method:"post",
+            paramName:"advImg",
+            maxFilesize: maxFileSize,
+            maxFiles:maxFile,
+            addRemoveLinks: true,
+            previewTemplate:$("#dropZonePreview").html(),
+            init:function(){
+
+                /** If function is overridden */
+                if(addFileFn != undefined && typeof addFileFn == "function"){
+                    addFileFn(this);
+                }else{
+                    /** Default behaviour */
+
+                    this.on("maxfilesexceeded", function(file) {
+
+                    });
+                    this.on("addedfile", function(file) {
+                        file._removeLink.addEventListener("click", function() {
+                            console.log(file);
+                            removeFileByToken(file.token,afterServerFileRemove,file);
+                            advImgDropZone.removeFile(file);
+                        });
+
+                        if(this.files.length > maxFile){
+                            if(maxFile==1){
+                                console.log(this.files);
+                                this.files[0]._removeLink.click();
+                                console.log(this.files);
+                            }else{
+                                showServerErrorMessage("Maximum file limit is "+maxFile,"tc",4000);
+                                this.files[advImgDropZone.files-1]._removeLink.click();
+                                this.removeFile(file);
+                            }
+                        }
+
+
+                    });
+                }
+
+
+            },
+            error:function(file,response){
+                var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
+                $("#"+elementId).find(".dz-error-message span").html(msg).addClass("text-danger");
+            },
+            success:function(file,response){
+
+                file.token = response.token;
+                fnSuccess(response,file);
+            }
+        }
+    );
+    return dropZoneConfig;
+}

@@ -17,6 +17,7 @@ public class TempFile {
     private int id;
     private int token;
     private String path;
+    private String fileName;
     private Timestamp createdDate;
 
     @Id
@@ -53,6 +54,16 @@ public class TempFile {
     }
 
     @Basic
+    @Column(name = "file_name")
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -72,24 +83,17 @@ public class TempFile {
         if (id != tempFile.id) return false;
         if (token != tempFile.token) return false;
         if (path != null ? !path.equals(tempFile.path) : tempFile.path != null) return false;
-        if (createdDate != null ? !createdDate.equals(tempFile.createdDate) : tempFile.createdDate != null)
-            return false;
-
-        return true;
+        if (fileName != null ? !fileName.equals(tempFile.fileName) : tempFile.fileName != null) return false;
+        return createdDate != null ? createdDate.equals(tempFile.createdDate) : tempFile.createdDate == null;
     }
 
     @Override
     public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "TempFile{" +
-                "id=" + id +
-                ", token=" + token +
-                ", path='" + path + '\'' +
-                ", createdDate=" + createdDate +
-                '}';
+        int result = id;
+        result = 31 * result + token;
+        result = 31 * result + (path != null ? path.hashCode() : 0);
+        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        return result;
     }
 }

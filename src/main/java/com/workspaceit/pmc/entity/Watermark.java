@@ -35,6 +35,9 @@ public class Watermark {
     @Column(name = "logo_name")
     private String logoName;
 
+    @Column(name = "sample_image_name")
+    private String sampleImageName;
+
     @Column(name = "logo_image")
     private String logoImage;
 
@@ -121,6 +124,14 @@ public class Watermark {
 
     public void setLogoImage(String logoImage) {
         this.logoImage = logoImage;
+    }
+
+    public String getSampleImageName() {
+        return sampleImageName;
+    }
+
+    public void setSampleImageName(String sampleImageName) {
+        this.sampleImageName = sampleImageName;
     }
 
     public Size getSize() {
@@ -230,6 +241,7 @@ public class Watermark {
         if (name != null ? !name.equals(watermark.name) : watermark.name != null) return false;
         if (type != watermark.type) return false;
         if (logoName != null ? !logoName.equals(watermark.logoName) : watermark.logoName != null) return false;
+        if (sampleImageName != null ? !sampleImageName.equals(watermark.sampleImageName) : watermark.sampleImageName != null) return false;
         if (logoImage != null ? !logoImage.equals(watermark.logoImage) : watermark.logoImage != null) return false;
         if (size != watermark.size) return false;
         if (fade != null ? !fade.equals(watermark.fade) : watermark.fade != null) return false;
@@ -252,6 +264,7 @@ public class Watermark {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (logoName != null ? logoName.hashCode() : 0);
+        result = 31 * result + (sampleImageName != null ? sampleImageName.hashCode() : 0);
         result = 31 * result + (logoImage != null ? logoImage.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + (fade != null ? fade.hashCode() : 0);
@@ -266,28 +279,5 @@ public class Watermark {
         result = 31 * result + (active != null ? active.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Watermark{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                ", logoName='" + logoName + '\'' +
-                ", logoImage='" + logoImage + '\'' +
-                ", size=" + size +
-                ", fade=" + fade +
-                ", watermarkText='" + watermarkText + '\'' +
-                ", font=" + font +
-                ", placement=" + placement +
-                ", color='" + color + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", createdBy=" + createdBy +
-                ", events=" + events +
-                ", active=" + active +
-                ", deleted=" + deleted +
-                '}';
     }
 }
