@@ -95,7 +95,7 @@
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
-                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watemark">
+                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watermark">
                         </div>
                     </div>
                     <div class="col-md-3">

@@ -2,10 +2,14 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.FILE;
+import com.workspaceit.pmc.constant.watermark.Placement;
+import com.workspaceit.pmc.constant.watermark.Size;
+import com.workspaceit.pmc.constant.watermark.WATERMARK_ATTR;
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.dao.WatermarkDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.util.WatermarkUtil;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
@@ -41,7 +45,7 @@ public class WatermarkService {
     private EventImageService eventImageService;
     private FileUtil fileUtil;
     private WatermarkUtil watermarkUtil;
-
+    private WatermarkHelper watermarkHelper;
     private WatermarkDao watermarkDao;
 
     @Autowired
@@ -78,6 +82,11 @@ public class WatermarkService {
     @Autowired
     public void setWatermarkUtil(WatermarkUtil watermarkUtil) {
         this.watermarkUtil = watermarkUtil;
+    }
+
+    @Autowired
+    public void setWatermarkHelper(WatermarkHelper watermarkHelper) {
+        this.watermarkHelper = watermarkHelper;
     }
 
     @Autowired
@@ -130,6 +139,7 @@ public class WatermarkService {
 
         if(logoImgToken!=null && logoImgToken>0){
             logoImgName = this.fileService.copyFile(logoImgToken);
+            watermark.setLogoName(logoImgName);
         }
         if(sampleImgToken!=null && sampleImgToken>0){
             sampleImgName = this.fileService.copyFile(sampleImgToken);
@@ -138,8 +148,11 @@ public class WatermarkService {
             sampleImgName = fileInfo.get(FILE.NAME);
         }
 
+        watermark.setLogoName(logoImgName);
         watermark.setSampleImageName(sampleImgName);
-        watermark.setLogoImage(logoImgName);
+
+        this.populateWatermarkByWatermarkForm(watermark,watermarkForm);
+
         watermark.setActive(true);
         watermark.setDeleted(false);
 
@@ -165,6 +178,38 @@ public class WatermarkService {
         return watermarkedImgByte;
     }
     @Transactional
+    public byte[] getImageWithWaterMark(Watermark watermark) throws IOException,EntityNotFound {
+        byte[] watermarkedImgByte = null;
+        WatermarkType watermarkType =  watermark.getType();
+        if(watermarkType==null){
+            throw new EntityNotFound("Water mark type required");
+        }
+
+        if(watermark.getType().equals(WatermarkType.image))
+            watermarkedImgByte = this.getImageWithWaterMarkImage(watermark);
+        else if(watermark.getType().equals(WatermarkType.text))
+            watermarkedImgByte = this.getImageWithWaterMarkText(watermark);
+
+        return watermarkedImgByte;
+    }
+    @Transactional
+    public byte[] getImageWithWaterMark(Watermark watermark,WatermarkForm watermarkForm) throws IOException,EntityNotFound {
+        Map<WATERMARK_ATTR,Object> mergedData = this.watermarkHelper.mergeData(watermark,watermarkForm);
+
+        byte[] watermarkedImgByte = null;
+        WatermarkType watermarkType = (WatermarkType) mergedData.get(WATERMARK_ATTR._TYPE);
+        if(watermarkType==null){
+            throw new EntityNotFound("Water mark type required");
+        }
+
+        if(watermarkType.equals(WatermarkType.image))
+            watermarkedImgByte = this.getImageWithWaterMarkImage(mergedData);
+        else if(watermarkType.equals(WatermarkType.text))
+            watermarkedImgByte = this.getImageWithWaterMarkText(mergedData);
+
+        return watermarkedImgByte;
+    }
+    @Transactional
     public byte[] getImageWithWaterMark(WatermarkForm watermarkForm,boolean useBothWatermark) throws IOException,EntityNotFound {
         byte[] watermarkedImgByte = null;
 
@@ -178,6 +223,19 @@ public class WatermarkService {
         return watermarkedImgByte;
     }
     @Transactional
+    public byte[] getImageWithWaterMark(Watermark watermark,boolean useBothWatermark) throws IOException,EntityNotFound {
+        byte[] watermarkedImgByte = null;
+
+        if(useBothWatermark){
+            watermarkedImgByte = this.getImageWithWaterMarkText(watermark);
+            watermarkedImgByte = this.getImageWithWaterMarkImage(watermark,watermarkedImgByte);
+        }else{
+            watermarkedImgByte = this.getImageWithWaterMark(watermark);
+        }
+
+        return watermarkedImgByte;
+    }
+    @Transactional
     public byte[] getImageWithWaterMarkImage(WatermarkForm watermarkForm) throws IOException,EntityNotFound {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Integer logoToken = watermarkForm.getLogoImgToken();
@@ -185,7 +243,7 @@ public class WatermarkService {
         String originalImgAbsPath = this.fileService.getSampleImgPath(sampleToken);
         String logoImgAbsPath = "";
         BufferedImage watermarkedImage;
-
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermarkForm);
 
         if(logoToken!=null && logoToken>0){
             TempFile tempLogoFile =  this.tempFileService.getByToken(logoToken);
@@ -196,7 +254,65 @@ public class WatermarkService {
             logoImgAbsPath = tempLogoFile.getPath();
         }
 
-        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,watermarkForm);
+
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,data);
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
+    @Transactional
+    public byte[] getImageWithWaterMarkImage(Map<WATERMARK_ATTR,Object> data) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        Integer tmpLogoToken = (Integer) data.get(WATERMARK_ATTR._LOGO_TOKEN);
+        Integer tmpSampleToken = (Integer)data.get(WATERMARK_ATTR._SAMPLE_TOKEN);
+
+        String logoImgAbsPath;
+        String originalImgAbsPath;
+
+
+        if(tmpLogoToken!=null && tmpLogoToken>0){
+            TempFile tempFile =  this.tempFileService.getTempFile(tmpLogoToken);
+            logoImgAbsPath = tempFile.getPath();
+        }else{
+            logoImgAbsPath = environment.getCommonFilePath()+"/"+((String)data.get(WATERMARK_ATTR._LOGO));
+        }
+
+
+        if(tmpSampleToken!=null && tmpSampleToken>0){
+            TempFile tempFile =  this.tempFileService.getTempFile(tmpSampleToken);
+            originalImgAbsPath = tempFile.getPath();
+        }else{
+            originalImgAbsPath = environment.getCommonFilePath()+"/"+((String)data.get(WATERMARK_ATTR._SAMPLE_IMG));
+        }
+
+
+        BufferedImage watermarkedImage;
+
+
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,data);
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
+    @Transactional
+    public byte[] getImageWithWaterMarkImage(Watermark watermark) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String logoImgAbsPath = environment.getCommonFilePath()+"/"+watermark.getLogoImage();
+        String originalImgAbsPath = environment.getCommonFilePath()+"/"+watermark.getSampleImageName();
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermark);
+        BufferedImage watermarkedImage;
+
+
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,data);
 
         if(watermarkedImage!=null){
             ImageIO.write( watermarkedImage, "png", outputStream );
@@ -213,6 +329,7 @@ public class WatermarkService {
         String originalImgAbsPath = this.fileService.getSampleImgPath(sampleToken);
         String logoImgAbsPath = "";
         BufferedImage watermarkedImage;
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermarkForm);
 
         InputStream in = new ByteArrayInputStream(originalImageByte);
         BufferedImage originalImg = ImageIO.read(in);
@@ -223,7 +340,29 @@ public class WatermarkService {
             logoImgAbsPath = tempLogoFile.getPath();
         }
 
-        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImg,logoImgAbsPath,watermarkForm);
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImg,logoImgAbsPath,data);
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
+    @Transactional
+    public byte[] getImageWithWaterMarkImage(Watermark watermark,byte[] originalImageByte) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String originalImgAbsPath = watermark.getSampleImageName();
+        String logoImgAbsPath = watermark.getLogoImage();
+        BufferedImage watermarkedImage;
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermark);
+
+        InputStream in = new ByteArrayInputStream(originalImageByte);
+        BufferedImage originalImg = ImageIO.read(in);
+
+
+
+        watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImg,logoImgAbsPath,data);
 
         if(watermarkedImage!=null){
             ImageIO.write( watermarkedImage, "png", outputStream );
@@ -238,8 +377,9 @@ public class WatermarkService {
         Integer sampleToken =watermarkForm.getSampleImgToken();
         String originalImgAbsPath = this.fileService.getSampleImgPath(sampleToken);
         BufferedImage watermarkedImage;
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermarkForm);
 
-        watermarkedImage =  this.watermarkUtil.addWatermarkText(originalImgAbsPath,watermarkForm);
+        watermarkedImage =  this.watermarkUtil.addWatermarkText(originalImgAbsPath,data);
 
         if(watermarkedImage!=null){
             ImageIO.write( watermarkedImage, "png", outputStream );
@@ -248,7 +388,48 @@ public class WatermarkService {
         outputStream.flush();
         return outputStream.toByteArray();
     }
+    @Transactional
+    public byte[] getImageWithWaterMarkText(Watermark watermark) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String originalImgAbsPath = watermark.getSampleImageName();
+        BufferedImage watermarkedImage;
+        Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermark);
 
+        watermarkedImage =  this.watermarkUtil.addWatermarkText(originalImgAbsPath,data);
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
+    @Transactional
+    public byte[] getImageWithWaterMarkText(Map<WATERMARK_ATTR,Object> data) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String originalImgAbsPath = "";
+        BufferedImage watermarkedImage;
+
+        Integer tmpSampleToken = (Integer)data.get(WATERMARK_ATTR._SAMPLE_TOKEN);
+
+
+        if(tmpSampleToken!=null && tmpSampleToken>0){
+            TempFile tempFile =  this.tempFileService.getTempFile(tmpSampleToken);
+            originalImgAbsPath = tempFile.getPath();
+        }else{
+            originalImgAbsPath = environment.getCommonFilePath()+"/"+((String)data.get(WATERMARK_ATTR._SAMPLE_IMG));
+        }
+
+
+        watermarkedImage =  this.watermarkUtil.addWatermarkText(originalImgAbsPath,data);
+
+        if(watermarkedImage!=null){
+            ImageIO.write( watermarkedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
     @Transactional
     public byte[] getImageWithWaterMark(int eventImageId,int watermarkId) throws IOException,EntityNotFound {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -257,12 +438,13 @@ public class WatermarkService {
         WatermarkType watermarkType = watermark.getType();
 
         BufferedImage watermarkedImage = null;
-
+        Map<WATERMARK_ATTR,Object>  data = this.watermarkHelper.mergeData(watermark);
         if(watermarkType!=null && watermarkType.equals(WatermarkType.image)){
+
             watermarkedImage =  this.watermarkUtil.addWatermarkLogo(environment.getCommonFilePath()+"/"+eventImage.getImage(),watermark);
 
         }else if(watermarkType!=null && watermarkType.equals(WatermarkType.text)){
-            watermarkedImage =  this.watermarkUtil.addWatermarkText(environment.getCommonFilePath()+"/"+eventImage.getImage(),watermark);
+            watermarkedImage =  this.watermarkUtil.addWatermarkText(environment.getCommonFilePath()+"/"+eventImage.getImage(),data);
         }
 
 
@@ -302,13 +484,20 @@ public class WatermarkService {
     public Watermark update(int id,WatermarkForm watermarkForm,Admin admin)throws EntityNotFound{
         Watermark watermark = this.getById(id);
         Integer logoImgToken = watermarkForm.getLogoImgToken();
-        System.out.println("logoImgToken"+logoImgToken);
+        Integer sampleImgToken = watermarkForm.getSampleImgToken();
+
         String logoImgName = "";
         if(logoImgToken!=null && logoImgToken>0){
-            System.out.println("logoImgToken"+logoImgToken);
             logoImgName = this.fileService.copyFile(logoImgToken);
             watermark.setLogoImage(logoImgName);
         }
+
+        if(sampleImgToken!=null && sampleImgToken>0){
+            String sampleImgName  = this.fileService.copyFile(sampleImgToken);
+            watermark.setSampleImageName(sampleImgName);
+        }
+
+
         this.populateWatermarkByWatermarkForm(watermark,watermarkForm);
         this.update(watermark);
         return watermark;
@@ -316,19 +505,20 @@ public class WatermarkService {
 
 
     private void populateWatermarkByWatermarkForm(Watermark watermark, WatermarkForm watermarkForm){
+
         watermark.setName(watermarkForm.getName());
         watermark.setLogoName(watermarkForm.getLogoName());
-        watermark.setType(watermarkForm.getType());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
         watermark.setFade(watermarkForm.getFade());
+
+        watermark.setType(watermarkForm.getType());
+
         watermark.setWatermarkText(watermarkForm.getWatermarkText());
-        watermark.setFont(watermarkForm.getFont());
         watermark.setColor(watermarkForm.getColor());
 
-        /**
-         * Populating slid show settings
-         * */
+        watermark.setTxtLogoName(watermarkForm.getTxtLogoName());
+
     }
 
 

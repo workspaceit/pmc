@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
@@ -45,20 +46,50 @@ public class ImageController {
             * */
     @ResponseBody
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-    public  ResponseEntity<byte[]> defaultSamplePreview(@Valid WatermarkForm watermarkForm, BindingResult error) throws IOException, EntityNotFound {
+    public  ResponseEntity<byte[]> defaultSamplePreview( @Valid WatermarkForm watermarkForm, BindingResult error) throws IOException, EntityNotFound {
         byte[] imageByte = null;
 
         this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
 
         WatermarkType type = watermarkForm.getType();
-
         if(type!=null && type.equals(WatermarkType.image) && error.getFieldErrorCount("logoImgToken")>0){
             throw new IOException("Logo required");
         }
 
+
         try {
             imageByte = watermarkService.getImageWithWaterMark(watermarkForm); // Image or Text
-           // imageByte = watermarkService.getImageWithWaterMark(watermarkForm,true); // Image and text both
+            // imageByte = watermarkService.getImageWithWaterMark(watermarkForm,true); // Image and text both
+        }catch (EntityNotFound ex){
+            throw ex;
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(imageByte);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/watermarked-preview/{watermarkId}",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public  ResponseEntity<byte[]> defaultSamplePreviewWhileEdit(@PathVariable(name = "watermarkId") Integer watermarkId, @Valid WatermarkForm watermarkForm, BindingResult error) throws IOException, EntityNotFound {
+        byte[] imageByte = null;
+        Watermark watermark = null;
+
+        if(watermarkId!=null && watermarkId>0){
+            watermark = this.watermarkService.getWatermark(watermarkId);
+        }
+
+
+        if(watermark==null){
+            this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
+
+            WatermarkType type = watermarkForm.getType();
+            if(type!=null && type.equals(WatermarkType.image) && error.getFieldErrorCount("logoImgToken")>0){
+                throw new IOException("Logo required");
+            }
+        }
+
+
+        try {
+            imageByte = watermarkService.getImageWithWaterMark(watermark,watermarkForm); // Image or Text
+            //imageByte = watermarkService.getImageWithWaterMark(watermark,true); // Image and text both
         }catch (EntityNotFound ex){
             throw ex;
         }

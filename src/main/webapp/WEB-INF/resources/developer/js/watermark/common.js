@@ -204,35 +204,24 @@ function getAllWatermarkData(){
 function getWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
-    var logoImgToken='';
-    var logoName='';
-    var size='';
-    var fade='';
-    var watermarkText='';
-    var fontId='';
-    var placement='';
-    var color='';
+    var logoImgToken= getwatermarkLogoToken();
+    var logoName=$("input[name=img_logo_name]").val();
+    var txtLogoName=$("#txt_logo_name").val();
+    var size=$(".img_font_size").val();
+    var fade=$("input[name=img_fade_range]").val();
+    var watermarkText=$("input[name=txt_wm_text]").val();
+    var fontId=$(".txt_font").val();
+    var placement=$(".img_placement").val();
+    var color=$("input[name=txt_color]").val();
     var sampleImgToken = getToken(WATERMARK_TOKEN_KEY._SAMPLE);
 
-    if(type === "image"){
-        logoImgToken= getwatermarkLogoToken();
-        logoName=$("input[name=img_logo_name]").val();
-        placement=$(".img_placement").val();
-        size=$(".img_font_size").val();
-        fade=$("input[name=img_fade_range]").val();
-
-    }else{
-        logoName=$("input[name=txt_logo_name]").val();
-        watermarkText=$("input[name=txt_wm_text]").val();
-        fontId=$(".txt_font").val();
-        color=$("input[name=txt_color]").val();
-    }
     var data = {
         name: name,
         type:type,
         logoImgToken:logoImgToken,
         sampleImgToken:sampleImgToken,
         logoName: logoName,
+        txtLogoName:txtLogoName,
         placement: placement,
         size: size,
         fade: fade,
@@ -256,6 +245,29 @@ function previewWatermarkOnSample() {
 
     $("#watermarkPreviewOnSampleImg").attr("src",url);
 }
+function previewWatermarkOnSample() {
+    var parameters = getAllWatermarkData();
+
+    if(parameters.type=="image"){
+        if(parameters.logoImgToken==null || parameters.logoImgToken<=0){
+            alert("Logo Required");
+            return;
+        }
+    }
+
+    var url = getWatermarkOnSamplePreviewUrl(parameters);
+
+    $("#watermarkPreviewOnSampleImg").attr("src",url);
+}
+function previewWatermarkOnSampleEdit() {
+    var parameters = getAllWatermarkData();
+
+
+
+    var url = getWatermarkOnSamplePreviewUrlWithId(parameters);
+
+    $("#watermarkPreviewOnSampleImg").attr("src",url);
+}
 function getWatermarkOnSamplePreviewUrl(parameters) {
 
     var urlParams = getArrayToUriParams(parameters);
@@ -263,7 +275,13 @@ function getWatermarkOnSamplePreviewUrl(parameters) {
     return url;
 }
 
+function getWatermarkOnSamplePreviewUrlWithId(parameters) {
 
+    var id = $("#watermarkId").val();
+    var urlParams = getArrayToUriParams(parameters);
+    var url = BASEURL+"img/watermarked-preview/"+id+"?"+urlParams;
+    return url;
+}
 commonDropZoneConfig({
         elementId:"dummyForDropZone",
         param:"watermark-sample-image",
