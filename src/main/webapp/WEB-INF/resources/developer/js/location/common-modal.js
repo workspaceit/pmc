@@ -16,6 +16,7 @@ function submitLocationDataFromModal(afterSuccessFn){
     var name = $('#location_name').val();
     var address = $('#location_address').val();
     var stateId = $('#location_stateId').val();
+    var cityId = $('#location_cityId').val();
     var zip = $('#location_zip').val();
     var phone = $('#location_phone').val();
     var locationLogo = $('#location_locationLogo').val();
@@ -30,6 +31,7 @@ function submitLocationDataFromModal(afterSuccessFn){
         name: name,
         address: address,
         stateId: stateId,
+        cityId:cityId,
         zip: zip,
         phone: phone,
         locationLogo: locationLogo,
@@ -68,7 +70,7 @@ function submitLocationDataFromModal(afterSuccessFn){
 
             GLOBAL_venueLogoImgDropZone.removeAllFiles();
             GLOBAL_venueBgImgDropZone.removeAllFiles();
-
+            BindErrorsWithHtml("errorObjLocation_",response.responseJSON,false,"#locationFormBody");
 
             if(afterSuccessFn!= undefined && typeof  afterSuccessFn == 'function'){
                 afterSuccessFn(response);

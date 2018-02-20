@@ -71,6 +71,7 @@ public class FileUploadController{
             case "venue-logo-image":
             case "venue-background-image":
             case "watermark-logo-image":
+            case "watermark-sample-image":
             case "admin-profile-image":
             case "event-image":
                 default:
@@ -135,13 +136,14 @@ public class FileUploadController{
         return validateAndProcessMultiPart(  "advImg",fileSizeLimit,multipartFile,imgContentType);
 
     }
-    private ResponseEntity<?> validateAndProcessMultiPart(  String param,
+    private ResponseEntity<?>   validateAndProcessMultiPart(  String param,
                                                             long fileSizeLimit,
                                                             MultipartFile multipartFile,
                                                             Set<String> imgContentType
                                                          ){
         String mimeType = FileHelper.getMimeType(multipartFile);
-        System.out.println("mimeType "+mimeType);
+
+
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         if(!imgContentType.contains(mimeType)) {
             serviceResponse.setValidationError(param," Mime Type "+ mimeType+" not allowed");
@@ -152,7 +154,7 @@ public class FileUploadController{
             serviceResponse.setValidationError(param,"No file receive");
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-        System.out.println(multipartFile.getSize());
+
 
         if(multipartFile.getSize()>fileSizeLimit){
             serviceResponse.setValidationError(param,"File size exceeds. Max size "+FileHelper.getByteToMb(fileSizeLimit));
@@ -164,7 +166,6 @@ public class FileUploadController{
             tempfile  = fileService.saveTempFile(multipartFile);
 
         } catch(IOException e) {
-            // TODO Auto-generated catch block
             serviceResponse.setValidationError(param,"Internal server error : "+e.getMessage());
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }

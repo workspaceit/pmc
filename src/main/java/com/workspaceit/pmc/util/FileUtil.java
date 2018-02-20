@@ -3,6 +3,7 @@ package com.workspaceit.pmc.util;
 
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,12 +12,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.workspaceit.pmc.constant.FILE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.dao.TempFileDao;
+
+import javax.imageio.ImageIO;
 
 /**
  * Created by mi on 1/11/17.
@@ -38,8 +44,9 @@ public class FileUtil {
 		this.tempFileDao = tempFileDao;
 	}
 
-	public String saveFileInFolder(byte[] fileByte, String fileExtention) throws IOException{
-    		String fileName = System.nanoTime()+"."+fileExtention;
+	public Map<FILE,String> saveFileInFolder(byte[] fileByte, String fileExtension) throws IOException{
+			Map<FILE,String> fileRes = new HashMap<>();
+			String fileName = System.nanoTime()+"."+fileExtension;
     		String filePath = this.env.getTmpFilePath()+"/"+fileName;
     		FileOutputStream fileOutPutStream = null;
     		try {
@@ -55,8 +62,12 @@ public class FileUtil {
     			throw new IOException("Unable to write byte "+filePath);
     		}finally {
     			if(fileOutPutStream!=null)fileOutPutStream.close();
-    		} 
-    		return filePath;
+    		}
+
+			fileRes.put(FILE.NAME,fileName);
+			fileRes.put(FILE.PATH,filePath);
+
+    		return fileRes;
     	}
 
 	public boolean deleteFile(String filePath){
@@ -81,12 +92,16 @@ public class FileUtil {
 		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 		return newFilePath.getFileName().toString();
 	}
-	public String copyFileFromTemp(String destinationPath,String filePath) throws IOException {
+	public String copyFile(String destinationPath, String filePath) throws IOException {
 
 		Path source = Paths.get(filePath);
 		Path newPath = Paths.get(destinationPath);
 		Path newFilePath = Files.copy(source, newPath.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 		return newFilePath.getFileName().toString();
+	}
+	public void copyFileWithNewName(String destinationFilePath,String sourceFile) throws IOException {
+		BufferedImage sampleImage = ImageIO.read(new File(sourceFile));
+		ImageIO.write(sampleImage, "PNG", new File(destinationFilePath));
 	}
 	public File getTempFile(String filePath) throws IOException {
 
@@ -94,5 +109,6 @@ public class FileUtil {
 
 		return new File(source.toUri());
 	}
+
 
 }

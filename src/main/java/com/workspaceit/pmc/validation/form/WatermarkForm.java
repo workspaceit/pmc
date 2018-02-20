@@ -22,6 +22,8 @@ public class WatermarkForm
 
     private Integer logoImgToken;
 
+    private Integer sampleImgToken;
+
     private Size size;
 
     private Double fade;
@@ -113,5 +115,13 @@ public class WatermarkForm
 
     public void setLogoImgToken(Integer logoImgToken) {
         this.logoImgToken = logoImgToken;
+    }
+
+    public Integer getSampleImgToken() {
+        return sampleImgToken;
+    }
+
+    public void setSampleImgToken(Integer sampleImgToken) {
+        this.sampleImgToken = sampleImgToken;
     }
 }

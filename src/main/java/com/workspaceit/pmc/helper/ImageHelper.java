@@ -17,10 +17,11 @@ public class ImageHelper {
 
     }
     public BufferedImage resizeImage(String filePath,int height,int width) throws IOException {
+        System.out.println("filePath "+filePath);
         File srcFile =  new File(filePath);
         BufferedImage bufferedImage = ImageIO.read(srcFile);
         return Thumbnails.of(bufferedImage)
-                .size(height, width)
+                .size(width,height )
                 .asBufferedImage();
 
     }

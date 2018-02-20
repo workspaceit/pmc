@@ -17,13 +17,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
     <%--<link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />--%>
 
-    <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
+        <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/pmc-adv/update.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
     </jsp:attribute>
     <jsp:body>
         <div id="page-wrapper">
@@ -86,9 +87,6 @@
                         <div class="modal-body">
                             <div class="btn-container-top">
                                 <button class="btn btn-action-top" onclick="submitLocationDataFromModal()">Save</button>
-                                <button class="btn btn-action-top">Save&nbsp;&&nbsp;Close</button>
-                                <button class="btn btn-action-top">Save&nbsp;&&nbsp;New</button>
-                                <button class="btn btn-action-top">Cancel</button>
                             </div>
                             <div class="form-group">
                                 <%@  include file="/WEB-INF/views/admin/location/pertial/form-body-for-modal.jsp" %>

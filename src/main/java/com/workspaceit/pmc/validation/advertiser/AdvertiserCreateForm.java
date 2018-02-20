@@ -27,7 +27,7 @@ public class AdvertiserCreateForm extends AdvertiserForm{
         return super.getAddress();
     }
 
-    @NotNull(message = "City Id is required")
+    @NotNull(message = "City is required")
     @Override
     public Integer getCityId() {
         return super.getCityId();

@@ -1,10 +1,8 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.entity.Watermark;
-import com.workspaceit.pmc.service.PhotographerService;
 import com.workspaceit.pmc.service.WatermarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,13 +22,25 @@ import java.util.List;
 @RequestMapping(value = ControllerUriPrefix.ADMIN+"/watermark")
 public class WatermarkController {
 
-    @Autowired
+    private Environment environment;
+
+
     private WatermarkService watermarkService;
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+    @Autowired
+    public void setWatermarkService(WatermarkService watermarkService) {
+        this.watermarkService = watermarkService;
+    }
 
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     public ModelAndView addWatermark(Authentication authentication){
 
         ModelAndView model = new ModelAndView("admin/watermark/add");
+        model.addObject("previewSampleUri",environment.getWatermarkSamplePreviewImgUri());
         return model;
     }
 
@@ -38,6 +48,9 @@ public class WatermarkController {
     public ModelAndView allWatermark(Authentication authentication){
         List<Watermark> watermarkList=watermarkService.getAll();
         ModelAndView model = new ModelAndView("admin/watermark/all");
+
+
+
         model.addObject("watermarkList",watermarkList);
         return model;
     }
@@ -52,6 +65,7 @@ public class WatermarkController {
 
 
         ModelAndView model = new ModelAndView("admin/watermark/edit");
+        model.addObject("previewSampleUri",environment.getWatermarkSamplePreviewImgUri());
         model.addObject("watermark",watermark);
         return model;
     }

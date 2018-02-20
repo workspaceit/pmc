@@ -28,6 +28,9 @@ public class Environment {
     @Value("${file.common.path}")
     private String commonFilePath;
 
+    @Value("${file.watermark.preview.sample.uri}")
+    private String watermarkSamplePreviewImgUri;
+
     @Value("${file.photographer.profile.path}")
     private String photographerProfilePath;
 
@@ -69,5 +72,13 @@ public class Environment {
 
     public void setCommonFilePath(String commonFilePath) {
         this.commonFilePath = commonFilePath;
+    }
+
+    public String getWatermarkSamplePreviewImgUri() {
+        return watermarkSamplePreviewImgUri;
+    }
+
+    public void setWatermarkSamplePreviewImgUri(String watermarkSamplePreviewImgUri) {
+        this.watermarkSamplePreviewImgUri = watermarkSamplePreviewImgUri;
     }
 }
