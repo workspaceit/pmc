@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static com.workspaceit.pmc.entity.Watermark_.font;
 
 @Component
 public class WatermarkUtil {
