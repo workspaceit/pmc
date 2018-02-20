@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.dao;
 
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,13 @@ public class EventImageDao extends BaseDao {
         query.setMaxResults(limit);
         List<EventImage> eventImages = query.getResultList();
         return  eventImages;
+    }
+
+    public Integer getImageCountForEvent(Event event){
+        Session session = this.getCurrentSession();
+        Integer count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
+                "ei.event.id=:eventId").setParameter("eventId" , event.getId()).uniqueResult()).intValue();
+        return count;
     }
 
 }

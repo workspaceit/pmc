@@ -58,9 +58,9 @@ public class Photographer {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "photographers",fetch = FetchType.LAZY)
-    private Set<Event> events = new HashSet<Event>();
+//    @JsonIgnore
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "photographers",fetch = FetchType.LAZY)
+//    private Set<Event> events = new HashSet<Event>();
 
     @Column(name = "active")
     private Boolean active;
@@ -149,13 +149,13 @@ public class Photographer {
         this.createdBy = createdBy;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
+//    public Set<Event> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(Set<Event> events) {
+//        this.events = events;
+//    }
 
     public Boolean getActive() {
         return active;
@@ -190,7 +190,7 @@ public class Photographer {
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
         if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
-        if (events != null ? !events.equals(that.events) : that.events != null) return false;
+//        if (events != null ? !events.equals(that.events) : that.events != null) return false;
         if (active != null ? !active.equals(that.active) : that.active != null) return false;
         return deleted != null ? deleted.equals(that.deleted) : that.deleted == null;
     }
@@ -207,7 +207,7 @@ public class Photographer {
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
-        result = 31 * result + (events != null ? events.hashCode() : 0);
+//        result = 31 * result + (events != null ? events.hashCode() : 0);
         result = 31 * result + (active != null ? active.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
