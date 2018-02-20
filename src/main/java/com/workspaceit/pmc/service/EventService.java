@@ -59,6 +59,7 @@ public class EventService {
         this.fileService = fileService;
     }
 
+    @Transactional
     public Event getById(int id){
         return this.eventDao.getById(id);
     }

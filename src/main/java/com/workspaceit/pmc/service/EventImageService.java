@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.EventImageDao;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class EventImageService {
     @Transactional
     public List<EventImage> getEventImagesByCriteria(Integer eventId, Integer limit, Integer offset){
         return eventImageDao.getEventImagesByCriteria(eventId, limit, offset);
+    }
+
+    @Transactional
+    public Integer getImageCountForEvent(Event event) {
+        return eventImageDao.getImageCountForEvent(event);
     }
 
     @Transactional

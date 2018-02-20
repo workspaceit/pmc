@@ -63,13 +63,12 @@ public class Watermark {
     @Column(name = "color")
     private String color;
 
-    @JsonIgnore
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
-    @JsonIgnore
+
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
@@ -80,14 +79,17 @@ public class Watermark {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @ManyToMany(mappedBy = "watermarks", fetch = FetchType.LAZY)
-    private Set<Event> events = new HashSet<Event>();
-
     @Column(name = "active")
     private Boolean active;
 
     @Column(name = "deleted")
     private Boolean deleted;
+
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "watermarks",fetch = FetchType.LAZY)
+    private Set<Event> events = new HashSet<Event>();
+
+
 
     public int getId() {
         return id;
@@ -218,14 +220,6 @@ public class Watermark {
         this.createdBy = createdBy;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
-
     public Boolean getActive() {
         return active;
     }
@@ -242,13 +236,20 @@ public class Watermark {
         this.deleted = deleted;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Watermark watermark = (Watermark) o;
-
         if (id != watermark.id) return false;
         if (name != null ? !name.equals(watermark.name) : watermark.name != null) return false;
         if (type != watermark.type) return false;
@@ -292,4 +293,5 @@ public class Watermark {
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
     }
+
 }

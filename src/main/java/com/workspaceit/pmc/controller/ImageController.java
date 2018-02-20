@@ -75,7 +75,7 @@ public class ImageController {
         if(watermarkId!=null && watermarkId>0){
             watermark = this.watermarkService.getWatermark(watermarkId);
         }
-
+        
 
         if(watermark==null){
             this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);

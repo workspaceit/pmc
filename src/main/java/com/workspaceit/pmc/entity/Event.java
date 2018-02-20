@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -17,11 +18,12 @@ import java.util.Set;
  */
 
 @Entity
+@JsonIgnoreProperties({"advertisers", "createdBy", "createdAt", "updatedAt", "deleted" })
 @FilterDef(name = "activeEvents")
 @Filter(name = "activeEvents", condition = "deleted = false AND active = true")
 @Table(name = "events")
-public class Event {
 
+public class Event {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,39 +52,34 @@ public class Event {
     @Column(name = "event_photo")
     private String eventPhoto;
 
-    @JsonIgnore
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
-    @JsonIgnore
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_photographers",
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "photographer_id")})
     private Set<Photographer> photographers = new HashSet<>();
 
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_watermarks",
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "watermark_id")})
-    private Set<Watermark> watermarks = new HashSet<>();
 
+    private Set<Watermark> watermarks = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_advertisers",
@@ -128,12 +125,20 @@ public class Event {
         this.endsAt = endsAt;
     }
 
-    public String getEventPhoto() {
-        return eventPhoto;
+    public Boolean getEventPrivate() {
+        return eventPrivate;
     }
 
-    public void setEventPhoto(String eventPhoto) {
-        this.eventPhoto = eventPhoto;
+    public void setEventPrivate(Boolean eventPrivate) {
+        this.eventPrivate = eventPrivate;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
     }
 
     public Location getLocation() {
@@ -144,12 +149,12 @@ public class Event {
         this.location = location;
     }
 
-    public Venue getVenue() {
-        return venue;
+    public String getEventPhoto() {
+        return eventPhoto;
     }
 
-    public void setVenue(Venue venue) {
-        this.venue = venue;
+    public void setEventPhoto(String eventPhoto) {
+        this.eventPhoto = eventPhoto;
     }
 
     public Date getCreatedAt() {
@@ -176,8 +181,8 @@ public class Event {
         this.createdBy = createdBy;
     }
 
-    public Set<Photographer> getPhotographers(List<Photographer> photographers) {
-        return this.photographers;
+    public Set<Photographer> getPhotographers() {
+        return photographers;
     }
 
     public void setPhotographers(Set<Photographer> photographers) {
@@ -192,24 +197,12 @@ public class Event {
         this.watermarks = watermarks;
     }
 
-    public Set<Photographer> getPhotographers() {
-        return photographers;
-    }
-
     public Set<Advertiser> getAdvertisers() {
         return advertisers;
     }
 
     public void setAdvertisers(Set<Advertiser> advertisers) {
         this.advertisers = advertisers;
-    }
-
-    public Boolean getEventPrivate() {
-        return eventPrivate;
-    }
-
-    public void setEventPrivate(Boolean eventPrivate) {
-        this.eventPrivate = eventPrivate;
     }
 
     public Boolean getActive() {
@@ -227,4 +220,5 @@ public class Event {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
 }

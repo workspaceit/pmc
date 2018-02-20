@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.workspaceit.pmc.entity.Watermark_.font;
 
 @Component
 public class WatermarkUtil {
