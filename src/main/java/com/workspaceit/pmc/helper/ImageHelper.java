@@ -11,20 +11,7 @@ import java.io.*;
 
 @Component
 public class ImageHelper {
-    public BufferedImage resizeImage(String filePath,Size size) throws IOException {
-        ImageSize imageSize = this.getHeightWidth(size);
-        return resizeImage(filePath,imageSize.getHeight(),imageSize.getWidth());
 
-    }
-    public BufferedImage resizeImage(String filePath,int height,int width) throws IOException {
-
-        File srcFile =  new File(filePath);
-        BufferedImage bufferedImage = ImageIO.read(srcFile);
-        return Thumbnails.of(bufferedImage)
-                .size(width,height )
-                .asBufferedImage();
-
-    }
     public ImageSize getHeightWidth(Size size){
         int x=0,y=0;
         switch (size){
@@ -47,6 +34,50 @@ public class ImageHelper {
 
         return new ImageSize(x,y);
     }
+    public BufferedImage resizeImage(String filePath,Size size) throws IOException {
+        ImageSize imageSize = this.getHeightWidth(size);
+        return resizeImage(filePath,imageSize.getHeight(),imageSize.getWidth());
 
+    }
+    private BufferedImage resizeImage(String filePath,int height,int width) throws IOException {
+
+        File srcFile =  new File(filePath);
+        BufferedImage bufferedImage = ImageIO.read(srcFile);
+
+        return this.resizeImage(bufferedImage,height,width);
+
+    }
+    private BufferedImage resizeImage(BufferedImage bufferedImage,int height,int width) throws IOException {
+
+        return Thumbnails.of(bufferedImage)
+                .size(width,height )
+                .asBufferedImage();
+
+    }
+    public BufferedImage resizeImage(byte[] imageByte,Size size) throws IOException {
+        ImageSize imageSize = this.getHeightWidth(size);
+        InputStream inputStream = new ByteArrayInputStream(imageByte);
+        BufferedImage bufferedImage = ImageIO.read(inputStream);
+
+
+
+
+        return this.resizeImage(bufferedImage,imageSize.getHeight(),imageSize.getWidth());
+    }
+
+
+    public byte[] bufferedImageToByte(BufferedImage bufferedImage) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+
+
+
+        if(bufferedImage!=null){
+            ImageIO.write( bufferedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
 
 }
