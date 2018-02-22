@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.api;
 
+import com.workspaceit.pmc.auth.PhotographerUserDetails;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.service.EventImageService;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/test/api/events")
+@RequestMapping("/auth/api/events")
 @CrossOrigin
 public class EventApiController {
     private EventService eventService;
@@ -69,8 +70,11 @@ public class EventApiController {
     public ResponseEntity<?> getEventsByLocation(@PathVariable Integer limit, @PathVariable Integer offset,
                                                  @RequestParam("locationId") Integer locationId,
                                                  @RequestParam(value = "filterDate", required = false)
-                                                     @DateTimeFormat(pattern="yyyy-MM-dd") Date filterDate) {
-        Photographer photographer = photographerService.getById(1);
+                                                     @DateTimeFormat(pattern="yyyy-MM-dd") Date filterDate,
+                                                 Authentication authentication) {
+        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfguysdgfjsdgfj--------------");
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
         Map<String, Object> responseData = eventService.getEventsByCriteriaWithCount(locationId, filterDate, photographer,
                 limit, offset);
         return ResponseEntity.status(HttpStatus.OK).body(responseData);

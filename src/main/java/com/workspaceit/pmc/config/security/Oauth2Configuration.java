@@ -45,7 +45,7 @@ public class Oauth2Configuration {
             http.antMatcher("/auth/api/**")
                     .authorizeRequests()
                     .antMatchers("/auth/api/**").access("hasRole('photographer')")
-                    .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                    .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and().cors();
         }
 
 
