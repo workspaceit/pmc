@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.constant.watermark.WATERMARK_ATTR;
 import com.workspaceit.pmc.dao.TempFileDao;
 import com.workspaceit.pmc.entity.TempFile;
 import com.workspaceit.pmc.exception.EntityNotFound;
@@ -31,4 +32,6 @@ public class TempFileService {
     public TempFile getByToken(int token){
         return this.tempFileDao.getByToken(token);
     }
+
+
 }

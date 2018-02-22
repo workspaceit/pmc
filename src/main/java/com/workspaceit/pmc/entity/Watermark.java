@@ -35,6 +35,9 @@ public class Watermark {
     @Column(name = "logo_name")
     private String logoName;
 
+    @Column(name = "text_logo_name")
+    private String txtLogoName;
+
     @Column(name = "sample_image_name")
     private String sampleImageName;
 
@@ -126,6 +129,15 @@ public class Watermark {
 
     public void setLogoImage(String logoImage) {
         this.logoImage = logoImage;
+    }
+
+
+    public String getTxtLogoName() {
+        return txtLogoName;
+    }
+
+    public void setTxtLogoName(String txtLogoName) {
+        this.txtLogoName = txtLogoName;
     }
 
     public String getSampleImageName() {

@@ -151,6 +151,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="url-tab panel-body" >
+
+                    <div class="col-md-3">
+                        <div class="form-group timepick">
+                            <button class="btn btn-action-top" onclick="previewWatermarkOnSampleEdit()" >Preview</button>
+                            <button id="changeSample" class="btn btn-action-top" >Change sample</button>
+                                <%--
+                                    Dropzone needs html but it is kept hidden
+                                    Because image is beging displayed in #watermarkPreviewOnSampleImg
+                                 --%>
+                            <div  id="dummyForDropZone" style="display: none"></div>
+                            <img id="watermarkPreviewOnSampleImg" onerror="this.src='<s:url value="/resources${previewSampleUri}"/>'" src="<s:url value="/common/${watermark.sampleImageName}"/>" />
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -174,6 +190,7 @@
 
 
         <input type="hidden" id="venueLogoToken" value="" />
+        <input type="hidden" id="watermarkId" value="${watermark.id}" />
 
         <script src="<s:url value="/resources/js/bootstrap-imageupload.js"/>"></script>
         <script src="<s:url value="/resources/js/select2.js"/>"></script>
@@ -181,91 +198,14 @@
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/helper/url.helper.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/watermark/common.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/watermark/update.js"/>"></script>
 
 
 
         <script>
-            function submitWatermark(action) {
-                var name = $('#name').val();
-                var type=$('.wm_tab.active').attr("data-name");
-                var logoImgToken='';
-                var logoName='';
-                var size='';
-                var fade='';
-                var watermarkText='';
-                var fontId='';
-                var placement='';
-                var color='';
-
-                if(type=="image"){
-                    logoImgToken= getwatermarkLogoToken();
-                    logoName=$("input[name=img_logo_name]").val();
-                    placement=$(".img_placement").val();
-                    size=$(".img_font_size").val();
-                    fade=$("input[name=img_fade_range]").val();
-
-
-                    if(name === '' || logoName===''||logoImgToken===''||placement===''||size===''||fade===''){
-                        alert("Please fill all the field");
-                        return false;
-                    }
-
-                }else{
-                    logoName=$("input[name=txt_logo_name]").val();
-                    watermarkText=$("input[name=txt_wm_text]").val();
-                    fontId=$(".txt_font").val();
-                    color=$("input[name=txt_color]").val();
-
-                    if(name === '' || logoName===''||watermarkText===''||fontId===''||color===''){
-                        alert("Please fill all the field");
-                        return false;
-                    }
-
-                }
-                var data = {
-                    name: name,
-                    type:type,
-                    logoImgToken:logoImgToken,
-                    logoName: logoName,
-                    placement: placement,
-                    size: size,
-                    fade: fade,
-                    watermarkText: watermarkText,
-                    fontId: fontId,
-                    color: color
-                };
-
-                var id="${watermark.id}";
-                console.log(data)
-                $.ajax({
-                    url: BASEURL+"api/watermark/update/"+id,
-                    type: "POST",
-                    data: data ,
-                    traditional:true,
-                    statusCode:{
-                        500: function(response) {
-                            console.log(response);
-                        }, 401: function(response) {
-                            console.log(response.responseJSON);
-                        }, 422: function(response) {
-                            BindErrorsWithHtml("errorObj_",response.responseJSON);
-                        }
-                    },
-                    success: function(response) {
-//                        alert("Updated successfully");
-                        if(action === "save" || action === "save-close") {
-                            window.location = BASEURL+"admin/watermark/all";
-                        }
-                        else if(action === "save-new"){
-                            window.location = BASEURL+"admin/watermark/add";
-                        }
-                    }
-                });
-            }
-
-
             $(document).ready(function () {
                 if(${watermark.type.equals(WatermarkType.text)}){
                     $("#wm_tab_text_btn").trigger("click")
@@ -274,7 +214,7 @@
                     $("#wm_tab_image_btn").trigger("click")
                 }
 
-            })
+            });
 
 
         </script>

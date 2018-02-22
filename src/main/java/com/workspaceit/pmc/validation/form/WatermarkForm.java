@@ -20,6 +20,10 @@ public class WatermarkForm
     @NotBlank(message="Logo name can not be null")
     private String logoName;
 
+    @NotBlank(message="Logo name can not be null")
+    private String txtLogoName;
+
+
     private Integer logoImgToken;
 
     private Integer sampleImgToken;
@@ -58,6 +62,14 @@ public class WatermarkForm
 
     public void setLogoName(String logoName) {
         this.logoName = logoName;
+    }
+
+    public String getTxtLogoName() {
+        return txtLogoName;
+    }
+
+    public void setTxtLogoName(String txtLogoName) {
+        this.txtLogoName = txtLogoName;
     }
 
     public Size getSize() {
