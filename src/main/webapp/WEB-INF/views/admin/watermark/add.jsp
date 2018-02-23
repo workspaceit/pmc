@@ -136,7 +136,7 @@
                                 Because image is beging displayed in #watermarkPreviewOnSampleImg
                              --%>
                             <div  id="dummyForDropZone" style="display: none"></div>
-                            <img id="watermarkPreviewOnSampleImg" onerror="this.src='<s:url value="/resources${previewSampleUri}"/>'" src="<s:url value="/resources${previewSampleUri}"/>" />
+                            <img id="watermarkPreviewOnSampleImg"  src="<s:url value="/resources${previewSampleUri}"/>" />
                         </div>
                     </div>
 

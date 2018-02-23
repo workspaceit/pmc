@@ -29,13 +29,23 @@
             <div class="dz-default dz-message">
                 <div class="droper">
                     <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
-                    <p class="dropext">Click or Drop your banner images or video here</p>
+                    <p class="dropext">Click or Drop your banner image here</p>
                 </div>
 
             </div>
         </div>
         <p class="text-danger" id="errorObj_smsPopupBanner"></p>
 
+        <div id="advSmsPopUpVideo"  class="panel-body" >
+            <div class="dz-default dz-message">
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your video here</p>
+                </div>
+
+            </div>
+        </div>
+        <p class="text-danger" id="errorObj_smsPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
                             <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
@@ -76,11 +86,20 @@
             <div class="dz-default dz-message">
                 <div class="droper">
                     <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
-                    <p class="dropext">Click or Drop your banner images or video here</p>
+                    <p class="dropext">Click or Drop your banner image here</p>
                 </div>
             </div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
+        <div id="advEmailPopUpVideo"  class="panel-body" >
+            <div class="dz-default dz-message">
+                <div class="droper">
+                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                    <p class="dropext">Click or Drop your video here</p>
+                </div>
+            </div>
+        </div>
+        <p class="text-danger" id="errorObj_emailPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
                             <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >

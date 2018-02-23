@@ -1,4 +1,5 @@
 package com.workspaceit.pmc.service;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -7,7 +8,9 @@ import java.util.Map;
 
 import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.FILE;
+import com.workspaceit.pmc.constant.watermark.Size;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.helper.ImageHelper;
 import com.workspaceit.pmc.helper.TokenGenerator;
 import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,24 +29,14 @@ import javax.servlet.ServletContext;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class FileService {
-	private ServletContext servletContext;
-	private Environment environment;
 	private FileUtil fileUtil;
 	private TempFileDao tempFileDao;
 	private TempFileService tempFileService;
 	private Environment env;
 	private WatermarkHelper watermarkHelper;
+	private ImageHelper imageHelper;
 
 
-	@Autowired
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-
-	@Autowired
-	public void setEnvironment(Environment environment) {
-		this.environment = environment;
-	}
 
 	@Autowired
     public void setFileUtil(FileUtil fileUtil) {
@@ -69,6 +62,11 @@ public class FileService {
     @Autowired
 	public void setWatermarkHelper(WatermarkHelper watermarkHelper) {
 		this.watermarkHelper = watermarkHelper;
+	}
+
+	@Autowired
+	public void setImageHelper(ImageHelper imageHelper) {
+		this.imageHelper = imageHelper;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -207,4 +205,20 @@ public class FileService {
 		fileInf.put(FILE.PATH,filePath);
 		return fileInf;
 	}
+	public byte[] resizeCommonImage(String fileName, Size  size) throws IOException {
+		String filePath = env.getCommonFilePath()+"/"+fileName;
+		return this.resizeImage(filePath,size);
+
+	}
+	public byte[] resizePhotographerProfileImage(String fileName, Size  size) throws IOException {
+		String filePath = env.getPhotographerProfilePath()+"/"+fileName;
+		return this.resizeImage(filePath,size);
+
+	}
+	private byte[] resizeImage(String filePath, Size  size) throws IOException {
+		BufferedImage bufferedImage = this.imageHelper.resizeImage(filePath,size);
+		return this.imageHelper.bufferedImageToByte(bufferedImage);
+
+	}
+
 }

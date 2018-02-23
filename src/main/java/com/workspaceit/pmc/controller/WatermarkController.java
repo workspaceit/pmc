@@ -50,7 +50,7 @@ public class WatermarkController {
         ModelAndView model = new ModelAndView("admin/watermark/all");
 
 
-
+        model.addObject("previewSampleUri",environment.getWatermarkSamplePreviewImgUri());
         model.addObject("watermarkList",watermarkList);
         return model;
     }

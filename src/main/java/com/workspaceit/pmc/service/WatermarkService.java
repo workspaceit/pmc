@@ -9,6 +9,7 @@ import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.dao.WatermarkDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.helper.ImageHelper;
 import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.util.WatermarkUtil;
@@ -47,6 +48,7 @@ public class WatermarkService {
     private WatermarkUtil watermarkUtil;
     private WatermarkHelper watermarkHelper;
     private WatermarkDao watermarkDao;
+    private ImageHelper imageHelper;
 
     @Autowired
     public void setServletContext(ServletContext servletContext) {
@@ -92,6 +94,11 @@ public class WatermarkService {
     @Autowired
     public void setWatermarkDao(WatermarkDao watermarkDao) {
         this.watermarkDao = watermarkDao;
+    }
+
+    @Autowired
+    public void setImageHelper(ImageHelper imageHelper) {
+        this.imageHelper = imageHelper;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -209,6 +216,24 @@ public class WatermarkService {
 
         return watermarkedImgByte;
     }
+    @Transactional
+    public byte[] getImageWithWaterMark(Watermark watermark,Size size) throws IOException,EntityNotFound {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        byte[] watermarkedImgByte  =  this.getImageWithWaterMark(watermark);
+        BufferedImage resizedImage = this.imageHelper.resizeImage(watermarkedImgByte,size);
+
+
+        if(resizedImage!=null){
+            ImageIO.write( resizedImage, "png", outputStream );
+        }
+
+        outputStream.flush();
+        return outputStream.toByteArray();
+    }
+
+
+
     @Transactional
     public byte[] getImageWithWaterMark(WatermarkForm watermarkForm,boolean useBothWatermark) throws IOException,EntityNotFound {
         byte[] watermarkedImgByte = null;

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.workspaceit.pmc.constant.watermark.Size" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="d" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -61,7 +62,8 @@
                                 <p class="text-left">${wm.type}</p>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt">Preview here</span>
+                                <img src="<c:url value="/img/watermarked-preview/${wm.id}/${Size.thumb.name()}" />"
+                                     alt="No preview found">
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">
