@@ -181,4 +181,19 @@ public class Section {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", advertisementId=" + advertisementId +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", rotation=" + rotation +
+                ", sectionType=" + sectionType +
+                ", expireDate=" + expireDate +
+                ", sectionResource=" + sectionResource +
+                ", createdAt=" + createdAt +
+                ", duration=" + duration +
+                '}';
+    }
 }

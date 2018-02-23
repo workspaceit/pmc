@@ -6,4 +6,5 @@ package com.workspaceit.pmc.constant;
 public class ControllerUriPrefix {
     public final static String API = "/api";
     public final static String ADMIN = "/admin";
+    public final static String AUTH_API = "/auth/api";
 }

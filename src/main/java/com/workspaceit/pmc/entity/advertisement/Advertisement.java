@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.Map;
 
 @Entity
-
-@SQLDelete(sql = "UPDATE advertisement SET state = 'DELETE' WHERE id = ?", check = ResultCheckStyle.COUNT)
 @Table(name = "advertisement")
 public class Advertisement {
 

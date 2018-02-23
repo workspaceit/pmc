@@ -22,7 +22,7 @@ public class ImageQualityReducer {
         File sf = new File("/home/mi/Pictures/compression/30mb.jpg");
         BufferedImage bi = ImageIO.read(sf );
         Thumbnails.of(sf)
-                .size(bi.getWidth(), bi.getHeight())
+                .size(1920, 1080)
                 .outputQuality(0.5)
                 .toFile(new File("/home/mi/Pictures/compression/after-compress1.jpg"));
 

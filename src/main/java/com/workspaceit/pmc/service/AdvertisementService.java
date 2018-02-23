@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,10 @@ public class AdvertisementService {
         return this.advertisementDao.getByAdvertiserId(advertiserId);
     }
     @Transactional
+    public List<Advertisement> getByAdvertiserId(List<Integer> advertiserId){
+        return this.advertisementDao.getByAdvertiserId(advertiserId);
+    }
+    @Transactional
     public Map<ADVERTISEMENT_TYPE,Advertisement> getMapByAdvertiserId(int advertiserId){
         Map<ADVERTISEMENT_TYPE,Advertisement> advertisementMap = new HashMap<>();
         List<Advertisement> advertisements  =  this.advertisementDao.getByAdvertiserId(advertiserId);
@@ -48,7 +53,17 @@ public class AdvertisementService {
 
         return advertisementMap;
     }
+    @Transactional
+    public List<Map<ADVERTISEMENT_TYPE,Advertisement>> getMapByAdvertiserId(List<Integer> advertiserIds){
+        List<Map<ADVERTISEMENT_TYPE,Advertisement>> advertisements = new ArrayList<>();
+        for(Integer advertiserId:advertiserIds){
 
+            Map<ADVERTISEMENT_TYPE,Advertisement> advertisementMap = this.getMapByAdvertiserId(advertiserId);
+            advertisements.add(advertisementMap);
+        }
+
+        return advertisements;
+    }
     @Transactional(rollbackFor = Exception.class)
     public Advertisement create(int advertiserId, ADVERTISEMENT_TYPE adType, Admin admin){
         Advertisement advertisement = new Advertisement();
