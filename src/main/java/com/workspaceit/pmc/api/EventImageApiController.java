@@ -1,27 +1,66 @@
 package com.workspaceit.pmc.api;
 
+import com.workspaceit.pmc.auth.PhotographerUserDetails;
+import com.workspaceit.pmc.constant.FILE;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
+import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.entity.TempFile;
+import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.EventImageService;
+import com.workspaceit.pmc.service.EventService;
+import com.workspaceit.pmc.service.FileService;
+import com.workspaceit.pmc.util.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by anik on 2/15/18.
  */
 
 @RestController
-@RequestMapping("/test/api/event-images")
+@RequestMapping("/auth/api/event-images")
 @CrossOrigin
 public class EventImageApiController {
+
+    private Set<String> imgAllowedMimeType;
+
 
     private EventImageService eventImageService;
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
+    }
+
+
+    private EventService eventService;
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
+
+
+    @PostConstruct
+    private void initConfiguration(){
+        imgAllowedMimeType = new HashSet<>();
+        /**
+         * Image mime type
+         * */
+        imgAllowedMimeType.add("image/jpeg");
+        imgAllowedMimeType.add("image/pjpeg");
+        imgAllowedMimeType.add("image/jpeg");
+        imgAllowedMimeType.add("image/png");
     }
 
     @PostMapping("/{limit}/{offset}")
@@ -30,6 +69,54 @@ public class EventImageApiController {
                                                       @RequestParam(value = "eventId") Integer eventId){
         List<EventImage> eventImages = eventImageService.getEventImagesByCriteria(eventId, limit, offset);
         return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+    }
+
+    @PostMapping("/{eventId}")
+    public ResponseEntity<?> uploadEventPhotos(@PathVariable("eventId") Integer eventId, @RequestParam("file") MultipartFile multipartFile,Authentication authentication){
+
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        long fileSizeLimit = FileHelper.getMBtoByte(30);
+        Set<String> imgContentType = this.imgAllowedMimeType;
+
+        return validateAndProcessMultipartFile("file",fileSizeLimit,multipartFile,imgContentType,photographer,eventId);
+    }
+
+    private ResponseEntity<?> validateAndProcessMultipartFile(String param,long fileSizeLimit,MultipartFile file,Set<String> imgContentTypes,Photographer photographer,Integer eventId){
+
+        String mimeType = FileHelper.getMimeType(file);
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        if(!imgContentTypes.contains(mimeType)) {
+            serviceResponse.setValidationError(param," Mime Type "+ mimeType+" not allowed");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        if(file==null || file.getSize()==0){
+            serviceResponse.setValidationError(param,"No file receive");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        if(file.getSize()>fileSizeLimit){
+            serviceResponse.setValidationError(param,"File size exceeds. Max size "+FileHelper.getByteToMb(fileSizeLimit));
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        Map<FILE,String> fileInfo;
+        EventImage eventImage = new EventImage();
+        try {
+            fileInfo = eventImageService.saveEventImageFile(file);
+            String fileName = fileInfo.get(FILE.NAME);
+
+            eventImage.setActive(true);
+            eventImage.setImage(fileName);
+            eventImage.setCreatedBy(photographer);
+            Event event = eventService.getById(eventId);
+            eventImage.setEvent(event);
+            eventImage.setInSlideshow(false);
+            eventImageService.saveEventImage(eventImage);
+
+        } catch(IOException e) {
+            serviceResponse.setValidationError(param,"Internal server error : "+e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(eventImage);
     }
 
 }

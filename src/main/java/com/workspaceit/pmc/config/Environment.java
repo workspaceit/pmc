@@ -34,6 +34,13 @@ public class Environment {
     @Value("${file.photographer.profile.path}")
     private String photographerProfilePath;
 
+    @Value("${file.event.image.path}")
+    private String eventImagePath;
+
+    public String getEventImagePath() {
+        return eventImagePath;
+    }
+
     public String getHbm2ddl() {
         return hbm2ddl;
     }

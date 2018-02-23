@@ -24,6 +24,7 @@ public class EventImageDao extends BaseDao {
         Root<EventImage> eventImageRoot = criteriaQuery.from(EventImage.class);
 
         criteriaQuery.where(builder.equal(eventImageRoot.get("event").get("id"), eventId));
+        criteriaQuery.orderBy(builder.desc(eventImageRoot.get("id")));
         Query query = session.createQuery(criteriaQuery);
         query.setFirstResult(offset);
         query.setMaxResults(limit);

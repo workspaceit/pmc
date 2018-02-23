@@ -16,7 +16,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/test/api/locations")
+@RequestMapping("/auth/api/locations")
 @CrossOrigin
 public class LocationApiController {
     LocationService locationService;

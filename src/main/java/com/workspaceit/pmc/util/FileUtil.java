@@ -68,7 +68,33 @@ public class FileUtil {
 			fileRes.put(FILE.PATH,filePath);
 
     		return fileRes;
-    	}
+	}
+
+	public Map<FILE,String> saveEventImageFile(byte[] fileByte, String fileExtension) throws IOException{
+		Map<FILE,String> fileRes = new HashMap<>();
+		String fileName = System.nanoTime()+"."+fileExtension;
+		String filePath = this.env.getEventImagePath()+"/"+fileName;
+		FileOutputStream fileOutPutStream = null;
+		try {
+			File file = new File(filePath);
+			fileOutPutStream = new FileOutputStream(file);
+			fileOutPutStream.write(fileByte);
+			fileOutPutStream.flush();
+
+
+		}catch (FileNotFoundException e) {
+			throw new FileNotFoundException("File not found in path "+filePath);
+		} catch (IOException e) {
+			throw new IOException("Unable to write byte "+filePath);
+		}finally {
+			if(fileOutPutStream!=null)fileOutPutStream.close();
+		}
+
+		fileRes.put(FILE.NAME,fileName);
+		fileRes.put(FILE.PATH,filePath);
+
+		return fileRes;
+	}
 
 	public boolean deleteFile(String filePath){
 		File file = new File(filePath);
