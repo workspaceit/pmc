@@ -61,6 +61,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
         registry.addResourceHandler("/photographer-profile-img/**").addResourceLocations("file://"+this.env.getPhotographerProfilePath()+"/");
         registry.addResourceHandler("/common/**").addResourceLocations("file://"+this.env.getCommonFilePath()+"/");
+        registry.addResourceHandler("/event-images/**").addResourceLocations("file://"+this.env.getEventImagePath()+"/");
     }
     @Bean
     public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
