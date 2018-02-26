@@ -67,7 +67,7 @@ public class Event {
     private Admin createdBy;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_photographers",
             joinColumns = {@JoinColumn(name = "event_id")},

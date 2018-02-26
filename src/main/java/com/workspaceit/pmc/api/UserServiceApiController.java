@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping(ControllerUriPrefix.AUTH_API+"/user-service")
 public class UserServiceApiController {
     @RequestMapping(value = "/get",method = RequestMethod.GET)

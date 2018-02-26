@@ -108,13 +108,13 @@ function redirectFromAdminUser(btnAction){
     var url = BASEURL+"admin/user";
     switch(btnAction){
         case "save":
-            url +="/all";
+            url += "/all";
             break;
-        case "save_and_new":
+        case "save-new":
             url +="/add";
             break;
-        case "save_and_close":
-            url +="/all";
+        case "save-close":
+            url += "/all";
             break;
         case "cancel":
             url +="/all";

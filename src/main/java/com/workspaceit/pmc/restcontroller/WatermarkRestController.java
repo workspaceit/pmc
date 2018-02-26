@@ -58,10 +58,8 @@ public class WatermarkRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 
-
         this.watermarkService.create(watermarkForm);
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("");
     }
 
 
