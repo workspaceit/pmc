@@ -80,7 +80,7 @@ public class ImageHelper {
                 .asBufferedImage();
 
     }
-    private BufferedImage compressImage(String filePath,float quality,int height,int width) throws IOException {
+    public BufferedImage compressImage(String filePath,float quality,int height,int width) throws IOException {
         BufferedImage bufferedImage = this.filePathToBufferedImage(filePath);
         return Thumbnails.of(bufferedImage)
                 .size(width,height )
@@ -115,6 +115,25 @@ public class ImageHelper {
 
         outputStream.flush();
         return outputStream.toByteArray();
+    }
+
+    public float getOptimizedImageQuality(long filesize){
+        float quality = (float) 1.0;
+        if(filesize>200000 && filesize<1000000){
+            quality = (float) 0.30;
+        }
+        else if(filesize>1000000 && filesize<5000000){
+            quality = (float) 0.35;
+        }else if(filesize>5000000 && filesize<1000000){
+            quality = (float) 0.60;
+        }else if(filesize>1000000 && filesize<1500000){
+            quality= (float) 0.65;
+        }else if(filesize>1500000 && filesize<3000000){
+            quality= (float) 0.75;
+        }else if(filesize>3000000){
+            quality= (float) 0.80;
+        }
+        return quality;
     }
 
 }

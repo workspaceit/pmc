@@ -19,12 +19,12 @@ public class ImageQualityReducer {
 
     public static void main(String[] args) throws Exception {
       //  compress("/home/mi/Pictures/compression/30mb.jpg","/home/mi/Pictures/compression/after-compress.jpeg",0.5f);
-        File sf = new File("/home/mi/Pictures/compression/30mb.jpg");
+        File sf = new File("/home/chizz/projects/java/pmc-media-files/compressed/32mb.jpg");
         BufferedImage bi = ImageIO.read(sf );
         Thumbnails.of(sf)
-                .size(bi.getWidth(), bi.getHeight())
-                .outputQuality(0.5)
-                .toFile(new File("/home/mi/Pictures/compression/after-compress1.jpg"));
+                .size(1920, 1080)
+                .outputQuality(0.75)
+                .toFile(new File("/home/chizz/projects/java/pmc-media-files/compressed/after-compress1.jpg"));
 
 
 
