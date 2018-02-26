@@ -3,6 +3,7 @@ package com.workspaceit.pmc.util;
 
 
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,11 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.workspaceit.pmc.constant.FILE;
+import com.workspaceit.pmc.helper.ImageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.dao.TempFileDao;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 
@@ -33,6 +36,8 @@ public class FileUtil {
 	Environment env;
 	TempFileDao tempFileDao;
 
+	@Autowired
+	private ImageHelper imageHelper;
 
 	@Autowired
 	public void setEnv(Environment env) {
@@ -70,10 +75,13 @@ public class FileUtil {
     		return fileRes;
 	}
 
-	public Map<FILE,String> saveEventImageFile(byte[] fileByte, String fileExtension) throws IOException{
+	public Map<FILE,String> saveEventImageFile(MultipartFile multipartFile, String fileExtension) throws IOException{
+		System.out.println(multipartFile);
+		byte[] fileByte = multipartFile.getBytes();
+		long imageSize = multipartFile.getSize();
 		Map<FILE,String> fileRes = new HashMap<>();
 		String fileName = System.nanoTime()+"."+fileExtension;
-		String filePath = this.env.getEventImagePath()+"/"+fileName;
+		String filePath = this.env.getEventImagePath()+"/original/"+fileName;
 		FileOutputStream fileOutPutStream = null;
 		try {
 			File file = new File(filePath);
@@ -90,9 +98,17 @@ public class FileUtil {
 			if(fileOutPutStream!=null)fileOutPutStream.close();
 		}
 
+//		compress the Image
+		float optimizedImageQuality = imageHelper.getOptimizedImageQuality(imageSize);
+		System.out.println(optimizedImageQuality);
+		String compressImagefilePath = this.env.getEventImagePath()+"/web/"+fileName;
+		BufferedImage compressedImageBuffer = imageHelper.compressImage(filePath,optimizedImageQuality,1080,1920);
+		File compressedfile = new File(compressImagefilePath);
+		ImageIO.write(compressedImageBuffer,fileExtension,compressedfile);
+
+
 		fileRes.put(FILE.NAME,fileName);
 		fileRes.put(FILE.PATH,filePath);
-
 		return fileRes;
 	}
 

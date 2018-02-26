@@ -6,12 +6,14 @@ import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
+import com.workspaceit.pmc.helper.ImageHelper;
 import com.workspaceit.pmc.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class EventImageService {
 
     private FileUtil fileUtil;
+
 
     @Autowired
     public void setFileUtil(FileUtil fileUtil) {
@@ -68,9 +71,8 @@ public class EventImageService {
 
     public Map<FILE,String> saveEventImageFile(MultipartFile multipartFile) throws IOException {
         Map<FILE,String> fileInfo = new HashMap<>();
-        byte[] fileByte = multipartFile.getBytes();
         String fileExtension = FileHelper.getExtension(multipartFile);
-        Map<FILE,String> fileInf =  this.fileUtil.saveEventImageFile(fileByte, fileExtension);
+        Map<FILE,String> fileInf =  this.fileUtil.saveEventImageFile(multipartFile, fileExtension);
         String fileName = fileInf.get(FILE.NAME);
         String filePath = fileInf.get(FILE.PATH);
         fileInfo.put(FILE.NAME,fileName);

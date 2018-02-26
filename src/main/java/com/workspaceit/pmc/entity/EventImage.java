@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "event_images")
-@JsonIgnoreProperties({"event"})
+@JsonIgnoreProperties({"event","createdBy"})
 public class EventImage {
 
     @Id
