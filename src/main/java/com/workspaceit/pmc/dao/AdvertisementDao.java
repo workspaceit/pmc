@@ -33,4 +33,17 @@ public class AdvertisementDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+
+    public List<Advertisement> getByAdvertiserId(List<Integer> advertiserId){
+        Session session = this.openSession();
+        try{
+            return (List<Advertisement>)session.createQuery("SELECT distinct adv FROM Advertisement adv " +
+                    "inner join fetch adv.sections as section  " +
+                    "WHERE advertiser_id in :advertiser_id")
+                    .setParameter("advertiser_id",advertiserId)
+                    .list();
+        }finally {
+            if(session!=null)session.close();
+        }
+    }
 }

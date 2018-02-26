@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.auth.PhotographerUserDetails;
+import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -11,8 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/auth/api/user-service")
-@CrossOrigin
+@RequestMapping(ControllerUriPrefix.AUTH_API+"/user-service")
 public class UserServiceApiController {
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public ResponseEntity<?> getUserService(Authentication authentication){

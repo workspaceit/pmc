@@ -190,6 +190,18 @@ public class AdvertiserService {
         return this.advertiserDao.getByEventId(eventId);
     }
     @Transactional
+    public List<Advertiser> getIdsByLocationAndEventId(int eventId,int locationId){
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId);
+    }
+    @Transactional
+    public List<Advertiser> getByLocationAndEventId(int eventId,int locationId){
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId);
+    }
+    @Transactional
+    public List<Advertiser> getByEventAndLocationId(int eventId,int locationId,boolean includeAllSelected){
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected);
+    }
+    @Transactional
     public List<Integer> getIdByEventId(int eventId){
         List<Advertiser> advertisers =  this.getByEventId(eventId);
         if(advertisers==null || advertisers.size()==0){
