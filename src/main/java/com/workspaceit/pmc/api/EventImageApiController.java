@@ -6,11 +6,13 @@ import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.entity.TempFile;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.FileService;
 import com.workspaceit.pmc.util.ServiceResponse;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -117,6 +119,21 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         return ResponseEntity.status(HttpStatus.OK).body(eventImage);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> removeEventImages(@RequestParam("imageIds") int[] imageIds,Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        try {
+            boolean result = eventImageService.deleteEventImages(imageIds);
+            if(!result){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }catch (EntityNotFound entityNotFound){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
+        }
     }
 
 }

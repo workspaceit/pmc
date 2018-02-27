@@ -2,6 +2,8 @@ package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -16,6 +18,8 @@ import java.util.Set;
 @Entity
 @Table(name = "event_images")
 @JsonIgnoreProperties({"event","createdBy"})
+@FilterDef(name = "activeImages")
+@Filter(name = "activeImages", condition = "is_deleted = false AND is_active = true")
 public class EventImage {
 
     @Id
@@ -39,6 +43,9 @@ public class EventImage {
 
     @Column(name = "in_slideshow")
     private Boolean inSlideshow;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -137,4 +144,11 @@ public class EventImage {
         this.createdBy = createdBy;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }
