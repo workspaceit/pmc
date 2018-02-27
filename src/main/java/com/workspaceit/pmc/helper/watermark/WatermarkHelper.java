@@ -9,6 +9,7 @@ import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.entity.Font;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.service.FontService;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class WatermarkHelper {
     private final static int MAX_FADE = 50;
     private ServletContext servletContext;
     private Environment environment;
+    private FontService fontService;
 
     @Autowired
     public void setServletContext(ServletContext servletContext) {
@@ -33,6 +35,11 @@ public class WatermarkHelper {
     @Autowired
     public void setEnvironment(Environment environment) {
         this.environment = environment;
+    }
+
+    @Autowired
+    public void setFontService(FontService fontService) {
+        this.fontService = fontService;
     }
 
     public static float getNormalizedFadeValForAlpha(float fade){
@@ -49,7 +56,7 @@ public class WatermarkHelper {
         URL originalImgPath = this.servletContext.getResource("WEB-INF/resources"+environment.getWatermarkSamplePreviewImgUri());
         return originalImgPath.getPath();
     }
-    public Map<WATERMARK_ATTR,Object> mergeData(Watermark watermark){
+    public Map<WATERMARK_ATTR,Object> convertToMap(Watermark watermark){
         Map<WATERMARK_ATTR,Object> mergedData = new HashMap<>();
         WatermarkType watermarkType=watermark.getType();
 
@@ -82,9 +89,10 @@ public class WatermarkHelper {
     }
 
 
-    public Map<WATERMARK_ATTR,Object> mergeData( WatermarkForm watermarkForm){
+    public Map<WATERMARK_ATTR,Object> convertToMap(WatermarkForm watermarkForm){
         Map<WATERMARK_ATTR,Object> mergedData = new HashMap<>();
         WatermarkType watermarkType=watermarkForm.getType();
+        Font font =  this.fontService.getById(watermarkForm.getFontId());
 
         String color=watermarkForm.getColor();
         float fadeVal=(watermarkForm.getFade()!=null)?watermarkForm.getFade().floatValue():0;
@@ -92,7 +100,6 @@ public class WatermarkHelper {
         Placement placement=watermarkForm.getPlacement();
         String logoImageName=null;
         String sampleImageName=null;
-        Font font= null;//watermarkForm.getFont();
         String watermarkText=watermarkForm.getWatermarkText();
         Integer logoToken=watermarkForm.getLogoImgToken();
         Integer sampleToken=watermarkForm.getSampleImgToken();
@@ -105,7 +112,7 @@ public class WatermarkHelper {
         mergedData.put(WATERMARK_ATTR._PLACEMENT,placement);
         mergedData.put(WATERMARK_ATTR._LOGO,logoImageName);
         mergedData.put(WATERMARK_ATTR._SAMPLE_IMG,sampleImageName);
-        mergedData.put(WATERMARK_ATTR._FONT,null);
+        mergedData.put(WATERMARK_ATTR._FONT,font);
         mergedData.put(WATERMARK_ATTR._TEXT,watermarkText);
         mergedData.put(WATERMARK_ATTR._LOGO_TOKEN,logoToken);
         mergedData.put(WATERMARK_ATTR._SAMPLE_TOKEN,sampleToken);
@@ -113,7 +120,7 @@ public class WatermarkHelper {
         return mergedData;
     }
 
-    public Map<WATERMARK_ATTR,Object> mergeData(Watermark watermark, WatermarkForm watermarkForm){
+    public Map<WATERMARK_ATTR,Object> convertToMap(Watermark watermark, WatermarkForm watermarkForm){
         Map<WATERMARK_ATTR,Object> mergedData = new HashMap<>();
         WatermarkType watermarkType=watermark.getType();
 
@@ -149,8 +156,8 @@ public class WatermarkHelper {
         if(watermarkForm.getPlacement()!=null){
             placement = watermarkForm.getPlacement();
         }
-        if(watermarkForm.getFontId()!=null){
-            font = null;//watermarkForm.getFont();
+        if(watermarkForm.getFontId()!=null && watermarkForm.getFontId()>0 ){
+            font =  this.fontService.getById(watermarkForm.getFontId());
         }
 
         mergedData.put(WATERMARK_ATTR._TYPE,watermarkType);

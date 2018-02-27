@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by mi_rafi on 12/26/17.
@@ -116,18 +117,13 @@ public class ImageController {
                                                                  @PathVariable(name = "imageSize") Size imgSize,
                                                                  @Valid WatermarkForm watermarkForm, BindingResult error){
         byte[] imageByte = null;
-
         try {
             Watermark watermark = this.watermarkService.getWatermark(watermarkId);
             imageByte = watermarkService.getImageWithWaterMark(watermark,imgSize); // Image or Text
             //imageByte = watermarkService.getImageWithWaterMark(watermark,true); // Image and text both
         }catch (EntityNotFound ex){
-
-            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         } catch (IOException e) {
-
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         }
 

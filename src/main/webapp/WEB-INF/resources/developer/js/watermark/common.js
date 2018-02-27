@@ -231,20 +231,7 @@ function getWatermarkData(){
     };
     return data;
 }
-function previewWatermarkOnSample() {
-    var parameters = getAllWatermarkData();
 
-    if(parameters.type=="image"){
-        if(parameters.logoImgToken==null || parameters.logoImgToken<=0){
-            alert("Logo Required");
-            return;
-        }
-    }
-
-    var url = getWatermarkOnSamplePreviewUrl(parameters);
-
-    $("#watermarkPreviewOnSampleImg").attr("src",url);
-}
 function previewWatermarkOnSample() {
     var parameters = getAllWatermarkData();
 
@@ -262,7 +249,10 @@ function previewWatermarkOnSample() {
 function previewWatermarkOnSampleEdit() {
     var parameters = getAllWatermarkData();
 
-
+    if(parameters.watermarkText==null || parameters.watermarkText.trim() == ""){
+        alert("Watermark text required");
+        return;
+    }
 
     var url = getWatermarkOnSamplePreviewUrlWithId(parameters);
 
