@@ -5,6 +5,7 @@ import com.workspaceit.pmc.constant.watermark.Placement;
 import com.workspaceit.pmc.constant.watermark.Size;
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -54,7 +55,7 @@ public class Watermark {
     private String watermarkText;
 
     @ManyToOne
-    @JoinColumn(name = "font_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "font_id", referencedColumnName = "id", nullable = true)
     private Font font;
 
     @Enumerated(EnumType.STRING)
@@ -82,13 +83,13 @@ public class Watermark {
     @Column(name = "active")
     private Boolean active;
 
+    @JsonIgnore
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "watermarks",fetch = FetchType.LAZY)
-    private Set<Event> events = new HashSet<Event>();
-
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "watermarks", fetch = FetchType.EAGER)
+//    private Set<Event> events = new HashSet<Event>();
 
 
     public int getId() {
@@ -235,14 +236,14 @@ public class Watermark {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
+//
+//    public Set<Event> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(Set<Event> events) {
+//        this.events = events;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -266,7 +267,6 @@ public class Watermark {
         if (createdAt != null ? !createdAt.equals(watermark.createdAt) : watermark.createdAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(watermark.updatedAt) : watermark.updatedAt != null) return false;
         if (createdBy != null ? !createdBy.equals(watermark.createdBy) : watermark.createdBy != null) return false;
-        if (events != null ? !events.equals(watermark.events) : watermark.events != null) return false;
         if (active != null ? !active.equals(watermark.active) : watermark.active != null) return false;
         return deleted != null ? deleted.equals(watermark.deleted) : watermark.deleted == null;
     }
@@ -288,10 +288,12 @@ public class Watermark {
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
-        result = 31 * result + (events != null ? events.hashCode() : 0);
         result = 31 * result + (active != null ? active.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
     }
+
+
+
 
 }

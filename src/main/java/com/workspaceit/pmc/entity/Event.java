@@ -66,7 +66,6 @@ public class Event {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_photographers",
@@ -74,12 +73,14 @@ public class Event {
             inverseJoinColumns = {@JoinColumn(name = "photographer_id")})
     private Set<Photographer> photographers = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_watermarks",
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "watermark_id")})
-
     private Set<Watermark> watermarks = new HashSet<>();
+
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "event_advertisers",
@@ -92,6 +93,8 @@ public class Event {
 
     @Column(name = "deleted")
     private Boolean deleted;
+
+
 
     public int getId() {
         return id;
@@ -181,16 +184,12 @@ public class Event {
         this.createdBy = createdBy;
     }
 
-    public Set<Photographer> getPhotographers() {
-        return photographers;
-    }
+    public Set<Photographer> getPhotographers() { return photographers; }
 
-    public void setPhotographers(Set<Photographer> photographers) {
-        this.photographers = photographers;
-    }
+    public void setPhotographers(Set<Photographer> photographers) { this.photographers = photographers; }
 
     public Set<Watermark> getWatermarks() {
-        return watermarks;
+        return this.watermarks;
     }
 
     public void setWatermarks(Set<Watermark> watermarks) {
@@ -221,4 +220,21 @@ public class Event {
         this.deleted = deleted;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (id != event.id) return false;
+        return name != null ? name.equals(event.name) : event.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
 }

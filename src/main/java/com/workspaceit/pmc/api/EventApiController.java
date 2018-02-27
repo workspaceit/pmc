@@ -72,7 +72,6 @@ public class EventApiController {
                                                  @RequestParam(value = "filterDate", required = false)
                                                      @DateTimeFormat(pattern="yyyy-MM-dd") Date filterDate,
                                                  Authentication authentication) {
-        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfguysdgfjsdgfj--------------");
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Map<String, Object> responseData = eventService.getEventsByCriteriaWithCount(locationId, filterDate, photographer,
