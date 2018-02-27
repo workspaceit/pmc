@@ -53,7 +53,7 @@ public class ImageController {
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreview( @Valid WatermarkForm watermarkForm,
                                                          BindingResult error){
-        byte[] imageByte = null;
+        byte[] imageByte = new byte[]{};
 
 
 
@@ -68,9 +68,9 @@ public class ImageController {
             imageByte = watermarkService.getImageWithWaterMark(watermarkForm); // Image or Text
             // imageByte = watermarkService.getImageWithWaterMark(watermarkForm,true); // Image and text both
         }catch (EntityNotFound ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageByte);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageByte);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(imageByte);
@@ -122,8 +122,12 @@ public class ImageController {
             imageByte = watermarkService.getImageWithWaterMark(watermark,imgSize); // Image or Text
             //imageByte = watermarkService.getImageWithWaterMark(watermark,true); // Image and text both
         }catch (EntityNotFound ex){
+
+            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         } catch (IOException e) {
+
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         }
 

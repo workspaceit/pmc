@@ -49,6 +49,7 @@ public class WatermarkService {
     private WatermarkHelper watermarkHelper;
     private WatermarkDao watermarkDao;
     private ImageHelper imageHelper;
+    private FontService fontService;
 
     @Autowired
     public void setServletContext(ServletContext servletContext) {
@@ -101,6 +102,11 @@ public class WatermarkService {
         this.imageHelper = imageHelper;
     }
 
+    @Autowired
+    public void setFontService(FontService fontService) {
+        this.fontService = fontService;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public List<Watermark> getAll(){
         return this.watermarkDao.getAll();
@@ -146,7 +152,6 @@ public class WatermarkService {
 
         if(logoImgToken!=null && logoImgToken>0){
             logoImgName = this.fileService.copyFile(logoImgToken);
-            watermark.setLogoName(logoImgName);
         }
         if(sampleImgToken!=null && sampleImgToken>0){
             sampleImgName = this.fileService.copyFile(sampleImgToken);
@@ -155,10 +160,8 @@ public class WatermarkService {
             sampleImgName = fileInfo.get(FILE.NAME);
         }
 
-        watermark.setLogoName(logoImgName);
+        watermark.setLogoImage(logoImgName);
         watermark.setSampleImageName(sampleImgName);
-
-        this.populateWatermarkByWatermarkForm(watermark,watermarkForm);
 
         watermark.setActive(true);
         watermark.setDeleted(false);
@@ -416,7 +419,7 @@ public class WatermarkService {
     @Transactional
     public byte[] getImageWithWaterMarkText(Watermark watermark) throws IOException,EntityNotFound {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        String originalImgAbsPath = watermark.getSampleImageName();
+        String originalImgAbsPath = environment.getCommonFilePath()+"/"+watermark.getSampleImageName();
         BufferedImage watermarkedImage;
         Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.mergeData(watermark);
 
@@ -486,6 +489,7 @@ public class WatermarkService {
     }
 
     private Watermark getWatermarkFromWatermarkForm(WatermarkForm watermarkForm){
+        Font font =  this.fontService.getById(watermarkForm.getFontId());
 
         Watermark watermark = new Watermark();
 
@@ -496,7 +500,7 @@ public class WatermarkService {
         watermark.setSize(watermarkForm.getSize());
         watermark.setFade(watermarkForm.getFade());
         watermark.setWatermarkText(watermarkForm.getWatermarkText());
-        watermark.setFont(watermarkForm.getFont());
+        watermark.setFont(font);
         watermark.setColor(watermarkForm.getColor());
 
         return watermark;

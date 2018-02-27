@@ -176,7 +176,7 @@ function getAllWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
-    var logoName=$("input[name=img_logo_name]").val(); //$("input[name=txt_logo_name]").val();
+    var logoName=$("#logoName").val(); //$("input[name=txt_logo_name]").val();
     var placement=$(".img_placement").val();
     var size=$(".img_font_size").val();
     var fade=$("input[name=img_fade_range]").val();
@@ -205,7 +205,7 @@ function getWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
-    var logoName=$("input[name=img_logo_name]").val();
+    var logoName=$("#logoName").val();
     var txtLogoName=$("#txt_logo_name").val();
     var size=$(".img_font_size").val();
     var fade=$("input[name=img_fade_range]").val();

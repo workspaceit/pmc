@@ -12,6 +12,7 @@ import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
 import com.workspaceit.pmc.validation.location.LocationForm;
 import com.workspaceit.pmc.validation.location.LocationValidator;
+import com.workspaceit.pmc.validation.watermark.WatermarkValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class WatermarkRestController {
 
     private WatermarkService watermarkService;
     private AdminService adminService;
+    private WatermarkValidator watermarkValidator;
 
     @Autowired
     public void setWatermarkService(WatermarkService watermarkService){
@@ -45,21 +47,28 @@ public class WatermarkRestController {
     }
 
 
+    @Autowired
+    public void setWatermarkValidator(WatermarkValidator watermarkValidator) {
+        this.watermarkValidator = watermarkValidator;
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
 
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
-         * Basic Validation
+         *  Conditional Basic Validation
          * */
-        if (bindingResult.hasErrors()) {
+        this.watermarkValidator.validate(watermarkForm,bindingResult);
 
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-
-        this.watermarkService.create(watermarkForm);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("");
+        Watermark watermark = this.watermarkService.create(watermarkForm);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(watermark);
     }
 
 
@@ -70,10 +79,14 @@ public class WatermarkRestController {
         Admin currentUser = (Admin)authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
-         * Basic Validation
+         * Conditional Basic Validation
+         * And Business logic
          * */
-        if (bindingResult.hasErrors()) {
 
+        this.watermarkValidator.validateForUpdate(watermarkForm,bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         try {
