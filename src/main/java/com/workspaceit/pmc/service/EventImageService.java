@@ -80,5 +80,20 @@ public class EventImageService {
         return fileInf;
     }
 
+    @Transactional
+    public Boolean deleteEventImages(int[] imageIds)throws EntityNotFound{
+        for(Integer imageId : imageIds){
+            Boolean result = this.eventImageDao.deleteImage(imageId);
+            if(!result){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+
+
 
 }
