@@ -42,8 +42,8 @@
                 <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="col-md-6">
                         <label>Logo Name</label>
-                        <input class="form-control" value="${watermark.logoName}" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
-
+                        <input class="form-control" value="${watermark.logoName}" id="logoName" name="logoName  " placeholder="Enter Text Here">
+                        <p class="text-danger" id="errorObj_logoName" style="display: block;"></p>
                     </div>
                     <div class="col-md-6">
                         <label>Logo</label>
@@ -57,10 +57,9 @@
                                 <p id="errorObj_profilePictureToken"></p>
                             </div>
                         </div>
-
                         <c:set value="" var="logoImgSrc" />
                         <c:choose>
-                            <c:when test="${watermark.logoImage==null ||location.logoImage.trim().equals('')}">
+                            <c:when test="${watermark.logoImage==null || watermark.logoImage.trim().equals('')}">
                                 <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
                             </c:when>
                             <c:otherwise>
@@ -92,6 +91,7 @@
 
                             </select>
                         </div>
+                        <p class="text-danger" id="errorObj_placement" style="display: block;"></p>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group timepick">
@@ -104,6 +104,7 @@
                                 <option value="x_large" <c:if test="${watermark.size.equals(Size.x_large) }"> selected </c:if>>X-Large</option>
                             </select>
                         </div>
+                        <p class="text-danger" id="errorObj_size" style="display: block;"></p>
                     </div>
                     <div class="col-md-4">
                         <label>Fade</label><br>
@@ -111,6 +112,7 @@
                             <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="${watermark.fade}" min="0" max="50">
                             <span class="range-slider__value">0</span>
                         </div>
+                        <p class="text-danger" id="errorObj_fade" style="display: block;"></p>
                     </div>
 
 
@@ -121,26 +123,28 @@
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
-                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.logoName}" placeholder="New Watemark">
+                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.txtLogoName}" placeholder="New Watemark">
+                            <p class="text-danger" id="errorObj_txtLogoName" style="display: block;"></p>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Watermark</label><br>
                             <input class="form-control" id="txt_wm_text" name="txt_wm_text" value="${watermark.watermarkText}" placeholder="enter your text watermark">
+                            <p class="text-danger" id="errorObj_watermarkText" style="display: block;"></p>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Font</label><br>
                             <select id="e1" class="txt_font" name="txt_font">
-                                <option value="1" <c:if test="${watermark.font==1}"> selected </c:if>>Myriad Pro</option>
-                                <option value="2" <c:if test="${watermark.font==2}"> selected </c:if>>Times New Roman</option>
-                                <option value="3" <c:if test="${watermark.font==3}"> selected </c:if>>Roboto</option>
-                                <option value="4" <c:if test="${watermark.font==4}"> selected </c:if>>Bebas Nueu</option>
-                                <option value="5" <c:if test="${watermark.font==5}"> selected </c:if>>Aerial</option>
-                                <option value="6" <c:if test="${watermark.font==6}"> selected </c:if>>Gothic Pro</option>
-                                <option value="7" <c:if test="${watermark.font==7}"> selected </c:if>>Fira</option>
+                                <c:forEach var="font" items="${fonts}" >
+                                    <c:set var="fontSelected" value=""></c:set>
+                                    <c:if test="${watermark.font !=null || watermark.font.id == font.id}" >
+                                        <c:set var="fontSelected" value="selected='selected'"></c:set>
+                                    </c:if>
+                                    <option value="${font.id}"  ${fontSelected} >${font.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -148,6 +152,7 @@
                         <div class="form-group timepick">
                             <label>Text Colors</label>
                             <input class="jscolor form-control" id="txt_color" name="txt_color" value="${watermark.color}">
+                            <p class="text-danger" id="errorObj_color" style="display: block;"></p>
                         </div>
                     </div>
                 </div>

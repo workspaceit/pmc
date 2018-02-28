@@ -55,7 +55,7 @@ public class Watermark {
     private String watermarkText;
 
     @ManyToOne
-    @JoinColumn(name = "font_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "font_id", referencedColumnName = "id")
     private Font font;
 
     @Enumerated(EnumType.STRING)

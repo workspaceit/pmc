@@ -1,10 +1,10 @@
 
 function submitWatermark(action) {
-
+    UnBindErrors("errorObj_");
     var data = getWatermarkData();
     console.log(data);
 
-    if(data.type === "image"){
+    /*if(data.type === "image"){
         if(data.name === '' || data.logoName===''||data.logoImgToken===''|| data.placement===''|| data.size===''|| data.fade===''){
             alert("Please fill all the field");
             return false;
@@ -14,7 +14,7 @@ function submitWatermark(action) {
             alert("Please fill all the field");
             return false;
         }
-    }
+    }*/
 
 
 

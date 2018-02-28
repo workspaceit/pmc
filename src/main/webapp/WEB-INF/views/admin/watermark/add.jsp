@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="com.workspaceit.pmc.constant.watermark.Placement" %>
 <t:genericpage>
     <jsp:body>
         <!-- /#page-wrapper -->
@@ -41,7 +42,7 @@
                 <div id="waterMarkImgFile" class="file-tab panel-body">
                     <div class="col-md-6">
                         <label>Logo Name</label>
-                        <input class="form-control" id="img_logo_name" name="img_logo_name" placeholder="Enter Text Here">
+                        <input class="form-control" id="logoName" name="logoName" placeholder="Enter Text Here">
                     </div>
                     <div class="col-md-6">
                         <label>Logo</label>
@@ -51,7 +52,7 @@
                                     <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
                                     <p class="dropext">Click or Drop your file here</p>
                                 </div>
-                                <p id="errorObj_profilePictureToken"></p>
+                                <p class="text-danger" id="errorObj_logoImgToken"></p>
                             </div>
                         </div>
                         <p id="errorObj_locationLogo"  class="text-danger"></p>
@@ -61,15 +62,13 @@
                         <div class="form-group timepick">
                             <label>Placement</label><br>
                             <select id="e-placement" class="img_placement" name="img_placement">
-                                <option value="tl">Top Left</option>
-                                <option value="tc">Top Center</option>
-                                <option value="tr">Top Right</option>
-                                <option value="bl">Bottom Left</option>
-                                <option value="br">Bottom Right</option>
-                                <option value="bc">Bottom Center</option>
 
+                                     <c:forEach var="placement" items="${Placement.values()}">
+                                    <option value="${placement.name()}">${placement.getDisplayName()}</option>
+                                </c:forEach>
                             </select>
                         </div>
+                        <p class="text-danger" id="errorObj_placement"></p>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group timepick">
@@ -82,6 +81,7 @@
                                 <option value="x_large">X-Large</option>
                             </select>
                         </div>
+                        <p class="text-danger" id="errorObj_size"></p>
                     </div>
                     <div class="col-md-4">
                         <label>Fade</label><br>
@@ -89,6 +89,7 @@
                             <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="25" min="0" max="50">
                             <span class="range-slider__value">0</span>
                         </div>
+                        <p class="text-danger" id="errorObj_fade"></p>
                     </div>
                 </div>
                 <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
@@ -96,32 +97,32 @@
                         <div class="form-group timepick">
                             <label>Logo Name</label><br>
                             <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watermark">
+                            <p class="text-danger" id="errorObj_txtLogoName"></p>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Watermark</label><br>
                             <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="enter your text watermark">
+                            <p class="text-danger" id="errorObj_watermarkText"></p>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Font</label><br>
                             <select id="e1" class="txt_font" name="txt_font">
-                                <option value="1">Myriad Pro</option>
-                                <option value="2">Times New Roman</option>
-                                <option value="3">Roboto</option>
-                                <option value="4">Bebas Nueu</option>
-                                <option value="5">Aerial</option>
-                                <option value="6">Gothic Pro</option>
-                                <option value="7">Fira</option>
+                                <c:forEach var="font" items="${fonts}">
+                                    <option value="${font.id}">${font.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
+                        <p class="text-danger" id="errorObj_fontId"></p>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group timepick">
                             <label>Text Colors</label>
                             <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
+                            <p class="text-danger" id="errorObj_color"></p>
                         </div>
                     </div>
                 </div>

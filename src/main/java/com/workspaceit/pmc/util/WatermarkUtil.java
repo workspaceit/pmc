@@ -28,6 +28,8 @@ import java.util.Map;
 
 @Component
 public class WatermarkUtil {
+    String _DEFAUL_FONT_NAME = "Arial";
+
     ImageHelper imageHelper;
     WatermarkTextPositioning watermarkTextPositioning;
     Environment environment;
@@ -92,6 +94,7 @@ public class WatermarkUtil {
 
         float alpha = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
         File sourceImageFile = new File(sourceImagePath);
+        String fontName = (font!=null)?font.getIdentifier():_DEFAUL_FONT_NAME;
         // Water mark text don't have fade value in UI
         // although Max value is 5
 
@@ -109,12 +112,12 @@ public class WatermarkUtil {
 
         }
 
-
+        System.out.println("fontName "+fontName);
 
         AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         g2d.setComposite(alphaChannel);
         g2d.setColor(color);
-        g2d.setFont(new Font("Arial", Font.BOLD, watermarkTextPositioning.getRelativeFontSize(sourceImage.getHeight())));
+        g2d.setFont(new Font(fontName, Font.PLAIN, watermarkTextPositioning.getRelativeFontSize(sourceImage.getHeight())));
         FontMetrics fontMetrics = g2d.getFontMetrics();
         Rectangle2D rect = fontMetrics.getStringBounds(text, g2d);
 

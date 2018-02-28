@@ -176,7 +176,7 @@ function getAllWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
-    var logoName=$("input[name=img_logo_name]").val(); //$("input[name=txt_logo_name]").val();
+    var logoName=$("#logoName").val(); //$("input[name=txt_logo_name]").val();
     var placement=$(".img_placement").val();
     var size=$(".img_font_size").val();
     var fade=$("input[name=img_fade_range]").val();
@@ -205,7 +205,7 @@ function getWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
-    var logoName=$("input[name=img_logo_name]").val();
+    var logoName=$("#logoName").val();
     var txtLogoName=$("#txt_logo_name").val();
     var size=$(".img_font_size").val();
     var fade=$("input[name=img_fade_range]").val();
@@ -231,20 +231,7 @@ function getWatermarkData(){
     };
     return data;
 }
-function previewWatermarkOnSample() {
-    var parameters = getAllWatermarkData();
 
-    if(parameters.type=="image"){
-        if(parameters.logoImgToken==null || parameters.logoImgToken<=0){
-            alert("Logo Required");
-            return;
-        }
-    }
-
-    var url = getWatermarkOnSamplePreviewUrl(parameters);
-
-    $("#watermarkPreviewOnSampleImg").attr("src",url);
-}
 function previewWatermarkOnSample() {
     var parameters = getAllWatermarkData();
 
@@ -262,7 +249,10 @@ function previewWatermarkOnSample() {
 function previewWatermarkOnSampleEdit() {
     var parameters = getAllWatermarkData();
 
-
+    if(parameters.watermarkText==null || parameters.watermarkText.trim() == ""){
+        alert("Watermark text required");
+        return;
+    }
 
     var url = getWatermarkOnSamplePreviewUrlWithId(parameters);
 
