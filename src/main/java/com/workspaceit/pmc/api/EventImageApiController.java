@@ -2,15 +2,13 @@ package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.auth.PhotographerUserDetails;
 import com.workspaceit.pmc.constant.FILE;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.EventImage;
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.TempFile;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.FileService;
+import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.util.JSONPObject;
@@ -47,18 +45,21 @@ public class EventImageApiController {
 
 
     private EventImageService eventImageService;
+    private WatermarkService watermarkService;
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
     }
-
 
     private EventService eventService;
     @Autowired
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
-
+    @Autowired
+    public void setWatermarkService(WatermarkService watermarkService) {
+        this.watermarkService = watermarkService;
+    }
 
     @PostConstruct
     private void initConfiguration(){
@@ -148,6 +149,31 @@ public class EventImageApiController {
         }
     }
 
+    @PostMapping("/add-watermark")
+    public ResponseEntity<?> removeEventImages(@RequestParam("imageIds") List<Integer> imageIds,
+                                               @RequestParam("watermarkId") Integer watermarkId,
+                                               Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        Watermark watermark = watermarkService.getById(watermarkId);
+        try {
+            if(watermark == null){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("No watermark found");
+            }
+            boolean ownership = eventImageService.photographerAssignedOnEvent(imageIds, photographer);
+            if(!ownership){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have permission to do this action");
+            }
+            boolean result = eventImageService.addWatermark(imageIds, watermark);
+            if(!result){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            }
+            List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+            return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+        }catch (EntityNotFound entityNotFound){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
+        }
+    }
 
 
 
