@@ -5,13 +5,10 @@ import com.workspaceit.pmc.constant.watermark.Placement;
 import com.workspaceit.pmc.constant.watermark.Size;
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**

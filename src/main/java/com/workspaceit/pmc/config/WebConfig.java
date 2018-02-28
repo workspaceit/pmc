@@ -15,6 +15,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -49,6 +50,11 @@ public class WebConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.configureMessageConverters(converters);
     }
 
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.setUseSuffixPatternMatch(false);
+    }
+
     @Bean
     public InternalResourceViewResolver resolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -73,6 +79,7 @@ public class WebConfig implements WebMvcConfigurer {
     private List<MediaType> getSupportedMediaTypes() {
         List<MediaType> list = new ArrayList<>();
         list.add(MediaType.IMAGE_PNG);
+        list.add(MediaType.IMAGE_JPEG);
         return list;
     }
     @Bean

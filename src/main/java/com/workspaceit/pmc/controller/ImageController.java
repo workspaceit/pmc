@@ -135,14 +135,12 @@ public class ImageController {
                                              @PathVariable("eventImageId") int eventImageId){
         byte[] imageByte = null;
         try {
-
             imageByte = watermarkService.getImageWithWaterMark(eventImageId,watermarkId);
         }catch (EntityNotFound ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new byte[]{});
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(imageByte);
     }
 

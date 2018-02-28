@@ -12,8 +12,10 @@ import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.FileService;
 import com.workspaceit.pmc.util.ServiceResponse;
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,7 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -135,5 +142,64 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
