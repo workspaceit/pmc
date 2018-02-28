@@ -11,25 +11,30 @@ import com.workspaceit.pmc.service.AdvertisementService;
 import com.workspaceit.pmc.service.AdvertiserService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.util.ServiceResponse;
+import com.workspaceit.pmc.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 
 @RestController
-@RequestMapping("/test"+ControllerUriPrefix.AUTH_API+"/pmv-adv")
+@RequestMapping(ControllerUriPrefix.PUBLIC_API+"/pmv-adv")
+@CrossOrigin
 public class AdvertisementApiController {
 
     private EventService eventService;
     private AdvertiserService advertiserService;
     private AdvertisementService advertisementService;
+    private ValidationUtil validationUtil;
 
     @Autowired
     public void setEventService(EventService eventService) {
@@ -46,11 +51,24 @@ public class AdvertisementApiController {
         this.advertisementService = advertisementService;
     }
 
-    @RequestMapping("/get/{eventId}")
-    public ResponseEntity<?> getAdvertisement(@PathVariable("eventId")int eventId){
-        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+    @Autowired
+    public void setValidationUtil(ValidationUtil validationUtil) {
+        this.validationUtil = validationUtil;
+    }
+
+    @RequestMapping("/get/{eventId}/{limit}/{offset}")
+    public ResponseEntity<?> getAdvertisement(@PathVariable("eventId")int eventId,
+                                            @PathVariable("limit") int limit,
+                                            @PathVariable("offset") int offset){
         Event event;
         Location location;
+        ServiceResponse serviceResponse = this.validationUtil.limitOffsetValidation(limit,offset,10);
+
+        if(serviceResponse.hasErrors()){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
         int locationId = 0;
         try {
             event =  this.eventService.getEvent(eventId);
@@ -67,7 +85,9 @@ public class AdvertisementApiController {
         }
 
 
-        List<Advertiser> advertiserList = this.advertiserService.getByEventAndLocationId(event.getId(),locationId,true);
+        List<Advertiser> advertiserList = this.advertiserService.getByEventAndLocationId(event.getId(),
+                                                                                        locationId,true,
+                                                                                        limit,offset);
 
         List<Integer> advertiserIds = new ArrayList<>();
         if(advertiserList!=null){

@@ -494,6 +494,7 @@ public class WatermarkService {
         watermark.setName(watermarkForm.getName());
         watermark.setType(watermarkForm.getType());
         watermark.setLogoName(watermarkForm.getLogoName());
+        watermark.setTxtLogoName(watermarkForm.getTxtLogoName());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
         watermark.setFade(watermarkForm.getFade());

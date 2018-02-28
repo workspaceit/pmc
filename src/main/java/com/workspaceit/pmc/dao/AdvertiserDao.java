@@ -112,10 +112,27 @@ public class AdvertiserDao extends BaseDao {
                 "LEFT JOIN FETCH a.locations location " +
                 "LEFT JOIN FETCH a.events event " +
                 "WHERE ( location.id=:locationId or " +
+                " event.id=:eventId or" +
+                " a.isAllLocationSelected =true or " +
+                " a.isAllEventSelected = true )" +
+                " and a.active = true ")
+                .setParameter("locationId",locationId)
+                .setParameter("eventId",eventId)
+                .list();
+    }
+    public List<Advertiser> getByEventAndLocationId(int eventId,int locationId,boolean includeAllSelected,int limit,int offset){
+        Session session = this.getCurrentSession();
+
+        return session.createQuery("FROM Advertiser a "+
+                "LEFT JOIN FETCH a.locations location " +
+                "LEFT JOIN FETCH a.events event " +
+                "WHERE ( location.id=:locationId or " +
                         " event.id=:eventId or" +
                         " a.isAllLocationSelected =true or " +
                         " a.isAllEventSelected = true )" +
                         " and a.active = true ")
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .setParameter("locationId",locationId)
                 .setParameter("eventId",eventId)
                 .list();
