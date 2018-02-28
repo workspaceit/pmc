@@ -4,6 +4,7 @@ import com.workspaceit.pmc.constant.FILE;
 import com.workspaceit.pmc.dao.EventImageDao;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
+import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.helper.ImageHelper;
@@ -82,7 +83,7 @@ public class EventImageService {
 
     @Transactional
     public Boolean deleteEventImages(int[] imageIds)throws EntityNotFound{
-        for(Integer imageId : imageIds){
+        for(int imageId : imageIds){
             Boolean result = this.eventImageDao.deleteImage(imageId);
             if(!result){
                 return false;
@@ -91,6 +92,27 @@ public class EventImageService {
         return true;
     }
 
+    @Transactional
+    public Boolean sendImagesToSlideShow(int[] imageIds){
+        for(int imageId : imageIds){
+            Boolean result = this.eventImageDao.sendToSlideShow(imageId);
+            if(!result){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Transactional
+    public Boolean checkOwnerShipOfImages(int[] imageIds, Photographer photographer){
+        for(int imageId : imageIds){
+            EventImage eventImage = this.eventImageDao.getById(imageId);
+            if(eventImage.getCreatedBy().getId()!=photographer.getId()){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 

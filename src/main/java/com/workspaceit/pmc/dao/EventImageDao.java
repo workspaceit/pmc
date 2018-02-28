@@ -45,13 +45,20 @@ public class EventImageDao extends BaseDao {
     public Integer getImageCountForEvent(Event event){
         Session session = this.getCurrentSession();
         Integer count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
-                "ei.event.id=:eventId").setParameter("eventId" , event.getId()).uniqueResult()).intValue();
+                "ei.event.id=:eventId and is_deleted=0").setParameter("eventId" , event.getId()).uniqueResult()).intValue();
         return count;
     }
 
     public Boolean deleteImage(int id){
         EventImage eventImage = this.getById(id);
         eventImage.setDeleted(true);
+        this.update(eventImage);
+        return true;
+    }
+
+    public Boolean sendToSlideShow(int id){
+        EventImage eventImage = this.getById(id);
+        eventImage.setInSlideshow(true);
         this.update(eventImage);
         return true;
     }

@@ -133,6 +133,10 @@ public class EventImageApiController {
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         try {
+            boolean ownership = eventImageService.checkOwnerShipOfImages(imageIds,photographer);
+            if(!ownership){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have access to delete some of the images");
+            }
             boolean result = eventImageService.deleteEventImages(imageIds);
             if(!result){
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
@@ -200,6 +204,15 @@ public class EventImageApiController {
 
 
 
+
+    @PostMapping("/send-to-slideshow")
+    public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") int[] imageIds){
+        boolean result = eventImageService.sendImagesToSlideShow(imageIds);
+        if(!result){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 
 
 }

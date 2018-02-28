@@ -13,14 +13,12 @@ import org.hibernate.validator.constraints.NotBlank;
 public class WatermarkForm
 {
 
-    @NotBlank(message="Name is required")
+
     private String name;
     private WatermarkType type;
 
-    @NotBlank(message="Logo name can not be null")
     private String logoName;
 
-    @NotBlank(message="Logo name can not be null")
     private String txtLogoName;
 
 
@@ -34,7 +32,7 @@ public class WatermarkForm
 
     private String watermarkText;
 
-    private Font font;
+    private Integer fontId;
 
     private Placement placement;
 
@@ -96,12 +94,12 @@ public class WatermarkForm
         this.watermarkText = watermarkText;
     }
 
-    public Font getFont() {
-        return font;
+    public Integer getFontId() {
+        return fontId;
     }
 
-    public void setFont(Font font) {
-        this.font = font;
+    public void setFontId(Integer fontId) {
+        this.fontId = fontId;
     }
 
     public Placement getPlacement() {

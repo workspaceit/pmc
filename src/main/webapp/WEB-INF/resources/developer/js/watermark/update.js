@@ -2,23 +2,7 @@ function submitWatermark(action) {
     var id  = $("#watermarkId").val();
     var data = getWatermarkData();
 
-    if(data.type=="image"){
-        if(data.name === '' || data.logoName===''||data.logoImgToken===''||data.placement===''||data.size===''||data.fade===''){
-            alert("Please fill all the field");
-            return false;
-        }
 
-    }else{
-        if(data.name === '' || data.logoName===''||data.watermarkText===''||data.fontId===''||data.color===''){
-            alert("Please fill all the field");
-            return false;
-        }
-
-    }
-
-
-
-    console.log(data)
     $.ajax({
         url: BASEURL+"api/watermark/update/"+id,
         type: "POST",
