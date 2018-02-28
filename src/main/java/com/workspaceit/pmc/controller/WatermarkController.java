@@ -68,7 +68,7 @@ public class WatermarkController {
     }
 
 
-    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
     public ModelAndView editWatermark(@PathVariable("id") int id){
         Watermark watermark = this.watermarkService.getById(id);
         List<Font> fonts = this.fontService.getAll();
