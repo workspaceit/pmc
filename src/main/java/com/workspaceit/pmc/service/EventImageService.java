@@ -5,6 +5,7 @@ import com.workspaceit.pmc.dao.EventImageDao;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.helper.ImageHelper;
@@ -54,6 +55,11 @@ public class EventImageService {
     @Transactional
     public EventImage getById(Integer id){
         return eventImageDao.getById(id);
+    }
+
+    @Transactional
+    public EventImage getByFileName(String fileName){
+        return eventImageDao.getByFileName(fileName);
     }
 
     @Transactional
@@ -114,8 +120,32 @@ public class EventImageService {
         return true;
     }
 
+    @Transactional
+    public List<EventImage> getImagesByIds(List<Integer> imageIds){
+        List<EventImage> eventImages = this.eventImageDao.getByIds(imageIds);
+        return eventImages;
+    }
 
+    @Transactional
+    public Boolean photographerAssignedOnEvent(List<Integer> imageIds, Photographer photographer){
+        List<EventImage> eventImages = this.eventImageDao.getByIds(imageIds);
+        Boolean exists = false;
+        for(EventImage eventImage: eventImages){
+            for(Photographer ePhotographer: eventImage.getEvent().getPhotographers()){
+                if(ePhotographer.getId() == photographer.getId()){
+                    exists = true;
+                    break;
+                }
+            }
+        }
+        return exists;
+    }
 
+    @Transactional
+    public Boolean addWatermark(List<Integer> imageIds, Watermark watermark)throws EntityNotFound{
+        Boolean result = this.eventImageDao.addWatermarkToImages(imageIds, watermark);
+        return result;
+    }
 
 
 }

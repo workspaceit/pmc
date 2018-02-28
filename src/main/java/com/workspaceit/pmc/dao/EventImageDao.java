@@ -3,6 +3,7 @@ package com.workspaceit.pmc.dao;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.EventImage;
+import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -34,10 +35,26 @@ public class EventImageDao extends BaseDao {
         session.disableFilter("activeImages");
         return  eventImages;
     }
+
     public EventImage getById(int id){
         Session session = this.getCurrentSession();
         return (EventImage)session.createQuery("FROM EventImage  WHERE id=:id")
                 .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+
+    public List<EventImage> getByIds(List<Integer> ids){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM EventImage  WHERE id IN (:ids)")
+                .setParameterList("ids", ids)
+                .list();
+    }
+
+    public EventImage getByFileName(String fileName){
+        Session session = this.getCurrentSession();
+        return (EventImage)session.createQuery("FROM EventImage  WHERE image=:fileName")
+                .setParameter("fileName", fileName)
                 .setMaxResults(1)
                 .uniqueResult();
     }
@@ -61,6 +78,15 @@ public class EventImageDao extends BaseDao {
         eventImage.setInSlideshow(true);
         this.update(eventImage);
         return true;
+    }
+
+    public Boolean addWatermarkToImages(List<Integer> eventImageIds, Watermark watermark){
+        Session session = this.getCurrentSession();
+        int i = session.createQuery("UPDATE EventImage ei SET ei.watermark.id=:watermarkId WHERE ei.id IN (:eventImageIds)")
+                .setParameter("watermarkId", watermark.getId()).setParameterList("eventImageIds", eventImageIds)
+                .executeUpdate();
+        System.out.println("i: " + i);
+        return i > 0;
     }
 
 }

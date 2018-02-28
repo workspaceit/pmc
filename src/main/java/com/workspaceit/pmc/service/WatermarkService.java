@@ -467,15 +467,15 @@ public class WatermarkService {
         Map<WATERMARK_ATTR,Object>  data = this.watermarkHelper.convertToMap(watermark);
         if(watermarkType!=null && watermarkType.equals(WatermarkType.image)){
 
-            watermarkedImage =  this.watermarkUtil.addWatermarkLogo(environment.getCommonFilePath()+"/"+eventImage.getImage(),watermark);
+            watermarkedImage =  this.watermarkUtil.addWatermarkLogo(environment.getEventImagePath()+"/web/"+eventImage.getImage(),watermark);
 
         }else if(watermarkType!=null && watermarkType.equals(WatermarkType.text)){
-            watermarkedImage =  this.watermarkUtil.addWatermarkText(environment.getCommonFilePath()+"/"+eventImage.getImage(),data);
+            watermarkedImage =  this.watermarkUtil.addWatermarkText(environment.getEventImagePath()+"/web/"+eventImage.getImage(),data);
         }
 
 
         if(watermarkedImage!=null){
-            ImageIO.write( watermarkedImage, "png", outputStream );
+            ImageIO.write( watermarkedImage, "jpg", outputStream );
         }
 
         outputStream.flush();
