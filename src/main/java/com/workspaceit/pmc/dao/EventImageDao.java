@@ -34,10 +34,19 @@ public class EventImageDao extends BaseDao {
         session.disableFilter("activeImages");
         return  eventImages;
     }
+
     public EventImage getById(int id){
         Session session = this.getCurrentSession();
         return (EventImage)session.createQuery("FROM EventImage  WHERE id=:id")
                 .setParameter("id",id)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+
+    public EventImage getByFileName(String fileName){
+        Session session = this.getCurrentSession();
+        return (EventImage)session.createQuery("FROM EventImage  WHERE image=:fileName")
+                .setParameter("fileName", fileName)
                 .setMaxResults(1)
                 .uniqueResult();
     }

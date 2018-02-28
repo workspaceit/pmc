@@ -119,6 +119,7 @@ public class EventImageApiController {
             Event event = eventService.getById(eventId);
             eventImage.setEvent(event);
             eventImage.setInSlideshow(false);
+            eventImage.setDeleted(false);
             eventImageService.saveEventImage(eventImage);
 
         } catch(IOException e) {

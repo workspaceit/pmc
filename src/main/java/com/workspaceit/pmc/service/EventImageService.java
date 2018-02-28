@@ -57,6 +57,11 @@ public class EventImageService {
     }
 
     @Transactional
+    public EventImage getByFileName(String fileName){
+        return eventImageDao.getByFileName(fileName);
+    }
+
+    @Transactional
     public EventImage getEventImage(Integer id)throws EntityNotFound{
         EventImage eventImage = this.eventImageDao.getById(id);
         if(eventImage==null){
