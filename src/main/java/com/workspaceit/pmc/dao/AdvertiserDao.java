@@ -129,8 +129,8 @@ public class AdvertiserDao extends BaseDao {
                 "WHERE ( location.id=:locationId or " +
                         " event.id=:eventId or" +
                         " a.isAllLocationSelected =true or " +
-                        " a.isAllEventSelected = true )" +
-                        " and a.active = true ")
+                        " a.isAllEventSelected = true ) and" +
+                        "  a.active = true ")
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .setParameter("locationId",locationId)

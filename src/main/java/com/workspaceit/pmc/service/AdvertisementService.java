@@ -54,6 +54,33 @@ public class AdvertisementService {
         return advertisementMap;
     }
     @Transactional
+    public Advertisement getByAdvertiserIdAndType(int advertiserId,ADVERTISEMENT_TYPE adType){
+        Advertisement advertisement  =  this.advertisementDao.getByAdvertiserIdAndType(advertiserId,adType);
+        return advertisement;
+    }
+    @Transactional
+    public List<Advertisement> getByAdvertiserIdAndType(List<Integer> advertiserIds,ADVERTISEMENT_TYPE adType){
+        List<Advertisement> advertisements = new ArrayList<>();
+        for(Integer advertiserId:advertiserIds){
+
+            Advertisement advertisement = this.getByAdvertiserIdAndType(advertiserId,adType);
+            advertisements.add(advertisement);
+        }
+
+        return advertisements;
+    }
+    @Transactional
+    public List<Map<ADVERTISEMENT_TYPE,Advertisement>> getMapByAdvertiserId(List<Integer> advertiserIds,ADVERTISEMENT_TYPE adType){
+        List<Map<ADVERTISEMENT_TYPE,Advertisement>> advertisements = new ArrayList<>();
+        for(Integer advertiserId:advertiserIds){
+
+            Map<ADVERTISEMENT_TYPE,Advertisement> advertisementMap = this.getMapByAdvertiserId(advertiserId);
+            advertisements.add(advertisementMap);
+        }
+
+        return advertisements;
+    }
+    @Transactional
     public List<Map<ADVERTISEMENT_TYPE,Advertisement>> getMapByAdvertiserId(List<Integer> advertiserIds){
         List<Map<ADVERTISEMENT_TYPE,Advertisement>> advertisements = new ArrayList<>();
         for(Integer advertiserId:advertiserIds){
@@ -64,6 +91,7 @@ public class AdvertisementService {
 
         return advertisements;
     }
+
     @Transactional(rollbackFor = Exception.class)
     public Advertisement create(int advertiserId, ADVERTISEMENT_TYPE adType, Admin admin){
         Advertisement advertisement = new Advertisement();

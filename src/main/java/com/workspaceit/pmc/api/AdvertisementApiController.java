@@ -98,5 +98,41 @@ public class AdvertisementApiController {
         return ResponseEntity.ok(advertisementList);
     }
 
+    @RequestMapping("/get/{type}/{eventId}/{limit}/{offset}")
+    public ResponseEntity<?> getAdvertisementByEventIdAndType(@PathVariable("eventId")int eventId,
+                                                     @PathVariable("type") String type,
+                                                     @PathVariable("limit") int limit,
+                                                     @PathVariable("offset") int offset){
 
+        ADVERTISEMENT_TYPE adType = null;
+
+        ServiceResponse serviceResponse = this.validationUtil.limitOffsetValidation(limit,offset,10);
+
+        if(serviceResponse.hasErrors()){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        }
+
+        List<Advertiser> advertiserList;
+        try {
+            adType = ADVERTISEMENT_TYPE.getFromString(type);
+            advertiserList = this.advertiserService.getByEventAndLocationId(eventId,true,
+                    limit,offset);
+
+        } catch (EntityNotFound entityNotFound) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body(serviceResponse
+                            .setMsg("eventId",entityNotFound.getMessage())
+                            .getFormError());
+
+        }
+
+        List<Integer> advertiserIds = new ArrayList<>();
+        if(advertiserList!=null && advertiserList.size()>0){
+            advertiserList.stream().forEach(advertiser -> advertiserIds.add(advertiser.getId()));
+        }
+
+        List<Advertisement> advertisementList = this.advertisementService.getByAdvertiserIdAndType(advertiserIds,adType);
+
+        return ResponseEntity.ok(advertisementList);
+    }
 }
