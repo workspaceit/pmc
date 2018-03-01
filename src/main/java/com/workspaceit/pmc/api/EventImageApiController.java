@@ -150,7 +150,7 @@ public class EventImageApiController {
     }
 
     @PostMapping("/add-watermark")
-    public ResponseEntity<?> removeEventImages(@RequestParam("imageIds") List<Integer> imageIds,
+    public ResponseEntity<?> addWatermark(@RequestParam("imageIds") List<Integer> imageIds,
                                                @RequestParam("watermarkId") Integer watermarkId,
                                                Authentication authentication){
         Object principle = authentication.getPrincipal();
@@ -165,6 +165,27 @@ public class EventImageApiController {
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have permission to do this action");
             }
             boolean result = eventImageService.addWatermark(imageIds, watermark);
+            if(!result){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            }
+            List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+            return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+        }catch (EntityNotFound entityNotFound){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
+        }
+    }
+
+    @PostMapping("/remove-watermark")
+    public ResponseEntity<?> removeWatermark(@RequestParam("imageIds") List<Integer> imageIds,
+                                               Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        try {
+            boolean ownership = eventImageService.photographerAssignedOnEvent(imageIds, photographer);
+            if(!ownership){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have permission to do this action");
+            }
+            boolean result = eventImageService.removeWatermark(imageIds);
             if(!result){
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
             }

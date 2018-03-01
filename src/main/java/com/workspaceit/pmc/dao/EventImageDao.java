@@ -89,4 +89,13 @@ public class EventImageDao extends BaseDao {
         return i > 0;
     }
 
+    public Boolean removeWatermarkFromImages(List<Integer> eventImageIds){
+        Session session = this.getCurrentSession();
+        int i = session.createQuery("UPDATE EventImage ei SET ei.watermark.id=null WHERE ei.id IN (:eventImageIds)")
+                .setParameterList("eventImageIds", eventImageIds)
+                .executeUpdate();
+        System.out.println("total updated rows: " + i);
+        return true;
+    }
+
 }

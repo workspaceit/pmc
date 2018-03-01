@@ -147,5 +147,10 @@ public class EventImageService {
         return result;
     }
 
+    @Transactional
+    public Boolean removeWatermark(List<Integer> imageIds)throws EntityNotFound{
+        Boolean result = this.eventImageDao.removeWatermarkFromImages(imageIds);
+        return result;
+    }
 
 }
