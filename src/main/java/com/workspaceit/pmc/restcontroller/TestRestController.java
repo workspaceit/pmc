@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -67,6 +69,15 @@ public class TestRestController {
         System.out.println(event.getWatermarks());
         return event;
     }
+    @RequestMapping(value = "/monthwise-event-image-count")
+    private ResponseEntity<?> getMonthWiseEventImageCount(){
+        List<Integer> monthdata = new ArrayList<Integer>();
+        System.out.println("adfsdas---------d");
+        System.out.println(this.eventImageService);
+        monthdata = this.eventImageService.getMonthWiseEventImageCount();
+        return ResponseEntity.status(HttpStatus.OK).body(monthdata);
+    }
+
 
 //    anik
 

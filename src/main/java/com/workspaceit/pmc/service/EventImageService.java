@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +169,33 @@ public class EventImageService {
     public Boolean removeWatermark(List<Integer> imageIds)throws EntityNotFound{
         Boolean result = this.eventImageDao.removeWatermarkFromImages(imageIds);
         return result;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Integer> getMonthWiseEventImageCount(){
+        System.out.println("fsdfsdfs");
+        List<Object[]> rows= this.eventImageDao.getMonthWiseEventImageCount();
+        List<Integer> monthdata = new ArrayList<Integer>();
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        monthdata.add(0);
+        for (Object[] row:rows) {
+            int index = Integer.parseInt(row[0].toString())-1;
+            int data = Integer.parseInt(row[1].toString());
+            System.out.println(index);
+            System.out.println(data);
+            monthdata.set(index,data);
+        }
+        return monthdata;
     }
 
 }

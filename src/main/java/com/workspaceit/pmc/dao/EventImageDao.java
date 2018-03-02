@@ -5,6 +5,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -135,6 +136,13 @@ public class EventImageDao extends BaseDao {
                 .executeUpdate();
         System.out.println("total updated rows: " + i);
         return true;
+    }
+
+    public List<Object[]> getMonthWiseEventImageCount(){
+        Session session = this.getCurrentSession();
+        SQLQuery query = session.createSQLQuery("select month(`created_at`) as month, count(id) as total from event_images group by 1 order by month");
+        List<Object[]> rows = query.list();
+        return rows;
     }
 
 }

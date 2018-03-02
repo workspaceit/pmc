@@ -182,6 +182,17 @@
         <script>
 
             $(document).ready(function () {
+                    $.ajax({
+                        url:BASEURL+'test/api/monthwise-event-image-count',
+                        type:'GET',
+                        success:function (data) {
+                            console.log(data);
+                            renderGraph(data);
+                        }
+                    });
+            });
+
+            function renderGraph(data){
                 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 var config = {
                     type: 'line',
@@ -189,20 +200,12 @@
                         labels: MONTHS,
                         datasets: [
                             {
-                            label: 'Photo Uploaded',
-                            fill: false,
-                            backgroundColor: window.chartColors.blue,
-                            borderColor: window.chartColors.blue,
-                            data: [
-                                randomScalingFactor(),
-                                randomScalingFactor(),
-                                randomScalingFactor(),
-                                randomScalingFactor(),
-                                randomScalingFactor(),
-                                randomScalingFactor(),
-                                randomScalingFactor()
-                            ]
-                        }]
+                                label: 'Photo Uploaded',
+                                fill: false,
+                                backgroundColor: window.chartColors.blue,
+                                borderColor: window.chartColors.blue,
+                                data: data
+                            }]
                     },
                     options: {
                         responsive: true,
@@ -238,7 +241,7 @@
                 };
                 var ctx =$('#canvas');
                 var myChart = new Chart(ctx,config);
-            });
+            }
         </script>
         <script src="<s:url value="/resources/js/Chart.js"/>"></script>
         <script src="<s:url value="/resources/js/chart-utils.js"/>"></script>

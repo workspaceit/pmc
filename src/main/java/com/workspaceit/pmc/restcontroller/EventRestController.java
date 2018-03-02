@@ -10,6 +10,7 @@ import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.AdminService;
+import com.workspaceit.pmc.service.DashboardService;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.util.ServiceResponse;
@@ -28,9 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -45,7 +44,11 @@ public class EventRestController {
     private EventService eventService;
     private EventValidator eventValidator;
     private EventImageService eventImageService;
+    @Autowired
+    private DashboardService dashboardService;
     private Set<String> imgAllowedMimeType;
+
+
 
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
@@ -210,6 +213,16 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         return ResponseEntity.status(HttpStatus.OK).body(event);
+    }
+
+
+    @RequestMapping(value = "/monthwise-event-image-count")
+    private ResponseEntity<?> getMonthWiseEventImageCount(){
+        List<Integer> monthdata = new ArrayList<Integer>();
+        System.out.println("adfsdas---------d");
+        System.out.println(this.eventImageService);
+        monthdata = this.eventImageService.getMonthWiseEventImageCount();
+        return ResponseEntity.status(HttpStatus.OK).body(monthdata);
     }
 
 }
