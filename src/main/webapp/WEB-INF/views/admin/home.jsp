@@ -211,7 +211,7 @@
                         responsive: true,
                         title: {
                             display: true,
-                            text: 'Chart.js Line Chart'
+                            text: 'Photo Uploaded'
                         },
                         tooltips: {
                             mode: 'index',
