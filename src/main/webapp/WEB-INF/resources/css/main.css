@@ -1154,3 +1154,15 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     background: #cdcdcd;
     opacity: 0.5;
 }
+
+.option_img {
+    width: 25%;
+    padding: 5px;
+    border: 1px solid #cdcdcd;
+    border-radius: 5px;
+}
+.option_text {
+    width: 75%;
+    font-size: 18px;
+    font-weight: 500;
+}

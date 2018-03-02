@@ -170,10 +170,23 @@ $(document).ready(function () {
         update('save-new');
     });
 
+    function select2FormatState (state) {
+        // console.log(state);
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "/common";
+        var $state = $(
+            '<span><label class="option_text">' + state.text + '</label><img src="' + baseUrl + '/' + state.logo + '"  class="option_img" />' + '</span>'
+        );
+        return $state;
+    };
+
     $("#watermark-select2").select2({
         placeholder: 'Select Watermark(s)',
-        multiple: true,
-//                    minimumInputLength: 1,
+        templateResult: select2FormatState,
+        // multiple: true,
+        // minimumInputLength: 1,
         width: 'resolve',
         hideSelectionFromResult: true,
         ajax: {
@@ -194,12 +207,15 @@ $(document).ready(function () {
                     results: $.map(data, function (item) {
                         return {
                             'text': item.name,
-                            'id': item.id
+                            'id': item.id,
+                            'logo': item.logoImage
                         }
                     })
                 };
             }
         }
+    }).on('change', function (e) {
+        // console.log($(this));
     });
     var locationSelect2 = $("#locationIds").select2({
         placeholder: 'Select a Location',

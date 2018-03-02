@@ -179,14 +179,25 @@
                                 </div>
                                 <div class="panel-body">
                                     <div style="width: 100%">
-                                        <select id="watermark-select2" name="watermarkIds" multiple="true" style="width: 100%;" tabindex="-1"
+                                        <select id="watermark-select2" name="watermarkIds" style="width: 100%;" tabindex="-1"
                                                 class="select2-hidden-accessible" aria-hidden="true">
                                             <c:forEach var="watermark" items="${event.watermarks}">
-                                                <option selected value="${watermark.id}">${watermark.name}</option>
+                                                <option selected value="${watermark.id}">
+                                                    <label>${watermark.name}</label>
+                                                    <img src="<s:url value="/common/${watermark.logoImage}"/>"
+                                                         class="option_img" alt="No Image"/>
+                                                </option>
                                             </c:forEach>
                                         </select>
                                     </div>
 
+                                </div>
+                                <div>
+                                    <label>Current Watermark</label>
+                                    <c:forEach var="watermark" items="${event.watermarks}">
+                                        <img src="<s:url value="/common/${watermark.logoImage}"/>" alt="No Image"
+                                             class="img-responsive"/>
+                                    </c:forEach>
                                 </div>
                             </div>
                             <div style="text-align: center;">
