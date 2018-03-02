@@ -183,7 +183,7 @@
 
             $(document).ready(function () {
                     $.ajax({
-                        url:BASEURL+'test/api/monthwise-event-image-count',
+                        url:BASEURL+'api/event/monthwise-event-image-count',
                         type:'GET',
                         success:function (data) {
                             console.log(data);
