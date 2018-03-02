@@ -217,7 +217,7 @@ public class EventRestController {
 
 
     @RequestMapping(value = "/monthwise-event-image-count")
-    private ResponseEntity<?> getMonthWiseEventImageCount(){
+    public ResponseEntity<?> getMonthWiseEventImageCount(){
         List<Integer> monthdata = new ArrayList<Integer>();
         System.out.println("adfsdas---------d");
         System.out.println(this.eventImageService);
