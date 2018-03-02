@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class EventController {
     private EventService eventService;
     private LocationService locationService;
     private StateService stateService;
+    private EventImageService eventImageService;
 
     /** For Location modal*/
     private List<Double> fadeInList;
@@ -35,6 +37,10 @@ public class EventController {
 
     private Set<Integer> durations;
 
+    @Autowired
+    public void setEventImageService(EventImageService eventImageService) {
+        this.eventImageService = eventImageService;
+    }
 
     @Autowired
     public void setVenueService(VenueService venueService) {
@@ -128,5 +134,18 @@ public class EventController {
 
         return model;
     }
+
+    @RequestMapping(value = "/gallery/{eventId}")
+    public ModelAndView gallery(@PathVariable("eventId") int eventId){
+        Event event = this.eventService.getById(eventId);
+        List<EventImage> eventImages = this.eventImageService.getEventImages(eventId);
+        int imageCount = this.eventImageService.getImageCountForEvent(event);
+        ModelAndView modelAndView = new ModelAndView("admin/event/gallery");
+        modelAndView.addObject("event", event);
+        modelAndView.addObject("eventImages", eventImages);
+        modelAndView.addObject("imageCount", imageCount);
+        return modelAndView;
+    }
+
 
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +36,20 @@ public class EventImageDao extends BaseDao {
         session.disableFilter("activeImages");
         return  eventImages;
     }
+    public List<EventImage> getEventImagesByCriteria(Integer eventId){
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeImages");
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<EventImage> criteriaQuery = builder.createQuery(EventImage.class);
+        Root<EventImage> eventImageRoot = criteriaQuery.from(EventImage.class);
+
+        criteriaQuery.where(builder.equal(eventImageRoot.get("event").get("id"), eventId));
+        criteriaQuery.orderBy(builder.desc(eventImageRoot.get("id")));
+        Query query = session.createQuery(criteriaQuery);
+        List<EventImage> eventImages = query.getResultList();
+        session.disableFilter("activeImages");
+        return  eventImages;
+    }
     public EventImage getById(int id){
         Session session = this.getCurrentSession();
         return (EventImage)session.createQuery("FROM EventImage  WHERE id=:id")
@@ -45,7 +61,30 @@ public class EventImageDao extends BaseDao {
     public Integer getImageCountForEvent(Event event){
         Session session = this.getCurrentSession();
         Integer count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
-                "ei.event.id=:eventId and is_deleted=0").setParameter("eventId" , event.getId()).uniqueResult()).intValue();
+                "ei.event.id=:eventId and ei.isDeleted=0").setParameter("eventId" , event.getId()).uniqueResult()).intValue();
+        return count;
+    }
+
+    public  Integer getAllImageCount(int days){
+        Integer count=0;
+        Session session = this.getCurrentSession();
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, (-1)*days);
+        Date d = c.getTime();
+        count= ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
+                "ei.isDeleted=0 and ei.createdAt > :date")
+                .setParameter("date",d)
+                .uniqueResult()).intValue();
+
+        return count;
+    }
+
+    public Integer getAllImageCount(){
+        Integer count=0;
+        Session session = this.getCurrentSession();
+        count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
+                    "ei.isDeleted=0").uniqueResult()).intValue();
+
         return count;
     }
 

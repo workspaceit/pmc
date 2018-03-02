@@ -2,6 +2,7 @@ package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Photographer;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.*;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +32,16 @@ public class EventDao extends BaseDao {
         session.disableFilter("activeEvents");
         return count;
     }
+    public Integer getActiveEventCount(int days){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, (-1)*days);
+        Date d = c.getTime();
+        Session session = this.getCurrentSession();
+        session.enableFilter("activeEvents");
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e WHERE e.createdAt > :date").setParameter("date",d).uniqueResult()).intValue();
+        session.disableFilter("activeEvents");
+        return count;
+    }
     public List<Event> getActiveEvents(int limit,int offset){
         Session session = this.getCurrentSession();
         session.enableFilter("activeEvents");
@@ -40,6 +52,14 @@ public class EventDao extends BaseDao {
         session.disableFilter("activeEvents");
         return events;
     }
+
+    public List<Object[]> getActiveEventsWithImageCount(){
+        Session session = this.getCurrentSession();
+        SQLQuery query = session.createSQLQuery("select id, name, created_at, active ,(select count(id) from event_images ei where e.id = ei.event_id and is_deleted=0) as no_of_images from events e order by e.id desc limit 5");
+        List<Object[]> rows = query.list();
+        return rows;
+    }
+
     public List<Event> getActiveEvents(){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Event WHERE active=true ORDER BY id DESC")

@@ -112,6 +112,32 @@ public class FileUtil {
 		return fileRes;
 	}
 
+	public Map<FILE,String> saveEventLogoFile(MultipartFile multipartFile, String fileExtension) throws IOException{
+		byte[] fileByte = multipartFile.getBytes();
+		Map<FILE,String> fileRes = new HashMap<>();
+		String fileName = System.nanoTime()+"."+fileExtension;
+		String filePath = this.env.getCommonFilePath()+"/"+fileName;
+		FileOutputStream fileOutPutStream = null;
+		try {
+			File file = new File(filePath);
+			fileOutPutStream = new FileOutputStream(file);
+			fileOutPutStream.write(fileByte);
+			fileOutPutStream.flush();
+
+
+		}catch (FileNotFoundException e) {
+			throw new FileNotFoundException("File not found in path "+filePath);
+		} catch (IOException e) {
+			throw new IOException("Unable to write byte "+filePath);
+		}finally {
+			if(fileOutPutStream!=null)fileOutPutStream.close();
+		}
+
+		fileRes.put(FILE.NAME,fileName);
+		fileRes.put(FILE.PATH,filePath);
+		return fileRes;
+	}
+
 	public boolean deleteFile(String filePath){
 		File file = new File(filePath);
 		if(file.exists()){

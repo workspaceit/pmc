@@ -211,5 +211,9 @@ public class EventService {
         eventDao.update(event);
         return event;
     }
+    @Transactional
+    public void update(Event event){
+        this.eventDao.update(event);
+    }
 
 }

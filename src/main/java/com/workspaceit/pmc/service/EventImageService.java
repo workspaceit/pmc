@@ -47,6 +47,12 @@ public class EventImageService {
     }
 
     @Transactional
+    public List<EventImage> getEventImages(Integer eventId){
+        return eventImageDao.getEventImagesByCriteria(eventId);
+    }
+
+
+    @Transactional
     public Integer getImageCountForEvent(Event event) {
         return eventImageDao.getImageCountForEvent(event);
     }
@@ -74,6 +80,17 @@ public class EventImageService {
         Map<FILE,String> fileInfo = new HashMap<>();
         String fileExtension = FileHelper.getExtension(multipartFile);
         Map<FILE,String> fileInf =  this.fileUtil.saveEventImageFile(multipartFile, fileExtension);
+        String fileName = fileInf.get(FILE.NAME);
+        String filePath = fileInf.get(FILE.PATH);
+        fileInfo.put(FILE.NAME,fileName);
+        fileInfo.put(FILE.PATH,filePath);
+        return fileInf;
+    }
+
+    public Map<FILE,String> saveEventLogoFile(MultipartFile multipartFile) throws IOException {
+        Map<FILE,String> fileInfo = new HashMap<>();
+        String fileExtension = FileHelper.getExtension(multipartFile);
+        Map<FILE,String> fileInf =  this.fileUtil.saveEventLogoFile(multipartFile, fileExtension);
         String fileName = fileInf.get(FILE.NAME);
         String filePath = fileInf.get(FILE.PATH);
         fileInfo.put(FILE.NAME,fileName);
