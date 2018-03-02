@@ -198,6 +198,19 @@ public class AdvertiserService {
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId);
     }
     @Transactional
+    public List<Advertiser> getByEventAndLocationId(int eventId,int locationId,boolean includeAllSelected,int limit,int offset){
+        offset = limit*offset;
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected,limit,offset);
+    }
+    @Transactional
+    public List<Advertiser> getByEventAndLocationId(int eventId,boolean includeAllSelected,int limit,int offset) throws EntityNotFound {
+        Event event =  this.eventService.getEvent(eventId);
+        Location location = event.getLocation();
+        int locationId = (location!=null)?location.getId():0;
+
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected,limit,offset);
+    }
+    @Transactional
     public List<Advertiser> getByEventAndLocationId(int eventId,int locationId,boolean includeAllSelected){
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected);
     }
@@ -209,10 +222,12 @@ public class AdvertiserService {
         }
         return advertisers.stream().map(Advertiser::getId).collect(Collectors.toList());
     }
+
     @Transactional
     public List<Advertiser> getByLocationId(int locationId){
         return this.advertiserDao.getByLocationId(locationId);
     }
+
     @Transactional
     public List<Integer> getIdByLocationId(int locationId){
         List<Advertiser> advertisers =  this.getByLocationId(locationId);

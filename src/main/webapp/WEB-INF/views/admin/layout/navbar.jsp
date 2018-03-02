@@ -57,14 +57,14 @@
                     <ul class="dropdown-menu">
                         <li><a href="<c:url value="/admin/user/add" />">Add a new Admin</a></li>
                         <li><a href="<c:url value="/admin/location/add" />">Add New Location</a></li>
-                        <li><a href="<c:url value="/admin/venue/add" />"> Add New Venue</a></li>
+                        <%--<li><a href="<c:url value="/admin/venue/add" />"> Add New Venue</a></li>--%>
                         <li><a href="<c:url value="/admin/photographer/add" />">Add New Photographer</a></li>
                         <li><a href="<c:url value="/admin/photographer/all" />">Photographers</a></li>
                         <li><a href="<c:url value="/admin/location/all" />">Locations</a></li>
                         <li><a href="<c:url value="/admin/user/all" />">Admins</a></li>
                         <li><a href="<c:url value="/admin/advertiser/all" />">Advertisers</a></li>
                         <li><a href="<c:url value="/admin/watermark/all" />">Watermarks</a></li>
-                        <li><a href="<c:url value="/admin/venue/all" />">Venues</a></li>
+                        <%--<li><a href="<c:url value="/admin/venue/all" />">Venues</a></li>--%>
                         <li><a href="<c:url value="/admin/event/all" />">Events</a></li>
                     </ul>
                 </li>

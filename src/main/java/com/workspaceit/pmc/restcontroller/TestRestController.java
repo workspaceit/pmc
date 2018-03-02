@@ -1,19 +1,22 @@
 package com.workspaceit.pmc.restcontroller;
 
+import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.Venue;
-import com.workspaceit.pmc.service.EventService;
-import com.workspaceit.pmc.service.LocationService;
-import com.workspaceit.pmc.service.VenueService;
+import com.workspaceit.pmc.entity.EventImage;
+import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.service.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 
 /**
  * Created by anik on 2/6/18.
@@ -27,6 +30,14 @@ public class TestRestController {
     private LocationService locationService;
     private VenueService venueService;
     private EventService eventService;
+    private Environment env;
+    private EventImageService eventImageService;
+    private WatermarkService watermarkService;
+
+    @Autowired
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
 
     @Autowired
     public void setLocationService(LocationService locationService) {
@@ -40,6 +51,14 @@ public class TestRestController {
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
+    @Autowired
+    public void setEventImageService(EventImageService eventImageService) {
+        this.eventImageService = eventImageService;
+    }
+    @Autowired
+    public void setWatermarkService(WatermarkService watermarkService) {
+        this.watermarkService = watermarkService;
+    }
 
     @GetMapping("/events/{id}")
     public Event getEventById(@PathVariable Integer id) {
@@ -48,5 +67,8 @@ public class TestRestController {
         System.out.println(event.getWatermarks());
         return event;
     }
+
+//    anik
+
 
 }

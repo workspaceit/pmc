@@ -248,10 +248,11 @@ function previewWatermarkOnSample() {
 }
 function previewWatermarkOnSampleEdit() {
     var parameters = getAllWatermarkData();
-
-    if(parameters.watermarkText==null || parameters.watermarkText.trim() == ""){
-        alert("Watermark text required");
-        return;
+    if(parameters.type=="text") {
+        if (parameters.watermarkText == null || parameters.watermarkText.trim() == "") {
+            alert("Watermark text required");
+            return;
+        }
     }
 
     var url = getWatermarkOnSamplePreviewUrlWithId(parameters);

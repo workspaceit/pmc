@@ -7,4 +7,5 @@ public class ControllerUriPrefix {
     public final static String API = "/api";
     public final static String ADMIN = "/admin";
     public final static String AUTH_API = "/auth/api";
+    public final static String PUBLIC_API = "/public/api";
 }

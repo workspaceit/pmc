@@ -2,18 +2,18 @@ package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.auth.PhotographerUserDetails;
 import com.workspaceit.pmc.constant.FILE;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.EventImage;
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.TempFile;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.FileService;
+import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.util.ServiceResponse;
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,7 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,18 +45,21 @@ public class EventImageApiController {
 
 
     private EventImageService eventImageService;
+    private WatermarkService watermarkService;
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
     }
-
 
     private EventService eventService;
     @Autowired
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
-
+    @Autowired
+    public void setWatermarkService(WatermarkService watermarkService) {
+        this.watermarkService = watermarkService;
+    }
 
     @PostConstruct
     private void initConfiguration(){
@@ -112,6 +120,7 @@ public class EventImageApiController {
             Event event = eventService.getById(eventId);
             eventImage.setEvent(event);
             eventImage.setInSlideshow(false);
+            eventImage.setDeleted(false);
             eventImageService.saveEventImage(eventImage);
 
         } catch(IOException e) {
@@ -140,6 +149,110 @@ public class EventImageApiController {
         }
     }
 
+    @PostMapping("/add-watermark")
+    public ResponseEntity<?> addWatermark(@RequestParam("imageIds") List<Integer> imageIds,
+                                               @RequestParam("watermarkId") Integer watermarkId,
+                                               Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        Watermark watermark = watermarkService.getById(watermarkId);
+        try {
+            if(watermark == null){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("No watermark found");
+            }
+            boolean ownership = eventImageService.photographerAssignedOnEvent(imageIds, photographer);
+            if(!ownership){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have permission to do this action");
+            }
+            boolean result = eventImageService.addWatermark(imageIds, watermark);
+            if(!result){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            }
+            List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+            return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+        }catch (EntityNotFound entityNotFound){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
+        }
+    }
+
+    @PostMapping("/remove-watermark")
+    public ResponseEntity<?> removeWatermark(@RequestParam("imageIds") List<Integer> imageIds,
+                                               Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        try {
+            boolean ownership = eventImageService.photographerAssignedOnEvent(imageIds, photographer);
+            if(!ownership){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("You don't have permission to do this action");
+            }
+            boolean result = eventImageService.removeWatermark(imageIds);
+            if(!result){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            }
+            List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+            return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+        }catch (EntityNotFound entityNotFound){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @PostMapping("/send-to-slideshow")
     public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") int[] imageIds){
         boolean result = eventImageService.sendImagesToSlideShow(imageIds);
@@ -148,5 +261,6 @@ public class EventImageApiController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
 
 }
