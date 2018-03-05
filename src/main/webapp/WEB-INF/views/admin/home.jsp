@@ -210,7 +210,7 @@
                     options: {
                         responsive: true,
                         title: {
-                            display: true,
+                            display: false,
                             text: 'Photo Uploaded'
                         },
                         tooltips: {
@@ -225,15 +225,15 @@
                             xAxes: [{
                                 display: true,
                                 scaleLabel: {
-                                    display: true,
+                                    display: false,
                                     labelString: 'Month'
                                 }
                             }],
                             yAxes: [{
                                 display: true,
                                 scaleLabel: {
-                                    display: true,
-                                    labelString: 'Value'
+                                    display: false,
+                                    labelString: 'Photos'
                                 }
                             }]
                         }
