@@ -1,0 +1,1 @@
+ALTER TABLE  `events` ADD  `is_all_advertiser` TINYINT( 1 ) NOT NULL AFTER  `event_photo` ;

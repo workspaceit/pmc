@@ -54,12 +54,11 @@ public class EventValidator implements Validator {
     public void validate(Object o, Errors errors) {
         EventForm eventForm = (EventForm) o;
         this.checkImageToken(eventForm.getImageToken(), errors);
-        this.checkAdvertiserExistence(eventForm.getAdvertiserIds(), errors);
+        this.checkAdvertiserExistence(eventForm.getAdvertiserIds(),eventForm.getIsAllAdvertiserSelected(), errors);
         this.checkPhotographerExistence(eventForm.getPhotographerIds(), errors);
         this.checkWatermarkExistence(eventForm.getWatermarkIds(), errors);
         this.checkLocationExistence(eventForm.getLocationId(), errors);
         this.checkDates(eventForm.getStartDate(), eventForm.getEndDate(), errors);
-
     }
 
     private void checkImageToken(Integer token, Errors errors){
@@ -87,12 +86,23 @@ public class EventValidator implements Validator {
             }
         }
     }
+    private void checkAdvertiser(Integer[] advertiserIds,boolean isAllAdvertiser,Errors errors){
+        if(!isAllAdvertiser && advertiserIds.length==0){
+            errors.rejectValue("advertiserIds","Advertiser required");
+        }
 
+    }
+    private void checkAdvertiserExistence(Integer[] advertiserIds,boolean isAllAdvertiser,Errors errors){
+        this.checkAdvertiser(advertiserIds,isAllAdvertiser,errors);
+        if(!errors.hasFieldErrors("advertiserIds")){
+            checkAdvertiserExistence(advertiserIds,errors);
+        }
+    }
     private void checkAdvertiserExistence(Integer[] advertiserIds, Errors errors){
         for(int advertiserId: advertiserIds){
             Advertiser advertiser =  this.advertiserService.getById(advertiserId);
             if(advertiser == null){
-                errors.rejectValue("watermarkIds","Advertiser is not found by id : " + advertiserId);
+                errors.rejectValue("advertiserIds","Advertiser is not found by id : " + advertiserId);
                 return;
             }
         }

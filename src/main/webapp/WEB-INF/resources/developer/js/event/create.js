@@ -52,6 +52,8 @@ $(document).ready(function () {
         var watermarkIds = $('#watermark-select2').val();
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+        var isAllAdvertiserSelected = $("#allAdvertiserSelection").is(":checked");
+
         var data = {
             'eventName': eventName,
             'startDate': startDate,
@@ -62,7 +64,8 @@ $(document).ready(function () {
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
             'imageToken': pictureToken,
-            'isPrivate': isPrivate
+            'isPrivate': isPrivate,
+            'isAllAdvertiserSelected':isAllAdvertiserSelected
         };
         $.ajax({
             url: BASEURL+'api/event/create',
@@ -118,7 +121,7 @@ $(document).ready(function () {
 
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
-
+        var isAllAdvertiserSelected = $("#allAdvertiserSelection").is(":checked")
 
         var data = {
             'eventName': eventName,
@@ -130,7 +133,8 @@ $(document).ready(function () {
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
             'imageToken': pictureToken == 0 ? -1 :pictureToken,
-            'isPrivate': isPrivate
+            'isPrivate': isPrivate,
+            'isAllAdvertiserSelected':isAllAdvertiserSelected
         };
         var eventId = $('#eventId').val();
         $.ajax({

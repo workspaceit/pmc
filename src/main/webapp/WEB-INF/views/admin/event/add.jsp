@@ -76,6 +76,7 @@
                                                     class="fa fa-plus" aria-hidden="true"></i>Add new Location
                                             </button>
                                         </div>
+                                        <p class="text-danger" id="errorObj_locationId"></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -109,11 +110,16 @@
                                                         <h4 class="panel-title">Choose Advertiser</h4>
                                                     </div>
                                                     <div class="panel-body">
+                                                        <div>
+                                                            <input id="allAdvertiserSelection" type="checkbox" value="1" />All Advertiser
+                                                        </div>
                                                         <div style="width: 100%">
+
                                                             <select id="advertiser-select2" name="advertiserIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                                     class="select2-hidden-accessible" aria-hidden="true">
                                                             </select>
                                                         </div>
+                                                        <p class="text-danger" id="errorObj_advertiserIds"></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,12 +323,13 @@
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/event/common.js"/>" ></script>
         <script src="<s:url value="/resources/developer/js/event/create.js"/>" ></script>
 
         <%-- Add location modal dependency --%>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
-
+        <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
     </jsp:body>
 </t:genericpage>

@@ -127,6 +127,13 @@
                                                         <h4 class="panel-title">Choose Advertiser</h4>
                                                     </div>
                                                     <div class="panel-body">
+                                                        <div>
+                                                            <c:set var="allAdvSelected" value="" ></c:set>
+                                                            <c:if test="${event.isAllAdvertiser}" >
+                                                                <c:set var="allAdvSelected" value="checked='checked'" ></c:set>
+                                                            </c:if>
+                                                            <input id="allAdvertiserSelection" type="checkbox" value="1" ${allAdvSelected} />All Advertiser
+                                                        </div>
                                                         <div style="width: 100%">
                                                             <select id="advertiser-select2" name="advertiserIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                                     class="select2-hidden-accessible" aria-hidden="true">
@@ -135,7 +142,7 @@
                                                                 </c:forEach>
                                                             </select>
                                                         </div>
-
+                                                        <p class="text-danger" id="errorObj_advertiserIds"></p>
                                                         <!-- <button type="button" class="btn btn-primary btn-sm-new"  data-toggle="modal" data-target="#addAdvertiser" style="margin-top: 15px;"><i class="fa fa-plus" aria-hidden="true"></i>  Add new Advertiser</button> -->
                                                     </div>
                                                 </div>
@@ -358,6 +365,7 @@
         <!-- dropzone -->
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="<s:url value="/resources/js/dropzone.min.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/event/common.js"/>" ></script>
         <script src="<s:url value="/resources/developer/js/event/create.js"/>" ></script>
 
         <%-- Add location modal dependency --%>
