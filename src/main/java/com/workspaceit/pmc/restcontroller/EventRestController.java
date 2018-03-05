@@ -5,8 +5,6 @@ import com.workspaceit.pmc.constant.FILE;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.EventImage;
-import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.service.AdminService;
@@ -14,9 +12,9 @@ import com.workspaceit.pmc.service.DashboardService;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.util.ServiceResponse;
-import com.workspaceit.pmc.validation.event.EventForm;
+import com.workspaceit.pmc.validation.event.EventCreateForm;
+import com.workspaceit.pmc.validation.event.EventUpdateForm;
 import com.workspaceit.pmc.validation.event.EventValidator;
-import com.workspaceit.pmc.validation.location.LocationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,7 +81,7 @@ public class EventRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping("/create")
-    public ResponseEntity<?> create(Authentication authentication, @Valid EventForm eventForm, BindingResult bindingResult) throws EntityNotFound {
+    public ResponseEntity<?> create(Authentication authentication, @Valid EventCreateForm eventForm, BindingResult bindingResult) throws EntityNotFound {
         Admin admin = (Admin) authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
@@ -97,8 +95,8 @@ public class EventRestController {
          * Business logic Validation
          * */
         this.eventValidator.validate(eventForm, bindingResult);
-        serviceResponse.bindValidationError(bindingResult);
         if (bindingResult.hasErrors()) {
+            serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         Event event = this.eventService.create(eventForm);
@@ -109,7 +107,7 @@ public class EventRestController {
     @RequestMapping(value = "/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,
-                                    @Valid EventForm eventForm, BindingResult bindingResult) throws EntityNotFound {
+                                    @Valid EventUpdateForm eventUpdateForm, BindingResult bindingResult) throws EntityNotFound {
         Admin admin = (Admin) authentication.getPrincipal();
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
@@ -122,12 +120,12 @@ public class EventRestController {
         /**
          * Business logic Validation
          * */
-        this.eventValidator.validate(eventForm, bindingResult);
+        this.eventValidator.validate(eventUpdateForm, bindingResult);
         serviceResponse.bindValidationError(bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-        Event event = eventService.update(id,eventForm);
+        Event event = eventService.update(id,eventUpdateForm);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
 

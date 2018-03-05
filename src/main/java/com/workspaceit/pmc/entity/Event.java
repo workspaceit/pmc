@@ -1,6 +1,5 @@
 package com.workspaceit.pmc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
 
@@ -10,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -51,6 +49,9 @@ public class Event {
 
     @Column(name = "event_photo")
     private String eventPhoto;
+
+    @Column(name = "is_all_advertiser")
+    private boolean isAllAdvertiser;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -158,6 +159,14 @@ public class Event {
 
     public void setEventPhoto(String eventPhoto) {
         this.eventPhoto = eventPhoto;
+    }
+
+    public boolean getIsAllAdvertiser() {
+        return isAllAdvertiser;
+    }
+
+    public void setIsAllAdvertiser(boolean allAdvertiser) {
+        isAllAdvertiser = allAdvertiser;
     }
 
     public Date getCreatedAt() {

@@ -3,13 +3,13 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.dao.EventDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
-import com.workspaceit.pmc.validation.event.EventForm;
+import com.workspaceit.pmc.validation.event.EventCreateForm;
+import com.workspaceit.pmc.validation.event.EventUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.*;
 
 /**
@@ -109,7 +109,7 @@ public class EventService {
         this.eventDao.insert(event);
     }
 
-    public Event create(EventForm eventForm) throws EntityNotFound {
+    public Event create(EventCreateForm eventForm) throws EntityNotFound {
         Event event = getEventFromEventForm(eventForm);
         create(event);
         return event;
@@ -132,7 +132,7 @@ public class EventService {
         return eventData;
     }
 
-    private Event getEventFromEventForm(EventForm eventForm) throws EntityNotFound {
+    private Event getEventFromEventForm(EventCreateForm eventForm) throws EntityNotFound {
         Event event = new Event();
 
         //Venue venue =  venueService.getVenue(eventForm.getVenueId());
@@ -150,6 +150,7 @@ public class EventService {
         event.setStartsAt(eventForm.getStartDate());
         event.setEndsAt(eventForm.getEndDate());
         event.setLocation(location);
+        event.setIsAllAdvertiser(eventForm.getIsAllAdvertiserSelected());
         //event.setVenue(venue);
 
 
@@ -171,25 +172,25 @@ public class EventService {
     }
 
     @Transactional
-    public Event update(Integer eventId, EventForm eventForm) throws EntityNotFound {
+    public Event update(Integer eventId, EventUpdateForm eventUpdateForm) throws EntityNotFound {
         Event event = eventDao.getById(eventId);
         //Venue venue =  venueService.getVenue(eventForm.getVenueId());
-        Location location = this.locationService.getById(eventForm.getLocationId());
-        List<Watermark> watermarks = watermarkService.getAll(eventForm.getWatermarkIds());
-        List<Photographer> photographers = photographerService.getAll(eventForm.getPhotographerIds());
-        List<Advertiser> advertisers = advertiserService.getAll(eventForm.getAdvertiserIds());
-        Integer eventImageToken = eventForm.getImageToken();
+        Location location = this.locationService.getById(eventUpdateForm.getLocationId());
+        List<Watermark> watermarks = watermarkService.getAll(eventUpdateForm.getWatermarkIds());
+        List<Photographer> photographers = photographerService.getAll(eventUpdateForm.getPhotographerIds());
+        List<Advertiser> advertisers = advertiserService.getAll(eventUpdateForm.getAdvertiserIds());
+        Integer eventImageToken = eventUpdateForm.getImageToken();
         if(eventImageToken != 0 && eventImageToken != - 1){
             String eventImageName = this.fileService.copyFile(eventImageToken);
             event.setEventPhoto(eventImageName);
         }
-        event.setName(eventForm.getEventName());
-        event.setStartsAt(eventForm.getStartDate());
+        event.setName(eventUpdateForm.getEventName());
+        event.setStartsAt(eventUpdateForm.getStartDate());
         event.setEndsAt(event.getEndsAt());
         //event.setVenue(venue);
         event.setLocation(location);
-        event.setEventPrivate(eventForm.getIsPrivate());
-
+        event.setEventPrivate(eventUpdateForm.getIsPrivate());
+        event.setIsAllAdvertiser(event.getIsAllAdvertiser());
         if(photographers != null) {
             event.setPhotographers(new HashSet<>(photographers));
         }
