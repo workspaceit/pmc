@@ -32,11 +32,9 @@ $(document).ready(function() {
         var checkedIds = getCheckedIds();
         if(checkedIds.length === 1){
             $('#edit-selected-btn').prop('disabled', false);
-            $('#delete-selected-btn').prop('disabled', false);
         }
         else{
             $('#edit-selected-btn').prop('disabled', true);
-            $('#delete-selected-btn').prop('disabled', true);
         }
     }
 
