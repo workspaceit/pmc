@@ -1,16 +1,10 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
-import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.dao.GalleryAdDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.advertisement.Advertisement;
-import com.workspaceit.pmc.entity.advertisement.Section;
 import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
-import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAdQuantityPrice;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
@@ -18,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by mi_rafi on 1/5/18.

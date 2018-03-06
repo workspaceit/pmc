@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
+import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -61,4 +62,5 @@ public class AdvertisementDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+
 }

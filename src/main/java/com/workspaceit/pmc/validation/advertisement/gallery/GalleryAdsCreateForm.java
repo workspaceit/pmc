@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.gallery;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
@@ -30,13 +30,13 @@ public class GalleryAdsCreateForm extends GalleryAdsForm{
 
     @Override
     @NotNull(message = "Rotation settings required")
-    public AdvertiseRotationSettings getTopBannerRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getTopBannerRotation() {
         return super.getTopBannerRotation();
     }
 
     @Override
     @NotNull(message = "Rotation settings required")
-    public AdvertiseRotationSettings getBottomBannerRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getBottomBannerRotation() {
         return super.getBottomBannerRotation();
     }
 

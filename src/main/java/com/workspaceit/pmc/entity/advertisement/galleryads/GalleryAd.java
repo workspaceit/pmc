@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.entity.advertisement.galleryads;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.GalleryAdsBottomBannerImage;
@@ -54,11 +54,11 @@ public class GalleryAd {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "top_banner_rotation_settings")
-    private AdvertiseRotationSettings topBannerRotate;
+    private ADVERTISEMENT_ROTATION_SETTINGS topBannerRotate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "bottom_banner_rotation_settings")
-    private AdvertiseRotationSettings bottomBannerRotate;
+    private ADVERTISEMENT_ROTATION_SETTINGS bottomBannerRotate;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -145,19 +145,19 @@ public class GalleryAd {
         this.bottomBannerExpiryDate = bottomBannerExpiryDate;
     }
 
-    public AdvertiseRotationSettings getBottomBannerRotate() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getBottomBannerRotate() {
         return bottomBannerRotate;
     }
 
-    public void setBottomBannerRotate(AdvertiseRotationSettings bottomBannerRotate) {
+    public void setBottomBannerRotate(ADVERTISEMENT_ROTATION_SETTINGS bottomBannerRotate) {
         this.bottomBannerRotate = bottomBannerRotate;
     }
 
-    public AdvertiseRotationSettings getTopBannerRotate() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getTopBannerRotate() {
         return topBannerRotate;
     }
 
-    public void setTopBannerRotate(AdvertiseRotationSettings topBannerRotate) {
+    public void setTopBannerRotate(ADVERTISEMENT_ROTATION_SETTINGS topBannerRotate) {
         this.topBannerRotate = topBannerRotate;
     }
 

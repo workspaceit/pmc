@@ -1,5 +1,5 @@
 package com.workspaceit.pmc.constant.advertisement;
 
-public enum AdvertiseRotationSettings {
+public enum ADVERTISEMENT_ROTATION_SETTINGS {
     ROTATE,STATIC
 }
