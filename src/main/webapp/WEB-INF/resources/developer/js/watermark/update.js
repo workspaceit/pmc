@@ -18,8 +18,10 @@ function submitWatermark(action) {
             }
         },
         success: function(response) {
-//                        alert("Updated successfully");
-            if(action === "save" || action === "save-close") {
+            if(action === "save") {
+                $.growl.notice({title: 'Success!', message: "Watermark saved"});
+            }
+            else if(action === "save-close") {
                 window.location = BASEURL+"admin/watermark/all";
             }
             else if(action === "save-new"){

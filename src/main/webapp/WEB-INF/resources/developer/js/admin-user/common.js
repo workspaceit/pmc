@@ -108,7 +108,8 @@ function redirectFromAdminUser(btnAction){
     var url = BASEURL+"admin/user";
     switch(btnAction){
         case "save":
-            url += "/all";
+            $.growl.notice({title: 'Success!', message: "Admin saved"});
+            return;
             break;
         case "save-new":
             url +="/add";

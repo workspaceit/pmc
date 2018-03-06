@@ -93,7 +93,8 @@ function photographerAfterSaveAction(btnAction){
     var urlStr ="";
     switch(btnAction){
         case "save":
-            urlStr = "admin/photographer/all";
+            $.growl.notice({title: 'Success!', message: "Photographer saved"});
+            return;
             break;
         case "save_and_close":
             urlStr = "admin/photographer/all";
