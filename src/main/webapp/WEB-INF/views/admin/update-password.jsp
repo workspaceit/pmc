@@ -100,7 +100,7 @@
                     <input type="password" name="confirmPassword" placeholder="Confirm"  />
                     <button type="submit" class="btn btn-primary btn-block btn-large">Update</button>
                 </form>
-                <a href="<c:url value="/login" />" >Go Back</a>
+                <a href="<c:url value="/login" />" style="display: block; text-align: center">Go to Login</a>
             </div>
         </div>
 

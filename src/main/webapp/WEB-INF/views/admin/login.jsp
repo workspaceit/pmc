@@ -100,7 +100,7 @@
                     <input type="password" name="password" placeholder="Password"  />
                     <button type="submit" class="btn btn-primary btn-block btn-large">Let me in</button>
                 </form>
-                <a href="<c:url value="/reset-password" />" >Forgot your password?</a>
+                <a href="<c:url value="/reset-password" />" style="display: block; text-align: center">Forgot your password?</a>
             </div>
         </div>
 
