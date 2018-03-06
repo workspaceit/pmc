@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.service;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.dao.SectionDao;
@@ -381,10 +382,13 @@ public class SectionService {
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(List<Section> sections) throws EntityNotFound{
+       // this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
+            sections.stream().forEach(section -> {System.out.println(section.getId());});
         this.sectionDao.updateAll(sections);
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(Section section) throws EntityNotFound{
+     //   this.makePreviousSectionStaticToRotatingByAdvertisementId(section);
         this.sectionDao.update(section);
     }
     @Transactional(rollbackFor = Exception.class)
@@ -412,28 +416,28 @@ public class SectionService {
 
 
 
-        Section logoSection = this.getSection(advertisement.getId(),
+        Section logoSection = this.getSection(advertisement,
                                             null,
                                             logoSectionResources.size(),
                                             null,
                                             SECTION_TYPE.LOGO,
-                                            AdvertiseRotationSettings.STATIC,
+                                            ADVERTISEMENT_ROTATION_SETTINGS.STATIC,
                                             null,
                                             logoSectionResources,
                                             admin);
 
-        Section bgSection = this.getSection(advertisement.getId(),
+        Section bgSection = this.getSection(advertisement,
                                             galleryAdsForm.getBgPrice(),
                                             bgSectionResources.size(),
                                             null,
                                             SECTION_TYPE.BACKGROUND,
-                                            AdvertiseRotationSettings.STATIC,
+                                            ADVERTISEMENT_ROTATION_SETTINGS.STATIC,
                                             null,
                                             bgSectionResources,
                                             admin);
 
         Section topBannerSection = this.getSection(
-                                            advertisement.getId(),
+                                            advertisement,
                                             galleryAdsForm.getTopBannerPrice(),
                                             topBannerSectionResources.size(),
                                             null,
@@ -444,7 +448,7 @@ public class SectionService {
                                             admin);
 
         Section bottomBannerSection = this.getSection(
-                                            advertisement.getId(),
+                                            advertisement,
                                             galleryAdsForm.getBottomBannerPrice(),
                                             bottomBannerSectionResources.size(),
                                             null,
@@ -487,7 +491,7 @@ public class SectionService {
 
 
         Section smsSection = this.getSection(
-                                            popSmsAdv.getId(),
+                                            popSmsAdv,
                                             popupAdsForm.getSmsAdPrice(),
                                             smsSecResources.size(),
                                             popupAdsForm.getSmsPopupVideoDuration(),
@@ -498,7 +502,7 @@ public class SectionService {
                                             admin);
 
         Section emailSection = this.getSection(
-                                            popEmailAdv.getId(),
+                                            popEmailAdv,
                                             popupAdsForm.getEmailAdPrice(),
                                             emailSecResources.size(),
                                             popupAdsForm.getEmailPopupVideoDuration(),
@@ -536,7 +540,7 @@ public class SectionService {
         }
 
         Section topBannerSection = this.getSection(
-                                            advertisement.getId(),
+                                            advertisement,
                                             slideShowAdsForm.getBannerPrice(),
                                             topBannerSectionResources.size(),
                                             slideShowAdsForm.getSlideShowBannerDuration(),
@@ -546,7 +550,7 @@ public class SectionService {
                                             topBannerSectionResources,
                                             admin);
 
-        Section videoSection = this.getSection(advertisement.getId(),
+        Section videoSection = this.getSection(advertisement,
                                             slideShowAdsForm.getVideoPrice(),
                                             videoSectionResources.size(),
                                             slideShowAdsForm.getSlideShowVideoDuration(),
@@ -574,22 +578,61 @@ public class SectionService {
 
     @Transactional(rollbackFor = Exception.class)
     public void create(List<Section> sections){
+
+        this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
         this.sectionDao.insertAll(sections);
     }
 
-    private Section getSection(Integer advertisementId,
+    @Transactional(rollbackFor = Exception.class)
+    public void makePreviousSectionStaticToRotatingByAdvertisementId(List<Section> sections){
+        List<Section> updatableSectionList = new ArrayList<>();
+
+        for(Section section :sections){
+            Section tmpSec = this.sectionDao.getById(section.getId());
+            if(section.getRotation().equals(ADVERTISEMENT_ROTATION_SETTINGS.STATIC)){
+                List<Section> sectionList =  this.sectionDao.getByAdTypeSectionTypeAndRotation(tmpSec.getAdvertisement().getAdType(),
+                        tmpSec.getSectionType(),
+                        ADVERTISEMENT_ROTATION_SETTINGS.STATIC,section.getId());
+
+                sectionList.stream().forEach(s->System.out.println("S "+s.getId()));
+                updatableSectionList.addAll(sectionList);
+
+            }
+
+        }
+        for(Section section :updatableSectionList){
+            section.setRotation(ADVERTISEMENT_ROTATION_SETTINGS.ROTATE);
+        }
+        updatableSectionList.removeAll(sections);
+
+        updatableSectionList.stream().forEach(section -> {System.out.println("M "+section.getId());});
+        this.sectionDao.updateAll(updatableSectionList);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void makePreviousSectionStaticToRotatingByAdvertisementId(Section section){
+        List<Section> updatableSectionList = new ArrayList<>();
+        if(section.getRotation().equals(ADVERTISEMENT_ROTATION_SETTINGS.STATIC)){
+            Section tmpSec = this.sectionDao.getById(section.getId());
+            updatableSectionList =  this.sectionDao.getByAdTypeSectionTypeAndRotation(tmpSec.getAdvertisement().getAdType(),
+                    tmpSec.getSectionType(),
+                    ADVERTISEMENT_ROTATION_SETTINGS.STATIC,section.getId());
+        }
+        updatableSectionList.remove(section);
+        this.sectionDao.update(updatableSectionList);
+    }
+    private Section getSection(Advertisement advertisement,
                                Float price,
                                Integer quantity,
                                Integer duration,
                                SECTION_TYPE sectionType,
-                               AdvertiseRotationSettings rotation,
+                               ADVERTISEMENT_ROTATION_SETTINGS rotation,
                                Date expireDate,
                                List<SectionResource> sectionResources,
                                Admin createdBy){
 
         Section section = new Section();
 
-        section.setAdvertisementId(advertisementId);
+        section.setAdvertisement(advertisement);
         section.setPrice(price);
         section.setQuantity(quantity);
         section.setDuration(duration);
@@ -607,7 +650,7 @@ public class SectionService {
                                      Integer quantity,
                                      Integer duration,
                                      SECTION_TYPE sectionType,
-                                     AdvertiseRotationSettings rotation,
+                                     ADVERTISEMENT_ROTATION_SETTINGS rotation,
                                      Date expireDate,
                                      FileToken newSingleFileToken,
                                      List<FileToken> newTokens){

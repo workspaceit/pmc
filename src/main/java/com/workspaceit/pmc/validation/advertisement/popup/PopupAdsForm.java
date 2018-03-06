@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -21,8 +21,8 @@ public class PopupAdsForm {
     private Date smsExpiryDate;
     private Date emailExpiryDate;
 
-    private AdvertiseRotationSettings smsRotation;
-    private AdvertiseRotationSettings emailRotation;
+    private ADVERTISEMENT_ROTATION_SETTINGS smsRotation;
+    private ADVERTISEMENT_ROTATION_SETTINGS emailRotation;
 
     private Float smsAdPrice;
     private Float emailAdPrice;
@@ -116,19 +116,19 @@ public class PopupAdsForm {
         this.emailExpiryDate = emailExpiryDate;
     }
 
-    public AdvertiseRotationSettings getSmsRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getSmsRotation() {
         return smsRotation;
     }
 
-    public void setSmsRotation(AdvertiseRotationSettings smsRotation) {
+    public void setSmsRotation(ADVERTISEMENT_ROTATION_SETTINGS smsRotation) {
         this.smsRotation = smsRotation;
     }
 
-    public AdvertiseRotationSettings getEmailRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getEmailRotation() {
         return emailRotation;
     }
 
-    public void setEmailRotation(AdvertiseRotationSettings emailRotation) {
+    public void setEmailRotation(ADVERTISEMENT_ROTATION_SETTINGS emailRotation) {
         this.emailRotation = emailRotation;
     }
 

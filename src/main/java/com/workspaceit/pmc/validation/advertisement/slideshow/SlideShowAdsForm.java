@@ -1,9 +1,7 @@
 package com.workspaceit.pmc.validation.advertisement.slideshow;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 
-import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -21,8 +19,8 @@ public class SlideShowAdsForm {
     private Date videoExpiryDate;
     private Date bannerExpiryDate;
 
-    private AdvertiseRotationSettings bannerRotation;
-    private AdvertiseRotationSettings videoRotation;
+    private ADVERTISEMENT_ROTATION_SETTINGS bannerRotation;
+    private ADVERTISEMENT_ROTATION_SETTINGS videoRotation;
 
     private Float bannerPrice;
     private Float videoPrice;
@@ -91,19 +89,19 @@ public class SlideShowAdsForm {
         this.bannerExpiryDate = bannerExpiryDate;
     }
 
-    public AdvertiseRotationSettings getBannerRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getBannerRotation() {
         return bannerRotation;
     }
 
-    public void setBannerRotation(AdvertiseRotationSettings bannerRotation) {
+    public void setBannerRotation(ADVERTISEMENT_ROTATION_SETTINGS bannerRotation) {
         this.bannerRotation = bannerRotation;
     }
 
-    public AdvertiseRotationSettings getVideoRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getVideoRotation() {
         return videoRotation;
     }
 
-    public void setVideoRotation(AdvertiseRotationSettings videoRotation) {
+    public void setVideoRotation(ADVERTISEMENT_ROTATION_SETTINGS videoRotation) {
         this.videoRotation = videoRotation;
     }
 

@@ -1,4 +1,4 @@
-<%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@page import="com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <div class="tab-pane" id="tab_default_2">
     <div class="row clearfix">
@@ -96,17 +96,17 @@
                             <c:set var="topBannerRotateActive" value="" ></c:set>
                             <c:set var="topBannerStaticActive" value="" ></c:set>
                             <c:choose>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.ROTATE }" >
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
                                     <c:set var="topBannerRotateActive" value="active" ></c:set>
                                 </c:when>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.STATIC}">
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
                                     <c:set var="topBannerStaticActive" value="active" ></c:set>
                                 </c:when>
                             </c:choose>
 
                             <div id="galleryTopRotationBtn" class="btn-group">
-                                <button disabled="disabled" type="button" class="${topBannerRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button disabled="disabled" type="button" class="${topBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                                <button  type="button" class="${topBannerRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button  type="button" class="${topBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>
@@ -171,16 +171,16 @@
                             <c:set var="bottomBannerStaticActive" value="" ></c:set>
                             <c:choose>
 
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.ROTATE }" >
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
                                     <c:set var="bottomBannerRotateActive" value="active" ></c:set>
                                 </c:when>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.STATIC}">
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
                                     <c:set var="bottomBannerStaticActive" value="active" ></c:set>
                                 </c:when>
                             </c:choose>
                             <div id="galleryBottomRotationBtn" class="btn-group">
-                                <button disabled="disabled" type="button" class="${bottomBannerRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                                <button disabled="disabled" type="button" class="${bottomBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                                <button  type="button" class="${bottomBannerRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                                <button  type="button" class="${bottomBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                             </div>
 
                         </div>

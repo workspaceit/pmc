@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.entity.advertisement.popup;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
@@ -47,7 +47,7 @@ public class PopupAd {
 
     @Column(name = "ad_rotate")
     @Enumerated(EnumType.STRING)
-    private AdvertiseRotationSettings adRotate;
+    private ADVERTISEMENT_ROTATION_SETTINGS adRotate;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "popup_ad_id",referencedColumnName = "id")
@@ -138,11 +138,11 @@ public class PopupAd {
         this.popupBannerImages = popupBannerImages;
     }
 
-    public AdvertiseRotationSettings getAdRotate() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getAdRotate() {
         return adRotate;
     }
 
-    public void setAdRotate(AdvertiseRotationSettings adRotate) {
+    public void setAdRotate(ADVERTISEMENT_ROTATION_SETTINGS adRotate) {
         this.adRotate = adRotate;
     }
 

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.FILE_TYPE" %>
-<%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@page import="com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS" %>
 
 
 
@@ -23,15 +23,15 @@
                         <c:set var="popSmsRotateActive" value="" ></c:set>
                         <c:set var="popSmsStaticActive" value="" ></c:set>
                         <c:choose>
-                            <c:when test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).rotation.equals(AdvertiseRotationSettings.ROTATE)}" >
+                            <c:when test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.ROTATE)}" >
                                 <c:set var="popSmsRotateActive" value="active" ></c:set>
                             </c:when>
-                            <c:when test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).rotation.equals( AdvertiseRotationSettings.STATIC)}">
+                            <c:when test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).rotation.equals( ADVERTISEMENT_ROTATION_SETTINGS.STATIC)}">
                                 <c:set var="popSmsStaticActive" value="active" ></c:set>
                             </c:when>
                         </c:choose>
-                        <button type="button" disabled="disabled" class="${popSmsRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" disabled="disabled" class="${popSmsStaticActive} btn btn-default btn-switch" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button"  class="${popSmsRotateActive} btn btn-default btn-switch" data-val="1"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button"  class="${popSmsStaticActive} btn btn-default btn-switch" data-val="0"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >
@@ -126,15 +126,15 @@
                         <c:set var="popEmailRotateActive" value="" ></c:set>
                         <c:set var="popEmailStaticActive" value="" ></c:set>
                         <c:choose>
-                            <c:when test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).rotation.equals(AdvertiseRotationSettings.ROTATE)}" >
+                            <c:when test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.ROTATE)}" >
                                 <c:set var="popEmailRotateActive" value="active" ></c:set>
                             </c:when>
-                            <c:when test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).rotation.equals(AdvertiseRotationSettings.STATIC)}">
+                            <c:when test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.STATIC)}">
                                 <c:set var="popEmailStaticActive" value="active" ></c:set>
                             </c:when>
                         </c:choose>
-                        <button type="button" disabled="disabled" class="${popEmailRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" disabled="disabled" class="${popEmailStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button"  class="${popEmailRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button"  class="${popEmailStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >

@@ -1,4 +1,4 @@
-<%@ page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@ page import="com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.FILE_TYPE" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,16 +19,16 @@
                     <c:set var="slideShowBannerRotateActive" value="" ></c:set>
                     <c:set var="slideShowBannerStaticActive" value="" ></c:set>
                     <c:choose>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.ROTATE }" >
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
                             <c:set var="slideShowBannerRotateActive" value="active" ></c:set>
                         </c:when>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == AdvertiseRotationSettings.STATIC}">
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
                             <c:set var="slideShowBannerStaticActive" value="active" ></c:set>
                         </c:when>
                     </c:choose>
                     <div id="slideShowBannerRotationBtn" class="btn-group">
-                        <button type="button" disabled="disabled" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" disabled="disabled" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >
@@ -107,16 +107,16 @@
                     <c:set var="slideShowVideoRotateActive" value="" ></c:set>
                     <c:set var="slideShowVideoStaticActive" value="" ></c:set>
                     <c:choose>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(AdvertiseRotationSettings.ROTATE) }" >
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.ROTATE) }" >
                             <c:set var="slideShowVideoRotateActive" value="active" ></c:set>
                         </c:when>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(AdvertiseRotationSettings.STATIC)}">
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.STATIC)}">
                             <c:set var="slideShowVideoStaticActive" value="active" ></c:set>
                         </c:when>
                     </c:choose>
                     <div id="slideShowVideoRotationBtn" class="btn-group">
-                        <button type="button" disabled="disabled" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" disabled="disabled" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >

@@ -1,7 +1,7 @@
 package com.workspaceit.pmc.entity.advertisement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,8 +18,10 @@ public class Section {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "advertisement_id")
-    private Integer advertisementId;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "advertisement_id", referencedColumnName = "id",nullable = false,updatable = false)
+    private Advertisement advertisement;
 
     @Column(name = "price")
     private Float price;
@@ -29,7 +31,7 @@ public class Section {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rotation")
-    private AdvertiseRotationSettings rotation;
+    private ADVERTISEMENT_ROTATION_SETTINGS rotation;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "section_type")
@@ -63,12 +65,12 @@ public class Section {
         this.id = id;
     }
 
-    public Integer getAdvertisementId() {
-        return advertisementId;
+    public Advertisement getAdvertisement() {
+        return advertisement;
     }
 
-    public void setAdvertisementId(Integer advertisementId) {
-        this.advertisementId = advertisementId;
+    public void setAdvertisement(Advertisement advertisement) {
+        this.advertisement = advertisement;
     }
 
     public Float getPrice() {
@@ -87,11 +89,11 @@ public class Section {
         this.quantity = quantity;
     }
 
-    public AdvertiseRotationSettings getRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getRotation() {
         return rotation;
     }
 
-    public void setRotation(AdvertiseRotationSettings rotation) {
+    public void setRotation(ADVERTISEMENT_ROTATION_SETTINGS rotation) {
         this.rotation = rotation;
     }
 
@@ -151,8 +153,6 @@ public class Section {
         Section section = (Section) o;
 
         if (id != section.id) return false;
-        if (advertisementId != null ? !advertisementId.equals(section.advertisementId) : section.advertisementId != null)
-            return false;
         if (price != null ? !price.equals(section.price) : section.price != null) return false;
         if (quantity != null ? !quantity.equals(section.quantity) : section.quantity != null) return false;
         if (rotation != section.rotation) return false;
@@ -161,14 +161,12 @@ public class Section {
         if (sectionResource != null ? !sectionResource.equals(section.sectionResource) : section.sectionResource != null)
             return false;
         if (createdAt != null ? !createdAt.equals(section.createdAt) : section.createdAt != null) return false;
-        if (createdBy != null ? !createdBy.equals(section.createdBy) : section.createdBy != null) return false;
         return duration != null ? duration.equals(section.duration) : section.duration == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (advertisementId != null ? advertisementId.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (rotation != null ? rotation.hashCode() : 0);
@@ -176,7 +174,6 @@ public class Section {
         result = 31 * result + (expireDate != null ? expireDate.hashCode() : 0);
         result = 31 * result + (sectionResource != null ? sectionResource.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         return result;
     }
@@ -185,7 +182,6 @@ public class Section {
     public String toString() {
         return "Section{" +
                 "id=" + id +
-                ", advertisementId=" + advertisementId +
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", rotation=" + rotation +

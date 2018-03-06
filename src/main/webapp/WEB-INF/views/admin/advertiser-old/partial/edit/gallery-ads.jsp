@@ -1,4 +1,4 @@
-<%@page import="com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings" %>
+<%@page import="com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.GalleryAdsConstant" %>
 
 <div class="tab-pane" id="tab_default_2">

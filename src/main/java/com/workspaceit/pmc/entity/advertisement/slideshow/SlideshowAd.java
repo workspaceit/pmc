@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.entity.advertisement.slideshow;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import com.workspaceit.pmc.constant.advertisement.SlideshowAdsConstant;
 import com.workspaceit.pmc.entity.Admin;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,11 +49,11 @@ public class SlideshowAd {
 
     @Column(name = "banner_rotate")
     @Enumerated(EnumType.STRING)
-    private AdvertiseRotationSettings bannerRotate;
+    private ADVERTISEMENT_ROTATION_SETTINGS bannerRotate;
 
     @Column(name = "video_rotate")
     @Enumerated(EnumType.STRING)
-    private AdvertiseRotationSettings videoRotate;
+    private ADVERTISEMENT_ROTATION_SETTINGS videoRotate;
 
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -144,19 +144,19 @@ public class SlideshowAd {
         this.bannerExpiryDate = bannerExpiryDate;
     }
 
-    public AdvertiseRotationSettings getBannerRotate() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getBannerRotate() {
         return bannerRotate;
     }
 
-    public void setBannerRotate(AdvertiseRotationSettings bannerRotate) {
+    public void setBannerRotate(ADVERTISEMENT_ROTATION_SETTINGS bannerRotate) {
         this.bannerRotate = bannerRotate;
     }
 
-    public AdvertiseRotationSettings getVideoRotate() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getVideoRotate() {
         return videoRotate;
     }
 
-    public void setVideoRotate(AdvertiseRotationSettings videoRotate) {
+    public void setVideoRotate(ADVERTISEMENT_ROTATION_SETTINGS videoRotate) {
         this.videoRotate = videoRotate;
     }
 

@@ -1,6 +1,6 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
-import com.workspaceit.pmc.constant.advertisement.AdvertiseRotationSettings;
+import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -41,13 +41,13 @@ public class PopupAdsCreateForm extends PopupAdsForm {
 
     @Override
     @NotNull(message = "Rotation settings required")
-    public AdvertiseRotationSettings getSmsRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getSmsRotation() {
         return super.getSmsRotation();
     }
 
     @Override
     @NotNull(message = "Rotation settings required")
-    public AdvertiseRotationSettings getEmailRotation() {
+    public ADVERTISEMENT_ROTATION_SETTINGS getEmailRotation() {
         return super.getEmailRotation();
     }
 }
