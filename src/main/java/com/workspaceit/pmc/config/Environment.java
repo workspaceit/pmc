@@ -3,6 +3,8 @@ package com.workspaceit.pmc.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
+
 /**
  * Created by anik on 12/18/17.
  */
@@ -36,6 +38,62 @@ public class Environment {
 
     @Value("${file.event.image.path}")
     private String eventImagePath;
+
+    @Value("${mail.driver}")
+    private String mailDriver;
+
+    @Value("${mail.host}")
+    private String mailHost;
+
+    @Value("${mail.port}")
+    private String mailPort;
+
+    @Value("${mail.username}")
+    private String mailUsername;
+
+    @Value("${mail.password}")
+    private String mailPassword;
+
+    @Value("${mail.sender.email}")
+    private String mailSenderEmail;
+
+    @Value("${mail.sender.password}")
+    private String mailSenderPassword;
+
+    @Value("${mail.server.link}")
+    private String mailServerLink;
+
+    public String getMailSenderEmail() {
+        return mailSenderEmail;
+    }
+
+    public String getMailSenderPassword() {
+        return mailSenderPassword;
+    }
+
+    public String getMailServerLink() {
+        return mailServerLink;
+    }
+
+    public String getMailDriver() {
+        return mailDriver;
+    }
+
+    public String getMailHost() {
+        return mailHost;
+    }
+
+    public String getMailPort() {
+        return mailPort;
+    }
+
+    public String getMailUsername() {
+        return mailUsername;
+    }
+
+    public String getMailPassword() {
+        return mailPassword;
+    }
 
     public String getEventImagePath() {
         return eventImagePath;

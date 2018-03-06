@@ -195,4 +195,10 @@ public class AdminService {
         return this.adminDao.getById(id);
     }
 
+    public Boolean changePassword(Admin admin,String password){
+        admin.setPassword(CypherHelper.getbCryptPassword(password));
+        this.update(admin);
+        return true;
+    }
+
 }

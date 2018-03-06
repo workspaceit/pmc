@@ -87,20 +87,20 @@
         <div class="container container-fluid">
             <div class="login">
                 <img src='<c:url value="resources/images/logo.png"/>' class="img-responsive" style="padding-left: 67px;">
-                <h1 style="margin-top: 3px">Login</h1>
+                <h1 style="margin-top: 3px">Update Password</h1>
                 <c:if test="${not empty error}">
                     <div class="error">${error}</div>
                 </c:if>
                 <c:if test="${not empty msg}">
                     <div class="msg">${msg}</div>
                 </c:if>
-                <form name='loginForm' action="<c:url value='/j_spring_security_check' />" method='POST'>
+                <form name='resetForm' action="<c:url value='/submit-update-password' />" method='POST'>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="text" name="email" placeholder="Email"  />
                     <input type="password" name="password" placeholder="Password"  />
-                    <button type="submit" class="btn btn-primary btn-block btn-large">Let me in</button>
+                    <input type="password" name="confirmPassword" placeholder="Confirm"  />
+                    <button type="submit" class="btn btn-primary btn-block btn-large">Update</button>
                 </form>
-                <a href="<c:url value="/reset-password" />" >Forgot your password?</a>
+                <a href="<c:url value="/login" />" >Go Back</a>
             </div>
         </div>
 
