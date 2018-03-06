@@ -20,7 +20,7 @@ public class Section {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "advertisement_id", referencedColumnName = "id",nullable = false,updatable = false)
+    @JoinColumn(name = "advertisement_id", referencedColumnName = "id",nullable = false)
     private Advertisement advertisement;
 
     @Column(name = "price")

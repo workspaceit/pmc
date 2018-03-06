@@ -579,7 +579,7 @@ public class SectionService {
     @Transactional(rollbackFor = Exception.class)
     public void create(List<Section> sections){
 
-        this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
+       // this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
         this.sectionDao.insertAll(sections);
     }
 
