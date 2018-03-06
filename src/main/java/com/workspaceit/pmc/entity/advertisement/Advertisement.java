@@ -32,7 +32,8 @@ public class Advertisement {
     @Column(name = "state")
     private ENTITY_STATE state;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "advertisement")
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "advertisement_id",referencedColumnName = "id")
     @MapKey(name = "sectionType")
     private Map<SECTION_TYPE,Section> sections;
 

@@ -199,22 +199,37 @@ public class AdvertiserRestController {
         Advertiser advertiser = this.advertiserService.create(advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
 
 
-        /** Old Implementation */
-        /*
-        this.galleryAdService.create(advertiser,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
-        this.slideShowService.create(advertiser,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
-        this.popUpAdsService.create(advertiser,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
-        */
         /** new Implementation */
+
+        /**
+         * Create Advertisement first
+         * */
 
         Advertisement galleryAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.GALLERY,currentUser);
         Advertisement slideShowAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.SLIDESHOW,currentUser);
         Advertisement popupSmsAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_SMS,currentUser);
         Advertisement popupEmailAd =  this.advertisementService.create(advertiser.getId(), ADVERTISEMENT_TYPE.POPUP_EMAIL,currentUser);
 
-        this.sectionService.create(galleryAd,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
-        this.sectionService.create(slideShowAd,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
-        this.sectionService.create(popupSmsAd,popupEmailAd,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+        /**
+         * Create Sections after advertisement
+         * */
+        List<Section> gallerySection = this.sectionService.create(galleryAd,advertiserAndAllCompositeForm.getGalleryAds(),currentUser);
+        List<Section> slideShowSection =  this.sectionService.create(slideShowAd,advertiserAndAllCompositeForm.getSlideShowAds(),currentUser);
+        Map<ADVERTISEMENT_TYPE,Section> popUpSectionMap = this.sectionService.create(popupSmsAd,popupEmailAd,advertiserAndAllCompositeForm.getPopupAds(),currentUser);
+
+        galleryAd.setSections(this.sectionService.getSectionInMap(gallerySection));
+        slideShowAd.setSections(this.sectionService.getSectionInMap(slideShowSection));
+        popupSmsAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_EMAIL)));
+        popupEmailAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_SMS)));
+
+        /**
+         * Update Advertiment after setting created Sections
+         * Other wise section advertisement_id will be null
+         * * */
+        this.advertisementService.update(galleryAd,currentUser);
+        this.advertisementService.update(slideShowAd,currentUser);
+        this.advertisementService.update(popupSmsAd,currentUser);
+        this.advertisementService.update(popupEmailAd,currentUser);
 
 
         return ResponseEntity.status(HttpStatus.OK).body(advertiser);

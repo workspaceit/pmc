@@ -27,8 +27,8 @@
                         </c:when>
                     </c:choose>
                     <div id="slideShowBannerRotationBtn" class="btn-group">
-                        <button type="button" class="${slideShowBannerRotateActive} btn btn-default btn-switch" id="regi6"><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="${slideShowBannerStaticActive} btn btn-default btn-switch" id="regi7"><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="${slideShowBannerRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${slideShowBannerStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >
@@ -107,16 +107,16 @@
                     <c:set var="slideShowVideoRotateActive" value="" ></c:set>
                     <c:set var="slideShowVideoStaticActive" value="" ></c:set>
                     <c:choose>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.ROTATE) }" >
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
                             <c:set var="slideShowVideoRotateActive" value="active" ></c:set>
                         </c:when>
-                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation.equals(ADVERTISEMENT_ROTATION_SETTINGS.STATIC)}">
+                        <c:when test="${slideshowAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
                             <c:set var="slideShowVideoStaticActive" value="active" ></c:set>
                         </c:when>
                     </c:choose>
                     <div id="slideShowVideoRotationBtn" class="btn-group">
-                        <button type="button" class="active btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
-                        <button type="button" class="btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
+                        <button type="button" class="${slideShowVideoRotateActive} btn btn-default btn-switch" data-val="1" ><i class="fa fa-repeat"></i><span class="hidden-xs">&nbsp;&nbsp;Rotate</span></button>
+                        <button type="button" class="${slideShowVideoStaticActive} btn btn-default btn-switch" data-val="0" ><i class="fa fa-minus"></i><span class="hidden-xs">&nbsp;&nbsp;Static</span></button>
                     </div>
                 </div>
                 <div class="date-small pull-right" >

@@ -171,10 +171,10 @@
                             <c:set var="bottomBannerStaticActive" value="" ></c:set>
                             <c:choose>
 
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.ROTATE }" >
                                     <c:set var="bottomBannerRotateActive" value="active" ></c:set>
                                 </c:when>
-                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
+                                <c:when test="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).rotation == ADVERTISEMENT_ROTATION_SETTINGS.STATIC}">
                                     <c:set var="bottomBannerStaticActive" value="active" ></c:set>
                                 </c:when>
                             </c:choose>

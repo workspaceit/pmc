@@ -102,5 +102,9 @@ public class AdvertisementService {
 
         return this.create(advertisement);
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Advertisement advertisement, Admin admin){
+        this.advertisementDao.update(advertisement);
+    }
 
 }

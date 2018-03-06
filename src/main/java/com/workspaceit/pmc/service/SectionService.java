@@ -382,17 +382,18 @@ public class SectionService {
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(List<Section> sections) throws EntityNotFound{
-       // this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
-            sections.stream().forEach(section -> {System.out.println(section.getId());});
         this.sectionDao.updateAll(sections);
+        this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
+        sections.stream().forEach(section -> {System.out.println("Section "+section.getId()+" TYPE "+section.getSectionType());});
+        System.out.println("****************** Section Ends ******************");
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(Section section) throws EntityNotFound{
-     //   this.makePreviousSectionStaticToRotatingByAdvertisementId(section);
+        this.makePreviousSectionStaticToRotatingByAdvertisementId(section);
         this.sectionDao.update(section);
     }
     @Transactional(rollbackFor = Exception.class)
-    public void create(Advertisement advertisement,GalleryAdsForm galleryAdsForm,Admin admin){
+    public List<Section> create(Advertisement advertisement,GalleryAdsForm galleryAdsForm,Admin admin){
 
 
 
@@ -465,10 +466,11 @@ public class SectionService {
 
 
         this.create(sections);
+        return sections;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void create( Advertisement popSmsAdv,Advertisement popEmailAdv,PopupAdsForm popupAdsForm, Admin admin){
+    public Map<ADVERTISEMENT_TYPE,Section> create( Advertisement popSmsAdv,Advertisement popEmailAdv,PopupAdsForm popupAdsForm, Admin admin){
         Integer smsVideoToken = popupAdsForm.getSmsPopupVideo();
         Integer emailVideoToken = popupAdsForm.getEmailPopupVideo();
 
@@ -521,11 +523,17 @@ public class SectionService {
         sections.add(emailSection);
         sections.add(smsSection);
 
+        Map<ADVERTISEMENT_TYPE,Section> sectionMap = new HashMap<>();
+        sectionMap.put(ADVERTISEMENT_TYPE.POPUP_EMAIL,emailSection);
+        sectionMap.put(ADVERTISEMENT_TYPE.POPUP_SMS,smsSection);
+
         this.create(sections);
+
+        return sectionMap;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void create(Advertisement advertisement,SlideShowAdsForm slideShowAdsForm,Admin admin){
+    public List<Section> create(Advertisement advertisement,SlideShowAdsForm slideShowAdsForm,Admin admin){
 
 
 
@@ -569,6 +577,7 @@ public class SectionService {
 
 
         this.create(sections);
+        return sections;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -594,7 +603,7 @@ public class SectionService {
                         tmpSec.getSectionType(),
                         ADVERTISEMENT_ROTATION_SETTINGS.STATIC,section.getId());
 
-                sectionList.stream().forEach(s->System.out.println("S "+s.getId()));
+                sectionList.stream().forEach(s->System.out.println("S "+s.getId()+" T"+s.getSectionType()));
                 updatableSectionList.addAll(sectionList);
 
             }
@@ -606,7 +615,10 @@ public class SectionService {
         updatableSectionList.removeAll(sections);
 
         updatableSectionList.stream().forEach(section -> {System.out.println("M "+section.getId());});
-        this.sectionDao.updateAll(updatableSectionList);
+        if(updatableSectionList.size()>0){
+
+            this.sectionDao.updateAll(updatableSectionList);
+        }
     }
     @Transactional(rollbackFor = Exception.class)
     public void makePreviousSectionStaticToRotatingByAdvertisementId(Section section){
@@ -698,7 +710,20 @@ public class SectionService {
 
 
 
+    public Map<SECTION_TYPE,Section> getSectionInMap(List<Section> sections){
+        Map<SECTION_TYPE,Section> sectionMap = new HashMap<>();
 
+        for(Section section:sections){
+            sectionMap.put(section.getSectionType(),section);
+        }
+        return sectionMap;
+    }
+    public Map<SECTION_TYPE,Section> getSectionInMap(Section section){
+        Map<SECTION_TYPE,Section> sectionMap = new HashMap<>();
+
+        sectionMap.put(section.getSectionType(),section);
+        return sectionMap;
+    }
     private Section getSection(Integer id) throws EntityNotFound {
 
         Section section = this.sectionDao.getById(id);
