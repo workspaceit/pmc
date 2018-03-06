@@ -6,10 +6,12 @@ var profilePictureToken = 0;
 
 
 function locationAfterSaveAction(btnAction){
+
     var urlStr ="";
     switch(btnAction){
         case "save":
-            urlStr = "admin/location/all";
+            $.growl.notice({title: 'Success!', message: "Location saved"});
+            return;
             break;
         case "save_and_close":
             urlStr = "admin/location/all";
