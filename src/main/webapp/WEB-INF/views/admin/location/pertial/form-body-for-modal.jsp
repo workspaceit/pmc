@@ -99,14 +99,17 @@
 
                     </div>
                 </div>
-                <div id="venueBgImg" >
-                    <div class="dz-default dz-message">
-                        <div class="droper">
-                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
-                            <p class="dropext">Click or Drop your files here</p>
+                <div class="file-tab panel-body">
+                    <div id="venueBgImg" >
+                        <div class="dz-default dz-message">
+                            <div class="droper">
+                                <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                <p class="dropext">Click or Drop your files here</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
             </div>
             <div class="imageupload panel panel-default">

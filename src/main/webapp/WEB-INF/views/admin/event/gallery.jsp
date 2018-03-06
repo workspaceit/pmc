@@ -84,11 +84,11 @@
 
                                 <div class="col-md-8 text-center">
                                     <div class="action-container">
-                                        <a href="#"><img src="<s:url value="/resources/images/11.png"/>" /></a>
-                                        <a href="#"><img src="<s:url value="/resources/images/22.png" />" /></a>
-                                        <a href="#"><img src="<s:url value="/resources/images/33.png" />" /></a>
-                                        <a href="#"><img src="<s:url value="/resources/images/44.png" />" /></a>
-                                        <a href="#"><img src="<s:url value="/resources/images/55.png" />" /></a>
+                                        <%--<a href="#"><img src="<s:url value="/resources/images/11.png"/>" /></a>--%>
+                                        <%--<a href="#"><img src="<s:url value="/resources/images/22.png" />" /></a>--%>
+                                        <%--<a href="#"><img src="<s:url value="/resources/images/33.png" />" /></a>--%>
+                                        <%--<a href="#"><img src="<s:url value="/resources/images/44.png" />" /></a>--%>
+                                        <%--<a href="#"><img src="<s:url value="/resources/images/55.png" />" /></a>--%>
                                     </div>
                                 </div>
 

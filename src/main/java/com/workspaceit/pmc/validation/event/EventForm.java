@@ -3,15 +3,11 @@ package com.workspaceit.pmc.validation.event;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-/**
- * Created by anik on 1/17/18.
- */
-
 public class EventForm {
-
     @NotNull(message = "Event name is required")
     @NotEmpty(message = "Event name is required")
     private String eventName;
@@ -24,7 +20,6 @@ public class EventForm {
     @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date endDate;
 
-    //@NotNull(message = "Please select a venue")
     private Integer venueId;
 
     @NotNull(message = "Please select a location")
@@ -33,11 +28,12 @@ public class EventForm {
     private Integer[] photographerIds = new Integer[]{};
     private Integer[] advertiserIds = new Integer[]{};
     private Integer[] watermarkIds = new Integer[]{};
-
-    @NotNull(message = "Image token required")
     private Integer imageToken;
+
     @NotNull(message = "Visibility required")
     private Boolean isPrivate;
+
+    private boolean isAllAdvertiserSelected;
 
 
     public String getEventName() {
@@ -120,4 +116,11 @@ public class EventForm {
         isPrivate = aPrivate;
     }
 
+    public boolean getIsAllAdvertiserSelected() {
+        return isAllAdvertiserSelected;
+    }
+
+    public void setIsAllAdvertiserSelected(Boolean allAdvertiser) {
+        isAllAdvertiserSelected = allAdvertiser;
+    }
 }

@@ -52,6 +52,8 @@ $(document).ready(function () {
         var watermarkIds = $('#watermark-select2').val();
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
+        var isAllAdvertiserSelected = $("#allAdvertiserSelection").is(":checked");
+
         var data = {
             'eventName': eventName,
             'startDate': startDate,
@@ -62,7 +64,8 @@ $(document).ready(function () {
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
             'imageToken': pictureToken,
-            'isPrivate': isPrivate
+            'isPrivate': isPrivate,
+            'isAllAdvertiserSelected':isAllAdvertiserSelected
         };
         $.ajax({
             url: BASEURL+'api/event/create',
@@ -118,7 +121,7 @@ $(document).ready(function () {
 
         var startDate = moment(startDateOnly + " " + startTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
         var endDate = moment(endDateOnly + " " + endTime, "MM/DD/YYYY HH:mm").format('YYYY-MM-DD HH:mm:ss');
-
+        var isAllAdvertiserSelected = $("#allAdvertiserSelection").is(":checked")
 
         var data = {
             'eventName': eventName,
@@ -130,7 +133,8 @@ $(document).ready(function () {
             'advertiserIds': advertiserIds,
             'watermarkIds': watermarkIds,
             'imageToken': pictureToken == 0 ? -1 :pictureToken,
-            'isPrivate': isPrivate
+            'isPrivate': isPrivate,
+            'isAllAdvertiserSelected':isAllAdvertiserSelected
         };
         var eventId = $('#eventId').val();
         $.ajax({
@@ -170,10 +174,23 @@ $(document).ready(function () {
         update('save-new');
     });
 
+    function select2FormatState (state) {
+        // console.log(state);
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "/common";
+        var $state = $(
+            '<span><label class="option_text">' + state.text + '</label><img src="' + baseUrl + '/' + state.logo + '"  class="option_img" />' + '</span>'
+        );
+        return $state;
+    };
+
     $("#watermark-select2").select2({
         placeholder: 'Select Watermark(s)',
-        multiple: true,
-//                    minimumInputLength: 1,
+        templateResult: select2FormatState,
+        // multiple: true,
+        // minimumInputLength: 1,
         width: 'resolve',
         hideSelectionFromResult: true,
         ajax: {
@@ -194,12 +211,15 @@ $(document).ready(function () {
                     results: $.map(data, function (item) {
                         return {
                             'text': item.name,
-                            'id': item.id
+                            'id': item.id,
+                            'logo': item.logoImage
                         }
                     })
                 };
             }
         }
+    }).on('change', function (e) {
+        // console.log($(this));
     });
     var locationSelect2 = $("#locationIds").select2({
         placeholder: 'Select a Location',

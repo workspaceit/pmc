@@ -1,11 +1,16 @@
 var $body = $('body');
 var type = $('#type').val();
 
+
+function getCheckedIds(){
+    return $('.select-checkbox:checked').map(function(){return $(this).val();}).get();
+}
+
 $(document).ready(function() {
 
-
-    function getCheckedIds(){
-        return $('.select-checkbox:checked').map(function(){return $(this).val();}).get();
+    function clearSelectionAfterOperation() {
+        $('.select-checkbox:checked').prop('checked', false);
+        $('#select-all-checkbox').prop('checked', false);
     }
 
     $body.on('click', '#select-all-checkbox',function () {
@@ -50,14 +55,13 @@ $(document).ready(function() {
     });
 
     $body.on('click', '#delete-selected-btn', function () {
-
         bindDeleteModalButtonAction(function(){
             var ids = getCheckedIds();
             for(var i= 0; i < ids.length; i++) {
                 var id = ids[i];
                 deleteEntityFromServer(id, false);
             }
-        });
+        }, true);
     });
 
     $body.on('click', '#activate-selected-btn', function () {
@@ -99,6 +103,7 @@ $(document).ready(function() {
             success: function(data){
                 if(!multiple){
                     showDisableMessage(id);
+                    clearSelectionAfterOperation();
                 }
             }
         });
@@ -129,6 +134,7 @@ $(document).ready(function() {
             success: function(data){
                 if(!multiple){
                     showEnableMessage(id);
+                    clearSelectionAfterOperation();
                 }
             }
         });
@@ -193,9 +199,9 @@ function deleteEntity(id,  multiple) {
     bindDeleteModalButtonAction(function(){
         console.log("YES "+id);
         deleteEntityFromServer(id,  multiple);
-    });
+    }, false);
 }
-function bindDeleteModalButtonAction(yesBtnFn){
+function bindDeleteModalButtonAction(yesBtnFn, multiple){
     $("#delete-content-yes").unbind("click");
     $("#delete-content-no").unbind("click");
 
@@ -206,6 +212,13 @@ function bindDeleteModalButtonAction(yesBtnFn){
     $("#delete-content-no").click(function(){
         closeDeleteEntityModal();
     });
+    var ids = getCheckedIds();
+    if(multiple) {
+        $('#delete-content .modal-title').html("Are you sure you want to delete these items?");
+    }
+    else {
+        $('#delete-content .modal-title').html("Are you sure you want to delete this item?");
+    }
     $("#delete-content").modal("show");
 }
 function closeDeleteEntityModal(){

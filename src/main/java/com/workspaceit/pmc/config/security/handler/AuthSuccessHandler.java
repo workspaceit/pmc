@@ -37,7 +37,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler{
 
     }
     private void redirectToPriorLogin(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
-        String redirectUrl ="/";
+        String redirectUrl ="/admin/dashboard";
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) {
             SavedRequest savedRequest = (SavedRequest)session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
