@@ -67,6 +67,12 @@ public class EventImageDao extends BaseDao {
                 .setParameterList("ids", ids)
                 .list();
     }
+    public List<EventImage> getByWatermarkId(int watermarkId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM EventImage  WHERE watermark.id = :watermarkId ")
+                .setParameter("watermarkId", watermarkId)
+                .list();
+    }
 
     public EventImage getByFileName(String fileName){
         Session session = this.getCurrentSession();
@@ -144,5 +150,6 @@ public class EventImageDao extends BaseDao {
         List<Object[]> rows = query.list();
         return rows;
     }
+
 
 }

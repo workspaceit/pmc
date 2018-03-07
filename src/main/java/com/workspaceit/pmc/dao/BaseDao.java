@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.dao;
 
 
+import com.workspaceit.pmc.entity.advertisement.Section;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,12 @@ public class BaseDao {
     }
     protected Session openSession() {
         return this.sessionFactory.openSession();
+    }
+    public void clearCurrentSessionFirstLevelCache(){
+        Session session =  this.getCurrentSession();
+        if(session!=null){
+            session.clear();
+        }
     }
 
 }

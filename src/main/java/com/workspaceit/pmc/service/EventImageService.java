@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by anik on 2/15/18.
@@ -197,5 +194,21 @@ public class EventImageService {
         }
         return monthdata;
     }
+    @Transactional
+    public  List<EventImage> getByWatermarkId(int watermarkId){
+        return this.eventImageDao.getByWatermarkId(watermarkId);
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void makeWatermarkNull(int watermarkId) {
+        List<EventImage> eventImages =   this.getByWatermarkId(watermarkId);
+        if(eventImages==null){
+            return;
+        }
+        for(EventImage eventImage:eventImages){
+            eventImage.setWatermark(null);
 
+            this.eventImageDao.update(eventImage);
+        }
+
+    }
 }

@@ -1,7 +1,9 @@
 package com.workspaceit.pmc.dao;
 
+import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Photographer;
+import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -71,6 +73,28 @@ public class EventDao extends BaseDao {
                 .setParameter("ids", Arrays.asList(ids))
                 .list();
     }
+    public List<Event> getByWatermarkId(Integer watermarkId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("select distinct  e FROM Event e " +
+                "inner join fetch e.watermarks as watermark WHERE watermark.id = :watermarkId")
+                .setParameter("watermarkId", watermarkId)
+                .list();
+    }
+    public List<Event> getByPhotographerId(Integer photographerId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("select distinct  e FROM Event e " +
+                "inner join fetch e.photographers as photographer WHERE photographer.id = :photographerId")
+                .setParameter("photographerId", photographerId)
+                .list();
+    }
+    public List<Event> getByAdvertiserId(Integer advertiserId) {
+        Session session = this.getCurrentSession();
+        return session.createQuery("select distinct  e FROM Event e " +
+                "inner join fetch e.advertisers as advertiser WHERE advertiser.id = :advertiserId")
+                .setParameter("advertiserId", advertiserId)
+                .list();
+    }
+
     public Event getById(int id) {
         Session session = this.getCurrentSession();
         return (Event)session.createQuery("FROM Event where id=:id ")

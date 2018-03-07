@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.dao.CommonDao;
 import com.workspaceit.pmc.dao.EventDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
@@ -26,6 +27,7 @@ public class EventService {
     private VenueService venueService;
     private LocationService locationService;
     private FileService fileService;
+    private CommonDao commonDao;
 
 
     @Autowired
@@ -59,6 +61,11 @@ public class EventService {
         this.fileService = fileService;
     }
 
+    @Autowired
+    public void setCommonDao(CommonDao commonDao) {
+        this.commonDao = commonDao;
+    }
+
     @Transactional
     public Event getById(int id){
         return this.eventDao.getById(id);
@@ -75,6 +82,10 @@ public class EventService {
         return this.eventDao.getAll();
     }
 
+    @Transactional
+    public List<Event> getByWatermarkId(int watermarkId){
+        return this.eventDao.getByWatermarkId(watermarkId);
+    }
     @Transactional
     public List<Event> getAll(int limit,int offset){
         return this.eventDao.getActiveEvents(limit,offset);
@@ -212,9 +223,63 @@ public class EventService {
         eventDao.update(event);
         return event;
     }
+    public List<Event> getByPhotographerId(int photographerId){
+       return this.eventDao.getByPhotographerId(photographerId);
+    }
+    public List<Event> getByAdvertiserId(Integer advertiserId){
+        return this.eventDao.getByAdvertiserId(advertiserId);
+    }
     @Transactional
     public void update(Event event){
         this.eventDao.update(event);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void removeWatermarkFromEvent(int watermarkId) {
+        List<Event> events =   this.getByWatermarkId(watermarkId);
+        if(events==null){
+            return;
+        }
+
+        this.eventDao.clearCurrentSessionFirstLevelCache();
+
+        for(Event event:events){
+            Event tmpEvent = this.getById(event.getId());
+            Set<Watermark> watermarks =  tmpEvent.getWatermarks();
+            watermarks.removeIf(watermark -> (watermark.getId() == watermarkId));
+            this.update(event);
+        }
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void removePhotographerFromEvent(int photographerId) {
+        List<Event> events =   this.getByPhotographerId(photographerId);
+        if(events==null){
+            return;
+        }
+
+        this.eventDao.clearCurrentSessionFirstLevelCache();
+
+        for(Event event:events){
+            Event tmpEvent = this.getById(event.getId());
+            Set<Photographer> photographers =  tmpEvent.getPhotographers();
+            photographers.removeIf(photographer -> (photographer.getId() == photographerId));
+            this.update(event);
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public void removeAdvertiserFromEvent(int advertiserId) {
+        List<Event> events =   this.getByAdvertiserId(advertiserId);
+        if(events==null){
+            return;
+        }
+        this.eventDao.clearCurrentSessionFirstLevelCache();
+        for(Event event:events){
+            Event tmpEvent = this.getById(event.getId());
+            Set<Advertiser> advertisers =  tmpEvent.getAdvertisers();
+            advertisers.removeIf(advertiser -> (advertiser.getId() == advertiserId));
+            this.update(tmpEvent);
+        }
+    }
 }
