@@ -3,6 +3,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
@@ -201,10 +202,15 @@
                                 </div>
                                 <div>
                                     <label>Current Watermark</label>
-                                    <c:forEach var="watermark" items="${event.watermarks}">
-                                        <img src="<s:url value="/common/${watermark.logoImage}"/>" alt="No Image"
-                                             class="img-responsive"/>
-                                    </c:forEach>
+                                    <c:if test = "${fn:length(event.watermarks) gt 0}">
+                                        <c:forEach var="watermark" items="${event.watermarks}">
+                                            <img id="watermark-img-preview" src="<s:url value="/common/${watermark.logoImage}"/>"
+                                                 alt="No Image" class="img-responsive"/>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test = "${fn:length(event.watermarks) eq 0}">
+                                        <img id="watermark-img-preview" src="" alt="No watermark selected" class="img-responsive"/>
+                                    </c:if>
                                 </div>
                             </div>
                             <div style="text-align: center;">
