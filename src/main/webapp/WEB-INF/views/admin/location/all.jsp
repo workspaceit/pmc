@@ -15,7 +15,7 @@
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
                     <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
                     <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
-                    <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
+                    <button id="delete-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
                     <table id="location-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
@@ -89,8 +89,13 @@
                                     </c:if>
                                 </td>
                                 <td class="action-clm text-center">
-                                    <a href="<c:url value="/admin/location/update/${location.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                    <a href="javascript:void(0)" onclick="deleteEntity(${location.id},false)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <a href="<c:url value="/admin/location/update/${location.id}" />" class="btn btn-success">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" disabled="disabled"
+                                       onclick="deleteEntity(${location.id},false)" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </d:forEach>
