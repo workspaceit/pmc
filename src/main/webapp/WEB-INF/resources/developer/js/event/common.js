@@ -2,6 +2,8 @@ $(document).ready(function(){
     $("#allAdvertiserSelection").on("click",function(){
         showHideAdvertiserSelectBox();
     });
+
+    showHideAdvertiserSelectBox();
 });
 
 

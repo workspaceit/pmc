@@ -62,8 +62,8 @@
                                 <p class="text-left">${wm.type}</p>
                             </td>
                             <td class="date-clm">
-                                <img src="<c:url value="/img/watermarked-preview/${wm.id}/${Size.thumb.name()}" />"
-                                     alt="No preview found">
+                                <img src="<c:url value="/common/${wm.logoImage}"/>" class="img-responsive"
+                                     alt="No preview found" style="width: 65px; height: auto">
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">

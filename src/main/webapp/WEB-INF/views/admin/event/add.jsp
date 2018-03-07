@@ -162,7 +162,9 @@
                                                 class="select2-hidden-accessible" aria-hidden="true">
                                         </select>
                                     </div>
-
+                                </div>
+                                <div>
+                                    <img id="watermark-img-preview" src="" alt="No watermark selected" class="img-responsive"/>
                                 </div>
                             </div>
                             <div style="text-align: center;">

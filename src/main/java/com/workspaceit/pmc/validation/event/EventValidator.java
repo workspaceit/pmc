@@ -88,9 +88,8 @@ public class EventValidator implements Validator {
     }
     private void checkAdvertiser(Integer[] advertiserIds,boolean isAllAdvertiser,Errors errors){
         if(!isAllAdvertiser && advertiserIds.length==0){
-            errors.rejectValue("advertiserIds","Advertiser required");
+//            errors.rejectValue("advertiserIds","Advertiser required");
         }
-
     }
     private void checkAdvertiserExistence(Integer[] advertiserIds,boolean isAllAdvertiser,Errors errors){
         this.checkAdvertiser(advertiserIds,isAllAdvertiser,errors);

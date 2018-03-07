@@ -222,7 +222,8 @@ $(document).ready(function () {
             }
         }
     }).on('change', function (e) {
-        // console.log($(this));
+        var waterMarkLogo = $(this).select2('data')[0].logo;
+        $('#watermark-img-preview').attr('src', '/common/' + waterMarkLogo);
     });
     var locationSelect2 = $("#locationIds").select2({
         placeholder: 'Select a Location',
