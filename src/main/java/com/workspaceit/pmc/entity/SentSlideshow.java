@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -26,7 +27,7 @@ public class SentSlideshow {
     private String identifier;
 
     @Enumerated(EnumType.STRING)
-    private SentSlideshowType type;
+    private PopupAdConstant type;
 
     @Column(name = "address")
     private String address;
@@ -52,5 +53,3 @@ public class SentSlideshow {
 
 
 }
-
-enum SentSlideshowType { email, sms }
