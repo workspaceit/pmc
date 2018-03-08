@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Aspect
-public class CommonDaoAop {
+public class CommonServiceAop {
     private EventService eventService;
     private EventImageService eventImageService;
     private EntityHelper entityHelper;

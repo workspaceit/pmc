@@ -125,6 +125,17 @@ public class EventImageService {
     }
 
     @Transactional
+    public Boolean sendViaEmail(int[] imageIds){
+        for(int imageId : imageIds){
+            Boolean result = this.eventImageDao.sendToSlideShow(imageId);
+            if(!result){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Transactional
     public Boolean checkOwnerShipOfImages(int[] imageIds, Photographer photographer){
         for(int imageId : imageIds){
             EventImage eventImage = this.eventImageDao.getById(imageId);
@@ -170,7 +181,6 @@ public class EventImageService {
 
     @Transactional(rollbackFor = Exception.class)
     public List<Integer> getMonthWiseEventImageCount(){
-        System.out.println("fsdfsdfs");
         List<Object[]> rows= this.eventImageDao.getMonthWiseEventImageCount();
         List<Integer> monthdata = new ArrayList<Integer>();
         monthdata.add(0);

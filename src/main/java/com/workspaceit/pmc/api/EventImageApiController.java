@@ -2,13 +2,12 @@ package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.auth.PhotographerUserDetails;
 import com.workspaceit.pmc.constant.FILE;
+import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.helper.EmailHelper;
 import com.workspaceit.pmc.helper.FileHelper;
-import com.workspaceit.pmc.service.EventImageService;
-import com.workspaceit.pmc.service.EventService;
-import com.workspaceit.pmc.service.FileService;
-import com.workspaceit.pmc.service.WatermarkService;
+import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.util.JSONPObject;
@@ -46,6 +45,17 @@ public class EventImageApiController {
 
     private EventImageService eventImageService;
     private WatermarkService watermarkService;
+
+    private SentSlideShowService sentSlideShowService;
+
+    @Autowired
+    EmailHelper emailHelper;
+
+    @Autowired
+    public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
+        this.sentSlideShowService = sentSlideShowService;
+    }
+
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
@@ -260,6 +270,23 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping("/send-via-email")
+    public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("email") String email,@RequestParam("eventId") int eventId,Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        Event event = eventService.getById(eventId);
+        SentSlideshow sentSlideshow = sentSlideShowService.save(email,imageIds,photographer,event);
+        if(sentSlideshow==null){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+        Boolean result =emailHelper.sendImagesViaEmail(email,sentSlideshow.getIdentifier());
+        if(!result){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(sentSlideshow);
     }
 
 

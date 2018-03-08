@@ -1,7 +1,7 @@
 package com.workspaceit.pmc.config;
 
 import com.workspaceit.pmc.aop.TestAop;
-import com.workspaceit.pmc.aop.dao.CommonDaoAop;
+import com.workspaceit.pmc.aop.dao.CommonServiceAop;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -14,7 +14,7 @@ public class AopConfig {
         return new TestAop();
     }
     @Bean
-    public CommonDaoAop commonDaoAop(){
-        return new CommonDaoAop();
+    public CommonServiceAop commonDaoAop(){
+        return new CommonServiceAop();
     }
 }
