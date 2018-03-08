@@ -15,7 +15,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "sent_slideshow")
+@Table(name = "sent_slideshows")
 public class SentSlideshow {
 
     @Id
@@ -41,6 +41,10 @@ public class SentSlideshow {
     private Date createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
+    private Event event;
+
+    @ManyToOne
     @JoinColumn(name = "sent_by", referencedColumnName = "id", nullable = true)
     private Photographer photographer;
 
@@ -51,5 +55,75 @@ public class SentSlideshow {
             inverseJoinColumns = {@JoinColumn(name = "event_image_id")})
     Set<EventImage> eventImages = new HashSet<EventImage>();
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public PopupAdConstant getType() {
+        return type;
+    }
+
+    public void setType(PopupAdConstant type) {
+        this.type = type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(Boolean seen) {
+        isSeen = seen;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Photographer getPhotographer() {
+        return photographer;
+    }
+
+    public void setPhotographer(Photographer photographer) {
+        this.photographer = photographer;
+    }
+
+    public Set<EventImage> getEventImages() {
+        return eventImages;
+    }
+
+    public void setEventImages(Set<EventImage> eventImages) {
+        this.eventImages = eventImages;
+    }
 }

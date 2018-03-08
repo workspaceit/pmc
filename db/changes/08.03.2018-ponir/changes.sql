@@ -1,0 +1,1 @@
+ALTER TABLE  `sent_slideshows` ADD  `event_id` INT( 11 ) NOT NULL ;
