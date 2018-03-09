@@ -7,6 +7,7 @@ import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.EmailHelper;
 import com.workspaceit.pmc.helper.FileHelper;
+import com.workspaceit.pmc.helper.SmsHelper;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import org.apache.commons.io.IOUtils;
@@ -50,6 +51,9 @@ public class EventImageApiController {
 
     @Autowired
     EmailHelper emailHelper;
+
+    @Autowired
+    SmsHelper smsHelper;
 
     @Autowired
     public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
@@ -205,64 +209,6 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Entity Not found");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @PostMapping("/send-to-slideshow")
     public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") int[] imageIds){
         boolean result = eventImageService.sendImagesToSlideShow(imageIds);
@@ -273,15 +219,15 @@ public class EventImageApiController {
     }
 
     @PostMapping("/send-via-email")
-    public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("email") String email,@RequestParam("eventId") int eventId,Authentication authentication){
+    public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("email") String email,@RequestParam("message") String message,@RequestParam("eventId") int eventId,Authentication authentication){
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Event event = eventService.getById(eventId);
-        SentSlideshow sentSlideshow = sentSlideShowService.save(email,imageIds,photographer,event);
+        SentSlideshow sentSlideshow = sentSlideShowService.saveByEmail(email,message,imageIds,photographer,event);
         if(sentSlideshow==null){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
-        Boolean result =emailHelper.sendImagesViaEmail(email,sentSlideshow.getIdentifier());
+        Boolean result =emailHelper.sendImagesViaEmail(customerName,email,message,sentSlideshow.getIdentifier());
         if(!result){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
 
@@ -289,5 +235,21 @@ public class EventImageApiController {
         return ResponseEntity.status(HttpStatus.OK).body(sentSlideshow);
     }
 
+    @PostMapping("/send-via-sms")
+    public ResponseEntity<?> sendImagesViaSms(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("phoneNum") String phoneNum,@RequestParam("message") String message,@RequestParam("eventId") int eventId,Authentication authentication){
+        Object principle = authentication.getPrincipal();
+        Photographer photographer = (PhotographerUserDetails) principle;
+        Event event = eventService.getById(eventId);
+        SentSlideshow sentSlideshow = sentSlideShowService.saveBySms(phoneNum,message,imageIds,photographer,event);
+        if(sentSlideshow==null){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+        Boolean result =smsHelper.sendMessage(customerName,phoneNum,sentSlideshow.getIdentifier(),message);
+        if(!result){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(sentSlideshow);
+    }
 
 }

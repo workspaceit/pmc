@@ -1,0 +1,1 @@
+ALTER TABLE  `sent_slideshows` ADD  `message` TEXT NOT NULL AFTER  `address` ;
