@@ -1170,3 +1170,6 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     width: 49%;
     margin-bottom: 10px;
 }
+#advertiser-datatable .action-clm a {
+    width: 30%;
+}
