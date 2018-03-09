@@ -35,14 +35,15 @@ public class SentSlideShowService {
     }
 
     @Transactional
-    public SentSlideshow save(String email, int[] imageIDs, Photographer sentBy, Event event){
+    public SentSlideshow saveByEmail(String email,String message, int[] imageIDs, Photographer sentBy, Event event){
         SentSlideshow sentSlideshow = new SentSlideshow();
         sentSlideshow.setAddress(email);
         sentSlideshow.setType( PopupAdConstant.EMAIL);
         sentSlideshow.setPhotographer(sentBy);
         sentSlideshow.setEvent(event);
         sentSlideshow.setIdentifier(UUID.randomUUID().toString());
-        Set<EventImage> eventImageSet=new HashSet<EventImage>();;
+        sentSlideshow.setMessage(message);
+        Set<EventImage> eventImageSet=new HashSet<EventImage>();
         for(int imageId:imageIDs){
             try {
                 EventImage eventImage = eventImageService.getEventImage(imageId);
@@ -56,5 +57,29 @@ public class SentSlideShowService {
         this.sentSlideShowDao.save(sentSlideshow);
         return sentSlideshow;
     }
+    @Transactional
+    public SentSlideshow saveBySms(String phoneNum,String message, int[] imageIDs, Photographer sentBy, Event event){
+        SentSlideshow sentSlideshow = new SentSlideshow();
+        sentSlideshow.setAddress(phoneNum);
+        sentSlideshow.setType( PopupAdConstant.SMS);
+        sentSlideshow.setPhotographer(sentBy);
+        sentSlideshow.setEvent(event);
+        sentSlideshow.setIdentifier(UUID.randomUUID().toString());
+        sentSlideshow.setMessage(message);
+        Set<EventImage> eventImageSet=new HashSet<EventImage>();
+        for(int imageId:imageIDs){
+            try {
+                EventImage eventImage = eventImageService.getEventImage(imageId);
+                eventImageSet.add(eventImage);
+            } catch (EntityNotFound entityNotFound) {
+                entityNotFound.printStackTrace();
+            }
+        }
+        sentSlideshow.setEventImages(eventImageSet);
+        sentSlideshow.setSeen(false);
+        this.sentSlideShowDao.save(sentSlideshow);
+        return sentSlideshow;
+    }
+
 
 }

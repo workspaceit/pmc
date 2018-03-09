@@ -1117,7 +1117,7 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     background: #777373;
     border-color: #777373;
     color: #fff;
-
+    text-decoration: none;
 }
 .dtble .dataTables_wrapper .dataTables_filter input {
     border: 1px solid #adaaaa;
@@ -1166,3 +1166,60 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     font-size: 18px;
     font-weight: 500;
 }
+.timepick_btn button{
+    width: 49%;
+    margin-bottom: 10px;
+}
+#advertiser-datatable .action-clm a {
+    width: 30%;
+}
+
+/****************** Header Modification Author: Arnab 09/03/2018 ********************/\
+
+li.has_child{
+    position: relative;
+}
+li.has_child:hover .submenu {
+    max-height: 600px;
+    padding: 5px 0px;
+    border: 1px solid #ccc;
+}
+ul.submenu {
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    max-height: 0px;
+    padding: 0px 0px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    background-clip: padding-box;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+ul.submenu li a:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+
+}
+ul.submenu li a {
+    padding: 3px 20px;
+    color: #333;
+    display: block;
+}
+ul.submenu li{
+    list-style:none;
+}
+.has_child a i {
+    font-size: 10px;
+    padding-left: 3px;
+    display: inline-block;
+}
+
+
+
+
+
+/****************** End Header Modification Author: Arnab 09/03/2018 ********************/

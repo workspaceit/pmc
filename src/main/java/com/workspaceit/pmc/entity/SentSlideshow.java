@@ -32,6 +32,9 @@ public class SentSlideshow {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "message")
+    private String message;
+
     @Column(name = "is_seen")
     private Boolean isSeen;
 
@@ -121,6 +124,14 @@ public class SentSlideshow {
 
     public Set<EventImage> getEventImages() {
         return eventImages;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setEventImages(Set<EventImage> eventImages) {

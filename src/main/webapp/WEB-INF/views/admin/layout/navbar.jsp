@@ -1,5 +1,4 @@
 <!-- <div id="wrapper">
-
 <!-- Navigation -->
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,7 +21,30 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;background-color: #222">
-                <li>
+                <li><a href="<c:url value="/admin/dashboard"/>">Dashboard</a></li>
+                <li class="has_child">
+                    <a href="<c:url value="/admin/advertiser/all"/>">Advertiser<i class="fa fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="<c:url value="/admin/advertiser/all"/>">Advertisers</a></li>
+                        <li><a href="<c:url value="/admin/advertiser/add"/>">Add</a></li>
+                    </ul>
+                </li>
+                <li class="has_child">
+                    <a href="<c:url value="/admin/event/all"/>">Event<i class="fa fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="<c:url value="/admin/event/all"/>">Events</a></li>
+                        <li><a href="<c:url value="/admin/event/add"/>">Add</a></li>
+                    </ul>
+                </li>
+                <li><a href="<c:url value="/admin/advertisement-prices"/>">Pricing</a></li>
+                <li class="has_child">
+                    <a href="<c:url value="/admin/watermark/all"/>">Watermark<i class="fa fa-chevron-down"></i></a>
+                    <ul class="submenu">
+                        <li><a href="<c:url value="/admin/watermark/all"/>">Watermarks</a></li>
+                        <li><a href="<c:url value="/admin/watermark/add"/>">Add</a></li>
+                    </ul>
+                </li>
+                <%--<li>
                     <a href="<c:url value="/admin/dashboard"/>">
                         <img src="<s:url value="/resources/images/dashboard.svg"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Dashboard</span>
@@ -51,21 +73,13 @@
                         <img src="<s:url value="/resources/images/watermark.png"/>" class="img-responsive w-25px">
                         <span class="visible-xs">Watermark Settings</span>
                     </a>
-                </li>
+                </li>--%>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus-circle fa-2x f-size"></i><span class="visible-xs" style="margin-left:15px;">Dashboard</span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <%--<li><a href="<c:url value="/admin/user/add" />">Add a new Admin</a></li>--%>
-                        <%--<li><a href="<c:url value="/admin/location/add" />">Add New Location</a></li>--%>
-                        <%--<li><a href="<c:url value="/admin/venue/add" />"> Add New Venue</a></li>--%>
-                        <%--<li><a href="<c:url value="/admin/photographer/add" />">Add New Photographer</a></li>--%>
                         <li><a href="<c:url value="/admin/photographer/all" />">Photographers</a></li>
                         <li><a href="<c:url value="/admin/location/all" />">Locations</a></li>
                         <li><a href="<c:url value="/admin/user/all" />">Admins</a></li>
-                        <li><a href="<c:url value="/admin/advertiser/all" />">Advertisers</a></li>
-                        <li><a href="<c:url value="/admin/watermark/all" />">Watermarks</a></li>
-                        <%--<li><a href="<c:url value="/admin/venue/all" />">Venues</a></li>--%>
-                        <li><a href="<c:url value="/admin/event/all" />">Events</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

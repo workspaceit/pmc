@@ -63,6 +63,27 @@ public class Environment {
     @Value("${mail.server.link}")
     private String mailServerLink;
 
+    @Value("${sms.twilio.sid}")
+    private String smsSid;
+
+    @Value("${sms.twilio.authtoken}")
+    private String smsAuthToken;
+
+    @Value("${sms.twilio.phonenum}")
+    private String smsPhoneNumber;
+
+    public String getSmsSid() {
+        return smsSid;
+    }
+
+    public String getSmsAuthToken() {
+        return smsAuthToken;
+    }
+
+    public String getSmsPhoneNumber() {
+        return smsPhoneNumber;
+    }
+
     public String getMailSenderEmail() {
         return mailSenderEmail;
     }

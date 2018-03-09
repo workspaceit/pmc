@@ -157,7 +157,7 @@ $(document).ready(function () {
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
-                if(action === "save" || action === "save-close") {
+                if(action === "save-close") {
                     window.location = BASEURL + "admin/event/all";
                 }
                 else if(action === "save-new"){

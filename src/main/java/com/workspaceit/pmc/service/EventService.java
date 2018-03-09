@@ -201,7 +201,7 @@ public class EventService {
         //event.setVenue(venue);
         event.setLocation(location);
         event.setEventPrivate(eventUpdateForm.getIsPrivate());
-        event.setIsAllAdvertiser(event.getIsAllAdvertiser());
+        event.setIsAllAdvertiser(eventUpdateForm.getIsAllAdvertiserSelected());
         if(photographers != null) {
             event.setPhotographers(new HashSet<>(photographers));
         }
