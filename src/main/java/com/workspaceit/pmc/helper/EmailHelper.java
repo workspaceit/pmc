@@ -112,7 +112,7 @@ public class EmailHelper {
         }
         return true;
     }
-    public boolean sendImagesViaEmail(String email,String code) {
+    public boolean sendImagesViaEmail(String name,String email,String msg,String code) {
         String to = email;
         Properties properties = getProperties();
         Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
@@ -123,14 +123,14 @@ public class EmailHelper {
         });
         String activationUrl = link + "slideshow-images/"+code;
         String link = "<a href='" + activationUrl + "'>Click here</a>";
-        String emailHtmlBody = "Hi,<br>Please click this link " + link + " to see your images";
+        String emailHtmlBody = "Hi "+name+","+msg+"<br>Please click this link " + link + " to see your images";
         try {
             MimeMessage message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html");
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
-            message.setSubject("Password Reset");
+            message.setSubject("Slideshow Image");
             message.setText(emailHtmlBody, null, "html");
             Transport.send(message);
             System.out.println("inside the helper" + to);
