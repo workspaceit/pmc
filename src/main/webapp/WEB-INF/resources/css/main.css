@@ -1117,7 +1117,7 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     background: #777373;
     border-color: #777373;
     color: #fff;
-
+    text-decoration: none;
 }
 .dtble .dataTables_wrapper .dataTables_filter input {
     border: 1px solid #adaaaa;
@@ -1165,4 +1165,11 @@ box-shadow: 0 0 0 4px rgba(255,255,255,1);
     width: 75%;
     font-size: 18px;
     font-weight: 500;
+}
+.timepick_btn button{
+    width: 49%;
+    margin-bottom: 10px;
+}
+#advertiser-datatable .action-clm a {
+    width: 30%;
 }

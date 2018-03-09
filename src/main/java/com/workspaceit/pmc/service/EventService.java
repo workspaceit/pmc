@@ -73,7 +73,7 @@ public class EventService {
     @Transactional
     public Event getEvent(int id)throws EntityNotFound{
         Event event =  this.eventDao.getById(id);
-        if(event==null)throw new EntityNotFound("Entity not found by id :"+id);
+        if(event==null)throw new EntityNotFound("Event not found by id :"+id);
 
         return event;
     }
@@ -201,7 +201,7 @@ public class EventService {
         //event.setVenue(venue);
         event.setLocation(location);
         event.setEventPrivate(eventUpdateForm.getIsPrivate());
-        event.setIsAllAdvertiser(event.getIsAllAdvertiser());
+        event.setIsAllAdvertiser(eventUpdateForm.getIsAllAdvertiserSelected());
         if(photographers != null) {
             event.setPhotographers(new HashSet<>(photographers));
         }

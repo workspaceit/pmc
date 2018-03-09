@@ -25,52 +25,54 @@
             <!-- Page Heading -->
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
-                    <h4 class="panel-title pull-left" style="margin-top: 10px">Watermark Title</h4>
+                    <h4 class="panel-title pull-left" style="margin-top: 10px">Watermark Name</h4>
 
                 </div>
-                <input class="form-control" id="name" name="name" value="${watermark.name}" placeholder="Watermark Title">
+                <input class="form-control" id="name" name="name" value="${watermark.name}" placeholder="Watermark Name">
 
             </div>
-            <div class="imageupload panel panel-default">
-                <div class="panel-heading clearfix">
-                    <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
-                    <div id="waterMarkImg" class="btn-group pull-right">
-                        <button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>
-                        <button type="button" class="wm_tab btn btn-default" data-name="text"  id="wm_tab_text_btn">Text</button>
-                    </div>
-                </div>
-                <div id="waterMarkImgFile" class="file-tab panel-body">
-                    <div class="col-md-6">
-                        <label>Logo Name</label>
-                        <input class="form-control" value="${watermark.logoName}" id="logoName" name="logoName  " placeholder="Enter Text Here">
-                        <p class="text-danger" id="errorObj_logoName" style="display: block;"></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Logo</label>
-                        <div id="watermarkLogoImg" >
-
-                            <div class="dz-default dz-message">
-                                <div class="droper">
-                                    <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
-                                    <p class="dropext">Click or Drop your file here</p>
-                                </div>
-                                <p id="errorObj_profilePictureToken"></p>
+            <div class="row clearfix">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="imageupload panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
+                            <div id="waterMarkImg" class="btn-group pull-right">
+                                <button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>
+                                <button type="button" class="wm_tab btn btn-default" data-name="text"  id="wm_tab_text_btn">Text</button>
                             </div>
                         </div>
-                        <c:set value="" var="logoImgSrc" />
-                        <c:choose>
-                            <c:when test="${watermark.logoImage==null || watermark.logoImage.trim().equals('')}">
-                                <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
-                            </c:when>
-                            <c:otherwise>
-                                <c:set value="/common/${watermark.logoImage}" var="logoImgSrc" />
-                            </c:otherwise>
-                        </c:choose>
-                        <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+                        <div id="waterMarkImgFile" class="file-tab panel-body">
+                            <div class="col-md-12">
+                                <label>Logo Name</label>
+                                <input class="form-control" value="${watermark.logoName}" id="logoName" name="logoName  " placeholder="Enter Text Here">
+                                <p class="text-danger" id="errorObj_logoName" style="display: block;"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Logo</label>
+                                <div id="watermarkLogoImg" >
 
-                        <p id="errorObj_locationLogo"  class="text-danger"></p>
+                                    <div class="dz-default dz-message">
+                                        <div class="droper">
+                                            <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
+                                            <p class="dropext">Click or Drop your file here</p>
+                                        </div>
+                                        <p id="errorObj_profilePictureToken"></p>
+                                    </div>
+                                </div>
+                                <c:set value="" var="logoImgSrc" />
+                                <c:choose>
+                                    <c:when test="${watermark.logoImage==null || watermark.logoImage.trim().equals('')}">
+                                        <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set value="/common/${watermark.logoImage}" var="logoImgSrc" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
 
-                    </div>
+                                <p id="errorObj_locationLogo"  class="text-danger"></p>
+
+                            </div>
 
 
 
@@ -78,99 +80,113 @@
 
 
 
-                    <div class="col-md-4">
-                        <div class="form-group timepick">
-                            <label>Placement</label><br>
-                            <select id="e-placement" class="img_placement" name="img_placement">
-                                <option value="tl" <c:if test="${watermark.placement.equals(Placement.tl) }"> selected </c:if>>Top Left</option>
-                                <option value="tc" <c:if test="${watermark.placement.equals(Placement.tc) }"> selected </c:if>>Top Center</option>
-                                <option value="tr" <c:if test="${watermark.placement.equals(Placement.tr) }"> selected </c:if>>Top Right</option>
-                                <option value="bl" <c:if test="${watermark.placement.equals(Placement.bl) }"> selected </c:if>>Bottom Left</option>
-                                <option value="br" <c:if test="${watermark.placement.equals(Placement.br) }"> selected </c:if>>Bottom Right</option>
-                                <option value="bc" <c:if test="${watermark.placement.equals(Placement.bc) }"> selected </c:if>>Bottom Center</option>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group timepick">
+                                    <label>Placement</label><br>
+                                    <select id="e-placement" class="img_placement" name="img_placement">
+                                        <option value="tl" <c:if test="${watermark.placement.equals(Placement.tl) }"> selected </c:if>>Top Left</option>
+                                        <option value="tc" <c:if test="${watermark.placement.equals(Placement.tc) }"> selected </c:if>>Top Center</option>
+                                        <option value="tr" <c:if test="${watermark.placement.equals(Placement.tr) }"> selected </c:if>>Top Right</option>
+                                        <option value="bl" <c:if test="${watermark.placement.equals(Placement.bl) }"> selected </c:if>>Bottom Left</option>
+                                        <option value="br" <c:if test="${watermark.placement.equals(Placement.br) }"> selected </c:if>>Bottom Right</option>
+                                        <option value="bc" <c:if test="${watermark.placement.equals(Placement.bc) }"> selected </c:if>>Bottom Center</option>
 
-                            </select>
+                                    </select>
+                                </div>
+                                <p class="text-danger" id="errorObj_placement" style="display: block;"></p>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group timepick">
+                                    <label>Smallest Size</label><br>
+                                    <select id="e-size" class="img_font_size" name="img_font_size">
+                                        <option value="thumb" <c:if test="${watermark.size.equals(Size.thumb) }"> selected </c:if>>Thumb</option>
+                                        <option value="small" <c:if test="${watermark.size.equals(Size.small) }"> selected </c:if>>Small</option>
+                                        <option value="medium" <c:if test="${watermark.size.equals(Size.medium) }"> selected </c:if>>Medium</option>
+                                        <option value="large" <c:if test="${watermark.size.equals(Size.large) }"> selected </c:if>>Large</option>
+                                        <option value="x_large" <c:if test="${watermark.size.equals(Size.x_large) }"> selected </c:if>>X-Large</option>
+                                    </select>
+                                </div>
+                                <p class="text-danger" id="errorObj_size" style="display: block;"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Fade</label><br>
+                                <div class="range-slider">
+                                    <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="${watermark.fade}" min="0" max="50">
+                                    <span class="range-slider__value">0</span>
+                                </div>
+                                <p class="text-danger" id="errorObj_fade" style="display: block;"></p>
+                            </div>
+
+
+
                         </div>
-                        <p class="text-danger" id="errorObj_placement" style="display: block;"></p>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group timepick">
-                            <label>Smallest Size</label><br>
-                            <select id="e-size" class="img_font_size" name="img_font_size">
-                                <option value="thumb" <c:if test="${watermark.size.equals(Size.thumb) }"> selected </c:if>>Thumb</option>
-                                <option value="small" <c:if test="${watermark.size.equals(Size.small) }"> selected </c:if>>Small</option>
-                                <option value="medium" <c:if test="${watermark.size.equals(Size.medium) }"> selected </c:if>>Medium</option>
-                                <option value="large" <c:if test="${watermark.size.equals(Size.large) }"> selected </c:if>>Large</option>
-                                <option value="x_large" <c:if test="${watermark.size.equals(Size.x_large) }"> selected </c:if>>X-Large</option>
-                            </select>
+
+                        <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
+                            <div class="col-md-3">
+                                <div class="form-group timepick">
+                                    <label>Logo Name</label><br>
+                                    <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.txtLogoName}" placeholder="New Watemark">
+                                    <p class="text-danger" id="errorObj_txtLogoName" style="display: block;"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group timepick">
+                                    <label>Text Watermark</label><br>
+                                    <input class="form-control" id="txt_wm_text" name="txt_wm_text" value="${watermark.watermarkText}" placeholder="enter your text watermark">
+                                    <p class="text-danger" id="errorObj_watermarkText" style="display: block;"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group timepick">
+                                    <label>Font</label><br>
+                                    <select id="e1" class="txt_font" name="txt_font">
+                                        <c:forEach var="font" items="${fonts}" >
+                                            <c:set var="fontSelected" value=""></c:set>
+                                            <c:if test="${watermark.font !=null || watermark.font.id == font.id}" >
+                                                <c:set var="fontSelected" value="selected='selected'"></c:set>
+                                            </c:if>
+                                            <option value="${font.id}"  ${fontSelected} >${font.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group timepick">
+                                    <label>Text Colors</label>
+                                    <input class="jscolor form-control" id="txt_color" name="txt_color" value="${watermark.color}">
+                                    <p class="text-danger" id="errorObj_color" style="display: block;"></p>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-danger" id="errorObj_size" style="display: block;"></p>
+
                     </div>
-                    <div class="col-md-4">
-                        <label>Fade</label><br>
-                        <div class="range-slider">
-                            <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="${watermark.fade}" min="0" max="50">
-                            <span class="range-slider__value">0</span>
-                        </div>
-                        <p class="text-danger" id="errorObj_fade" style="display: block;"></p>
-                    </div>
-
-
-
                 </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="imgpreview panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <h4 class="panel-title pull-left" style="margin-top: 10px">Preview</h4>
+                            <%--<div id="waterMarkImg" class="btn-group pull-right">--%>
+                                <%--<button type="button" class="wm_tab btn btn-default active" data-name="image" id="wm_tab_image_btn">Image</button>--%>
+                                <%--<button type="button" class="wm_tab btn btn-default" data-name="text"  id="wm_tab_text_btn">Text</button>--%>
+                            <%--</div>--%>
+                        </div>
+                        <div class="url-tab panel-body" >
 
-                <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
-                    <div class="col-md-3">
-                        <div class="form-group timepick">
-                            <label>Logo Name</label><br>
-                            <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.txtLogoName}" placeholder="New Watemark">
-                            <p class="text-danger" id="errorObj_txtLogoName" style="display: block;"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group timepick">
-                            <label>Text Watermark</label><br>
-                            <input class="form-control" id="txt_wm_text" name="txt_wm_text" value="${watermark.watermarkText}" placeholder="enter your text watermark">
-                            <p class="text-danger" id="errorObj_watermarkText" style="display: block;"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group timepick">
-                            <label>Font</label><br>
-                            <select id="e1" class="txt_font" name="txt_font">
-                                <c:forEach var="font" items="${fonts}" >
-                                    <c:set var="fontSelected" value=""></c:set>
-                                    <c:if test="${watermark.font !=null || watermark.font.id == font.id}" >
-                                        <c:set var="fontSelected" value="selected='selected'"></c:set>
-                                    </c:if>
-                                    <option value="${font.id}"  ${fontSelected} >${font.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group timepick">
-                            <label>Text Colors</label>
-                            <input class="jscolor form-control" id="txt_color" name="txt_color" value="${watermark.color}">
-                            <p class="text-danger" id="errorObj_color" style="display: block;"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="url-tab panel-body" >
+                            <div class="col-md-12">
+                                <div class="form-group timepick timepick_btn">
+                                    <button class="btn btn-action-top" onclick="previewWatermarkOnSampleEdit()" >Preview</button>
+                                    <button id="changeSample" class="btn btn-action-top" >Change sample</button>
+                                        <%--
+                                            Dropzone needs html but it is kept hidden
+                                            Because image is beging displayed in #watermarkPreviewOnSampleImg
+                                         --%>
+                                    <div  id="dummyForDropZone" style="display: none"></div>
+                                    <img id="watermarkPreviewOnSampleImg" class="img-responsive" onerror="this.src='<s:url value="/resources${previewSampleUri}"/>'" src="<s:url value="/common/${watermark.sampleImageName}"/>" />
+                                </div>
+                            </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group timepick">
-                            <button class="btn btn-action-top" onclick="previewWatermarkOnSampleEdit()" >Preview</button>
-                            <button id="changeSample" class="btn btn-action-top" >Change sample</button>
-                                <%--
-                                    Dropzone needs html but it is kept hidden
-                                    Because image is beging displayed in #watermarkPreviewOnSampleImg
-                                 --%>
-                            <div  id="dummyForDropZone" style="display: none"></div>
-                            <img id="watermarkPreviewOnSampleImg" onerror="this.src='<s:url value="/resources${previewSampleUri}"/>'" src="<s:url value="/common/${watermark.sampleImageName}"/>" />
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

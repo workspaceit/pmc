@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.CommonDao;
+import com.workspaceit.pmc.helper.EntityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ public class CommonService {
     private CommonDao commonDao;
     private EventService eventService;
     private EventImageService eventImageService;
+    private EntityHelper entityHelper;
 
     @Autowired
     public void setCommonDao(CommonDao commonDao) {
@@ -30,9 +32,14 @@ public class CommonService {
         this.eventImageService = eventImageService;
     }
 
+    @Autowired
+    public void setEntityHelper(EntityHelper entityHelper) {
+        this.entityHelper = entityHelper;
+    }
+
     @Transactional
     public Boolean activateEntity(Integer id, String type){
-        String entityClassName = getEntityClassName(type);
+        String entityClassName = entityHelper.getClassName(type);
         if(entityClassName.equals("")){
             return false;
         }
@@ -41,7 +48,7 @@ public class CommonService {
 
     @Transactional
     public Boolean deActivateEntity(Integer id, String type){
-        String entityClassName = getEntityClassName(type);
+        String entityClassName = entityHelper.getClassName(type);
         if(entityClassName.equals("")){
             return false;
         }
@@ -50,57 +57,14 @@ public class CommonService {
 
     @Transactional(rollbackFor =Exception.class)
     public Boolean delete(Integer id, String type){
-        String entityClassName = getEntityClassName(type);
+        String entityClassName = entityHelper.getClassName(type);
         if(entityClassName.equals("")){
             return false;
         }
-        boolean flag = commonDao.delete(entityClassName, id);
-        this.afterDelete(entityClassName,id);
-        return flag;
+
+        return  commonDao.delete(entityClassName, id);
     }
-    @Transactional(rollbackFor =Exception.class)
-    public void afterDelete(String entityClassName,int id){
-        switch(entityClassName){
-            case "Watermark":
-                this.eventService.removeWatermarkFromEvent(id);
-                this.eventImageService.makeWatermarkNull(id);
-                break;
-            case "Photographer":
-                this.eventService.removePhotographerFromEvent(id);
-                break;
-            case "Advertiser":
-                this.eventService.removeAdvertiserFromEvent(id);
-                break;
-        }
-    }
-    private String getEntityClassName(String type){
-        String entityClassName = "";
-        switch (type){
-            case "event":
-                entityClassName = "Event";
-                break;
-            case "photographer":
-                entityClassName = "Photographer";
-                break;
-            case "watermark":
-                entityClassName = "Watermark";
-                break;
-            case "location":
-                entityClassName = "Location";
-                break;
-            case "advertiser":
-                entityClassName = "Advertiser";
-                break;
-            case "venue":
-                entityClassName = "Venue";
-                break;
-            case "user":
-                entityClassName = "Admin";
-                break;
-            default:
-                break;
-        }
-        return entityClassName;
-    }
+
+
 
 }

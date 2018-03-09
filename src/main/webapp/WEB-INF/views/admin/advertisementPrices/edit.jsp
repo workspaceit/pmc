@@ -10,7 +10,7 @@
       <div class="container">
         <h3 class="uni-header"><span>Advertising Pricing</span></h3>
         <div class="col-md-12" id="notification"></div>
-        <div class="col-md-6 well">
+        <div class="col-md-12 well">
           <c:forEach var="price" items="${pricesList}" >
           <div class="form-group">
             <label>${price.description}</label>
@@ -21,9 +21,7 @@
           </c:forEach>
           <button class="btn btn-primary" onclick="submitData()">Save</button>
         </div>
-
-      </Div>
-
+      </div>
       <!-- /#page-wrapper -->
       <script src="<s:url value="/resources/developer/js/advertisementPrices/update.js"/>"></script>
 

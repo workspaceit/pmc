@@ -1,5 +1,6 @@
 package sample;
 
+import com.workspaceit.pmc.aop.TestAop;
 import com.workspaceit.pmc.config.WebConfig;
 import com.workspaceit.pmc.constant.advertisement.*;
 import com.workspaceit.pmc.dao.*;
@@ -7,7 +8,9 @@ import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.entity.advertisement.Section;
+import com.workspaceit.pmc.helper.TestHelper;
 import com.workspaceit.pmc.service.EventService;
+import com.workspaceit.pmc.validation.admin.AdminCreateForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,56 +32,35 @@ import java.util.List;
 public class SampleTest {
 
 
-   private SectionDao sectionDao;
-   private EventService eventService;
-   private EventDao eventDao;
+    private TestAop testAop;
+    private TestHelper testHelper;
 
-   @Autowired
-    public void setSectionDao(SectionDao sectionDao) {
-        this.sectionDao = sectionDao;
+    @Autowired
+    public void setTestAop(TestAop testAop) {
+        this.testAop = testAop;
     }
 
     @Autowired
-    public void setEventService(EventService eventService) {
-        this.eventService = eventService;
-    }
-
-    @Autowired
-    public void setEventDao(EventDao eventDao) {
-        this.eventDao = eventDao;
+    public void setTestHelper(TestHelper testHelper) {
+        this.testHelper = testHelper;
     }
 
     @Test
     @Transactional
     public void test(){
+        AdminCreateForm adminCreateForm = new AdminCreateForm();
 
-     /* List<Section>  sections = this.sectionDao.getByAdTypeSectionTypeAndRotation(ADVERTISEMENT_TYPE.GALLERY,
-              SECTION_TYPE.TOP_BANNER,
-              ADVERTISEMENT_ROTATION_SETTINGS.STATIC);
-
-
-      for(Section section :sections){
-            System.out.println(section.getId());
-        }*/
-
-//    Section section = this.sectionDao.getById(1);
-//    System.out.println(section.getAdvertisement().getAdType());
-        List<Event> eventList = this.eventService.getByAdvertiserId(1);
-        Event event = this.eventService.getById(9);
-
-
+        adminCreateForm.setUserName("admin");
+        adminCreateForm.setEmail("admin@admin.com");
+        adminCreateForm.setPassword("123456");
+        adminCreateForm.setConfirmPassword("123456");
+        adminCreateForm.setFullName("ADMIN ADMIN");
+        adminCreateForm.setPhoneNumber("+8801764658987");
+        testHelper.test(adminCreateForm);
 
 
 
    }
 
-    public static void main(String[] args) {
-        Set<Integer> advertisers =  new HashSet<>();
-        advertisers.add(1);
-        advertisers.add(4);
-        advertisers.add(3);
-        advertisers.add(2);
-        advertisers.removeIf(advertiser->advertiser==1);
-        System.out.println(advertisers);
-    }
+
 }
