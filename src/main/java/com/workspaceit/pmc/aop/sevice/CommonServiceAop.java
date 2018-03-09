@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.aop.dao;
+package com.workspaceit.pmc.aop.sevice;
 
 import com.workspaceit.pmc.helper.EntityHelper;
 import com.workspaceit.pmc.service.EventImageService;
@@ -7,8 +7,10 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class CommonServiceAop {
     private EventService eventService;
     private EventImageService eventImageService;

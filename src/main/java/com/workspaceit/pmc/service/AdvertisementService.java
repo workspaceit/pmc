@@ -54,6 +54,11 @@ public class AdvertisementService {
         return advertisementMap;
     }
     @Transactional
+    public Advertisement getByIdAndType(int advertiserId,ADVERTISEMENT_TYPE adType){
+        Advertisement advertisement  =  this.advertisementDao.getByIdAndType(advertiserId,adType);
+        return advertisement;
+    }
+    @Transactional
     public Advertisement getByAdvertiserIdAndType(int advertiserId,ADVERTISEMENT_TYPE adType){
         Advertisement advertisement  =  this.advertisementDao.getByAdvertiserIdAndType(advertiserId,adType);
         return advertisement;

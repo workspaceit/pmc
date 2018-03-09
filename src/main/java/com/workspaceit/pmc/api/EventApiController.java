@@ -47,7 +47,6 @@ public class EventApiController {
         try {
             event = eventService.getEvent(eventId);
         } catch (EntityNotFound entityNotFound) {
-            entityNotFound.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(entityNotFound.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(event);

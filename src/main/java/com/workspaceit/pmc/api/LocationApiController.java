@@ -31,10 +31,17 @@ public class LocationApiController {
     @GetMapping("/get/{locationId}")
     public ResponseEntity<?> getLocationById(@PathVariable Integer locationId){
         Location location;
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             location = locationService.getLocation(locationId);
         } catch (EntityNotFound entityNotFound) {
-            entityNotFound.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(entityNotFound.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body(location);
