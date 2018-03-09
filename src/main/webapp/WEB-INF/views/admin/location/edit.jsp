@@ -294,6 +294,7 @@
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/update.js"/>"></script>
+        <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
         <!-- dropzone -->
         <script>
 

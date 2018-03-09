@@ -73,7 +73,7 @@ public class EventService {
     @Transactional
     public Event getEvent(int id)throws EntityNotFound{
         Event event =  this.eventDao.getById(id);
-        if(event==null)throw new EntityNotFound("Entity not found by id :"+id);
+        if(event==null)throw new EntityNotFound("Event not found by id :"+id);
 
         return event;
     }

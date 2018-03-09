@@ -1,6 +1,9 @@
 package com.workspaceit.pmc.api;
 
+import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/auth/api/locations")
+@RequestMapping(ControllerUriPrefix.PUBLIC_API+"/locations")
 @CrossOrigin
 public class LocationApiController {
     LocationService locationService;
@@ -25,19 +28,18 @@ public class LocationApiController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/{locationId}")
-    public Location getLocationById(@PathVariable Integer locationId){
-        return locationService.getById(locationId);
+    @GetMapping("/get/{locationId}")
+    public ResponseEntity<?> getLocationById(@PathVariable Integer locationId){
+        Location location;
+        try {
+            location = locationService.getLocation(locationId);
+        } catch (EntityNotFound entityNotFound) {
+            entityNotFound.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(entityNotFound.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(location);
     }
 
-    @GetMapping("/{limit}/{offset}/")
-    public ResponseEntity<?> get(@PathVariable int limit, @PathVariable int offset) throws InterruptedException {
-//        Thread.sleep(5000);
-        List<Location> locations = locationService.getActiveLocations(limit, offset);
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("count", locationService.getLocationCount());
-        responseData.put("locations", locations);
-        return ResponseEntity.status(HttpStatus.OK).body(responseData);
-    }
+
 
 }

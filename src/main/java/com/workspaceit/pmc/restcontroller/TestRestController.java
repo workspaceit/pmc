@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 
@@ -78,6 +80,17 @@ public class TestRestController {
         return ResponseEntity.status(HttpStatus.OK).body(monthdata);
     }
 
+    @RequestMapping(value = "/test",method =RequestMethod.POST )
+    public String getWEventById(HttpServletRequest httpServletRequest) {
+        String sss= " s ";
+        ServletRequest servletRequest = ( (ServletRequest) httpServletRequest);
+      Enumeration<String> s = servletRequest.getParameterNames();
+      while(s.hasMoreElements()){
+          String str = s.nextElement();
+          sss += str+" "+ servletRequest.getParameter(str);
+      }
+      return sss;
+    }
 
 //    anik
 
