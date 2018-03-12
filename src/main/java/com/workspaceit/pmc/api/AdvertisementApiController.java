@@ -98,11 +98,33 @@ public class AdvertisementApiController {
         return ResponseEntity.ok(advertisementList);
     }
 
+    @RequestMapping("/get-by-advertiser-id/{type}/{advertiserId}")
+    public ResponseEntity<?> getAdvertisementByAdvertiserId(@PathVariable("advertiserId") int advertiserId,
+                                                            @PathVariable("type") String type){
+
+        ADVERTISEMENT_TYPE adType = null;
+
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+
+        try {
+            adType = ADVERTISEMENT_TYPE.getFromString(type);
+
+        } catch (EntityNotFound entityNotFound) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body(serviceResponse
+                            .setMsg("eventId",entityNotFound.getMessage())
+                            .getFormError());
+
+        }
+
+        Advertisement advertisementList = this.advertisementService.getByAdvertiserIdAndType(advertiserId,adType);
+        return ResponseEntity.ok(advertisementList);
+    }
     @RequestMapping("/get/{type}/{eventId}/{limit}/{offset}")
     public ResponseEntity<?> getAdvertisementByEventIdAndType(@PathVariable("eventId")int eventId,
-                                                     @PathVariable("type") String type,
-                                                     @PathVariable("limit") int limit,
-                                                     @PathVariable("offset") int offset){
+                                                              @PathVariable("type") String type,
+                                                              @PathVariable("limit") int limit,
+                                                              @PathVariable("offset") int offset){
 
         ADVERTISEMENT_TYPE adType = null;
 
@@ -121,7 +143,7 @@ public class AdvertisementApiController {
         } catch (EntityNotFound entityNotFound) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body(serviceResponse
-                            .setMsg("eventId",entityNotFound.getMessage())
+                            .setValidationError("eventId",entityNotFound.getMessage())
                             .getFormError());
 
         }
@@ -135,31 +157,18 @@ public class AdvertisementApiController {
 
         return ResponseEntity.ok(advertisementList);
     }
-    @RequestMapping("/get/{type}/{advertisementId}")
-    public ResponseEntity<?> getAdvertisementById(@PathVariable("advertisementId")int advertisementId,
-                                                              @PathVariable("type") String type){
+    @RequestMapping("/get/{advertisementId}")
+    public ResponseEntity<?> getAdvertisementById(@PathVariable("advertisementId")int advertisementId){
 
-        ADVERTISEMENT_TYPE adType;
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
 
-        try {
-            adType = ADVERTISEMENT_TYPE.getFromString(type);
-
-        } catch (EntityNotFound entityNotFound) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body(serviceResponse
-                            .setValidationError("eventId",entityNotFound.getMessage())
-                            .getFormError());
-
-        }
-
-        Advertisement advertisement = this.advertisementService.getByIdAndType(advertisementId,adType);
+        Advertisement advertisement = this.advertisementService.getById(advertisementId);
         if(advertisement==null){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body(serviceResponse
-                            .setValidationError("id","No slideshow ad found by id :"+advertisementId)
+                            .setValidationError("id","No Advertisement found by id :"+advertisementId)
                             .getFormError());
         }
 

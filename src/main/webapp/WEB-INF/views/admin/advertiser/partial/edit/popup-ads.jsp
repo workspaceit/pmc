@@ -6,7 +6,13 @@
 
 
 <div class="tab-pane" id="tab_default_4">
+
+
+
     <div class="imageupload panel panel-default">
+        <div class="btn-container-top" >
+            <button class="btn btn-action-top"  onclick="redirectToAdvPreview(${popupAdSms.id},'popup')" >Preview</button>
+        </div>
         <div class="panel-heading clearfix">
             <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                 <h4 class="panel-title pull-left">SMS pop up banner/Video upload</h4>
@@ -105,8 +111,13 @@
                                 style="display:inline;width:100px;height:35px;"  /></span>
         </div>
     </div>
+
     <div class="imageupload panel panel-default">
+        <div class="btn-container-top" >
+            <button class="btn btn-action-top"  onclick="redirectToAdvPreview(${popupAdEmail.id},'popup')" >Preview</button>
+        </div>
         <div class="panel-heading clearfix">
+           <%-- <button class="btn" value="Preview" onclick="redirectToAdvPreview(${popupAdEmail.id},'popup')" />--%>
             <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                 <h4 class="panel-title pull-left">Email pop up banner/Video upload</h4>
             </div>

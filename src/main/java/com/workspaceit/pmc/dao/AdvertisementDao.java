@@ -35,21 +35,7 @@ public class AdvertisementDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
-    public Advertisement getByIdAndType(Integer id, ADVERTISEMENT_TYPE adType){
-        Session session = this.openSession();
-        try{
-            return (Advertisement)session.createQuery("SELECT distinct adv FROM Advertisement adv " +
-                    "inner join fetch adv.sections as section  " +
-                    "WHERE adv.id = :id and " +
-                    " adv.adType =                                                                                                                                                      :adType")
-                    .setParameter("id",id)
-                    .setParameter("adType",adType)
-                    .setMaxResults(1)
-                    .uniqueResult();
-        }finally {
-            if(session!=null)session.close();
-        }
-    }
+
     public Advertisement getByAdvertiserIdAndType(Integer advertiserId, ADVERTISEMENT_TYPE adType){
         Session session = this.openSession();
         try{

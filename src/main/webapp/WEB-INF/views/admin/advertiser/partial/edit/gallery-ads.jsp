@@ -1,8 +1,12 @@
 <%@page import="com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS" %>
 <%@page import="com.workspaceit.pmc.constant.advertisement.SECTION_TYPE" %>
 <div class="tab-pane" id="tab_default_2">
+    <div class="btn-container-top">
+           <button class="btn btn-action-top" onclick="redirectToAdvPreview(${galleryAd.id},'gallery')" >Preview</button>
+    </div>
     <div class="row clearfix">
         <div class="col-md-6">
+
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Logo</h4>

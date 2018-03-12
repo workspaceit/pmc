@@ -119,7 +119,7 @@
         <input type="hidden" id="slideshowAdId" value="${slideshowAd.id}" />
         <input type="hidden" id="popupSmsAdId" value="${popupAdSms.id}" />
         <input type="hidden" id="popupEmailAdId" value="${popupAdEmail.id}" />
-
+        <input type="hidden" id="frontEndBaseUrl" value="${frontEndBaseUrl}" />
 
 
         <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>

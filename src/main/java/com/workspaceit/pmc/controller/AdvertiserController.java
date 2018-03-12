@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.advertisement.*;
 import com.workspaceit.pmc.entity.*;
@@ -40,10 +41,13 @@ public class AdvertiserController {
     private SlideShowService slideShowService;
     private PopUpAdsService popUpAdsService;
 
+    private Environment environment;
+
     private List<Double> fadeInList;
     private List<Double>fadeOutList;
 
     private Set<Integer> durations;
+
 
 
     @Autowired
@@ -96,6 +100,11 @@ public class AdvertiserController {
         this.popUpAdsService = popUpAdsService;
     }
 
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
     @Autowired
     public void setFadeInList(List<Double> fadeInList) {
@@ -203,6 +212,7 @@ public class AdvertiserController {
         model.addObject("popupAdSms",popupAdSms);
         model.addObject("popupAdEmail",popupAdEmail);
 
+        model.addObject("frontEndBaseUrl",environment.getFrontEndAppBaseUrl());
 
 
           /*For location Modal Page*/

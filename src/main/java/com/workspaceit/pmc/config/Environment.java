@@ -3,8 +3,6 @@ package com.workspaceit.pmc.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
-
 /**
  * Created by anik on 12/18/17.
  */
@@ -71,6 +69,9 @@ public class Environment {
 
     @Value("${sms.twilio.phonenum}")
     private String smsPhoneNumber;
+
+    @Value("${front.end.app.baseurl}")
+    private String frontEndAppBaseUrl;
 
     public String getSmsSid() {
         return smsSid;
@@ -166,5 +167,13 @@ public class Environment {
 
     public void setWatermarkSamplePreviewImgUri(String watermarkSamplePreviewImgUri) {
         this.watermarkSamplePreviewImgUri = watermarkSamplePreviewImgUri;
+    }
+
+    public String getFrontEndAppBaseUrl() {
+        return frontEndAppBaseUrl;
+    }
+
+    public void setFrontEndAppBaseUrl(String frontEndAppBaseUrl) {
+        this.frontEndAppBaseUrl = frontEndAppBaseUrl;
     }
 }

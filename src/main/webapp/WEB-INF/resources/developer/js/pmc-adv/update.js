@@ -77,3 +77,21 @@ function updateAdvertiser(){
         }
     });
 }
+function redirectToAdvPreview(id,type){
+     var frontEndBaseUrl = $("#frontEndBaseUrl").val();
+     var uriWithQueryParam = "/pmcad-preview";
+     if(type=="gallery"){
+         uriWithQueryParam += "/gallery?galleryId="+id;
+     } else if(type=="popup"){
+         uriWithQueryParam += "/gallery?popUpId="+id;
+     }else if(type=="slideshow"){
+         uriWithQueryParam += "/slideshow?pmcadv="+id;
+     }
+    window.open(frontEndBaseUrl+uriWithQueryParam, '_blank');
+}
+function getAdIdBySelectedSectionTab(){
+    var galleryTab =  $("#tab_default_2").hasClass("active");
+    var slideshowTab = $("#tab_default_3").hasClass("active");
+    var popupTab = $("#tab_default_4").hasClass("active");
+
+}

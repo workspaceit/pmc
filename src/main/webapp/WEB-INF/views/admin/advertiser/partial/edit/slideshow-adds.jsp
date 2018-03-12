@@ -3,7 +3,11 @@
 <%@page import="com.workspaceit.pmc.constant.advertisement.FILE_TYPE" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="tab-pane" id="tab_default_3">
+    <div class="btn-container-top">
+        <button class="btn btn-action-top"  onclick="redirectToAdvPreview(${slideshowAd.id},'slideshow')" >Preview</button>
+    </div>
     <div class="imageupload panel panel-default">
+
         <div class="panel-heading clearfix">
             <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                 <h4 class="panel-title pull-left">Slideshow banner ad Upload</h4>
