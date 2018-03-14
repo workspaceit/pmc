@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.service.*;
@@ -30,6 +31,7 @@ public class EventController {
     private LocationService locationService;
     private StateService stateService;
     private EventImageService eventImageService;
+    private Environment environment;
 
     /** For Location modal*/
     private List<Double> fadeInList;
@@ -66,6 +68,11 @@ public class EventController {
     @Autowired
     public void setStateService(StateService stateService) {
         this.stateService = stateService;
+    }
+
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 
     @Autowired
@@ -120,18 +127,17 @@ public class EventController {
         Event event = this.eventService.getById(id);
         List<Location> locations = this.locationService.getAll();
         List<State> states = this.stateService.getAll();
-
+        String frontEndAppBaseUrl = environment.getFrontEndAppBaseUrl();
 
         ModelAndView model = new ModelAndView("admin/event/edit");
         model.addObject("event", event);
         model.addObject("locations",locations);
-
         /*For location Modal Page*/
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
         model.addObject("durations",durations);
         model.addObject("states",states);
-
+        model.addObject("frontEndAppBaseUrl",frontEndAppBaseUrl);
         return model;
     }
 

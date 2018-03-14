@@ -184,7 +184,6 @@ public class AdvertiserController {
 
         List<Location> locations = this.locationService.getAll();
         List<State> states = this.stateService.getAll();
-        List<City> cities = this.cityService.getAllNameAcs();
         List<Event> events = this.eventService.getAll();
 
 
@@ -203,7 +202,6 @@ public class AdvertiserController {
         model.addObject("events",events);
         model.addObject("locations",locations);
         model.addObject("states",states);
-        model.addObject("cities",cities);
         model.addObject("durations",durations);
 
 

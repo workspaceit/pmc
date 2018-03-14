@@ -47,6 +47,7 @@ $(document).ready(function(){
         var id = RotationSettings[key];
         initRtationSettings(id);
     }
+
 });
 
 function getRotationSetting(id){
@@ -565,7 +566,7 @@ function advertiserAfterSaveAction(btnAction,id){
     var urlStr =BASEURL+"admin";
     switch(btnAction){
         case "save":
-            urlStr += "/advertiser/checkout/"+id;
+            urlStr += "/advertiser/update/"+id;
             break;
         case "save_and_close":
             urlStr += "/advertiser/all";
@@ -969,4 +970,3 @@ function hasAllEventSelected(){
     var isChecked = $("#allEventSelection:checked").length;
     return (isChecked==1)?true:false;
 }
-

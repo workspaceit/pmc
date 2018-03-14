@@ -67,6 +67,8 @@ public class PersistenceConfig {
                 setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
                 setProperty("hibernate.globally_quoted_identifiers","true");
                 setProperty("hibernate.jdbc.batch_size","10");
+    /*            setProperty("hibernate.cache.use_second_level_cache","true");
+                setProperty("hibernate.cache.region.factory_class","org.hibernate.cache.ehcache.EhCacheRegionFactory");*/
 /*                setProperty("hibernate.show_sql","true");
                 setProperty("hibernate.format_sql","true");
                 setProperty("hibernate.use_sql_comments","true");*/
