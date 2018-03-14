@@ -41,8 +41,8 @@ public class EventImageService {
     }
 
     @Transactional
-    public List<EventImage> getEventImagesByCriteria(Integer eventId, Integer limit, Integer offset){
-        return eventImageDao.getEventImagesByCriteria(eventId, limit, offset);
+    public List<EventImage> getEventImagesByCriteria(Integer eventId, Integer limit, Integer offset, Boolean inSlideshow){
+        return eventImageDao.getEventImagesByCriteria(eventId, limit, offset, inSlideshow);
     }
 
     @Transactional
@@ -117,6 +117,17 @@ public class EventImageService {
     public Boolean sendImagesToSlideShow(int[] imageIds){
         for(int imageId : imageIds){
             Boolean result = this.eventImageDao.sendToSlideShow(imageId);
+            if(!result){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Transactional
+    public Boolean removeImagesFromSlideShow(int[] imageIds){
+        for(int imageId : imageIds){
+            Boolean result = this.eventImageDao.removeFromSlideShow(imageId);
             if(!result){
                 return false;
             }
