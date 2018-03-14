@@ -23,7 +23,14 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.2.Final</version>
+            <version>5.2.5.Final</version>
+        </dependency>
+
+        <!-- History -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>5.2.5.Final</version>
         </dependency>
        <!-- <dependency>
             <groupId>org.hibernate</groupId>
