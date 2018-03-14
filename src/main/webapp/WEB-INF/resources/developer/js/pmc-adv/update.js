@@ -95,3 +95,19 @@ function getAdIdBySelectedSectionTab(){
     var popupTab = $("#tab_default_4").hasClass("active");
 
 }
+$(document).ready(function(){
+    /**
+     * Get Cities by state
+     * */
+    var stateId = $("#stateId").val();
+    fetchCityOnStateChange(stateId,function(response) {
+        var selectedCityId = $("#advertiserCityId").val();
+        $("#cityId").html("");
+        $(response).each(function( key, value ){
+
+            var selectedHtml = (selectedCityId == value.id)?"selected='selected'":"";
+            var html = "<option value='"+value.id+"' "+selectedHtml+">"+value.name+"</option>";
+            $("#cityId").append(html);
+        });
+    },'locationFormBody');
+});

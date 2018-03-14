@@ -36,13 +36,6 @@
                             </label>
                             <div>
                                 <select id="cityId" class="form-control">
-                                    <c:forEach var="city" items="${cities}">
-                                        <c:set var="cityOptionSelected" value="" ></c:set>
-                                        <c:if test="${advertiser.city.id == city.id}">
-                                            <c:set var="cityOptionSelected" value="selected=\"selected\"" ></c:set>
-                                        </c:if>
-                                        <option value="${city.id}" ${cityOptionSelected} >${city.name}</option>
-                                    </c:forEach>
                                 </select>
                             </div>
                         </div>

@@ -21,7 +21,6 @@ public class FileServiceAop {
             if( arg instanceof AdvertiserAndAllCompositeForm){
                 allCompositeForm = (AdvertiserAndAllCompositeForm)arg;
                 System.out.println(allCompositeForm.toString());
-                throw new Exception();
             }
 
         }

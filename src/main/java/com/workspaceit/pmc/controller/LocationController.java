@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.controller;
 
+import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.State;
@@ -25,6 +26,7 @@ public class LocationController {
     private StateService stateService;
     private CityService cityService;
     private LocationService locationService;
+    private Environment environment;
     private List<Double> fadeInList;
     private List<Double>fadeOutList;
 
@@ -44,6 +46,11 @@ public class LocationController {
     }
 
     @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
+    @Autowired
     public void setFadeInList(List<Double> fadeInList) {
         this.fadeInList = fadeInList;
     }
@@ -54,11 +61,14 @@ public class LocationController {
 
     @RequestMapping(value = "/add")
     public ModelAndView add(){
+
         List<State> states = this.stateService.getAll();
+
         ModelAndView model = new ModelAndView("admin/location/add");
         model.addObject("states",states);
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
+
         return model;
     }
     @RequestMapping(value = "/all")
@@ -74,6 +84,8 @@ public class LocationController {
         Location location = this.locationService.getById(id);
         List<State> states = this.stateService.getAll();
         List<City>  cities = this.cityService.getAllCityByZip(location.getState().getId());
+        String frontEndAppBaseUrl = environment.getFrontEndAppBaseUrl();
+
         if(location==null){
             return new ModelAndView("redirect:"+"/admin/location/all");
         }
@@ -83,6 +95,8 @@ public class LocationController {
         model.addObject("location",location);
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
+        model.addObject("frontEndAppBaseUrl",frontEndAppBaseUrl);
+
         return model;
     }
 

@@ -33,13 +33,6 @@ public class LocationApiController {
         Location location;
 
         try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
             location = locationService.getLocation(locationId);
         } catch (EntityNotFound entityNotFound) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(entityNotFound.getMessage());
