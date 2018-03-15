@@ -88,10 +88,18 @@ public class EventImageApiController {
     }
 
     @PostMapping("/{limit}/{offset}")
-    public ResponseEntity<?> getEventImagesByCriteria(@PathVariable("limit") Integer limit,
+    public ResponseEntity<?> getAllEventImagesByCriteria(@PathVariable("limit") Integer limit,
                                                       @PathVariable("offset") Integer offset,
                                                       @RequestParam(value = "eventId") Integer eventId){
-        List<EventImage> eventImages = eventImageService.getEventImagesByCriteria(eventId, limit, offset);
+        List<EventImage> eventImages = eventImageService.getEventImagesByCriteria(eventId, limit, offset, false);
+        return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+    }
+
+    @PostMapping("/{limit}/{offset}/in-slideshow")
+    public ResponseEntity<?> getEventImagesInSlideshow(@PathVariable("limit") Integer limit,
+                                                      @PathVariable("offset") Integer offset,
+                                                      @RequestParam(value = "eventId") Integer eventId){
+        List<EventImage> eventImages = eventImageService.getEventImagesByCriteria(eventId, limit, offset, true);
         return ResponseEntity.status(HttpStatus.OK).body(eventImages);
     }
 
@@ -212,6 +220,15 @@ public class EventImageApiController {
     @PostMapping("/send-to-slideshow")
     public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") int[] imageIds){
         boolean result = eventImageService.sendImagesToSlideShow(imageIds);
+        if(!result){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping("/remove-from-slideshow")
+    public ResponseEntity<?> removeImagesFromSlideShow(@RequestParam("imageIds") int[] imageIds){
+        boolean result = eventImageService.removeImagesFromSlideShow(imageIds);
         if(!result){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }

@@ -5,13 +5,13 @@ Dropzone.autoDiscover = false;
 var profilePictureToken = 0;
 
 
-function locationAfterSaveAction(btnAction){
+function locationAfterSaveAction(btnAction, id){
 
     var urlStr ="";
     switch(btnAction){
         case "save":
             $.growl.notice({title: 'Success!', message: "Location saved"});
-            return;
+            urlStr = "admin/location/update/" + id;
             break;
         case "save_and_close":
             urlStr = "admin/location/all";

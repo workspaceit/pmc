@@ -80,7 +80,7 @@ public class PersistenceConfig {
                  * Have extra careful with this configuration
                  * Could cause data damage
                  * */
-                setProperty("hibernate.hbm2ddl.auto", "update");
+           //     setProperty("hibernate.hbm2ddl.auto", "update");
             }
         };
     }

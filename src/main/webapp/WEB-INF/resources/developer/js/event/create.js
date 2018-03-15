@@ -85,7 +85,7 @@ $(document).ready(function () {
             },success: function(data){
                 UnBindErrors("errorObj_");
                 if(action === "save") {
-                    $.growl.notice({title: 'Success!', message: "Event saved"});
+                    window.location = BASEURL + "admin/event/update/" + data.id;
                 }
                 else if(action === "save-close") {
                     window.location = BASEURL + "admin/event/all";

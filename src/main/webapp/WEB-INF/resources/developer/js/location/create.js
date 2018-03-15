@@ -51,7 +51,8 @@ function submitLocationData(btnAction){
             }
         },
         success: function(response) {
-            locationAfterSaveAction(btnAction);
+            console.log(response.id);
+            locationAfterSaveAction(btnAction, response.id);
         }
     });
 }

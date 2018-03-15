@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class NotificationService {
@@ -19,5 +21,11 @@ public class NotificationService {
     @Transactional(rollbackFor = Exception.class)
     public void create(Notification notification){
         this.notificationDao.insert(notification);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<Notification> get(int limit, int offset){
+        offset = offset*limit;
+        return this.notificationDao.get(limit,offset);
     }
 }

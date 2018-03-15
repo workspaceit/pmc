@@ -87,18 +87,17 @@ function submitPhotographerData(btnAction){
             }
         },success: function(data){
             UnBindErrors("errorObj_");
-            photographerAfterSaveActionCreate(btnAction);
+            photographerAfterSaveActionCreate(btnAction, data.id);
         }
     });
     console.log(data)
 
 }
-function photographerAfterSaveActionCreate(btnAction){
+function photographerAfterSaveActionCreate(btnAction, id){
     var urlStr ="";
     switch(btnAction){
         case "save":
-            $.growl.notice({title: 'Success!', message: "Photographer saved"});
-            return;
+            urlStr = "admin/photographer/update/" + id;
             break;
         case "save_and_close":
             urlStr = "admin/photographer/all";
