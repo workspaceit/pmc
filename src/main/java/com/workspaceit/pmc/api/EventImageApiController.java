@@ -43,28 +43,21 @@ public class EventImageApiController {
 
     private Set<String> imgAllowedMimeType;
 
-
     private EventImageService eventImageService;
     private WatermarkService watermarkService;
-
     private SentSlideShowService sentSlideShowService;
-
     @Autowired
     EmailHelper emailHelper;
-
     @Autowired
     SmsHelper smsHelper;
-
     @Autowired
     public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
         this.sentSlideShowService = sentSlideShowService;
     }
-
     @Autowired
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
     }
-
     private EventService eventService;
     @Autowired
     public void setEventService(EventService eventService) {
@@ -104,18 +97,20 @@ public class EventImageApiController {
     }
 
     @PostMapping("/{eventId}")
-    public ResponseEntity<?> uploadEventPhotos(@PathVariable("eventId") Integer eventId, @RequestParam("file") MultipartFile multipartFile,Authentication authentication){
+    public ResponseEntity<?> uploadEventPhotos(@PathVariable("eventId") Integer eventId,
+                                               @RequestParam("file") MultipartFile multipartFile,
+                                               Authentication authentication){
 
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         long fileSizeLimit = FileHelper.getMBtoByte(30);
         Set<String> imgContentType = this.imgAllowedMimeType;
-
         return validateAndProcessMultipartFile("file",fileSizeLimit,multipartFile,imgContentType,photographer,eventId);
     }
 
-    private ResponseEntity<?> validateAndProcessMultipartFile(String param,long fileSizeLimit,MultipartFile file,Set<String> imgContentTypes,Photographer photographer,Integer eventId){
-
+    private ResponseEntity<?> validateAndProcessMultipartFile(String param,long fileSizeLimit,MultipartFile file,
+                                                              Set<String> imgContentTypes,Photographer photographer,
+                                                              Integer eventId){
         String mimeType = FileHelper.getMimeType(file);
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         if(!imgContentTypes.contains(mimeType)) {
@@ -135,7 +130,6 @@ public class EventImageApiController {
         try {
             fileInfo = eventImageService.saveEventImageFile(file);
             String fileName = fileInfo.get(FILE.NAME);
-
             eventImage.setActive(true);
             eventImage.setImage(fileName);
             eventImage.setCreatedBy(photographer);
@@ -236,7 +230,11 @@ public class EventImageApiController {
     }
 
     @PostMapping("/send-via-email")
-    public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("email") String email,@RequestParam("message") String message,@RequestParam("eventId") int eventId,Authentication authentication){
+    public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,
+                                                @RequestParam("customerName") String customerName,
+                                                @RequestParam("email") String email,
+                                                @RequestParam("message") String message,
+                                                @RequestParam("eventId") int eventId,Authentication authentication){
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Event event = eventService.getById(eventId);
@@ -253,7 +251,11 @@ public class EventImageApiController {
     }
 
     @PostMapping("/send-via-sms")
-    public ResponseEntity<?> sendImagesViaSms(@RequestParam("imageIds") int[] imageIds,@RequestParam("customerName") String customerName,@RequestParam("phoneNum") String phoneNum,@RequestParam("message") String message,@RequestParam("eventId") int eventId,Authentication authentication){
+    public ResponseEntity<?> sendImagesViaSms(@RequestParam("imageIds") int[] imageIds,
+                                              @RequestParam("customerName") String customerName,
+                                              @RequestParam("phoneNum") String phoneNum,
+                                              @RequestParam("message") String message,
+                                              @RequestParam("eventId") int eventId,Authentication authentication){
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Event event = eventService.getById(eventId);

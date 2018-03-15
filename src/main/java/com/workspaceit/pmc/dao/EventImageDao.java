@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,11 +29,12 @@ public class EventImageDao extends BaseDao {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<EventImage> criteriaQuery = builder.createQuery(EventImage.class);
         Root<EventImage> eventImageRoot = criteriaQuery.from(EventImage.class);
-
-        criteriaQuery.where(builder.equal(eventImageRoot.get("event").get("id"), eventId));
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.and(builder.equal(eventImageRoot.get("event").get("id"), eventId)));
         if(inSlideshow) {
-            criteriaQuery.where(builder.equal(eventImageRoot.get("inSlideshow"), inSlideshow));
+            predicates.add(builder.and(builder.equal(eventImageRoot.get("inSlideshow"), inSlideshow)));
         }
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         criteriaQuery.orderBy(builder.desc(eventImageRoot.get("id")));
         Query query = session.createQuery(criteriaQuery);
         query.setFirstResult(offset);
