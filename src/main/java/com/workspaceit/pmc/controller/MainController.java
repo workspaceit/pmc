@@ -100,6 +100,7 @@ public class MainController {
         model.addObject("totalEvents",this.dashboardService.getNumberOfEvents(0));
         model.addObject("totalEventsInLastWeek",this.dashboardService.getNumberOfEvents(7));
         model.addObject("topActiveEvents",this.dashboardService.getTopActiveEvents());
+        model.addObject("notifications",notifications);
         model.setViewName("admin/home");
         return model;
     }
