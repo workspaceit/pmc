@@ -116,6 +116,11 @@ public class FileUploadController{
                 fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
                 imgContentType = this.videoAllowedMimeType;
                 break;
+            case "slide-show-banner-or-video":
+                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                imgContentType = this.imgAllowedMimeType;
+                imgContentType.addAll(this.videoAllowedMimeType);
+                break;
             case "email-popup-banner":
                 fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
                 imgContentType = this.imgAllowedMimeType;
