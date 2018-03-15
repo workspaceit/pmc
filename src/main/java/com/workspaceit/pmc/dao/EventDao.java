@@ -11,10 +11,7 @@ import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.criteria.*;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mi_rafi on 1/3/18.
@@ -111,19 +108,17 @@ public class EventDao extends BaseDao {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = builder.createQuery(Event.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
-
         Join<Event, Photographer> eventPhotographerJoin = eventRoot.join("photographers", JoinType.LEFT);
-
-        criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
-
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
         if(locationId != null) {
-            criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
+            predicates.add(builder.equal(eventRoot.get("location").get("id"), locationId));
         }
         if(filterDate != null) {
-            criteriaQuery.where(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
-            criteriaQuery.where(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
+            predicates.add(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
+            predicates.add(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
         }
-
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         Query<Event> query = session.createQuery(criteriaQuery);
         query.setMaxResults(limit);
         query.setFirstResult(offset);
@@ -135,35 +130,25 @@ public class EventDao extends BaseDao {
     public Integer getActiveEventCountByCriteria(Integer locationId, Date filterDate, Photographer photographer){
         Session session = this.getCurrentSession();
         session.enableFilter("activeEvents");
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
-
         Join<Event, Photographer> eventPhotographerJoin = eventRoot.join("photographers", JoinType.LEFT);
-
-        criteriaQuery.where(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
-
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(eventPhotographerJoin.get("id"), photographer.getId()));
         if(locationId != null) {
-            criteriaQuery.where(builder.equal(eventRoot.get("location").get("id"), locationId));
+            predicates.add(builder.equal(eventRoot.get("location").get("id"), locationId));
         }
         if(filterDate != null) {
-            criteriaQuery.where(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
-            criteriaQuery.where(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
+            predicates.add(builder.lessThanOrEqualTo(eventRoot.get("startsAt"), filterDate));
+            predicates.add(builder.greaterThanOrEqualTo(eventRoot.get("endsAt"), filterDate));
         }
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         criteriaQuery.select(builder.count(eventRoot.get("id")));
-
         Query<Long> query =session.createQuery(criteriaQuery);
         int count = query.getSingleResult().intValue();
         session.disableFilter("activeEvents");
         return count;
-
-        /*Session session = this.getCurrentSession();
-        session.enableFilter("activeEvents");
-        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e WHERE e.location.id=:locationId")
-                .setParameter("locationId", locationId).uniqueResult()).intValue();
-        session.disableFilter("activeEvents");
-        return count;*/
     }
 
 }
