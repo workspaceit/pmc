@@ -30,7 +30,6 @@ public class SectionService {
     private SectionDao sectionDao;
 
     private SectionResourceService sectionResourceService;
-    private FileService fileService;
 
 
 
@@ -43,12 +42,6 @@ public class SectionService {
     public void setSectionResourceService(SectionResourceService sectionResourceService) {
         this.sectionResourceService = sectionResourceService;
     }
-
-    @Autowired
-    public void setFileService(FileService fileService) {
-        this.fileService = fileService;
-    }
-
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -203,7 +196,6 @@ public class SectionService {
         /** All slide show section */
         List<Section> slideShowSections = new LinkedList<>();
         Section tBannerSection = advertisement.getSections().get(SECTION_TYPE.TOP_BANNER);
-        Section bBannerSection = advertisement.getSections().get(SECTION_TYPE.BOTTOM_BANNER);
 
 
         for(Integer token :tBannerToken){
@@ -218,21 +210,12 @@ public class SectionService {
                 null,
                 slideShowAdsForm.getBannerRotation(),
                 slideShowAdsForm.getBannerExpiryDate(),
-                null,
+                bBannerVideoNewFileToken,
                 tBannerNewFileToken);
 
-        bBannerSection=  this.populateIfChange(bBannerSection,
-                slideShowAdsForm.getVideoPrice(),
-                1,
-                slideShowAdsForm.getSlideShowVideoDuration(),
-                null,
-                slideShowAdsForm.getVideoRotation(),
-                slideShowAdsForm.getVideoExpiryDate(),
-                bBannerVideoNewFileToken,
-                null);
+
 
         slideShowSections.add(tBannerSection);
-        slideShowSections.add(bBannerSection);
 
         this.update(slideShowSections);
 
@@ -261,10 +244,8 @@ public class SectionService {
         }
 
         Integer tBQ = (tBannerSection.getSectionResource()==null)?0:tBannerSection.getSectionResource().size();
-        Integer bBQ = (bBannerSection.getSectionResource()==null)?0:bBannerSection.getSectionResource().size();
 
         tBannerSection.setQuantity(tBQ);
-        bBannerSection.setQuantity(bBQ);
 
         this.update(slideShowSections);
     }
@@ -316,7 +297,7 @@ public class SectionService {
         emailBannerSection=  this.populateIfChange(emailBannerSection,
                 popupAdsUpdateForm.getEmailAdPrice(),
                 1,
-                popupAdsUpdateForm.getSmsPopupVideoDuration(),
+                popupAdsUpdateForm.getEmailPopupVideoDuration(),
                 null,
                 popupAdsUpdateForm.getEmailRotation(),
                 popupAdsUpdateForm.getEmailExpiryDate(),
@@ -554,25 +535,11 @@ public class SectionService {
                                             slideShowAdsForm.getSlideShowBannerDuration(),
                                             SECTION_TYPE.TOP_BANNER,
                                             slideShowAdsForm.getBannerRotation(),
-                (topBannerSectionResources.size()>0)?slideShowAdsForm.getBannerExpiryDate():null,
+                                            (topBannerSectionResources.size()>0)?slideShowAdsForm.getBannerExpiryDate():null,
                                             topBannerSectionResources,
                                             admin);
 
-        Section videoSection = this.getSection(advertisement,
-                                            slideShowAdsForm.getVideoPrice(),
-                                            videoSectionResources.size(),
-                                            slideShowAdsForm.getSlideShowVideoDuration(),
-                                            SECTION_TYPE.BOTTOM_BANNER,
-                                            slideShowAdsForm.getVideoRotation(),
-                (videoSectionResources.size()>0)?slideShowAdsForm.getVideoExpiryDate():null,
-                                            videoSectionResources,
-                                            admin);
 
-
-
-
-
-        sections.add(videoSection);
         sections.add(topBannerSection);
 
 

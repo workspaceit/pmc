@@ -1,10 +1,12 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.Notification;
 import com.workspaceit.pmc.entity.PasswordResetToken;
 import com.workspaceit.pmc.helper.EmailHelper;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.DashboardService;
+import com.workspaceit.pmc.service.NotificationService;
 import com.workspaceit.pmc.service.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,8 +36,8 @@ public class MainController {
     private DashboardService dashboardService;
     private PasswordResetService passwordResetService;
     private AdminService adminService;
-    @Autowired
-    EmailHelper emailHelper;
+    private NotificationService notificationService;
+    private EmailHelper emailHelper;
 
     @Autowired
     public void setAdminService(AdminService adminService) {
@@ -49,6 +52,16 @@ public class MainController {
     @Autowired
     public void setDashboardService(DashboardService dashboardService) {
         this.dashboardService = dashboardService;
+    }
+
+    @Autowired
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @Autowired
+    public void setEmailHelper(EmailHelper emailHelper) {
+        this.emailHelper = emailHelper;
     }
 
     @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
@@ -79,12 +92,15 @@ public class MainController {
 
     @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView adminDashboard() {
+        List<Notification> notifications = this.notificationService.get(10,0);
+
         ModelAndView model = new ModelAndView();
         model.addObject("totalImages",this.dashboardService.getNumberOfEventPhotoUploaded(0));
         model.addObject("totalImagesInLastWeek",this.dashboardService.getNumberOfEventPhotoUploaded(7));
         model.addObject("totalEvents",this.dashboardService.getNumberOfEvents(0));
         model.addObject("totalEventsInLastWeek",this.dashboardService.getNumberOfEvents(7));
         model.addObject("topActiveEvents",this.dashboardService.getTopActiveEvents());
+        model.addObject("notifications",notifications);
         model.setViewName("admin/home");
         return model;
     }

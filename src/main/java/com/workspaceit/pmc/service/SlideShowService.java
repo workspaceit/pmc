@@ -51,7 +51,6 @@ public class SlideShowService {
         String videoName = this.fileService.copyFile(videoToken);
 
         float bannerPrice = slideShowAdsForm.getBannerPrice();
-        float videoPrice = slideShowAdsForm.getVideoPrice();
         int bannerQuantity = bannerTokens!=null?bannerTokens.length:0;
         int videoQuantity = (videoToken!=null && videoToken>0)?1:0;
 
@@ -62,17 +61,13 @@ public class SlideShowService {
         slideshowAd.setVideo(videoName);
         slideshowAd.setVideoType(videoType);
         slideshowAd.setBannerExpiryDate(slideShowAdsForm.getBannerExpiryDate());
-        slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
         slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
-        slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
         slideshowAd.setBannerRotate(slideShowAdsForm.getBannerRotation());
-        slideshowAd.setVideoRotate(slideShowAdsForm.getVideoRotation());
         slideshowAd.setCreatedBy(admin);
 
         this.create(slideshowAd);
 
         this.quantityPriceService.create(slideshowAd.getId(),bannerPrice,bannerQuantity, SlideshowAdsConstant.BANNER,admin);
-        this.quantityPriceService.create(slideshowAd.getId(),videoPrice,videoQuantity, SlideshowAdsConstant.VIDEO,admin);
 
         this.slideshowBannerImageService.create(slideshowAd,bannerTokens,admin);
 
@@ -93,11 +88,8 @@ public class SlideShowService {
         }
 
         slideshowAd.setBannerExpiryDate(slideShowAdsForm.getBannerExpiryDate());
-        slideshowAd.setVideoExpiryDate(slideShowAdsForm.getVideoExpiryDate());
         slideshowAd.setBannerDuration(slideShowAdsForm.getSlideShowBannerDuration());
-        slideshowAd.setVideoDuration(slideShowAdsForm.getSlideShowVideoDuration());
         slideshowAd.setBannerRotate(slideShowAdsForm.getBannerRotation());
-        slideshowAd.setVideoRotate(slideShowAdsForm.getVideoRotation());
 
         this.update(slideshowAd);
 

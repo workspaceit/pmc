@@ -34,6 +34,7 @@ public class SampleTest {
 
     private TestAop testAop;
     private TestHelper testHelper;
+    private HistoryDao historyDao;
 
     @Autowired
     public void setTestAop(TestAop testAop) {
@@ -43,6 +44,11 @@ public class SampleTest {
     @Autowired
     public void setTestHelper(TestHelper testHelper) {
         this.testHelper = testHelper;
+    }
+
+    @Autowired
+    public void setHistoryDao(HistoryDao historyDao) {
+        this.historyDao = historyDao;
     }
 
     @Test
@@ -56,8 +62,8 @@ public class SampleTest {
         adminCreateForm.setConfirmPassword("123456");
         adminCreateForm.setFullName("ADMIN ADMIN");
         adminCreateForm.setPhoneNumber("+8801764658987");
-        testHelper.test(adminCreateForm);
-
+        //testHelper.test(adminCreateForm);
+        historyDao.getAuditReader();
 
 
    }

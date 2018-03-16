@@ -108,38 +108,15 @@
                         <br/>
                         <h3 class="uni-header"><span>Notification panel</span></h3>
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">just now</span>
-                                New Event Added
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">4 minutes ago</span>
-                                Photos updated on Wedding Mass
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">23 minutes ago</span>
-                                Order 392 shipped
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">46 minutes ago</span>
-                                Invoice 653 has been paid
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">1 hour ago</span>
-                                A new user has been added
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">2 hours ago</span>
-                                Completed task: "pick up dry cleaning"
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">yesterday</span>
-                                Saved the world
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge badge-success">two days ago</span>
-                                Completed task: "fix error on sales page"
-                            </a>
+                            <c:forEach var="notification" items="${notifications}" >
+                                <fmt:formatDate var="createdDate" value="${notification.createdAt}" pattern="yyyy-MM-dd H:m:s" />
+                                <a href="javascript:void(0)" class="list-group-item" style="cursor: default">
+                                    ${notification.details}
+                                        <span class="badge badge-success " >
+                                          <time class="timeago" datetime="${createdDate}" ></time>
+                                        </span>
+                                </a>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -182,14 +159,16 @@
         <script>
 
             $(document).ready(function () {
-                    $.ajax({
-                        url:BASEURL+'api/event/monthwise-event-image-count',
-                        type:'GET',
-                        success:function (data) {
-                            console.log(data);
-                            renderGraph(data);
-                        }
-                    });
+                $("time.timeago").timeago();
+
+                $.ajax({
+                    url:BASEURL+'api/event/monthwise-event-image-count',
+                    type:'GET',
+                    success:function (data) {
+                        console.log(data);
+                        renderGraph(data);
+                    }
+                });
             });
 
             function renderGraph(data){
@@ -245,5 +224,6 @@
         </script>
         <script src="<s:url value="/resources/js/Chart.js"/>"></script>
         <script src="<s:url value="/resources/js/chart-utils.js"/>"></script>
+        <script src="<s:url value="/resources/js/timeago.js" />"></script>
     </jsp:body>
 </t:genericpage>

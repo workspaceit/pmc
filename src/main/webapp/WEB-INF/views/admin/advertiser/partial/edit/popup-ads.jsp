@@ -62,18 +62,24 @@
         </div>
 
         <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
-            <c:if test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
-                <div>
-                    <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
+            <c:choose>
+                <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
+                    <div>
+                        <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
 
-                    <br>
-                        <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
-                    <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
+                        <br>
+                            <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
 
-                </div>
-            </c:if>
-
-
+                    </div>
+                </c:when>
+                <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}">
+                    <video width="400" controls>
+                        <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
+                        Your browser does not support HTML5 video.
+                    </video>
+                </c:when>
+            </c:choose>
         </c:forEach>
         <div id="advSmsPopUpBanner"  class="panel-body"   >
             <div class="dz-default dz-message">
@@ -84,14 +90,6 @@
             </div>
         </div>
         <p class="text-danger" id="errorObj_smsPopupBanner"></p>
-        <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}">
-            <c:if test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}">
-                <video width="400" controls>
-                    <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
-                    Your browser does not support HTML5 video.
-                </video>
-            </c:if>
-        </c:forEach>
 
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
@@ -166,15 +164,23 @@
             </div>
         </div>
         <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
-            <c:if test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                <div>
-                    <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                    <br>
-                        <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
-                    <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
+            <c:choose>
+                <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
+                    <div>
+                        <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
+                        <br>
+                            <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
+                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
 
-                </div>
-            </c:if>
+                    </div>
+                </c:when>
+                <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
+                    <video width="400" controls>
+                        <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
+                        Your browser does not support HTML5 video.
+                    </video>
+                </c:when>
+            </c:choose>
 
 
         </c:forEach>
@@ -187,15 +193,6 @@
             </div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
-        <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
-            <c:if test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
-                <video width="400" controls>
-                    <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
-                    Your browser does not support HTML5 video.
-                </video>
-            </c:if>
-        </c:forEach>
-
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
