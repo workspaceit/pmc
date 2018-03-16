@@ -189,7 +189,7 @@ public class ImageController {
 
     @RequestMapping(value = "/images/{file_name}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImageAsResponseEntity(@PathVariable("file_name") String fileName) throws IOException, EntityNotFound {
-        String path = this.env.getEventImagePath() + "web/" + fileName;
+        String path = this.env.getEventImagePath() + "/web/" + fileName;
         System.out.println(fileName);
         byte[] imageByte = new byte[0];
         HttpHeaders headers = new HttpHeaders();
