@@ -37,10 +37,6 @@
                             </div>
                             <div id="waterMarkImgFile" class="file-tab panel-body">
                                 <div class="col-md-12">
-                                    <label>Logo Name</label>
-                                    <input class="form-control" id="logoName" name="logoName" placeholder="Enter Text Here">
-                                </div>
-                                <div class="col-md-12">
                                     <label>Logo</label>
                                     <div id="watermarkLogoImg" >
                                         <div class="dz-default dz-message">
@@ -88,13 +84,6 @@
                                 </div>
                             </div>
                             <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
-                                <div class="col-md-3 col-sm-3 col-xs-12">
-                                    <div class="form-group timepick">
-                                        <label>Logo Name</label><br>
-                                        <input class="form-control" id="txt_logo_name" name="txt_logo_name" placeholder="New Watermark">
-                                        <p class="text-danger" id="errorObj_txtLogoName"></p>
-                                    </div>
-                                </div>
                                 <div class="col-md-3 col-sm-3 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Text Watermark</label><br>

@@ -111,10 +111,9 @@
                                                     </div>
                                                     <div class="panel-body">
                                                         <div>
-                                                            <input id="allAdvertiserSelection" type="checkbox" value="1" />All Advertiser
+                                                            <input id="allAdvertiserSelection" type="checkbox" checked value="1" />All Advertiser
                                                         </div>
                                                         <div style="width: 100%">
-
                                                             <select id="advertiser-select2" name="advertiserIds" multiple="true" style="width: 100%;" tabindex="-1"
                                                                     class="select2-hidden-accessible" aria-hidden="true">
                                                             </select>
@@ -133,9 +132,7 @@
                                 <div class="panel-heading clearfix">
                                     <h4 class="panel-title pull-left">Add Event Photo</h4>
                                     <div  class="btn-group pull-right">
-
                                     </div>
-
                                 </div>
                                 <div class="file-tab panel-body">
                                     <div id="eventImg">

@@ -1,10 +1,9 @@
 package com.workspaceit.pmc.validation.form;
 
-import com.workspaceit.pmc.entity.Font;
+
 import com.workspaceit.pmc.constant.watermark.Placement;
 import com.workspaceit.pmc.constant.watermark.Size;
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
-import org.hibernate.validator.constraints.NotBlank;
 
 
 /**
@@ -16,26 +15,13 @@ public class WatermarkForm
 
     private String name;
     private WatermarkType type;
-
-    private String logoName;
-
-    private String txtLogoName;
-
-
     private Integer logoImgToken;
-
     private Integer sampleImgToken;
-
     private Size size;
-
     private Double fade;
-
     private String watermarkText;
-
     private Integer fontId;
-
     private Placement placement;
-
     private String color;
 
     public String getName() {
@@ -52,22 +38,6 @@ public class WatermarkForm
 
     public void setType(WatermarkType type) {
         this.type = type;
-    }
-
-    public String getLogoName() {
-        return logoName;
-    }
-
-    public void setLogoName(String logoName) {
-        this.logoName = logoName;
-    }
-
-    public String getTxtLogoName() {
-        return txtLogoName;
-    }
-
-    public void setTxtLogoName(String txtLogoName) {
-        this.txtLogoName = txtLogoName;
     }
 
     public Size getSize() {
