@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.activation.MimeType;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URLConnection;
 import java.util.List;
 
 /**
@@ -206,15 +205,17 @@ public class ImageController {
                 }
             }
             else {
-                System.out.println("here1");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageByte);
             }
             headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-            headers.setContentType(MediaType.IMAGE_JPEG);
+            /*InputStream is = new BufferedInputStream(new ByteArrayInputStream(imageByte));
+            String mimeType = URLConnection.guessContentTypeFromStream(is);
+            System.out.println(mimeType);
+            MediaType mediaType = new MediaType(mimeType.split("/")[0], mimeType.split("/")[1]);
+            headers.setContentType(mediaType);*/
 //            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=k.jpg");
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            System.out.println("here2");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageByte);
         }
         ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(imageByte, headers, HttpStatus.OK);
