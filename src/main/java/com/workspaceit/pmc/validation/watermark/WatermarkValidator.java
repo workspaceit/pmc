@@ -64,14 +64,11 @@ public class WatermarkValidator implements Validator {
         }
     }
     public void commonValidationForTypeImage(WatermarkForm watermarkForm , Errors errors){
-
-        ValidationUtils.rejectIfEmpty(errors,"logoName","Logo name required");
         this.checkPlacement(watermarkForm.getPlacement(),errors);
         this.checkSize(watermarkForm.getSize(),errors);
         this.checkFade(watermarkForm.getFade(),errors);
     }
     public void commonValidationForTypeText(WatermarkForm watermarkForm , Errors errors){
-        ValidationUtils.rejectIfEmpty(errors,"txtLogoName","Logo name required");
         ValidationUtils.rejectIfEmpty(errors,"watermarkText","Watermark required");
         this.checkColor(watermarkForm.getColor(),errors);
         this.checkFont(watermarkForm.getFontId(),errors);

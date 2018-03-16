@@ -43,11 +43,6 @@
                         </div>
                         <div id="waterMarkImgFile" class="file-tab panel-body">
                             <div class="col-md-12">
-                                <label>Logo Name</label>
-                                <input class="form-control" value="${watermark.logoName}" id="logoName" name="logoName  " placeholder="Enter Text Here">
-                                <p class="text-danger" id="errorObj_logoName" style="display: block;"></p>
-                            </div>
-                            <div class="col-md-12">
                                 <label>Logo</label>
                                 <div id="watermarkLogoImg" >
 
@@ -69,16 +64,8 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
-
                                 <p id="errorObj_locationLogo"  class="text-danger"></p>
-
                             </div>
-
-
-
-
-
-
 
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group timepick">
@@ -116,19 +103,9 @@
                                 </div>
                                 <p class="text-danger" id="errorObj_fade" style="display: block;"></p>
                             </div>
-
-
-
                         </div>
 
                         <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
-                            <div class="col-md-3">
-                                <div class="form-group timepick">
-                                    <label>Logo Name</label><br>
-                                    <input class="form-control" id="txt_logo_name" name="txt_logo_name" value="${watermark.txtLogoName}" placeholder="New Watemark">
-                                    <p class="text-danger" id="errorObj_txtLogoName" style="display: block;"></p>
-                                </div>
-                            </div>
                             <div class="col-md-3">
                                 <div class="form-group timepick">
                                     <label>Text Watermark</label><br>

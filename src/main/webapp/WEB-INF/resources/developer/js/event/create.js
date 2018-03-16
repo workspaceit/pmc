@@ -194,6 +194,7 @@ $(document).ready(function () {
         templateResult: select2FormatState,
         // multiple: true,
         // minimumInputLength: 1,
+        allowClear: true,
         width: 'resolve',
         hideSelectionFromResult: true,
         ajax: {
