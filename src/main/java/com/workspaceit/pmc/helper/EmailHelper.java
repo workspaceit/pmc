@@ -28,6 +28,8 @@ public class EmailHelper {
     //private static String link = "http://localhost:3000/#/";
     private static String link = "http://localhost:8080/";
 
+    private static String appBaseUrl = "http://localhost:4200/";
+
 //    @PostConstruct
 //    public void init(){
 //        link = appProperties.getMailOrigin();
@@ -46,6 +48,7 @@ public class EmailHelper {
         username = environment.getMailSenderEmail();
         password = environment.getMailSenderPassword();
         link = environment.getMailServerLink();
+        appBaseUrl = environment.getFrontEndAppBaseUrl();
         return properties;
     }
 
@@ -131,6 +134,38 @@ public class EmailHelper {
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
             message.setSubject("Slideshow Image");
+            message.setText(emailHtmlBody, null, "html");
+            Transport.send(message);
+            System.out.println("inside the helper" + to);
+            String title = "Password Reset";
+            String body = "";
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean sendPasswordResetMailToPhotoGrapher(int userId,String email,String code) {
+        String to = email;
+        String id = Integer.toString(userId);
+        Properties properties = getProperties();
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(
+                        username, password);// Specify the Username and the PassWord
+            }
+        });
+        String activationUrl = appBaseUrl + "/reset-password-verify/" +id+"/"+code;
+        String link = "<a href='" + activationUrl + "'>Click here</a>";
+        String emailHtmlBody = "Hi,<br>Please click this link " + link + " to reset your password";
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("Password Reset");
             message.setText(emailHtmlBody, null, "html");
             Transport.send(message);
             System.out.println("inside the helper" + to);
