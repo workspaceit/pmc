@@ -56,7 +56,7 @@ public class SentSlideshow {
     @JoinTable(name = "sent_slideshow_images",
             joinColumns = {@JoinColumn(name = "sent_slideshow_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_image_id")})
-    Set<EventImage> eventImages = new HashSet<EventImage>();
+    private Set<EventImage> eventImages = new HashSet<EventImage>();
 
     public int getId() {
         return id;

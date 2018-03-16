@@ -34,8 +34,14 @@ public class SentSlideShowService {
         this.sentSlideShowDao = sentSlideShowDao;
     }
 
-    /*public SentSlideshow*/
-
+    @Transactional
+    public SentSlideshow getByIdentifier(String identifier){
+        return this.sentSlideShowDao.getByIdentifier(identifier);
+    }
+    @Transactional
+    public SentSlideshow getById(String id){
+        return this.sentSlideShowDao.getById(id);
+    }
     @Transactional
     public SentSlideshow saveByEmail(String email,String message, int[] imageIDs, Photographer sentBy, Event event){
         SentSlideshow sentSlideshow = new SentSlideshow();

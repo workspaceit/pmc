@@ -1,0 +1,1 @@
+ALTER TABLE  `sent_slideshows` CHANGE  `type`  `type` ENUM(  'SMS',  'EMAIL' ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ;

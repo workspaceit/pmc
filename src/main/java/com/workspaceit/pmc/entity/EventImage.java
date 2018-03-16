@@ -35,7 +35,7 @@ public class EventImage {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "watermark_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "watermark_id", referencedColumnName = "id")
     private Watermark watermark;
 
     @Column(name = "is_active")
