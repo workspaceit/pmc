@@ -31,22 +31,9 @@ public class SlideShowAdsCreateForm extends SlideShowAdsForm {
     }
 
     @Override
-    @NotNull(message = "Video Duration required")
-    public Integer getSlideShowVideoDuration() {
-        return super.getSlideShowVideoDuration();
-    }
-
-    @Override
-    @NotNull(message = "Banner Duration required")
+    @NotNull(message = "Duration required")
     public Integer getSlideShowBannerDuration() {
         return super.getSlideShowBannerDuration();
-    }
-
-    @Override
-    @NotNull(message = "Expire date required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    public Date getVideoExpiryDate() {
-        return super.getVideoExpiryDate();
     }
 
     @Override
@@ -62,11 +49,7 @@ public class SlideShowAdsCreateForm extends SlideShowAdsForm {
         return super.getBannerRotation();
     }
 
-    @Override
-    @NotNull(message = "Rotation settings required")
-    public ADVERTISEMENT_ROTATION_SETTINGS getVideoRotation() {
-        return super.getVideoRotation();
-    }
+
 
 
 }

@@ -52,3 +52,10 @@ function createAdvertiser(fnSuccess){
         }
     });
 }
+
+$(document).ready(function(){
+    /**
+     * Get Cities by state
+     * */
+    $("#stateId").trigger("change");
+});

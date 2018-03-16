@@ -15,7 +15,7 @@ var dropZoneElements = {
      galleryTopBanner : {},
      galleryBottomBanner : {},
 
-     slideShowBanner : {},
+     slideShowBannerOrVideo : {},
      slideShowVideo : {},
 
      popUpEmailBannerOrVideo : {},
@@ -47,6 +47,7 @@ $(document).ready(function(){
         var id = RotationSettings[key];
         initRtationSettings(id);
     }
+
 });
 
 function getRotationSetting(id){
@@ -158,32 +159,75 @@ $(document).ready(function(){
                                                         }
                                                     });
     /*Slide show Ads*/
-    dropZoneElements.slideShowBanner = configAdvertBdImgDropZone({
+    dropZoneElements.slideShowBannerOrVideo = configAdvertBdImgDropZone({
                                             elementId:"advSlideShowBanner",
-                                            param:"slide-show-banner",
+                                            param:"slide-show-banner-or-video",
                                             maxFile:6,
                                             maxFileSize:1,
-                                            success:function(response){
-                                                storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                                            success:function(response,file){
+                                                if(isVideoFile(file)){
+                                                    emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
+                                                    storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
+                                                }else if(isImageFile(file)){
+                                                    storeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                                                }
                                             },
                                             afterServerFileRemove:function(response){
                                                 removeToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN,response.token);
+                                                var key = "";
+                                                if(isVideoFile(file)){
+                                                    key = ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN;
+                                                }else if(isImageFile(file)){
+                                                    key = ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN;
+                                                }
+                                                removeToken(key,response.token);
+                                            },
+                                            afterAddFile:function(elem){
+
+                                                elem.on("maxfilesexceeded", function(file) {
+
+                                                });
+                                                elem.on("addedfile", function(file) {
+                                                    /** Video or Image
+                                                     * Image could be multiple
+                                                     * Or One Video
+                                                     * */
+
+                                                    if(file.type.indexOf("video")>=0){
+                                                        var files = dropZoneElements.slideShowBannerOrVideo.files;
+                                                        for(var i=0;i<files.length-1;i++){
+                                                            var tmpFile  = files[i];
+                                                            tmpFile._removeLink.click();
+                                                        }
+                                                    }else{
+                                                        var tmpFile = dropZoneElements.slideShowBannerOrVideo.files[0];
+                                                        if(tmpFile!=undefined && tmpFile.type.indexOf("video")>=0){
+                                                            tmpFile._removeLink.click();
+                                                        }
+                                                    }
+
+
+                                                    file._removeLink.addEventListener("click", function() {
+                                                        var key = "";
+                                                        if(isVideoFile(file)){
+                                                            key = ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN;
+                                                        }else if(isImageFile(file)){
+                                                            key = ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN;
+                                                        }
+
+                                                        removeFileByToken(
+                                                            file.token,
+                                                            function(response){
+                                                                removeToken(key,response.token);
+                                                            }
+                                                        );
+
+                                                        elem.removeFile(file);
+                                                    });
+                                                });
                                             }
                                         });
 
-    dropZoneElements.slideShowVideo = configAdvertBdImgDropZone({
-                                        elementId:"advSlideShowVideo",
-                                        param:"slide-show-video",
-                                        maxFile:1,
-                                        maxFileSize:3,
-                                        success:function(response){
-                                            emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-                                            storeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-                                        },
-                                        afterServerFileRemove:function(response){
-                                            removeToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN,response.token);
-                                        }
-                                    });
     /*PopUp Ads*/
     dropZoneElements.popUpSmsBannerOrVideo = configAdvertBdImgDropZone({
         elementId:"advSmsPopUpBanner",
@@ -387,7 +431,6 @@ $(document).ready(function(){
 
     /*Slide show*/
     var slideShowBannerExpiryDate = ( $('#slideShowBannerExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#slideShowBannerExpiryDate').val();
-    var slideShowVideoExpiryDate= ( $('#slideShowVideoExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#slideShowVideoExpiryDate').val();
 
     $('#slideShowBannerExpiryDate').daterangepicker({
         locale: {
@@ -401,18 +444,7 @@ $(document).ready(function(){
         /*var years = moment().diff(start, 'years');
          alert("You are " + years + " years old.");*/
     });
-    $('#slideShowVideoExpiryDate').daterangepicker({
-        locale: {
-            format: 'MM/DD/YYYY'
-        },
-        singleDatePicker: true,
-        showDropdowns: true,
-        startDate:slideShowVideoExpiryDate
-    },function(start, end, label) {
-        $("#slideShowVideoExpiryDateLbl").html(start.format('MMM D, YYYY'));
-        /*var years = moment().diff(start, 'years');
-         alert("You are " + years + " years old.");*/
-    });
+
     /*Popup ads*/
     var smsExpiryDate = ( $('#smsExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#smsExpiryDate').val();
     var emailExpiryDate = ( $('#emailExpiryDate').val().trim()=="" )?moment().format('MM/D/YYYY'):$('#emailExpiryDate').val();
@@ -565,7 +597,7 @@ function advertiserAfterSaveAction(btnAction,id){
     var urlStr =BASEURL+"admin";
     switch(btnAction){
         case "save":
-            urlStr += "/advertiser/checkout/"+id;
+            urlStr += "/advertiser/update/"+id;
             break;
         case "save_and_close":
             urlStr += "/advertiser/all";
@@ -751,7 +783,6 @@ function getSlideShowAdsData(prefix){
     var slideShowBannerDuration = $("#slideShowBannerDuration").val();
     var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
 
-    var videoExpiryDate  =  $('#slideShowVideoExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
     var bannerExpiryDate = $('#slideShowBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
 
     var bannerRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_BANNER);
@@ -769,7 +800,6 @@ function getSlideShowAdsData(prefix){
     data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
     data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
     data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
-    data[prefix+"videoExpiryDate"] = videoExpiryDate;
     data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
     data[prefix+"bannerRotation"] = bannerRotation;
     data[prefix+"videoRotation"] = videoRotation;
@@ -969,4 +999,3 @@ function hasAllEventSelected(){
     var isChecked = $("#allEventSelection:checked").length;
     return (isChecked==1)?true:false;
 }
-

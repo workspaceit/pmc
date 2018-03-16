@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * Created by anik on 12/19/17.
  */
-
 @Entity
 @Table(name = "admins")
 public class Admin {

@@ -14,16 +14,12 @@ public class SlideShowAdsForm {
     private Integer advertiserId;
     private Integer[] slideShowAdsBannerTokens;
     private Integer slideShowAdsVideoToken;
-    private Integer slideShowVideoDuration;
     private Integer slideShowBannerDuration;
-    private Date videoExpiryDate;
     private Date bannerExpiryDate;
 
     private ADVERTISEMENT_ROTATION_SETTINGS bannerRotation;
-    private ADVERTISEMENT_ROTATION_SETTINGS videoRotation;
 
     private Float bannerPrice;
-    private Float videoPrice;
 
     public Integer getId() {
         return id;
@@ -57,14 +53,6 @@ public class SlideShowAdsForm {
         this.slideShowAdsVideoToken = slideShowAdsVideoToken;
     }
 
-    public Integer getSlideShowVideoDuration() {
-        return slideShowVideoDuration;
-    }
-
-    public void setSlideShowVideoDuration(Integer slideShowVideoDuration) {
-        this.slideShowVideoDuration = slideShowVideoDuration;
-    }
-
     public Integer getSlideShowBannerDuration() {
         return slideShowBannerDuration;
     }
@@ -73,13 +61,7 @@ public class SlideShowAdsForm {
         this.slideShowBannerDuration = slideShowBannerDuration;
     }
 
-    public Date getVideoExpiryDate() {
-        return videoExpiryDate;
-    }
 
-    public void setVideoExpiryDate(Date videoExpiryDate) {
-        this.videoExpiryDate = videoExpiryDate;
-    }
 
     public Date getBannerExpiryDate() {
         return bannerExpiryDate;
@@ -97,14 +79,6 @@ public class SlideShowAdsForm {
         this.bannerRotation = bannerRotation;
     }
 
-    public ADVERTISEMENT_ROTATION_SETTINGS getVideoRotation() {
-        return videoRotation;
-    }
-
-    public void setVideoRotation(ADVERTISEMENT_ROTATION_SETTINGS videoRotation) {
-        this.videoRotation = videoRotation;
-    }
-
     public Float getBannerPrice() {
         return bannerPrice;
     }
@@ -113,13 +87,6 @@ public class SlideShowAdsForm {
         this.bannerPrice = bannerPrice;
     }
 
-    public Float getVideoPrice() {
-        return videoPrice;
-    }
-
-    public void setVideoPrice(Float videoPrice) {
-        this.videoPrice = videoPrice;
-    }
 
     @Override
     public String toString() {
@@ -128,14 +95,10 @@ public class SlideShowAdsForm {
                 ", advertiserId=" + advertiserId +
                 ", slideShowAdsBannerTokens=" + Arrays.toString(slideShowAdsBannerTokens) +
                 ", slideShowAdsVideoToken=" + slideShowAdsVideoToken +
-                ", slideShowVideoDuration=" + slideShowVideoDuration +
                 ", slideShowBannerDuration=" + slideShowBannerDuration +
-                ", videoExpiryDate=" + videoExpiryDate +
                 ", bannerExpiryDate=" + bannerExpiryDate +
                 ", bannerRotation=" + bannerRotation +
-                ", videoRotation=" + videoRotation +
                 ", bannerPrice=" + bannerPrice +
-                ", videoPrice=" + videoPrice +
                 '}';
     }
 }

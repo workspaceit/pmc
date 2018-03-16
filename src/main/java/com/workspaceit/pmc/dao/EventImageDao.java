@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,14 +23,18 @@ import java.util.List;
 @Repository
 public class EventImageDao extends BaseDao {
 
-    public List<EventImage> getEventImagesByCriteria(Integer eventId, Integer limit, Integer offset){
+    public List<EventImage> getEventImagesByCriteria(Integer eventId, Integer limit, Integer offset, Boolean inSlideshow){
         Session session = this.getCurrentSession();
         session.enableFilter("activeImages");
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<EventImage> criteriaQuery = builder.createQuery(EventImage.class);
         Root<EventImage> eventImageRoot = criteriaQuery.from(EventImage.class);
-
-        criteriaQuery.where(builder.equal(eventImageRoot.get("event").get("id"), eventId));
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.and(builder.equal(eventImageRoot.get("event").get("id"), eventId)));
+        if(inSlideshow) {
+            predicates.add(builder.and(builder.equal(eventImageRoot.get("inSlideshow"), inSlideshow)));
+        }
+        criteriaQuery.where(predicates.toArray(new Predicate[]{}));
         criteriaQuery.orderBy(builder.desc(eventImageRoot.get("id")));
         Query query = session.createQuery(criteriaQuery);
         query.setFirstResult(offset);
@@ -125,6 +130,14 @@ public class EventImageDao extends BaseDao {
         this.update(eventImage);
         return true;
     }
+
+    public Boolean removeFromSlideShow(int id){
+        EventImage eventImage = this.getById(id);
+        eventImage.setInSlideshow(false);
+        this.update(eventImage);
+        return true;
+    }
+
 
     public Boolean addWatermarkToImages(List<Integer> eventImageIds, Watermark watermark){
         Session session = this.getCurrentSession();

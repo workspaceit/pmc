@@ -46,9 +46,6 @@
                             <label>City</label>
                             <div>
                                 <select id="cityId" class="form-control">
-                                    <c:forEach var="city" items="${cities}">
-                                        <option value="${city.id}"  >${city.name}</option>
-                                    </c:forEach>
                                 </select>
                             </div>
                         </div>

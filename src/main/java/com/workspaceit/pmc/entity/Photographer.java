@@ -6,13 +6,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by anik on 12/20/17.
  */
-
 @Entity
 @Table(name = "photographers")
 public class Photographer {

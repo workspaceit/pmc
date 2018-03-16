@@ -36,6 +36,7 @@
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_close','update')">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
                     <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
+                    <button class="btn btn-action-top" onclick="location.href='<s:url value="/admin/advertiser/checkout/${advertiser.id}"/>'">Checkout</button>
                 </div>
 
                 <div class="tabbable-panel clearfix">
@@ -120,6 +121,7 @@
         <input type="hidden" id="popupSmsAdId" value="${popupAdSms.id}" />
         <input type="hidden" id="popupEmailAdId" value="${popupAdEmail.id}" />
         <input type="hidden" id="frontEndBaseUrl" value="${frontEndBaseUrl}" />
+        <input type="hidden" id="advertiserCityId" value="${advertiser.city.id}" />
 
 
         <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>

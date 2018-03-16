@@ -18,6 +18,8 @@
                             <button class="btn btn-action-top" onclick="submitUpdatedData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="submitUpdatedData('save_and_new')">Save&nbsp;&&nbsp;New</button>
                             <button class="btn btn-action-top" onclick="locationAfterSaveActionUpdate('cancel')">Cancel</button>
+                            <button class="btn btn-action-top" onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?locId=${location.id}','_blank')">Preview</button>
+
                             <br>
                             <span id="successMsg"></span>
                         </div>

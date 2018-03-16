@@ -34,6 +34,8 @@ public class SentSlideShowService {
         this.sentSlideShowDao = sentSlideShowDao;
     }
 
+    /*public SentSlideshow*/
+
     @Transactional
     public SentSlideshow saveByEmail(String email,String message, int[] imageIDs, Photographer sentBy, Event event){
         SentSlideshow sentSlideshow = new SentSlideshow();

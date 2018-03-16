@@ -1,11 +1,11 @@
 package com.workspaceit.pmc.entity;
 
+
 import javax.persistence.*;
 
 /**
  * Created by anik on 12/22/17.
  */
-
 
 @Entity
 @Table(name = "admin_roles")

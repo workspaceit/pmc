@@ -30,12 +30,6 @@ public class Watermark {
     @Enumerated(EnumType.STRING)
     private WatermarkType type;
 
-    @Column(name = "logo_name")
-    private String logoName;
-
-    @Column(name = "text_logo_name")
-    private String txtLogoName;
-
     @Column(name = "sample_image_name")
     private String sampleImageName;
 
@@ -113,29 +107,12 @@ public class Watermark {
         this.type = type;
     }
 
-    public String getLogoName() {
-        return logoName;
-    }
-
-    public void setLogoName(String logoName) {
-        this.logoName = logoName;
-    }
-
     public String getLogoImage() {
         return logoImage;
     }
 
     public void setLogoImage(String logoImage) {
         this.logoImage = logoImage;
-    }
-
-
-    public String getTxtLogoName() {
-        return txtLogoName;
-    }
-
-    public void setTxtLogoName(String txtLogoName) {
-        this.txtLogoName = txtLogoName;
     }
 
     public String getSampleImageName() {
@@ -251,7 +228,6 @@ public class Watermark {
         if (id != watermark.id) return false;
         if (name != null ? !name.equals(watermark.name) : watermark.name != null) return false;
         if (type != watermark.type) return false;
-        if (logoName != null ? !logoName.equals(watermark.logoName) : watermark.logoName != null) return false;
         if (sampleImageName != null ? !sampleImageName.equals(watermark.sampleImageName) : watermark.sampleImageName != null) return false;
         if (logoImage != null ? !logoImage.equals(watermark.logoImage) : watermark.logoImage != null) return false;
         if (size != watermark.size) return false;
@@ -273,7 +249,6 @@ public class Watermark {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (logoName != null ? logoName.hashCode() : 0);
         result = 31 * result + (sampleImageName != null ? sampleImageName.hashCode() : 0);
         result = 31 * result + (logoImage != null ? logoImage.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);

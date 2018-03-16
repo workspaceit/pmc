@@ -45,6 +45,8 @@ public class SampleTest {
         this.testHelper = testHelper;
     }
 
+
+
     @Test
     @Transactional
     public void test(){
@@ -56,8 +58,7 @@ public class SampleTest {
         adminCreateForm.setConfirmPassword("123456");
         adminCreateForm.setFullName("ADMIN ADMIN");
         adminCreateForm.setPhoneNumber("+8801764658987");
-        testHelper.test(adminCreateForm);
-
+        //testHelper.test(adminCreateForm);
 
 
    }
