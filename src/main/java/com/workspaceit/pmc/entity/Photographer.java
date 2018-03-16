@@ -3,17 +3,13 @@ package com.workspaceit.pmc.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by anik on 12/20/17.
  */
-@Audited
 @Entity
 @Table(name = "photographers")
 public class Photographer {

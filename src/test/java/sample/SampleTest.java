@@ -34,7 +34,6 @@ public class SampleTest {
 
     private TestAop testAop;
     private TestHelper testHelper;
-    private HistoryDao historyDao;
 
     @Autowired
     public void setTestAop(TestAop testAop) {
@@ -46,10 +45,7 @@ public class SampleTest {
         this.testHelper = testHelper;
     }
 
-    @Autowired
-    public void setHistoryDao(HistoryDao historyDao) {
-        this.historyDao = historyDao;
-    }
+
 
     @Test
     @Transactional
@@ -63,7 +59,6 @@ public class SampleTest {
         adminCreateForm.setFullName("ADMIN ADMIN");
         adminCreateForm.setPhoneNumber("+8801764658987");
         //testHelper.test(adminCreateForm);
-        historyDao.getAuditReader();
 
 
    }

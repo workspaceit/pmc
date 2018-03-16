@@ -27,11 +27,12 @@
         </dependency>
 
         <!-- History -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
             <version>5.2.5.Final</version>
-        </dependency>
+        </dependency>-->
+
        <!-- <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>

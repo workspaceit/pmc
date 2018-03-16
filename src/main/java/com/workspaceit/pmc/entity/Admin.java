@@ -3,7 +3,6 @@ package com.workspaceit.pmc.entity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.*;
@@ -11,7 +10,6 @@ import java.util.*;
 /**
  * Created by anik on 12/19/17.
  */
-@Audited
 @Entity
 @Table(name = "admins")
 public class Admin {

@@ -1,6 +1,5 @@
 package com.workspaceit.pmc.entity;
 
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
  * Created by anik on 12/22/17.
  */
 
-@Audited
 @Entity
 @Table(name = "admin_roles")
 public class AdminRole {
