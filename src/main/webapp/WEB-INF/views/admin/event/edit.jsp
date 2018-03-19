@@ -176,10 +176,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <label for="">Current Photo</label>
-                                    <img src="<s:url value="/common/${event.eventPhoto}" />"  class="img-responsive" alt="">
-                                </div>
+                                <c:if test="${event.eventPhoto != ''}">
+                                    <div>
+                                        <label for="">Current Photo</label>
+                                        <img src="<s:url value="/common/${event.eventPhoto}" />"  class="img-responsive" alt="">
+                                        <a class="remove-current-image">Remove</a>
+                                    </div>
+                                </c:if>
+
                             </div>
 
                             <hr/>

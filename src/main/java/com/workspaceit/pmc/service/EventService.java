@@ -195,6 +195,9 @@ public class EventService {
             String eventImageName = this.fileService.copyFile(eventImageToken);
             event.setEventPhoto(eventImageName);
         }
+        if(eventImageToken==-2){
+            event.setEventPhoto("");
+        }
         event.setName(eventUpdateForm.getEventName());
         event.setStartsAt(eventUpdateForm.getStartDate());
         event.setEndsAt(event.getEndsAt());

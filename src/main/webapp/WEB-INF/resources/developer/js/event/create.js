@@ -96,7 +96,10 @@ $(document).ready(function () {
             }
         });
     }
-
+    $('.remove-current-image').click(function () {
+        $(this).parent().remove();
+        pictureToken = -2;
+    });
     $('#save-watermark-btn').click(function () {
         save('save');
     });
