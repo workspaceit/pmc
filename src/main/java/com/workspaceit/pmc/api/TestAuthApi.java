@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth/api")
 public class TestAuthApi {
 
-
     @RequestMapping("/test")
     public String test(){
         return "HELLO";

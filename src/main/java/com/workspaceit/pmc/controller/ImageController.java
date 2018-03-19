@@ -67,16 +67,13 @@ public class ImageController {
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreview( @Valid WatermarkForm watermarkForm,
                                                          BindingResult error){
+        System.out.println("we were here");
         byte[] imageByte = new byte[]{};
-
-
-
-
         try {
             this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
 
             WatermarkType type = watermarkForm.getType();
-            if(type!=null && type.equals(WatermarkType.image) && error.getFieldErrorCount("logoImgToken")>0){
+            if(type!=null && type.equals(WatermarkType.image) && error.getFieldErrorCount("logoImgToken") > 0){
                 throw new IOException("Logo required");
             }
             imageByte = watermarkService.getImageWithWaterMark(watermarkForm); // Image or Text

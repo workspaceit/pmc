@@ -177,7 +177,6 @@ public class WatermarkService {
         if(watermarkType==null){
             throw new EntityNotFound("Water mark type required");
         }
-
         if(watermarkForm.getType().equals(WatermarkType.image))
             watermarkedImgByte = this.getImageWithWaterMarkImage(watermarkForm);
         else if(watermarkForm.getType().equals(WatermarkType.text))

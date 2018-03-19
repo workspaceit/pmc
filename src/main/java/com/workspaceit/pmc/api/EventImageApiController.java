@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.SentSlideshow;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
@@ -20,6 +21,18 @@ public class EventImageApiController {
 
 
     private SentSlideShowService sentSlideShowService;
+    private EventImageService eventImageService;
+    private ReportImageService reportImageService;
+
+    @Autowired
+    public void setReportImageService(ReportImageService reportImageService) {
+        this.reportImageService = reportImageService;
+    }
+
+    @Autowired
+    public void setEventImageService(EventImageService eventImageService) {
+        this.eventImageService = eventImageService;
+    }
 
     @Autowired
     public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
@@ -37,6 +50,17 @@ public class EventImageApiController {
                     .setValidationError("identifier","No sent slide show found"));
         }
         return ResponseEntity.status(HttpStatus.OK).body(sentSlideShow.getEventImages());
+    }
+
+    @PostMapping("/report-image")
+    public ResponseEntity<?> reportEventImage(@RequestParam("eventImageId") Integer eventImageId){
+        EventImage eventImage = eventImageService.getById(eventImageId);
+        if(eventImage == null){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getInstance()
+                    .setValidationError("image","Image not found"));
+        }
+        reportImageService.reportImage(eventImage);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
 
