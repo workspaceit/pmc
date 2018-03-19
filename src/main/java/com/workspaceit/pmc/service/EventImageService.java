@@ -164,6 +164,11 @@ public class EventImageService {
     }
 
     @Transactional
+    public List<EventImage> getImagesByEventIdWhereInSlideshowTrue(int eventId){
+        return this.eventImageDao.getByEventIdWhereInSlideshowTrue(eventId);
+    }
+
+    @Transactional
     public Boolean photographerAssignedOnEvent(List<Integer> imageIds, Photographer photographer){
         List<EventImage> eventImages = this.eventImageDao.getByIds(imageIds);
         Boolean exists = false;

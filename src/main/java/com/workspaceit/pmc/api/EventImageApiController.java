@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by anik on 2/15/18.
  */
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(ControllerUriPrefix.PUBLIC_API+"/event-images")
 @CrossOrigin
 public class EventImageApiController {
-
 
     private SentSlideShowService sentSlideShowService;
     private EventImageService eventImageService;
@@ -34,12 +35,11 @@ public class EventImageApiController {
         this.eventImageService = eventImageService;
     }
 
+
     @Autowired
     public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
         this.sentSlideShowService = sentSlideShowService;
     }
-
-
 
     @GetMapping("/get/{identifier}")
     public ResponseEntity<?> getAllEventImagesSentSlideShowIdentifier(@PathVariable("identifier") String identifier){
@@ -63,6 +63,13 @@ public class EventImageApiController {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
+    @GetMapping("/get-by-event-id-where-is-sent-slide-show-true/{eventId}")
+    public ResponseEntity<?> getAllEventImagesSentSlideShowByEventId(@PathVariable("eventId") int eventId){
+        List<EventImage> eventImages =  this.eventImageService.getImagesByEventIdWhereInSlideshowTrue(eventId);
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(eventImages);
+    }
 
 
 }
