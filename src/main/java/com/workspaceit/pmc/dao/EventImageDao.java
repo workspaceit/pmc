@@ -72,6 +72,18 @@ public class EventImageDao extends BaseDao {
                 .setParameterList("ids", ids)
                 .list();
     }
+    public List<EventImage> getByEventId(int eventId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM EventImage  WHERE event.id = :eventId")
+                .setParameter("eventId", eventId)
+                .list();
+    }
+    public List<EventImage> getByEventIdWhereInSlideshowTrue(int eventId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM EventImage  WHERE event.id = :eventId and isActive=true and inSlideshow=true")
+                .setParameter("eventId", eventId)
+                .list();
+    }
     public List<EventImage> getByWatermarkId(int watermarkId){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM EventImage  WHERE watermark.id = :watermarkId ")
