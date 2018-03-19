@@ -25,7 +25,8 @@ public class SmsHelper {
     public boolean sendMessage(String name,String to,String code, String message) {
         this.setProperties();
         String msg = "Hi "+name+","+message;
-        String mediaUrl = environment.getMailServerLink()+ "slideshow-images/"+code;
+//        String mediaUrl = environment.getMailServerLink()+ "slideshow-images/"+code;
+        String mediaUrl = environment.getFrontEndAppBaseUrl() + "/user-panel/gallery/sms/"+code;
         String messageBody = msg+"click the link to see images: "+mediaUrl;
         System.out.println(messageBody);
         this.messageCreator.create(to, environment.getSmsPhoneNumber(), messageBody, null);
