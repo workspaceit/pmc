@@ -124,7 +124,8 @@ public class EmailHelper {
                         username, password);// Specify the Username and the PassWord
             }
         });
-        String activationUrl = link + "slideshow-images/"+code;
+//        String activationUrl = link + "slideshow-images/"+code;
+        String activationUrl = appBaseUrl + "/user-panel/gallery/email/"+code;
         String link = "<a href='" + activationUrl + "'>Click here</a>";
         String emailHtmlBody = "Hi "+name+","+msg+"<br>Please click this link " + link + " to see your images";
         try {

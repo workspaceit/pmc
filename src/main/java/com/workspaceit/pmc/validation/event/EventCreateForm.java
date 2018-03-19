@@ -12,8 +12,8 @@ import java.util.Date;
  */
 
 public class EventCreateForm extends EventForm{
-    @NotNull(message = "Image required")
-    @Min(value = 1,message = "Image required")
+//    @NotNull(message = "Image required")
+//    @Min(value = 1,message = "Image required")
     @Override
     public Integer getImageToken() {
         return super.getImageToken();

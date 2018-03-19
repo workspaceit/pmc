@@ -53,7 +53,7 @@ public class EventValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         EventForm eventForm = (EventForm) o;
-        this.checkImageToken(eventForm.getImageToken(), errors);
+//        this.checkImageToken(eventForm.getImageToken(), errors);
         this.checkAdvertiserExistence(eventForm.getAdvertiserIds(),eventForm.getIsAllAdvertiserSelected(), errors);
         this.checkPhotographerExistence(eventForm.getPhotographerIds(), errors);
         this.checkWatermarkExistence(eventForm.getWatermarkIds(), errors);
