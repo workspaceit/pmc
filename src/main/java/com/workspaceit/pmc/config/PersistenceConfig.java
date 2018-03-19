@@ -75,7 +75,7 @@ public class PersistenceConfig {
                 setProperty("hibernate.use_sql_comments","true");*/
 
                 /**
-                 * Have extra careful with this configuration
+                 * Be extra careful with this configuration
                  * Could cause data damage
                  * */
            //     setProperty("hibernate.hbm2ddl.auto", "update");

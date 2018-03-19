@@ -5,11 +5,13 @@ import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.entity.SentSlideshow;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdvertisementService;
 import com.workspaceit.pmc.service.AdvertiserService;
 import com.workspaceit.pmc.service.EventService;
+import com.workspaceit.pmc.service.SentSlideShowService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ public class AdvertisementApiController {
     private AdvertiserService advertiserService;
     private AdvertisementService advertisementService;
     private ValidationUtil validationUtil;
+    private SentSlideShowService sentSlideShowService;
 
     @Autowired
     public void setEventService(EventService eventService) {
@@ -55,6 +58,11 @@ public class AdvertisementApiController {
     @Autowired
     public void setValidationUtil(ValidationUtil validationUtil) {
         this.validationUtil = validationUtil;
+    }
+
+    @Autowired
+    public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
+        this.sentSlideShowService = sentSlideShowService;
     }
 
     @RequestMapping("/get/{eventId}/{limit}/{offset}")
@@ -120,8 +128,8 @@ public class AdvertisementApiController {
         Advertisement advertisementList = this.advertisementService.getByAdvertiserIdAndType(advertiserId,adType);
         return ResponseEntity.ok(advertisementList);
     }
-    @RequestMapping("/get/{type}/{eventId}/{limit}/{offset}")
-    public ResponseEntity<?> getAdvertisementByEventIdAndType(@PathVariable("eventId")int eventId,
+    @RequestMapping("/get/{type}/{identifier}/{limit}/{offset}")
+    public ResponseEntity<?> getAdvertisementByEventIdAndType(@PathVariable("identifier")String identifier,
                                                               @PathVariable("type") String type,
                                                               @PathVariable("limit") int limit,
                                                               @PathVariable("offset") int offset){
@@ -136,8 +144,12 @@ public class AdvertisementApiController {
 
         List<Advertiser> advertiserList;
         try {
+            SentSlideshow sentSlideshow = this.sentSlideShowService.getByIdentifier(identifier);
+            if(sentSlideshow == null){
+                throw new EntityNotFound("No sent show found by identifier :"+identifier);
+            }
             adType = ADVERTISEMENT_TYPE.getFromString(type);
-            advertiserList = this.advertiserService.getByEventAndLocationId(eventId,true,
+            advertiserList = this.advertiserService.getByEventAndLocationId(sentSlideshow.getEvent().getId(),true,
                     limit,offset);
 
         } catch (EntityNotFound entityNotFound) {

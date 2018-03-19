@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.auth.PhotographerUserDetails;
+import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.FILE;
 import com.workspaceit.pmc.constant.advertisement.PopupAdConstant;
 import com.workspaceit.pmc.entity.*;
@@ -37,7 +38,7 @@ import java.util.Set;
  */
 
 @RestController
-@RequestMapping("/auth/api/event-images")
+@RequestMapping(ControllerUriPrefix.AUTH_API+"/event-images")
 @CrossOrigin
 public class EventImageAuthApiController {
 
