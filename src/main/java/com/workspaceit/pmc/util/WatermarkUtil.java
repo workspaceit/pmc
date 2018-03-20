@@ -84,16 +84,19 @@ public class WatermarkUtil {
         // Water mark text don't have fade value in UI
         // although Max value is 50
         com.workspaceit.pmc.entity.Font font = (com.workspaceit.pmc.entity.Font) data.get(WATERMARK_ATTR._FONT);
-        BufferedImage sourceImage = addWatermarkText( sourceImagePath,   text,  colorCode, fadeVal,font);
+        BufferedImage sourceImage = addWatermarkTextOp( sourceImagePath, data);
         return sourceImage;
     }
 
-    public BufferedImage addWatermarkText(String sourceImagePath,String text, String colorCode, float fadeVal,
-                                          com.workspaceit.pmc.entity.Font font) throws IOException {
+    public BufferedImage addWatermarkTextOp(String sourceImagePath, Map<WATERMARK_ATTR,Object> data) throws IOException {
 
-
+        String text =(String) data.get(WATERMARK_ATTR._TEXT);
+        String colorCode = (String) data.get(WATERMARK_ATTR._COLOR);
+        float fadeVal = (float)data.get(WATERMARK_ATTR._FADE);
         float alpha = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
         File sourceImageFile = new File(sourceImagePath);
+        com.workspaceit.pmc.entity.Font font = (com.workspaceit.pmc.entity.Font) data.get(WATERMARK_ATTR._FONT);
+
         String fontName = (font!=null)?font.getIdentifier():_DEFAUL_FONT_NAME;
         // Water mark text don't have fade value in UI
         // although Max value is 5
@@ -111,27 +114,22 @@ public class WatermarkUtil {
             System.out.println(ex.getClass().getName()+" : From WatermarkUtil - No color found  - "+ex.getMessage());
 
         }
-
-        System.out.println("fontName "+fontName);
-
         AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         g2d.setComposite(alphaChannel);
         g2d.setColor(color);
         g2d.setFont(new Font(fontName, Font.PLAIN, watermarkTextPositioning.getRelativeFontSize(sourceImage.getHeight())));
         FontMetrics fontMetrics = g2d.getFontMetrics();
+        Placement placement =  (Placement)data.get(WATERMARK_ATTR._PLACEMENT);
         Rectangle2D rect = fontMetrics.getStringBounds(text, g2d);
 
         // calculates the coordinate where the String is painted
-        ImagePosition ip =  watermarkTextPositioning.getPosition(Placement.tc,
+        ImagePosition ip =  watermarkTextPositioning.getPosition(placement,
                 sourceImage.getHeight(),
                 sourceImage.getWidth(),
                 (int) rect.getHeight(),
                 (int) rect.getWidth());
         int centerX = ip.getX();
         int centerY =ip.getY();
-
-
-
         // paints the textual watermark
         g2d.drawString(text, centerX, centerY);
 

@@ -148,10 +148,10 @@ public class WatermarkService {
         String sampleImgName = "";
 
 
-        if(logoImgToken!=null && logoImgToken>0) {
+        if(logoImgToken!=null && logoImgToken>0){
             logoImgName = this.fileService.copyFile(logoImgToken);
         }
-        if(sampleImgToken!=null && sampleImgToken>0) {
+        if(sampleImgToken!=null && sampleImgToken>0){
             sampleImgName = this.fileService.copyFile(sampleImgToken);
         }else{
             Map<FILE,String> fileInfo =  this.fileService.makeNewFileFromDefaultWatermarkSampleImg();
@@ -160,9 +160,13 @@ public class WatermarkService {
 
         watermark.setLogoImage(logoImgName);
         watermark.setSampleImageName(sampleImgName);
+
         watermark.setActive(true);
         watermark.setDeleted(false);
+
         this.create(watermark);
+
+
         return watermark;
     }
 
@@ -526,6 +530,7 @@ public class WatermarkService {
 
 
     private void populateWatermarkByWatermarkForm(Watermark watermark, WatermarkForm watermarkForm){
+        Font font =  this.fontService.getById(watermarkForm.getFontId());
         watermark.setName(watermarkForm.getName());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
@@ -533,6 +538,7 @@ public class WatermarkService {
         watermark.setType(watermarkForm.getType());
         watermark.setWatermarkText(watermarkForm.getWatermarkText());
         watermark.setColor(watermarkForm.getColor());
+        watermark.setFont(font);
     }
 
 }
