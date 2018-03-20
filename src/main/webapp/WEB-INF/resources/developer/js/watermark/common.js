@@ -2,8 +2,7 @@
 WATERMARK_TOKEN_KEY = {_SAMPLE:"sampleToken"}
 
 
-$(document).ready(function()
-{
+$(document).ready(function() {
     $("#e9").select2( {maximumSelectionSize: 3});
     $("#e1").select2();
     $("#e2").select2();
@@ -17,11 +16,10 @@ $(document).ready(function(){
         $(this).addClass("active");
         var onOfVal = $(this).data("name");
 
-        if(onOfVal=="image"){
-
+        if(onOfVal === "image"){
             $("#waterMarkImgFile").show();
             $("#waterMarkImgUrl").hide();
-        }else if(onOfVal=="text"){
+        }else if(onOfVal === "text"){
             $("#waterMarkImgFile").hide();
             $("#waterMarkImgUrl").show();
         }

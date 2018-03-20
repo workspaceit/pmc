@@ -62,8 +62,13 @@
                                 <p class="text-left">${wm.type}</p>
                             </td>
                             <td class="date-clm">
-                                <img src="<c:url value="/common/${wm.logoImage}"/>" class="img-responsive"
-                                     alt="No preview found" style="width: 65px; height: auto">
+                                <c:if test = "${wm.type == 'image'}">
+                                    <img src="<c:url value="/common/${wm.logoImage}"/>" class="img-responsive"
+                                         alt="No preview found" style="width: 65px; height: auto">
+                                </c:if>
+                                <c:if test = "${wm.type == 'text'}">
+                                    <p class="text-left">${wm.watermarkText}</p>
+                                </c:if>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">

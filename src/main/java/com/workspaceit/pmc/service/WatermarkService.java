@@ -148,10 +148,10 @@ public class WatermarkService {
         String sampleImgName = "";
 
 
-        if(logoImgToken!=null && logoImgToken>0){
+        if(logoImgToken!=null && logoImgToken>0) {
             logoImgName = this.fileService.copyFile(logoImgToken);
         }
-        if(sampleImgToken!=null && sampleImgToken>0){
+        if(sampleImgToken!=null && sampleImgToken>0) {
             sampleImgName = this.fileService.copyFile(sampleImgToken);
         }else{
             Map<FILE,String> fileInfo =  this.fileService.makeNewFileFromDefaultWatermarkSampleImg();
@@ -160,13 +160,9 @@ public class WatermarkService {
 
         watermark.setLogoImage(logoImgName);
         watermark.setSampleImageName(sampleImgName);
-
         watermark.setActive(true);
         watermark.setDeleted(false);
-
         this.create(watermark);
-
-
         return watermark;
     }
 

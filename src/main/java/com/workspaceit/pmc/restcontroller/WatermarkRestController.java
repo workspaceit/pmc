@@ -1,24 +1,17 @@
 package com.workspaceit.pmc.restcontroller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
-import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
-import com.workspaceit.pmc.service.AdminService;
-import com.workspaceit.pmc.service.LocationService;
 import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
-import com.workspaceit.pmc.validation.location.LocationForm;
-import com.workspaceit.pmc.validation.location.LocationValidator;
 import com.workspaceit.pmc.validation.watermark.WatermarkValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,20 +26,12 @@ import java.util.List;
 public class WatermarkRestController {
 
     private WatermarkService watermarkService;
-    private AdminService adminService;
     private WatermarkValidator watermarkValidator;
 
     @Autowired
     public void setWatermarkService(WatermarkService watermarkService){
         this.watermarkService=watermarkService;
     }
-
-    @Autowired
-    public void setAdminService(AdminService adminService) {
-        this.adminService = adminService;
-    }
-
-
     @Autowired
     public void setWatermarkValidator(WatermarkValidator watermarkValidator) {
         this.watermarkValidator = watermarkValidator;
@@ -54,15 +39,11 @@ public class WatermarkRestController {
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid WatermarkForm watermarkForm, BindingResult bindingResult) {
-
-
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
          *  Conditional Basic Validation
          * */
-        this.watermarkValidator.validate(watermarkForm,bindingResult);
-
-
+        this.watermarkValidator.validate(watermarkForm, bindingResult);
         if (bindingResult.hasErrors()) {
             serviceResponse.bindValidationError(bindingResult);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
@@ -70,8 +51,6 @@ public class WatermarkRestController {
         Watermark watermark = this.watermarkService.create(watermarkForm);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(watermark);
     }
-
-
 
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id,
