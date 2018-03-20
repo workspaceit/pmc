@@ -59,6 +59,10 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getInstance()
                     .setValidationError("image","Image not found"));
         }
+        if(reportImageService.isReported(eventImage)){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getInstance()
+                    .setValidationError("image","Image already been reported"));
+        }
         reportImageService.reportImage(eventImage);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
