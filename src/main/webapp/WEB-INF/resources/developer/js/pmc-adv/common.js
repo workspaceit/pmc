@@ -163,7 +163,7 @@ $(document).ready(function(){
                                             elementId:"advSlideShowBanner",
                                             param:"slide-show-banner-or-video",
                                             maxFile:6,
-                                            maxFileSize:1,
+                                            maxFileSize:3,
                                             success:function(response,file){
                                                 if(isVideoFile(file)){
                                                     emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);

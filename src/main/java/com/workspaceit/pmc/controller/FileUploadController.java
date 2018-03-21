@@ -117,7 +117,7 @@ public class FileUploadController{
                 imgContentType = this.videoAllowedMimeType;
                 break;
             case "slide-show-banner-or-video":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 1 MB
                 imgContentType = this.imgAllowedMimeType;
                 imgContentType.addAll(this.videoAllowedMimeType);
                 break;
@@ -130,7 +130,7 @@ public class FileUploadController{
                 imgContentType = this.videoAllowedMimeType;
                 break;
             case "sms-popup-banner-or-video":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
                 imgContentType = this.imgAllowedMimeType;
                 imgContentType.addAll(this.videoAllowedMimeType);
                 break;
