@@ -2,7 +2,9 @@ package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.EventImage;
+import com.workspaceit.pmc.entity.ReportedImage;
 import com.workspaceit.pmc.entity.SentSlideshow;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,11 +69,33 @@ public class EventImageApiController {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
+    @GetMapping("/reported-image/{eventId}")
+    public ResponseEntity<?> reportedImage(@PathVariable("eventId") Integer eventId){
+        List<ReportedImage> list =reportImageService.getAllByEventId(eventId);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
+    @PostMapping("/report-image-action")
+    public ResponseEntity<?> reportedImageAction(@RequestParam("type") String type,@RequestParam("imageIds") int[] imageIds){
+        boolean result=false;
+        if(type.equals("ignore")){
+            result=reportImageService.takeAction(imageIds);
+        }else if(type.equals("delete")){
+            try {
+                Boolean res = eventImageService.deleteEventImages(imageIds);
+            } catch (EntityNotFound entityNotFound) {
+                entityNotFound.printStackTrace();
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(false);
+
+            }
+            result=reportImageService.takeAction(imageIds);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
     @GetMapping("/get-by-event-id-where-is-sent-slide-show-true/{eventId}")
     public ResponseEntity<?> getAllEventImagesSentSlideShowByEventId(@PathVariable("eventId") int eventId){
         List<EventImage> eventImages =  this.eventImageService.getImagesByEventIdWhereInSlideshowTrue(eventId);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(eventImages);
     }
 

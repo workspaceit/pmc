@@ -1,9 +1,12 @@
 package com.workspaceit.pmc.dao;
 
+import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.ReportedImage;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by anik on 3/19/18.
@@ -19,6 +22,22 @@ public class ReportImageDao extends BaseDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+    public ReportedImage getByImageId(int imageId){
+        Session session=this.getCurrentSession();
+        return (ReportedImage)session.createQuery("From ReportedImage where image_id=:id")
+                .setParameter("id",imageId)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+
+    public List<ReportedImage> getAllByEventId(int eventId){
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM ReportedImage a " +
+                "WHERE a.actionTaken=0 and a.eventImage.event.id=:eventId" +
+                " ORDER BY id desc").setParameter("eventId",eventId)
+                .list();
+    }
+
     public Boolean isReported(EventImage eventImage){
         Boolean result = false;
         if(this.getByImageId(eventImage)!=null){

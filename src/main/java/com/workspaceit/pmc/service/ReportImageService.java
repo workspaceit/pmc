@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by anik on 3/19/18.
  */
@@ -32,5 +34,21 @@ public class ReportImageService {
     @Transactional
     public Boolean isReported(EventImage eventImage){
         return reportImageDao.isReported(eventImage);
+    }
+
+    @Transactional
+    public List<ReportedImage> getAllByEventId(int eventId){
+        return reportImageDao.getAllByEventId(eventId);
+    }
+
+    @Transactional
+    public Boolean takeAction(int[] imageIds){
+        for (int imageId:imageIds) {
+            ReportedImage reportedImage = reportImageDao.getByImageId(imageId);
+            reportedImage.setActionTaken(true);
+            reportImageDao.update(reportedImage);
+
+        }
+        return true;
     }
 }
