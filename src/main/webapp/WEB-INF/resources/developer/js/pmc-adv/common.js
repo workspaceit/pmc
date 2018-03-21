@@ -47,7 +47,8 @@ $(document).ready(function(){
         var id = RotationSettings[key];
         initRtationSettings(id);
     }
-
+    showHideLocationSelectBox();
+    showHideEventSelectBox();
 });
 
 function getRotationSetting(id){

@@ -27,9 +27,6 @@
                                 <input type="checkbox" id="select-all-checkbox">
                             </th>
                             <th class="cstm-table-header">
-                                Date
-                            </th>
-                            <th class="cstm-table-header">
                                 Title
                             </th>
                             <th class="cstm-table-header">
@@ -37,6 +34,9 @@
                             </th>
                             <th class="cstm-table-header">
                                 Preview
+                            </th>
+                            <th class="cstm-table-header">
+                                Created At
                             </th>
                             <th class="cstm-table-header">
                                 Enabled
@@ -53,9 +53,6 @@
                                 <input type="checkbox" class="select-checkbox" value="${wm.id}">
                             </td>
                             <td class="des-clm">
-                                <p class="text-left"><fmt:formatDate pattern='yyyy-MM-dd hh:mm a' value="${wm.createdAt}"/></p>
-                            </td>
-                            <td class="des-clm">
                                 <p id="title-${wm.id}" class="text-left">${wm.name}</p>
                             </td>
                             <td class="des-clm">
@@ -69,6 +66,9 @@
                                 <c:if test = "${wm.type == 'text'}">
                                     <p class="text-left">${wm.watermarkText}</p>
                                 </c:if>
+                            </td>
+                            <td class="des-clm">
+                                <p class="text-left"><fmt:formatDate pattern='yyyy-MM-dd hh:mm a' value="${wm.createdAt}"/></p>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">
@@ -94,10 +94,10 @@
             $(document).ready(function() {
                 $('#watermark-datatable').DataTable({
                     "columnDefs": [{
-                        "targets": [0, 4, 5, 6],
+                        "targets": [0, 3, 5, 6],
                         "orderable": false,
                     }],
-                    "order": [[2, 'asc']]
+                    "order": [[4, 'desc']]
                 });
             });
         </script>

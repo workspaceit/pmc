@@ -161,14 +161,10 @@ public class AdvertiserController {
     }
     @RequestMapping("/all")
     public ModelAndView all(){
-
        List<Advertiser> advertisers =  this.advertiserService.getAll();
        ModelAndView model = new ModelAndView("admin/advertiser/all");
-
-
-        model.addObject("advertisers",advertisers);
-
-        return model;
+       model.addObject("advertisers", advertisers);
+       return model;
     }
 
     @RequestMapping("/update/{id}")

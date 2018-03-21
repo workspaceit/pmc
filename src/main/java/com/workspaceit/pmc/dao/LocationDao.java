@@ -16,7 +16,7 @@ import java.util.List;
 public class LocationDao extends BaseDao{
     public List<Location> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Location l where l.deleted = false  ORDER BY  l.id DESC")
+        return session.createQuery("FROM Location l where l.deleted = false  ORDER BY  l.createdAt DESC")
                 .list();
     }
 

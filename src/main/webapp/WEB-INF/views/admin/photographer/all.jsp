@@ -1,3 +1,4 @@
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
@@ -41,6 +42,9 @@
                                 Phone
                             </th>
                             <th class="cstm-table-header">
+                                Created At
+                            </th>
+                            <th class="cstm-table-header">
                                 Enabled
                             </th>
                             <th class="cstm-table-header">
@@ -79,6 +83,11 @@
                                 <span class="cstm-date-txt">${photographer.phoneNumber}</span>
                             </td>
                             <td class="date-clm">
+                                <span class="cstm-date-txt">
+                                    <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${photographer.createdAt}"></fmt:formatDate>
+                                </span>
+                            </td>
+                            <td class="date-clm">
                                 <c:if test = "${photographer.active}">
                                     <input type="checkbox" class="activate-checkbox" checked value="${photographer.id}">
                                 </c:if>
@@ -102,10 +111,10 @@
             $(document).ready(function() {
                 $('#photographer-datatable').DataTable({
                     "columnDefs": [{
-                        "targets": [0, 1, 6, 7],
+                        "targets": [0, 1, 7, 8],
                         "orderable": false,
                     }],
-                    "order": [[2, 'asc']]
+                    "order": [[6, 'desc']]
                 });
             });
         </script>
