@@ -5,10 +5,14 @@ $(document).ready(function(){
     injectHiddenBgRemoveIdField();
 });
 function locationAfterSaveActionUpdate(btnAction){
+    var id = $('#locationId').val();
     var urlStr ="";
     switch(btnAction){
         case "save":
-            urlStr = "admin/location/all";
+            // urlStr = "admin/location/update/" + id;
+            $.growl.notice({title: 'Success!', message: "Location updated"});
+            console.log("here");
+            return;
             break;
         case "save_and_close":
             urlStr = "admin/location/all";
@@ -73,9 +77,10 @@ function submitUpdatedData(btnAction){
             }
         },
         success: function(response) {
-            notifyUpdateStatus(function(){
-                locationAfterSaveActionUpdate(btnAction);
-            });
+            // notifyUpdateStatus(function(){
+            //     locationAfterSaveActionUpdate(btnAction);
+            // });
+            locationAfterSaveActionUpdate(btnAction);
         }
     });
 }

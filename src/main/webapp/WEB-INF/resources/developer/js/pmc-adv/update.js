@@ -79,12 +79,15 @@ function updateAdvertiser(){
 }
 function redirectToAdvPreview(id,type){
      var frontEndBaseUrl = $("#frontEndBaseUrl").val();
-     var uriWithQueryParam = "/pmcad-preview";
+     var uriWithQueryParam = "/user-panel";
      if(type=="gallery"){
          uriWithQueryParam += "/gallery?galleryId="+id;
      } else if(type=="popup"){
          uriWithQueryParam += "/gallery?popUpId="+id;
      }else if(type=="slideshow"){
+         /**
+          * Main Slide show
+          * */
          uriWithQueryParam += "/slideshow?pmcadv="+id;
      }
     window.open(frontEndBaseUrl+uriWithQueryParam, '_blank');

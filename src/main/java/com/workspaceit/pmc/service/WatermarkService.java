@@ -530,6 +530,7 @@ public class WatermarkService {
 
 
     private void populateWatermarkByWatermarkForm(Watermark watermark, WatermarkForm watermarkForm){
+        Font font =  this.fontService.getById(watermarkForm.getFontId());
         watermark.setName(watermarkForm.getName());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
@@ -537,6 +538,7 @@ public class WatermarkService {
         watermark.setType(watermarkForm.getType());
         watermark.setWatermarkText(watermarkForm.getWatermarkText());
         watermark.setColor(watermarkForm.getColor());
+        watermark.setFont(font);
     }
 
 }

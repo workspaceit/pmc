@@ -30,7 +30,7 @@ public class AdvertiserDao extends BaseDao {
         Session session = this.getCurrentSession();
         return session.createQuery("FROM Advertiser a " +
                                       "WHERE a.deleted=false  " +
-                                      "ORDER BY id desc")
+                                      "ORDER BY a.createdAt desc")
                 .list();
     }
     public List<Advertiser> getActiveAdvertisers(){

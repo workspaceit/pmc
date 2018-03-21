@@ -194,6 +194,10 @@ public class AdvertiserService {
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId);
     }
     @Transactional
+    public List<Advertiser> getIdsByLocationAndEventId(int eventId,int locationId,boolean includeAllSelected){
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected);
+    }
+    @Transactional
     public List<Advertiser> getByLocationAndEventId(int eventId,int locationId){
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId);
     }

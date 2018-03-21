@@ -37,15 +37,17 @@
                             <th class="cstm-table-header">
                                 State
                             </th>
-                            <th class="cstm-table-header">
-                                Zip
-                            </th>
-
+                            <%--<th class="cstm-table-header">--%>
+                                <%--Zip--%>
+                            <%--</th>--%>
                             <th class="cstm-table-header">
                                 Run time start
                             </th>
                             <th class="cstm-table-header">
                                 Run time ends
+                            </th>
+                            <th class="cstm-table-header">
+                                Created At
                             </th>
                             <th class="cstm-table-header">
                                 Enabled
@@ -73,15 +75,22 @@
                                 <td class="des-clm">
                                     <p class="text-left">${advertiser.state.name}</p>
                                 </td>
-                                <td class="date-clm">
-                                    <span class="cstm-date-txt">${advertiser.zip}</span>
-                                </td>
+                                <%--<td class="date-clm">--%>
+                                    <%--<span class="cstm-date-txt">${advertiser.zip}</span>--%>
+                                <%--</td>--%>
                                 <td class="date-clm">
 
-                                    <span class="cstm-date-txt"><fmt:formatDate pattern = "MM-dd-yyyy" value="${advertiser.runtimeStarts}"  ></fmt:formatDate></span>
+                                    <span class="cstm-date-txt"><fmt:formatDate pattern = "yyyy-MM-dd" value="${advertiser.runtimeStarts}"  ></fmt:formatDate></span>
                                 </td>
                                 <td class="date-clm">
-                                    <span class="cstm-date-txt"><fmt:formatDate pattern = "MM-dd-yyyy" value="${advertiser.runtimeEnds}"  ></fmt:formatDate></span>
+                                    <span class="cstm-date-txt">
+                                        <fmt:formatDate pattern = "yyyy-MM-dd" value="${advertiser.runtimeEnds}"></fmt:formatDate>
+                                    </span>
+                                </td>
+                                <td class="date-clm">
+                                    <span class="cstm-date-txt">
+                                        <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${advertiser.createdAt}"></fmt:formatDate>
+                                    </span>
                                 </td>
                                 <td class="date-clm">
                                     <c:if test = "${advertiser.active}">
@@ -112,7 +121,7 @@
                         "targets": [0, 8, 9],
                         "orderable": false,
                     }],
-                    "order": [[1, 'asc']]
+                    "order": [[7, 'desc']]
                 });
             });
         </script>

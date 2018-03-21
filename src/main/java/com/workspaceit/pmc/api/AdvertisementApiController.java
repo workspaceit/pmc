@@ -105,7 +105,40 @@ public class AdvertisementApiController {
         List<Map<ADVERTISEMENT_TYPE,Advertisement>> advertisementList = this.advertisementService.getMapByAdvertiserId(advertiserIds);
         return ResponseEntity.ok(advertisementList);
     }
+    @RequestMapping("/get/{type}/{eventId}")
+    public ResponseEntity<?> getAdvertisementByEventIdAndType(@PathVariable("eventId")int eventId,
+                                                              @PathVariable("type") String type){
+        Event event;
+        Location location;
+        ServiceResponse serviceResponse = ServiceResponse.getInstance();
+        int locationId = 0;
+        ADVERTISEMENT_TYPE adType = null;
+        try {
+            adType = ADVERTISEMENT_TYPE.getFromString(type);
+            event =  this.eventService.getEvent(eventId);
 
+            location = event.getLocation();
+            locationId = (location!=null)?location.getId():0;
+
+        } catch (EntityNotFound entityNotFound) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .body(serviceResponse
+                            .setMsg("eventId",entityNotFound.getMessage())
+                            .getFormError());
+
+        }
+
+
+        List<Advertiser> advertiserList = this.advertiserService.getIdsByLocationAndEventId(event.getId(),locationId,true);
+
+        List<Integer> advertiserIds = new ArrayList<>();
+        if(advertiserList!=null){
+            advertiserList.stream().forEach(advertiser -> advertiserIds.add(advertiser.getId()));
+        }
+
+        List<Advertisement> advertisementList = this.advertisementService.getByAdvertiserIdAndType(advertiserIds,adType);
+        return ResponseEntity.ok(advertisementList);
+    }
     @RequestMapping("/get-by-advertiser-id/{type}/{advertiserId}")
     public ResponseEntity<?> getAdvertisementByAdvertiserId(@PathVariable("advertiserId") int advertiserId,
                                                             @PathVariable("type") String type){

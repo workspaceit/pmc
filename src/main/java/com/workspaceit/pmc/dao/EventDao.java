@@ -1,9 +1,7 @@
 package com.workspaceit.pmc.dao;
 
-import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -21,7 +19,7 @@ public class EventDao extends BaseDao {
 
     public List<Event> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Event e WHERE  e.deleted = false ORDER BY e.id DESC")
+        return session.createQuery("FROM Event e WHERE  e.deleted = false ORDER BY e.createdAt DESC")
                 .list();
     }
     public Integer getActiveEventCount(){

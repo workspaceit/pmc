@@ -117,7 +117,7 @@
                     </div>
                     <div class="panel-body">
                         <div>
-                            <input id="allLocationSelection" type="checkbox" value="1" />All Location
+                            <input id="allLocationSelection" type="checkbox" checked value="1" />All Location
                         </div>
                         <div style="width: 100%">
                             <select id="locationIds" class="js-example-placeholder-multiple js-states form-control">
@@ -141,7 +141,7 @@
                             <div>
 
 
-                                <input id="allEventSelection" type="checkbox" value="1"  />All Event
+                                <input id="allEventSelection" type="checkbox" checked value="1"  />All Event
                             </div>
                             <div>
                                 <select id="eventIds" class="js-example-placeholder-multiple js-states form-control">
