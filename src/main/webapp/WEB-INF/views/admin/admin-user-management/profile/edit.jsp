@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input id="phoneNumber" class="form-control" type="Number" value="${user.phoneNumber}" >
+                            <input id="phoneNumber" class="form-control" type="text" value="${user.phoneNumber}" >
                         </div>
                         <div class="form-group">
                             <label>User Name</label>

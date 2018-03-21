@@ -54,10 +54,10 @@ public class LocationValidator implements Validator {
             this.rejectIfNull("fadeOutTime","Fade Out Time is required",locationForm.getFadeOutTime(),errors);
 
         }
-        if(errors.getFieldErrorCount("durationSpeed")==0){
+        if(errors.getFieldErrorCount("durationSpeed")==0 && locationForm.getDurationSpeed() != null){
             this.checkDurationSpeed(locationForm.getDurationSpeed(),errors);
         }
-        if(errors.getFieldErrorCount("breakTime")==0){
+        if(errors.getFieldErrorCount("breakTime")==0 && locationForm.getBreakTime() != null){
             this.checkAdBreakTime(locationForm.getBreakTime(),errors);
         }
 
@@ -77,13 +77,13 @@ public class LocationValidator implements Validator {
         }
     }
     private void checkDurationSpeed(Double durationSpeed,Errors errors){
-        if(durationSpeed<0){
+        if(durationSpeed < 0){
             errors.rejectValue("durationSpeed","Duration speed positive value required");
         }
 
     }
     private void checkAdBreakTime(Double addBreakTime,Errors errors){
-        if(addBreakTime<0) {
+        if(addBreakTime < 0) {
             errors.rejectValue("breakTime", "Break Time positive value required");
         }
     }
