@@ -28,4 +28,9 @@ public class ReportImageService {
         reportedImage.setActionTaken(false);
         reportImageDao.insert(reportedImage);
     }
+
+    @Transactional
+    public Boolean isReported(EventImage eventImage){
+        return reportImageDao.isReported(eventImage);
+    }
 }

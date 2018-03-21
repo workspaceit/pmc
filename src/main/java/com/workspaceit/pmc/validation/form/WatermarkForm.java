@@ -9,9 +9,7 @@ import com.workspaceit.pmc.constant.watermark.WatermarkType;
 /**
  * Created by mi_rafi on 12/28/17.
  */
-public class WatermarkForm
-{
-
+public class WatermarkForm {
 
     private String name;
     private WatermarkType type;

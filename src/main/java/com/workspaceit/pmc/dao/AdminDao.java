@@ -72,7 +72,7 @@ public class AdminDao extends BaseDao {
     }
     public List<Admin> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Admin ORDER BY id DESC")
+        return session.createQuery("FROM Admin ORDER BY createdAt DESC")
                 .list();
     }
 

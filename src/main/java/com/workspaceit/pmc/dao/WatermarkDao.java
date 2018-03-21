@@ -32,7 +32,7 @@ public class WatermarkDao extends BaseDao {
 
     public List<Watermark> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Watermark w where w.deleted = false ORDER BY w.id DESC")
+        return session.createQuery("FROM Watermark w where w.deleted = false ORDER BY w.createdAt DESC")
                 .list();
     }
 

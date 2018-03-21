@@ -49,12 +49,41 @@
                                     </div>
                                     <p id="errorObj_locationLogo"  class="text-danger"></p>
                                 </div>
+                            </div>
+                            <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group timepick">
+                                        <label>Watermark Text</label><br>
+                                        <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="Watermark Text">
+                                        <p class="text-danger" id="errorObj_watermarkText"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group timepick">
+                                        <label>Font</label><br>
+                                        <select id="e1" class="txt_font" name="txt_font">
+                                            <c:forEach var="font" items="${fonts}">
+                                                <option value="${font.id}">${font.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <p class="text-danger" id="errorObj_fontId"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group timepick">
+                                        <label>Text Color</label>
+                                        <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
+                                        <p class="text-danger" id="errorObj_color"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Placement</label><br>
                                         <select id="e-placement" class="img_placement" name="img_placement">
 
-                                                 <c:forEach var="placement" items="${Placement.values()}">
+                                            <c:forEach var="placement" items="${Placement.values()}">
                                                 <option value="${placement.name()}">${placement.getDisplayName()}</option>
                                             </c:forEach>
                                         </select>
@@ -83,34 +112,6 @@
                                     <p class="text-danger" id="errorObj_fade"></p>
                                 </div>
                             </div>
-                            <div id="waterMarkImgUrl" class="url-tab panel-body" style="display:none;">
-                                <div class="col-md-3 col-sm-3 col-xs-12">
-                                    <div class="form-group timepick">
-                                        <label>Text Watermark</label><br>
-                                        <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="enter your text watermark">
-                                        <p class="text-danger" id="errorObj_watermarkText"></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-xs-12">
-                                    <div class="form-group timepick">
-                                        <label>Font</label><br>
-                                        <select id="e1" class="txt_font" name="txt_font">
-                                            <c:forEach var="font" items="${fonts}">
-                                                <option value="${font.id}">${font.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <p class="text-danger" id="errorObj_fontId"></p>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group timepick">
-                                        <label>Text Colors</label>
-                                        <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
-                                        <p class="text-danger" id="errorObj_color"></p>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
