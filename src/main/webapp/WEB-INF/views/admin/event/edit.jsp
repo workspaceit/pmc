@@ -14,7 +14,7 @@
                     <button class="btn btn-action-top" id="update-close-watermark-btn">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top" id="update-new-watermark-btn">Save&nbsp;&&nbsp;New</button>
                     <a href="<c:url value="/admin/event/all"/>" class="btn btn-action-top">Cancel</a>
-                    <button class="btn btn-action-top" onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?evtId=${event.id}','_blank')">Preview</button>
+                    <button class="btn btn-action-top" onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?eventId=${event.id}','_blank')">Preview</button>
 
                 </div>
                 <!-- Page Heading -->

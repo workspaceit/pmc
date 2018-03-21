@@ -39,6 +39,7 @@ public class AdvertisementService {
     public List<Advertisement> getByAdvertiserId(int advertiserId){
         return this.advertisementDao.getByAdvertiserId(advertiserId);
     }
+
     @Transactional
     public List<Advertisement> getByAdvertiserId(List<Integer> advertiserId){
         return this.advertisementDao.getByAdvertiserId(advertiserId);
