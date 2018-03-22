@@ -4,6 +4,9 @@ import com.workspaceit.pmc.config.WebConfig;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.util.WatermarkUtil;
+import net.coobird.thumbnailator.filters.Caption;
+import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

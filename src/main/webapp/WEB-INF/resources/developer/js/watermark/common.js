@@ -182,6 +182,8 @@ function getAllWatermarkData(){
     var fontId=$(".txt_font").val();
     var color=$("input[name=txt_color]").val();
     var sampleImgToken = getToken(WATERMARK_TOKEN_KEY._SAMPLE);
+    var fontSize=$("#fontSize").val();
+    var textBackgroundColor=$("#textBackgroundColor").val();
 
 
     var data = {
@@ -195,7 +197,9 @@ function getAllWatermarkData(){
         fade: fade,
         watermarkText: watermarkText,
         fontId: fontId,
-        color: color
+        color: color,
+        fontSize:fontSize,
+        textBackgroundColor:textBackgroundColor
     };
     return data;
 }

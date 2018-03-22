@@ -95,6 +95,19 @@
                                         <p class="text-danger" id="errorObj_color" style="display: block;"></p>
                                     </div>
                                 </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group timepick">
+                                        <label>Font Size</label><br>
+                                        <input class="form-control" id="fontSize" >
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group timepick">
+                                        <label>Background Color</label><br>
+                                        <input class="jscolor form-control" id="textBackgroundColor"  value="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -124,6 +137,7 @@
                                     </div>
                                     <p class="text-danger" id="errorObj_size" style="display: block;"></p>
                                 </div>
+
                                 <div class="col-md-12">
                                     <label>Fade</label><br>
                                     <div class="range-slider">

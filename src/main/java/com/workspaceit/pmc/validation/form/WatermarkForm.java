@@ -21,6 +21,8 @@ public class WatermarkForm {
     private Integer fontId;
     private Placement placement;
     private String color;
+    private Integer fontSize;
+    private String textBackgroundColor;
 
     public String getName() {
         return name;
@@ -101,5 +103,21 @@ public class WatermarkForm {
 
     public void setSampleImgToken(Integer sampleImgToken) {
         this.sampleImgToken = sampleImgToken;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public String getTextBackgroundColor() {
+        return textBackgroundColor;
+    }
+
+    public void setTextBackgroundColor(String textBackgroundColor) {
+        this.textBackgroundColor = textBackgroundColor;
     }
 }

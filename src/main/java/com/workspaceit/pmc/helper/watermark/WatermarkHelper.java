@@ -134,6 +134,8 @@ public class WatermarkHelper {
         String watermarkText=watermark.getWatermarkText();
         Integer logoToken=watermarkForm.getLogoImgToken();
         Integer sampleToken=watermarkForm.getSampleImgToken();
+        Integer fontSize = watermarkForm.getFontSize();
+        String fontBackgroundColor = watermarkForm.getTextBackgroundColor();
 
         if(watermarkForm.getType()!=null){
             watermarkType = watermarkForm.getType();
@@ -171,6 +173,8 @@ public class WatermarkHelper {
         mergedData.put(WATERMARK_ATTR._TEXT,watermarkText);
         mergedData.put(WATERMARK_ATTR._LOGO_TOKEN,logoToken);
         mergedData.put(WATERMARK_ATTR._SAMPLE_TOKEN,sampleToken);
+        mergedData.put(WATERMARK_ATTR._FONT_SIZE,fontSize);
+        mergedData.put(WATERMARK_ATTR._TEXT_BG_COLOR,fontBackgroundColor);
 
         return mergedData;
     }

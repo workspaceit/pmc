@@ -13,6 +13,8 @@ import com.workspaceit.pmc.helper.watermark.WatermarkTextPositioning;
 import com.workspaceit.pmc.validation.form.WatermarkForm;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Caption;
+import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -73,27 +75,17 @@ public class WatermarkUtil {
 // Save as new image
         ImageIO.write(combined, "PNG", new File(path, "combined"+placement.name()+".png"));
     }
-    public BufferedImage addWatermarkText(String sourceImagePath,
-                                          Map<WATERMARK_ATTR,Object> data) throws IOException {
 
-
+    public BufferedImage addWatermarkText(String sourceImagePath, Map<WATERMARK_ATTR,Object> data) throws IOException {
 
         String text =(String) data.get(WATERMARK_ATTR._TEXT);
-        String colorCode = (String) data.get(WATERMARK_ATTR._COLOR);
-        float fadeVal = 25; //
-        // Water mark text don't have fade value in UI
-        // although Max value is 50
-        com.workspaceit.pmc.entity.Font font = (com.workspaceit.pmc.entity.Font) data.get(WATERMARK_ATTR._FONT);
-        BufferedImage sourceImage = addWatermarkTextOp( sourceImagePath, data);
-        return sourceImage;
-    }
-
-    public BufferedImage addWatermarkTextOp(String sourceImagePath, Map<WATERMARK_ATTR,Object> data) throws IOException {
-
-        String text =(String) data.get(WATERMARK_ATTR._TEXT);
-        String colorCode = (String) data.get(WATERMARK_ATTR._COLOR);
+        String fontColorCode = (String) data.get(WATERMARK_ATTR._COLOR);
         float fadeVal = (float)data.get(WATERMARK_ATTR._FADE);
         float alpha = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
+
+        String fontBackgroundColorCode = (String) data.get(WATERMARK_ATTR._TEXT_BG_COLOR);
+        Integer fontSize = (data.get(WATERMARK_ATTR._FONT_SIZE)==null)?0:(Integer) data.get(WATERMARK_ATTR._FONT_SIZE);
+
         File sourceImageFile = new File(sourceImagePath);
         com.workspaceit.pmc.entity.Font font = (com.workspaceit.pmc.entity.Font) data.get(WATERMARK_ATTR._FONT);
 
@@ -107,20 +99,47 @@ public class WatermarkUtil {
         // initializes necessary graphic properties
         // alpha represent fade value
 
-        Color color = Color.RED; // Default color;
+        Color color = Color.WHITE; // Default color;
+        Color fontBackgroundColor = null; // Default color;
         try{
-            color = Color.decode("#"+colorCode);
+            color = Color.decode("#"+fontColorCode);
+            fontBackgroundColor = Color.decode("#"+fontBackgroundColorCode);
         }catch (NumberFormatException ex){
             System.out.println(ex.getClass().getName()+" : From WatermarkUtil - No color found  - "+ex.getMessage());
 
         }
         AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+
+        if(fontBackgroundColor!=null){
+            g2d.setBackground(fontBackgroundColor);
+        }
+        System.out.println("COLOR "+fontBackgroundColorCode);
+        System.out.println(fontBackgroundColor.getRGB());
+        System.out.println(g2d.getBackground().getRGB());
+
         g2d.setComposite(alphaChannel);
         g2d.setColor(color);
-        g2d.setFont(new Font(fontName, Font.PLAIN, watermarkTextPositioning.getRelativeFontSize(sourceImage.getHeight())));
+
+        // watermarkTextPositioning.getRelativeFontSize(sourceImage.getHeight())
+
+
+        g2d.setFont(new Font(fontName, Font.PLAIN,fontSize ));
         FontMetrics fontMetrics = g2d.getFontMetrics();
         Placement placement =  (Placement)data.get(WATERMARK_ATTR._PLACEMENT);
         Rectangle2D rect = fontMetrics.getStringBounds(text, g2d);
+
+        /**
+         * If text gets out image boundary
+         * */
+        while((rect.getWidth()>sourceImage.getWidth()) || (rect.getHeight()>sourceImage.getHeight())){
+            g2d.setFont(new Font(fontName, Font.PLAIN,--fontSize ));
+            fontMetrics = g2d.getFontMetrics();
+            rect = fontMetrics.getStringBounds(text, g2d);
+            if (fontSize <= 0) {
+                break;
+            }
+        }
+
 
         // calculates the coordinate where the String is painted
         ImagePosition ip =  watermarkTextPositioning.getPosition(placement,
@@ -128,9 +147,12 @@ public class WatermarkUtil {
                 sourceImage.getWidth(),
                 (int) rect.getHeight(),
                 (int) rect.getWidth());
+
+
         int centerX = ip.getX();
-        int centerY =ip.getY();
+        int centerY = ip.getY();
         // paints the textual watermark
+
         g2d.drawString(text, centerX, centerY);
 
         // ImageIO.write(sourceImage, "png", destImageFile);
@@ -223,4 +245,25 @@ public class WatermarkUtil {
                 .asBufferedImage();
         return thumbnail;
     }
+
+    public static void main(String[] args) throws IOException {
+        File saveFile = new File("/home/mi/Pictures/water mark/output.jpg");
+        File img = new File("/home/mi/Pictures/water mark/logo.png");
+        BufferedImage originalImage = ImageIO.read(img );
+
+// Set up the caption properties
+        String caption = "Hello World";
+        Font font = new Font("Monospaced", Font.BOLD, 14);
+        Color c = Color.WHITE;
+        Position position = Positions.CENTER;
+        int insetPixels = 0;
+
+// Apply caption to the image
+        Caption filter = new Caption(caption, font, c, position, insetPixels);
+        BufferedImage captionedImage = filter.apply(originalImage);
+        ImageIO.write(captionedImage, "jpg", saveFile);
+    }
+
+
+
 }
