@@ -142,7 +142,7 @@ public class EventController {
         return model;
     }
 
-    @RequestMapping(value = "/gallery/{eventId}")
+    @RequestMapping(value = "/{eventId}/gallery")
     public ModelAndView gallery(@PathVariable("eventId") int eventId){
         Event event = this.eventService.getById(eventId);
         List<EventImage> eventImages = this.eventImageService.getEventImages(eventId);
@@ -154,12 +154,13 @@ public class EventController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/photographers/{eventId}")
+    @RequestMapping(value = "/{eventId}/photographers")
     public ModelAndView photographers(@PathVariable("eventId") int eventId){
         Event event = this.eventService.getById(eventId);
         Set<Photographer> photographers = event.getPhotographers();
         ModelAndView modelAndView = new ModelAndView("admin/event/photographers");
         modelAndView.addObject("photographers",photographers);
+        modelAndView.addObject("event", event);
 
         return modelAndView;
     }

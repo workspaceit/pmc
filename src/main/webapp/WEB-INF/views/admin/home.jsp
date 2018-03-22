@@ -7,9 +7,7 @@
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper">
-
             <div class="container">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -22,8 +20,6 @@
                 </div>
                 <!-- /.row -->
                 <br>
-
-
                 <div class="row" style="">
                     <div class="col-lg-7">
                         <div class="wrapper_graph">
@@ -57,7 +53,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-lg-12" style="margin-top: 70px;">
                         <h3 class="uni-header"><span>Most Recent Events</span></h3>
@@ -94,10 +89,9 @@
                                         <td style="text-align: center;">${event.noOfPhotographers}</td>
                                         <td style="text-align:center;">
                                             <a
-                                                href="<c:url value="/admin/event/gallery/${event.id}" />"
+                                                href="<c:url value="/admin/event/${event.id}/gallery" />"
                                                 class="btns btns1">View Gallery</a>
-                                            <a
-                                                    href="<c:url value="/admin/event/photographers/${event.id}" />"
+                                            <a href="<c:url value="/admin/event/${event.id}/photographers" />"
                                                     class="btns btns1">View Photographers</a>
                                         </td>
                                     </tr>

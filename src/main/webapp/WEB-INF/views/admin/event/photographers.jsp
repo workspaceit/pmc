@@ -7,7 +7,7 @@
     <jsp:body>
         <div id="page-wrapper">
             <div class="container">
-                <h1>Photographer List </h1>
+                <h1>Photographers for ${event.name}</h1>
                 <%--<hr>--%>
                 <div class="table-responsive dtble">
                     <table id="photographer-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
