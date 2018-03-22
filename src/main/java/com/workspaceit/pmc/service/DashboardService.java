@@ -68,6 +68,7 @@ public class DashboardService {
             }
             recentEvent.setStatus(Boolean.parseBoolean(row[3].toString()));
             recentEvent.setNoOfImages(Integer.parseInt(row[4].toString()));
+            recentEvent.setNoOfPhotographers(Integer.parseInt(row[5].toString()));
             recentEvents.add(recentEvent);
         }
         return recentEvents;

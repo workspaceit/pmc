@@ -7,6 +7,7 @@ public class RecentEvent {
     private String name;
     private Date createAt;
     private int noOfImages;
+    private int noOfPhotographers;
     private Boolean status;
 
     public int getId() {
@@ -47,6 +48,14 @@ public class RecentEvent {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public int getNoOfPhotographers() {
+        return noOfPhotographers;
+    }
+
+    public void setNoOfPhotographers(int noOfPhotographers) {
+        this.noOfPhotographers = noOfPhotographers;
     }
 
     @Override

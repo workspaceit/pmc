@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -141,7 +142,7 @@ public class EventController {
         return model;
     }
 
-    @RequestMapping(value = "/gallery/{eventId}")
+    @RequestMapping(value = "/{eventId}/gallery")
     public ModelAndView gallery(@PathVariable("eventId") int eventId){
         Event event = this.eventService.getById(eventId);
         List<EventImage> eventImages = this.eventImageService.getEventImages(eventId);
@@ -150,6 +151,17 @@ public class EventController {
         modelAndView.addObject("event", event);
         modelAndView.addObject("eventImages", eventImages);
         modelAndView.addObject("imageCount", imageCount);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/{eventId}/photographers")
+    public ModelAndView photographers(@PathVariable("eventId") int eventId){
+        Event event = this.eventService.getById(eventId);
+        Set<Photographer> photographers = event.getPhotographers();
+        ModelAndView modelAndView = new ModelAndView("admin/event/photographers");
+        modelAndView.addObject("photographers",photographers);
+        modelAndView.addObject("event", event);
+
         return modelAndView;
     }
 

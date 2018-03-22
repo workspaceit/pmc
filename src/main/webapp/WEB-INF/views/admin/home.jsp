@@ -7,9 +7,7 @@
 <t:genericpage>
     <jsp:body>
         <div id="page-wrapper">
-
             <div class="container">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -22,8 +20,6 @@
                 </div>
                 <!-- /.row -->
                 <br>
-
-
                 <div class="row" style="">
                     <div class="col-lg-7">
                         <div class="wrapper_graph">
@@ -57,7 +53,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-lg-12" style="margin-top: 70px;">
                         <h3 class="uni-header"><span>Most Recent Events</span></h3>
@@ -69,6 +64,7 @@
                                     <th style="text-align: center;">CREATED</th>
                                     <th style="text-align: center;">STATUS</th>
                                     <th style="text-align: center;">TOTAL PHOTOS</th>
+                                    <th style="text-align: center;">TOTAL PHOTOGRAPHERS</th>
                                     <th style="text-align: center;">ACTION</th>
                                 </tr>
                                 </thead>
@@ -90,9 +86,14 @@
                                             </c:choose>
                                         </td>
                                         <td style="text-align: center;">${event.noOfImages}</td>
-                                        <td style="text-align:center;"><a
-                                                href="<c:url value="/admin/event/gallery/${event.id}" />"
-                                                class="btns btns1">View Gallery</a></td>
+                                        <td style="text-align: center;">${event.noOfPhotographers}</td>
+                                        <td style="text-align:center;">
+                                            <a
+                                                href="<c:url value="/admin/event/${event.id}/gallery" />"
+                                                class="btns btns1">View Gallery</a>
+                                            <a href="<c:url value="/admin/event/${event.id}/photographers" />"
+                                                    class="btns btns1">View Photographers</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
 

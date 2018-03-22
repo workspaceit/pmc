@@ -52,7 +52,7 @@ public class EventDao extends BaseDao {
 
     public List<Object[]> getActiveEventsWithImageCount(){
         Session session = this.getCurrentSession();
-        SQLQuery query = session.createSQLQuery("select id, name, created_at, active ,(select count(id) from event_images ei where e.id = ei.event_id and is_deleted=0) as no_of_images from events e order by e.id desc limit 5");
+        SQLQuery query = session.createSQLQuery("select id, name, created_at, active ,(select count(id) from event_images ei where e.id = ei.event_id and is_deleted=0) as no_of_images,(select count(id) from event_photographers ep where e.id = ep.event_id) as no_of_photographers from events e order by e.id desc limit 5");
         List<Object[]> rows = query.list();
         return rows;
     }
