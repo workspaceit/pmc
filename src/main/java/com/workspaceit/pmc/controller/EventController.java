@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -150,6 +151,16 @@ public class EventController {
         modelAndView.addObject("event", event);
         modelAndView.addObject("eventImages", eventImages);
         modelAndView.addObject("imageCount", imageCount);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/photographers/{eventId}")
+    public ModelAndView photographers(@PathVariable("eventId") int eventId){
+        Event event = this.eventService.getById(eventId);
+        Set<Photographer> photographers = event.getPhotographers();
+        ModelAndView modelAndView = new ModelAndView("admin/event/photographers");
+        modelAndView.addObject("photographers",photographers);
+
         return modelAndView;
     }
 

@@ -69,6 +69,7 @@
                                     <th style="text-align: center;">CREATED</th>
                                     <th style="text-align: center;">STATUS</th>
                                     <th style="text-align: center;">TOTAL PHOTOS</th>
+                                    <th style="text-align: center;">TOTAL PHOTOGRAPHERS</th>
                                     <th style="text-align: center;">ACTION</th>
                                 </tr>
                                 </thead>
@@ -90,9 +91,15 @@
                                             </c:choose>
                                         </td>
                                         <td style="text-align: center;">${event.noOfImages}</td>
-                                        <td style="text-align:center;"><a
+                                        <td style="text-align: center;">${event.noOfPhotographers}</td>
+                                        <td style="text-align:center;">
+                                            <a
                                                 href="<c:url value="/admin/event/gallery/${event.id}" />"
-                                                class="btns btns1">View Gallery</a></td>
+                                                class="btns btns1">View Gallery</a>
+                                            <a
+                                                    href="<c:url value="/admin/event/photographers/${event.id}" />"
+                                                    class="btns btns1">View Photographers</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
 
