@@ -35,7 +35,8 @@ public class EventDao extends BaseDao {
         Date d = c.getTime();
         Session session = this.getCurrentSession();
         session.enableFilter("activeEvents");
-        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e WHERE e.createdAt > :date").setParameter("date",d).uniqueResult()).intValue();
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(e.id) FROM Event e WHERE e.createdAt > :date")
+                .setParameter("date",d).uniqueResult()).intValue();
         session.disableFilter("activeEvents");
         return count;
     }
@@ -52,8 +53,12 @@ public class EventDao extends BaseDao {
 
     public List<Object[]> getActiveEventsWithImageCount(){
         Session session = this.getCurrentSession();
-        SQLQuery query = session.createSQLQuery("select id, name, created_at, active ,(select count(id) from event_images ei where e.id = ei.event_id and is_deleted=0) as no_of_images,(select count(id) from event_photographers ep where e.id = ep.event_id) as no_of_photographers from events e order by e.id desc limit 5");
+        SQLQuery query = session.createSQLQuery("select id, name, created_at, active ,(select count(id) " +
+                "from event_images ei where e.id = ei.event_id and is_deleted=0) as no_of_images,(select count(id) " +
+                "from event_photographers ep where e.id = ep.event_id) as no_of_photographers from events e " +
+                "where e.active=1 and e.deleted=0 order by e.id desc limit 5");
         List<Object[]> rows = query.list();
+        session.disableFilter("activeEvents");
         return rows;
     }
 

@@ -12,7 +12,7 @@
                         <div class="btn-container-top">
                             <button class="btn btn-action-top" onclick="submitProfileUpdateData('save')">Save</button>
                             <button class="btn btn-action-top" onclick="submitProfileUpdateData('save_and_close')">Save&nbsp;&&nbsp;Close</button>
-                            <button class="btn btn-action-top" onclick="submitProfileUpdateData('save_and_new')">Save&nbsp;&&nbsp;New</button>
+                            <%--<button class="btn btn-action-top" onclick="submitProfileUpdateData('save_and_new')">Save&nbsp;&&nbsp;New</button>--%>
                             <button class="btn btn-action-top" onclick="submitProfileUpdateData('cancel')">Cancel</button>
                         </div>
                         <div class="form-group">
@@ -144,16 +144,14 @@
                 var url = BASEURL+"admin/user";
                 switch(actionStr){
                     case "save":
-                        url += "/all";
-                        break;
-                    case "save_and_new":
-                        url += "/add";
+                        $.growl.notice({ message: "Profile Updated" });
+                        return;
                         break;
                     case "save_and_close":
-                        url += "/all";
+                        url += "/profile";
                         break;
                     case "cancel":
-                        url += "/all";
+                        url += "/profile";
                         break;
                 }
                 window.location = url;
