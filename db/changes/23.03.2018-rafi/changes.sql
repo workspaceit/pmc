@@ -1,0 +1,1 @@
+ALTER TABLE  `watermarks` ADD  `font_size` INT NOT NULL AFTER  `size` ;

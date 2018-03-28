@@ -48,20 +48,15 @@
                                                 <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
                                                 <p class="dropext">Click or Drop your file here</p>
                                             </div>
-                                            <p id="errorObj_profilePictureToken"></p>
+                                            <p id="errorObj_logoImgToken" class="text-danger"></p>
                                         </div>
                                     </div>
-                                    <c:set value="" var="logoImgSrc" />
-                                    <c:choose>
-                                        <c:when test="${watermark.logoImage==null || watermark.logoImage.trim().equals('')}">
-                                            <c:set value="/resources/images/default_profile_pic.png" var="logoImgSrc" />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set value="/common/${watermark.logoImage}" var="logoImgSrc" />
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'"
-                                         src="<c:url value="${logoImgSrc}" /> " class="img-thumbnail" width="150">
+
+                                    <c:if test="${watermark.logoImage!=null && !watermark.logoImage.equals('')}" >
+                                        <img id="logoImg" onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'"
+                                             src="<c:url value="/common/${watermark.logoImage}" /> " class="img-thumbnail" width="150">
+                                    </c:if>
+
                                     <p id="errorObj_locationLogo"  class="text-danger"></p>
                                 </div>
                             </div>
@@ -98,11 +93,11 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Font Size</label><br>
-                                        <input class="form-control" id="fontSize" >
+                                        <input class="form-control" id="fontSize" value="${watermark.fontSize}" >
                                     </div>
 
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                                     <div class="form-group timepick">
                                         <label>Background Color</label><br>
                                         <input class="jscolor form-control" id="textBackgroundColor"  value="">

@@ -10,7 +10,7 @@ import com.workspaceit.pmc.entity.Font;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.FontService;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.validation.watermark.WatermarkForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

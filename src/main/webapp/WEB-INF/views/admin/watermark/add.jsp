@@ -76,6 +76,19 @@
                                         <p class="text-danger" id="errorObj_color"></p>
                                     </div>
                                 </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group timepick">
+                                        <label>Font Size</label><br>
+                                        <input type="number" class="form-control" id="fontSize" value="${watermark.fontSize}"  >
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                                    <div class="form-group timepick">
+                                        <label>Background Color</label><br>
+                                        <input class="jscolor form-control" id="textBackgroundColor"  value="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <div class="col-md-6 col-sm-6 col-xs-12">

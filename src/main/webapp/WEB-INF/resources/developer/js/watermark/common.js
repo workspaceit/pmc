@@ -159,10 +159,10 @@ function configwatermarkLogoDropZone(){
             },
             error:function(file,response){
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                $("#profileImg").find(".dz-error-message span").html(msg);
+                $("#watermarkLogoImg").find(".dz-error-message span").html(msg);
             },
             success:function(file,response){
-                $("#logoImg").remove();
+
                 file.token = response.token;
                 storewatermarkLogoToken(response.token);
                 console.log(file);
@@ -170,7 +170,7 @@ function configwatermarkLogoDropZone(){
         }
     );
 }
-function getAllWatermarkData(){
+function getWatermarkData(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
@@ -203,7 +203,7 @@ function getAllWatermarkData(){
     };
     return data;
 }
-function getWatermarkData(){
+function getWatermarkDataOLD(){
     var name = $('#name').val();
     var type=$('.wm_tab.active').attr("data-name");
     var logoImgToken= getwatermarkLogoToken();
@@ -235,7 +235,7 @@ function getWatermarkData(){
 }
 
 function previewWatermarkOnSample() {
-    var parameters = getAllWatermarkData();
+    var parameters = getWatermarkData();
 
     if(parameters.type=="image"){
         if(parameters.logoImgToken==null || parameters.logoImgToken<=0){
@@ -249,7 +249,7 @@ function previewWatermarkOnSample() {
     $("#watermarkPreviewOnSampleImg").attr("src",url);
 }
 function previewWatermarkOnSampleEdit() {
-    var parameters = getAllWatermarkData();
+    var parameters = getWatermarkData();
     if(parameters.type=="text") {
         if (parameters.watermarkText == null || parameters.watermarkText.trim() == "") {
             alert("Watermark text required");

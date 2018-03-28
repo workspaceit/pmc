@@ -9,7 +9,7 @@ import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.FileService;
 import com.workspaceit.pmc.service.WatermarkService;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.validation.watermark.WatermarkForm;
 import com.workspaceit.pmc.validation.watermark.WatermarkValidator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.activation.MimeType;
 import javax.validation.Valid;
 import java.io.*;
-import java.net.URLConnection;
-import java.util.List;
 
 /**
  * Created by mi_rafi on 12/26/17.

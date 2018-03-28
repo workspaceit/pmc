@@ -8,11 +8,13 @@ import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.dao.WatermarkDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.exception.ServiceException;
 import com.workspaceit.pmc.helper.ImageHelper;
 import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import com.workspaceit.pmc.util.FileUtil;
+import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.util.WatermarkUtil;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.validation.watermark.WatermarkForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,7 +142,7 @@ public class WatermarkService {
     }
     @Transactional(rollbackFor = Exception.class)
     public Watermark create(WatermarkForm watermarkForm){
-        Watermark watermark = getWatermarkFromWatermarkForm(watermarkForm);
+        Watermark watermark = this.getWatermarkFromWatermarkForm(watermarkForm);
         Integer logoImgToken = watermarkForm.getLogoImgToken();
         Integer sampleImgToken = watermarkForm.getSampleImgToken();
 
@@ -299,14 +301,12 @@ public class WatermarkService {
         String logoImgAbsPath;
         String originalImgAbsPath;
 
-
         if(tmpLogoToken!=null && tmpLogoToken>0){
             TempFile tempFile =  this.tempFileService.getTempFile(tmpLogoToken);
             logoImgAbsPath = tempFile.getPath();
         }else{
             logoImgAbsPath = environment.getCommonFilePath()+"/"+((String)data.get(WATERMARK_ATTR._LOGO));
         }
-
 
         if(tmpSampleToken!=null && tmpSampleToken>0){
             TempFile tempFile =  this.tempFileService.getTempFile(tmpSampleToken);
@@ -315,9 +315,7 @@ public class WatermarkService {
             originalImgAbsPath = environment.getCommonFilePath()+"/"+((String)data.get(WATERMARK_ATTR._SAMPLE_IMG));
         }
 
-
         BufferedImage watermarkedImage;
-
 
         watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,data);
 
@@ -494,8 +492,11 @@ public class WatermarkService {
         watermark.setType(watermarkForm.getType());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
+        watermark.setFontSize((watermarkForm.getFontSize()!=null)?watermarkForm.getFontSize():0);
+
         watermark.setFade(watermarkForm.getFade());
         watermark.setWatermarkText(watermarkForm.getWatermarkText());
+
         watermark.setFont(font);
         watermark.setColor(watermarkForm.getColor());
 
@@ -506,10 +507,17 @@ public class WatermarkService {
         this.watermarkDao.update(watermark);
     }
 
-    public Watermark update(int id,WatermarkForm watermarkForm,Admin admin)throws EntityNotFound{
+    public Watermark update(int id,WatermarkForm watermarkForm,Admin admin)throws EntityNotFound,ServiceException{
         Watermark watermark = this.getById(id);
         Integer logoImgToken = watermarkForm.getLogoImgToken();
         Integer sampleImgToken = watermarkForm.getSampleImgToken();
+
+        if((watermark.getLogoImage()==null || watermark.getLogoImage().equals("")) &&
+                (logoImgToken==null || logoImgToken==0)){
+            ServiceResponse serviceResponse = ServiceResponse.getInstance();
+            serviceResponse.setValidationError("logoImgToken","Logo required");
+            throw new ServiceException(serviceResponse.getFormError());
+        }
 
         String logoImgName = "";
         if(logoImgToken!=null && logoImgToken>0){
@@ -534,6 +542,7 @@ public class WatermarkService {
         watermark.setName(watermarkForm.getName());
         watermark.setPlacement(watermarkForm.getPlacement());
         watermark.setSize(watermarkForm.getSize());
+        watermark.setFontSize(watermarkForm.getFontSize());
         watermark.setFade(watermarkForm.getFade());
         watermark.setType(watermarkForm.getType());
         watermark.setWatermarkText(watermarkForm.getWatermarkText());

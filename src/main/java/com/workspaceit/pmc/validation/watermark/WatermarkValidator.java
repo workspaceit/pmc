@@ -5,7 +5,6 @@ import com.workspaceit.pmc.constant.watermark.Size;
 import com.workspaceit.pmc.constant.watermark.WatermarkType;
 import com.workspaceit.pmc.entity.Font;
 import com.workspaceit.pmc.service.FontService;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -46,6 +45,7 @@ public class WatermarkValidator implements Validator {
         }
         else if(watermarkForm.getType().equals(WatermarkType.text)){
             this.commonValidationForTypeText(watermarkForm,errors);
+            this.checkFontSize(watermarkForm.getFontSize(),errors);
         }
     }
     public void validateForUpdate( WatermarkForm watermarkForm , Errors errors){
@@ -62,6 +62,16 @@ public class WatermarkValidator implements Validator {
         else if(watermarkForm.getType().equals(WatermarkType.text)){
             this.commonValidationForTypeText(watermarkForm,errors);
         }
+    }
+    public void checkFontSize(Integer fontSize , Errors errors){
+        if(fontSize==null){
+            errors.rejectValue("fontSize","Font size required");
+            return;
+        }
+        if(fontSize<0){
+            errors.rejectValue("fontSize","Font size can't be less then zero");
+        }
+
     }
     public void commonValidationForTypeImage(WatermarkForm watermarkForm , Errors errors){
         this.checkPlacement(watermarkForm.getPlacement(),errors);

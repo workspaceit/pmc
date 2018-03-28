@@ -1,4 +1,4 @@
-package com.workspaceit.pmc.validation.form;
+package com.workspaceit.pmc.validation.watermark;
 
 
 import com.workspaceit.pmc.constant.watermark.Placement;

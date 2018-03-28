@@ -4,9 +4,10 @@ import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.exception.ServiceException;
 import com.workspaceit.pmc.service.WatermarkService;
 import com.workspaceit.pmc.util.ServiceResponse;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
+import com.workspaceit.pmc.validation.watermark.WatermarkForm;
 import com.workspaceit.pmc.validation.watermark.WatermarkValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,6 +73,9 @@ public class WatermarkRestController {
             this.watermarkService.update(id,watermarkForm,currentUser);
         } catch (EntityNotFound entityNotFound) {
             serviceResponse.setValidationError("id",entityNotFound.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
+        } catch (ServiceException e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getErrors());
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }

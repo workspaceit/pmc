@@ -39,6 +39,9 @@ public class Watermark {
     @Enumerated(EnumType.STRING)
     private Size size;
 
+    @Column(name = "font_size")
+    private int fontSize;
+
     @Column(name = "fade")
     private Double fade;
 
@@ -131,6 +134,14 @@ public class Watermark {
         this.size = size;
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
+
     public Double getFade() {
         return fade;
     }
@@ -219,16 +230,20 @@ public class Watermark {
 //        this.events = events;
 //    }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Watermark watermark = (Watermark) o;
+
         if (id != watermark.id) return false;
+        if (fontSize != watermark.fontSize) return false;
         if (name != null ? !name.equals(watermark.name) : watermark.name != null) return false;
         if (type != watermark.type) return false;
-        if (sampleImageName != null ? !sampleImageName.equals(watermark.sampleImageName) : watermark.sampleImageName != null) return false;
+        if (sampleImageName != null ? !sampleImageName.equals(watermark.sampleImageName) : watermark.sampleImageName != null)
+            return false;
         if (logoImage != null ? !logoImage.equals(watermark.logoImage) : watermark.logoImage != null) return false;
         if (size != watermark.size) return false;
         if (fade != null ? !fade.equals(watermark.fade) : watermark.fade != null) return false;
@@ -252,6 +267,7 @@ public class Watermark {
         result = 31 * result + (sampleImageName != null ? sampleImageName.hashCode() : 0);
         result = 31 * result + (logoImage != null ? logoImage.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + fontSize;
         result = 31 * result + (fade != null ? fade.hashCode() : 0);
         result = 31 * result + (watermarkText != null ? watermarkText.hashCode() : 0);
         result = 31 * result + (font != null ? font.hashCode() : 0);
@@ -264,8 +280,4 @@ public class Watermark {
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
         return result;
     }
-
-
-
-
 }

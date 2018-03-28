@@ -32,7 +32,7 @@ import java.util.Set;
 //@Import({ SecurityConfig.class })
 public class WebConfig implements WebMvcConfigurer {
 
-    Environment env;
+    private Environment env;
 
     @Autowired
     public void setEnv(Environment env) {

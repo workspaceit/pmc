@@ -39,7 +39,7 @@ public class ImageHelper {
         return resizeImage(filePath,imageSize.getHeight(),imageSize.getWidth());
 
     }
-    private BufferedImage resizeImage(String filePath,int height,int width) throws IOException {
+    public BufferedImage resizeImage(String filePath,int height,int width) throws IOException {
 
         File srcFile =  new File(filePath);
         BufferedImage bufferedImage = ImageIO.read(srcFile);
@@ -47,7 +47,7 @@ public class ImageHelper {
         return this.resizeImage(bufferedImage,height,width);
 
     }
-    private BufferedImage filePathToBufferedImage(String filePath) throws IOException {
+    public BufferedImage filePathToBufferedImage(String filePath) throws IOException {
         File srcFile =  new File(filePath);
         return ImageIO.read(srcFile);
     }

@@ -10,8 +10,6 @@ import com.workspaceit.pmc.constant.watermark.ImagePosition;
 import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import com.workspaceit.pmc.helper.watermark.WatermarkLogoPositioning;
 import com.workspaceit.pmc.helper.watermark.WatermarkTextPositioning;
-import com.workspaceit.pmc.validation.form.WatermarkForm;
-import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.filters.Caption;
 import net.coobird.thumbnailator.geometry.Position;
@@ -35,7 +33,8 @@ public class WatermarkUtil {
     ImageHelper imageHelper;
     WatermarkTextPositioning watermarkTextPositioning;
     Environment environment;
-
+    int watermarkWidthPadding = 20;
+    int watermarkHeightPadding = 20;
 
     @Autowired
     public void setImageHelper(ImageHelper imageHelper) {
@@ -164,18 +163,14 @@ public class WatermarkUtil {
 
     public BufferedImage addWatermarkLogo(String originalImagePath,String logoAbsPath, Map<WATERMARK_ATTR,Object> data) throws IOException {
         Placement tmpPlacement =  (Placement)data.get(WATERMARK_ATTR._PLACEMENT);
-        Size tmpSize =  (Size)data.get(WATERMARK_ATTR._SIZE);
-
 
         Placement placement =  ( tmpPlacement==null) ?Placement.tc:tmpPlacement;
-        Size size = ( tmpSize==null) ?Size.thumb:tmpSize;
         float fadeVal = (float)data.get(WATERMARK_ATTR._FADE);
         float opacity = WatermarkHelper.getNormalizedFadeValForAlpha(fadeVal);
 
 
         BufferedImage thumbnail = addWatermarkLogo(originalImagePath,
                 placement,
-                size,
                 opacity,
                 logoAbsPath);
 
@@ -214,7 +209,6 @@ public class WatermarkUtil {
 
         BufferedImage thumbnail = addWatermarkLogo(originalImagePath,
                                                         placement,
-                                                        size,
                                                         opacity,
                                                         logoAbsPath);
 
@@ -222,15 +216,19 @@ public class WatermarkUtil {
 
         return thumbnail;
     }
+    public BufferedImage addWatermarkLogo(String originalImagePath,Placement placement,float opacity,String logoAbsPath) throws IOException {
+
+
+        BufferedImage originalImage = ImageIO.read(new File(originalImagePath));
+        BufferedImage thumbnail = this.addWatermarkLogo(originalImage,placement,opacity,logoAbsPath);
+        return thumbnail;
+    }
     public BufferedImage addWatermarkLogo(String originalImagePath,Placement placement,Size size,float opacity,String logoAbsPath) throws IOException {
 
 
         BufferedImage originalImage = ImageIO.read(new File(originalImagePath));
-        Positions position = this.watermarkTextPositioning.getPosition(placement);
-        BufferedImage watermarkImage = this.imageHelper.resizeImage(logoAbsPath,size);
 
-
-        BufferedImage thumbnail = addWatermarkLogo(originalImage,placement,size,opacity,logoAbsPath);
+        BufferedImage thumbnail = this.addWatermarkLogo(originalImage,placement,size,opacity,logoAbsPath);
         return thumbnail;
     }
     public BufferedImage addWatermarkLogo(BufferedImage originalImage,Placement placement,Size size,float opacity,String logoAbsPath) throws IOException {
@@ -245,7 +243,45 @@ public class WatermarkUtil {
                 .asBufferedImage();
         return thumbnail;
     }
+    public BufferedImage addWatermarkLogo(BufferedImage originalImage,Placement placement,float opacity,String logoAbsPath) throws IOException {
 
+        Positions position = this.watermarkTextPositioning.getPosition(placement);
+        BufferedImage watermarkImage = this.imageHelper.filePathToBufferedImage(logoAbsPath);
+
+        int expectedHeight = watermarkImage.getHeight();
+        int expectedWidth = watermarkImage.getWidth();
+
+        int wImH = watermarkImage.getHeight();
+        int wImW = watermarkImage.getWidth();
+
+        int orgImH = originalImage.getHeight();
+        int orgImW = originalImage.getWidth();
+
+
+        if(wImH>=orgImH){
+            expectedHeight = orgImH - this.watermarkHeightPadding;
+        }
+
+        if(wImW>=orgImW){
+            expectedWidth = orgImW -this.watermarkWidthPadding;
+        }
+
+        watermarkImage = this.imageHelper.resizeImage(logoAbsPath,expectedHeight,expectedWidth);
+
+
+        watermarkImage.getHeight();
+        watermarkImage.getWidth();
+
+        originalImage.getWidth();
+        originalImage.getHeight();
+
+
+        BufferedImage thumbnail = Thumbnails.of(originalImage)
+                .size(originalImage.getWidth(), originalImage.getHeight())
+                .watermark(position, watermarkImage, opacity) /* 0.0f to 1 */
+                .asBufferedImage();
+        return thumbnail;
+    }
     public static void main(String[] args) throws IOException {
         File saveFile = new File("/home/mi/Pictures/water mark/output.jpg");
         File img = new File("/home/mi/Pictures/water mark/logo.png");
