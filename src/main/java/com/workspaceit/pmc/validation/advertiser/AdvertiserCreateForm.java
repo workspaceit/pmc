@@ -54,8 +54,8 @@ public class AdvertiserCreateForm extends AdvertiserForm{
     }
 
 
-    @NotBlank(message = "Website is required")
-    @Length(max = 100,message = "Value too large")
+//    @NotBlank(message = "Website is required")
+//    @Length(max = 100,message = "Value too large")
     @Override
     public String getWebsite() {
         return super.getWebsite();

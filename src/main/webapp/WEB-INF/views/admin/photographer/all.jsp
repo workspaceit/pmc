@@ -59,6 +59,7 @@
                                 <input type="checkbox" class="select-checkbox" value="${photographer.id}">
                             </td>
                             <td class="img-clm text-center">
+                                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />">
                                 <c:set value="" var="imgSrc" />
                                 <c:choose>
                                     <c:when test="${photographer.profilePhoto==null || photographer.profilePhoto.trim().equals('')}">
@@ -69,9 +70,10 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
+                                </a>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt">${photographer.userName}</span>
+                                <span class="cstm-date-txt"><a href="<c:url value="/admin/photographer/update/${photographer.id}" />">${photographer.userName}</a></span>
                             </td>
                             <td class="date-clm">
                                 <span class="cstm-date-txt">${photographer.email}</span>

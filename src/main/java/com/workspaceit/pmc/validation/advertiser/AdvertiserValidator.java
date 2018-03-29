@@ -64,7 +64,10 @@ public class AdvertiserValidator implements Validator {
 
         this.checkCityExistence(advertiserForm.getCityId(),errors);
         this.checkStateExistence(advertiserForm.getStateId(),errors);
-        this.checkValidUrl(advertiserForm.getWebsite(),errors);
+        if(advertiserForm.getWebsite() != null && !advertiserForm.getWebsite().equals("")){
+            this.checkValidUrl(advertiserForm.getWebsite(),errors);
+        }
+
 
         if(!advertiserForm.getIsAllLocationSelected() ){
             this.checkLocationExistence(advertiserForm.getLocationIds(),errors);
