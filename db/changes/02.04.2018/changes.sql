@@ -1,0 +1,1 @@
+ALTER TABLE  `watermarks` CHANGE  `placement`  `placement` ENUM(  'tl',  'tc',  'tr',  'cl',  'cc',  'cr',  'bl',  'bc',  'br',  'tile' ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ;

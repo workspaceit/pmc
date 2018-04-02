@@ -27,6 +27,18 @@ public class WatermarkTextPositioning {
                 x = ( srcImgWidth - (textWidth+WIDTH_PADDING) ) / 2;
                 y = TOP_HEIGHT_PADDING;
                 break;
+            case cc:
+                x = ( srcImgWidth - (textWidth+WIDTH_PADDING) ) / 2;
+                y = ( srcImgHeight - (textHeight) ) / 2;
+                break;
+            case cl:
+                x = WIDTH_PADDING;
+                y = ( srcImgHeight - (textHeight) ) / 2;
+                break;
+            case cr:
+                x = srcImgWidth - (textWidth+WIDTH_PADDING);
+                y = ( srcImgHeight - (textHeight) ) / 2;
+                break;
             case bl:
                 x = WIDTH_PADDING;
                 y = srcImgHeight - BOTTOM_HEIGHT_PADDING;
@@ -38,6 +50,10 @@ public class WatermarkTextPositioning {
             case bc:
                 x = ( srcImgWidth - (textWidth+WIDTH_PADDING) ) / 2;
                 y = srcImgHeight - BOTTOM_HEIGHT_PADDING;
+                break;
+            case tile:
+                x = WIDTH_PADDING;
+                y = TOP_HEIGHT_PADDING;
                 break;
         }
         position.setX(x);

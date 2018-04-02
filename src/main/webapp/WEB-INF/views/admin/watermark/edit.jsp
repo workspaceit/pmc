@@ -109,12 +109,9 @@
                                     <div class="form-group timepick">
                                         <label>Placement</label><br>
                                         <select id="e-placement" class="img_placement" name="img_placement">
-                                            <option value="tl" <c:if test="${watermark.placement.equals(Placement.tl) }"> selected </c:if>>Top Left</option>
-                                            <option value="tc" <c:if test="${watermark.placement.equals(Placement.tc) }"> selected </c:if>>Top Center</option>
-                                            <option value="tr" <c:if test="${watermark.placement.equals(Placement.tr) }"> selected </c:if>>Top Right</option>
-                                            <option value="bl" <c:if test="${watermark.placement.equals(Placement.bl) }"> selected </c:if>>Bottom Left</option>
-                                            <option value="br" <c:if test="${watermark.placement.equals(Placement.br) }"> selected </c:if>>Bottom Right</option>
-                                            <option value="bc" <c:if test="${watermark.placement.equals(Placement.bc) }"> selected </c:if>>Bottom Center</option>
+                                            <c:forEach var="placement" items="${Placement.values()}" >
+                                                <option value="${placement}" <c:if test="${watermark.placement.equals(placement) }"> selected </c:if>>${placement.displayName}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     <p class="text-danger" id="errorObj_placement" style="display: block;"></p>

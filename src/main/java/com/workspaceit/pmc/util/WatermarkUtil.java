@@ -151,16 +151,37 @@ public class WatermarkUtil {
         int centerX = ip.getX();
         int centerY = ip.getY();
         // paints the textual watermark
-
-        g2d.drawString(text, centerX, centerY);
-
-        // ImageIO.write(sourceImage, "png", destImageFile);
+        if(placement.equals(Placement.tile)){
+            this.makeTile(g2d,text,sourceImage.getWidth(),sourceImage.getHeight());
+        }else{
+            g2d.drawString(text, centerX, centerY);
+        }
 
         g2d.dispose();
 
         return sourceImage;
     }
+    public void makeTile(Graphics2D g2d,String text,int imageWidth,int imageHeight ){
 
+        Rectangle2D rect = g2d.getFontMetrics().getStringBounds(text, g2d);
+        int w = (int)rect.getWidth();
+        int h = (int)rect.getHeight();
+        int horizontalCellCount = imageWidth/w;
+        int verticalCellCount = imageHeight/h;
+        int centerX=0;
+        int centerY=60;
+        int wPadding = 30;
+        int hPadding = 10;
+        for(int i=0;i<verticalCellCount;i++){
+            for(int j=0;j<horizontalCellCount;j++){
+                g2d.drawString(text, centerX, centerY);
+                centerX += w+wPadding;
+            }
+            centerX=0;
+            centerY += h+hPadding;
+        }
+
+    }
     public BufferedImage addWatermarkLogo(String originalImagePath,String logoAbsPath, Map<WATERMARK_ATTR,Object> data) throws IOException {
         Placement tmpPlacement =  (Placement)data.get(WATERMARK_ATTR._PLACEMENT);
 

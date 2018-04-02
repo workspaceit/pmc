@@ -14,7 +14,8 @@ public enum Placement {
     cr("Center right"),
     bl("Bottom Left"),
     bc("Bottom Center"),
-    br("Bottom Right");
+    br("Bottom Right"),
+    tile("Tile");
     private String displayName;
 
     Placement(String displayName) {
