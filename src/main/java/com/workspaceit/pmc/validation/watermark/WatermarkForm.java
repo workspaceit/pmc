@@ -120,4 +120,22 @@ public class WatermarkForm {
     public void setTextBackgroundColor(String textBackgroundColor) {
         this.textBackgroundColor = textBackgroundColor;
     }
+
+    @Override
+    public String toString() {
+        return "WatermarkForm{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", logoImgToken=" + logoImgToken +
+                ", sampleImgToken=" + sampleImgToken +
+                ", size=" + size +
+                ", fade=" + fade +
+                ", watermarkText='" + watermarkText + '\'' +
+                ", fontId=" + fontId +
+                ", placement=" + placement +
+                ", color='" + color + '\'' +
+                ", fontSize=" + fontSize +
+                ", textBackgroundColor='" + textBackgroundColor + '\'' +
+                '}';
+    }
 }

@@ -64,7 +64,7 @@ public class ImageController {
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreview( @Valid WatermarkForm watermarkForm,
                                                          BindingResult error){
-        System.out.println("we were here");
+        System.out.println(watermarkForm);
         byte[] imageByte = new byte[]{};
         try {
             this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
@@ -74,7 +74,6 @@ public class ImageController {
                 throw new IOException("Logo required");
             }
             imageByte = watermarkService.getImageWithWaterMark(watermarkForm); // Image or Text
-            // imageByte = watermarkService.getImageWithWaterMark(watermarkForm,true); // Image and text both
         }catch (EntityNotFound ex){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(imageByte);
         } catch (IOException e) {

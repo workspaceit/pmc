@@ -84,7 +84,7 @@ public class WatermarkUtil {
 
         String fontBackgroundColorCode = (String) data.get(WATERMARK_ATTR._TEXT_BG_COLOR);
         Integer fontSize = (data.get(WATERMARK_ATTR._FONT_SIZE)==null)?0:(Integer) data.get(WATERMARK_ATTR._FONT_SIZE);
-
+        System.out.println(fontSize);
         File sourceImageFile = new File(sourceImagePath);
         com.workspaceit.pmc.entity.Font font = (com.workspaceit.pmc.entity.Font) data.get(WATERMARK_ATTR._FONT);
 
@@ -98,23 +98,24 @@ public class WatermarkUtil {
         // initializes necessary graphic properties
         // alpha represent fade value
 
-        Color color = Color.WHITE; // Default color;
+        Color color = null; // Default color;
         Color fontBackgroundColor = null; // Default color;
         try{
             color = Color.decode("#"+fontColorCode);
             fontBackgroundColor = Color.decode("#"+fontBackgroundColorCode);
         }catch (NumberFormatException ex){
             System.out.println(ex.getClass().getName()+" : From WatermarkUtil - No color found  - "+ex.getMessage());
+            color = fontBackgroundColor = Color.WHITE;
 
         }
         AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 
         if(fontBackgroundColor!=null){
-            g2d.setBackground(fontBackgroundColor);
+           // g2d.setBackground(fontBackgroundColor);
         }
-        System.out.println("COLOR "+fontBackgroundColorCode);
-        System.out.println(fontBackgroundColor.getRGB());
-        System.out.println(g2d.getBackground().getRGB());
+        //System.out.println("COLOR "+fontBackgroundColorCode);
+       /// System.out.println(fontBackgroundColor.getRGB());
+       /// System.out.println(g2d.getBackground().getRGB());
 
         g2d.setComposite(alphaChannel);
         g2d.setColor(color);
