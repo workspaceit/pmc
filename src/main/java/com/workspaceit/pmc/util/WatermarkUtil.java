@@ -7,6 +7,7 @@ import com.workspaceit.pmc.constant.watermark.WATERMARK_ATTR;
 import com.workspaceit.pmc.entity.Watermark;
 import com.workspaceit.pmc.helper.ImageHelper;
 import com.workspaceit.pmc.constant.watermark.ImagePosition;
+import com.workspaceit.pmc.helper.watermark.CustomPosition;
 import com.workspaceit.pmc.helper.watermark.WatermarkHelper;
 import com.workspaceit.pmc.helper.watermark.WatermarkLogoPositioning;
 import com.workspaceit.pmc.helper.watermark.WatermarkTextPositioning;
@@ -99,20 +100,17 @@ public class WatermarkUtil {
         // alpha represent fade value
 
         Color color = null; // Default color;
-        Color fontBackgroundColor = null; // Default color;
+
         try{
             color = Color.decode("#"+fontColorCode);
-            fontBackgroundColor = Color.decode("#"+fontBackgroundColorCode);
         }catch (NumberFormatException ex){
             System.out.println(ex.getClass().getName()+" : From WatermarkUtil - No color found  - "+ex.getMessage());
-            color = fontBackgroundColor = Color.WHITE;
+            color = Color.WHITE;
 
         }
         AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 
-        if(fontBackgroundColor!=null){
-           // g2d.setBackground(fontBackgroundColor);
-        }
+
         //System.out.println("COLOR "+fontBackgroundColorCode);
        /// System.out.println(fontBackgroundColor.getRGB());
        /// System.out.println(g2d.getBackground().getRGB());
@@ -153,7 +151,7 @@ public class WatermarkUtil {
         int centerY = ip.getY();
         // paints the textual watermark
         if(placement.equals(Placement.tile)){
-            this.makeTile(g2d,text,sourceImage.getWidth(),sourceImage.getHeight());
+            this.makeTextTile(g2d,text,sourceImage.getWidth(),sourceImage.getHeight());
         }else{
             g2d.drawString(text, centerX, centerY);
         }
@@ -162,7 +160,7 @@ public class WatermarkUtil {
 
         return sourceImage;
     }
-    public void makeTile(Graphics2D g2d,String text,int imageWidth,int imageHeight ){
+    public void makeTextTile(Graphics2D g2d, String text, int imageWidth, int imageHeight ){
 
         Rectangle2D rect = g2d.getFontMetrics().getStringBounds(text, g2d);
         int w = (int)rect.getWidth();
@@ -297,11 +295,43 @@ public class WatermarkUtil {
         originalImage.getWidth();
         originalImage.getHeight();
 
+        BufferedImage thumbnail;
+        if(placement.equals(Placement.tile)){
+            thumbnail = this.makeWaterMarkTile(originalImage,watermarkImage,opacity);
+        }else {
+            thumbnail = Thumbnails.of(originalImage)
+                    .size(originalImage.getWidth(), originalImage.getHeight())
+                    .watermark(position, watermarkImage, opacity) /* 0.0f to 1 */
+                    .asBufferedImage();
+        }
 
-        BufferedImage thumbnail = Thumbnails.of(originalImage)
-                .size(originalImage.getWidth(), originalImage.getHeight())
-                .watermark(position, watermarkImage, opacity) /* 0.0f to 1 */
-                .asBufferedImage();
+
+        return thumbnail;
+    }
+    public BufferedImage makeWaterMarkTile(BufferedImage originalImage,BufferedImage watermarkImage,float opacity) throws IOException {
+
+        BufferedImage thumbnail = originalImage;
+        int horizontalPadding=100;
+        int verticalPadding=100;
+        int horizontalCount = originalImage.getWidth()/watermarkImage.getWidth();
+        int verticalCount = originalImage.getHeight()/watermarkImage.getHeight();
+        int x=0,y=0;
+        for(int i=0;i<verticalCount;i++){
+
+            for(int j=0;j<horizontalCount;j++){
+                thumbnail = Thumbnails.of(thumbnail)
+                        .size(originalImage.getWidth(), originalImage.getHeight())
+                        .watermark(new CustomPosition(x,y), watermarkImage, opacity) /* 0.0f to 1 */
+                        .asBufferedImage();
+                x += watermarkImage.getWidth()+horizontalPadding;
+            }
+
+            x = 0;
+            y += watermarkImage.getHeight()+verticalPadding;
+        }
+        System.out.println("Memory Before GC "+Runtime.getRuntime().freeMemory());
+        Runtime.getRuntime().gc();
+        System.out.println("Memory After GC "+Runtime.getRuntime().freeMemory());
         return thumbnail;
     }
     public static void main(String[] args) throws IOException {

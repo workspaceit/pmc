@@ -32,3 +32,7 @@ function submitWatermark(action) {
 }
 
 
+$(document).ready(function () {
+    setTimeout(function(){previewWatermarkOnSampleEdit(); },1000);
+});
+

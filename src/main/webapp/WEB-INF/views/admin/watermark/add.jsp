@@ -27,7 +27,7 @@
                             </div>
                             <input class="form-control" id="name" name="name" placeholder="Watermark Name">
                         </div>
-                        <div class="imageupload panel panel-default">
+                        <div id="watermarkSettings" class="imageupload panel panel-default">
                             <div class="panel-heading clearfix">
                                 <h4 class="panel-title pull-left" style="margin-top: 10px">Choose Information type</h4>
                                 <div id="waterMarkImg" class="btn-group pull-right">
@@ -79,7 +79,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Font Size</label><br>
-                                        <input type="number" class="form-control" id="fontSize" value="${watermark.fontSize}"  >
+                                        <input type="number" class="form-control" id="fontSize"  value="50"  >
                                     </div>
 
                                 </div>
@@ -90,11 +90,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body">
+                            <div  class="panel-body">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Placement</label><br>
-                                        <select id="e-placement" class="img_placement" name="img_placement">
+                                        <select id="e-placement" class="img_placement" name="img_placement" >
 
                                             <c:forEach var="placement" items="${Placement.values()}">
                                                 <option value="${placement.name()}">${placement.getDisplayName()}</option>

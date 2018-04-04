@@ -1,5 +1,5 @@
 
-WATERMARK_TOKEN_KEY = {_SAMPLE:"sampleToken"}
+var WATERMARK_TOKEN_KEY = {_SAMPLE:"sampleToken"};
 
 
 $(document).ready(function() {
@@ -8,9 +8,7 @@ $(document).ready(function() {
     $("#e2").select2();
     $("#e-placement").select2();
     $("#e-size").select2();
-});
 
-$(document).ready(function(){
     $("#waterMarkImg .btn").click(function(){
         $("#waterMarkImg .active").removeClass("active");
         $(this).addClass("active");
@@ -25,7 +23,22 @@ $(document).ready(function(){
         }
 
     });
+
+    $("#e-placement,#img_fade_range,#e1,#txt_color").each(function () {
+        $(this).change(function(){
+            previewWatermarkOnSample();
+        });
+    });
+
+    $("#txt_wm_text").keyup(function(){
+        previewWatermarkOnSample();
+    });
+
+    $("#fontSize").bind("keyup change", function(e) {
+        previewWatermarkOnSample();
+    })
 });
+
 
 
 var rangeSlider = function(){
@@ -203,36 +216,7 @@ function getWatermarkData(){
     };
     return data;
 }
-function getWatermarkDataOLD(){
-    var name = $('#name').val();
-    var type=$('.wm_tab.active').attr("data-name");
-    var logoImgToken= getwatermarkLogoToken();
-    var logoName=$("#logoName").val();
-    var txtLogoName=$("#txt_logo_name").val();
-    var size=$(".img_font_size").val();
-    var fade=$("input[name=img_fade_range]").val();
-    var watermarkText=$("input[name=txt_wm_text]").val();
-    var fontId=$(".txt_font").val();
-    var placement=$(".img_placement").val();
-    var color=$("input[name=txt_color]").val();
-    var sampleImgToken = getToken(WATERMARK_TOKEN_KEY._SAMPLE);
 
-    var data = {
-        name: name,
-        type:type,
-        logoImgToken:logoImgToken,
-        sampleImgToken:sampleImgToken,
-        logoName: logoName,
-        txtLogoName:txtLogoName,
-        placement: placement,
-        size: size,
-        fade: fade,
-        watermarkText: watermarkText,
-        fontId: fontId,
-        color: color
-    };
-    return data;
-}
 
 function previewWatermarkOnSample() {
     var parameters = getWatermarkData();
@@ -240,6 +224,13 @@ function previewWatermarkOnSample() {
     if(parameters.type=="image"){
         if(parameters.logoImgToken==null || parameters.logoImgToken<=0){
             alert("Logo Required");
+            return;
+        }
+    }else if(parameters.type=="text"){
+        if(parameters.watermarkText == null || parameters.watermarkText==""){
+            return;
+        }
+        if(parameters.fontSize == null || parameters.fontSize<1){
             return;
         }
     }
