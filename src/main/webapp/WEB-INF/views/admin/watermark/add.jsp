@@ -54,14 +54,15 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Watermark Text</label><br>
-                                        <input class="form-control" id="txt_wm_text" name="txt_wm_text" placeholder="Watermark Text">
+                                        <input class="form-control" id="txt_wm_text" name="txt_wm_text"
+                                               onchange="previewWatermarkOnSample()" placeholder="Watermark Text">
                                         <p class="text-danger" id="errorObj_watermarkText"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Font</label><br>
-                                        <select id="e1" class="txt_font" name="txt_font">
+                                        <select id="e1" class="txt_font" name="txt_font" onchange="previewWatermarkOnSample()">
                                             <c:forEach var="font" items="${fonts}">
                                                 <option value="${font.id}">${font.name}</option>
                                             </c:forEach>
@@ -72,21 +73,24 @@
                                 <div class="col-md-6">
                                     <div class="form-group timepick">
                                         <label>Text Color</label>
-                                        <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57">
+                                        <input class="jscolor form-control" id="txt_color" name="txt_color" value="B3FF57"
+                                        onchange="previewWatermarkOnSample()">
                                         <p class="text-danger" id="errorObj_color"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Font Size</label><br>
-                                        <input type="number" class="form-control" id="fontSize"  value="50"  >
+                                        <input type="number" class="form-control" id="fontSize"  value="50"
+                                               onchange="previewWatermarkOnSample()">
                                     </div>
 
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                                     <div class="form-group timepick">
                                         <label>Background Color</label><br>
-                                        <input class="jscolor form-control" id="textBackgroundColor"  value="">
+                                        <input class="jscolor form-control" id="textBackgroundColor"  value=""
+                                        onchange="previewWatermarkOnSample()">
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +98,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Placement</label><br>
-                                        <select id="e-placement" class="img_placement" name="img_placement" >
-
+                                        <select id="e-placement" class="img_placement" name="img_placement"
+                                        onchange="previewWatermarkOnSample()">
                                             <c:forEach var="placement" items="${Placement.values()}">
                                                 <option value="${placement.name()}">${placement.getDisplayName()}</option>
                                             </c:forEach>
@@ -119,7 +123,8 @@
                                 <div class="col-md-12  col-sm-12 col-xs-12">
                                     <label>Fade</label><br>
                                     <div class="range-slider">
-                                        <input id="img_fade_range" class="range-slider__range" name="img_fade_range" type="range" value="25" min="0" max="50">
+                                        <input id="img_fade_range" class="range-slider__range" name="img_fade_range"
+                                               type="range" value="25" min="0" max="50" onchange="previewWatermarkOnSample()">
                                         <span class="range-slider__value">0</span>
                                     </div>
                                     <p class="text-danger" id="errorObj_fade"></p>

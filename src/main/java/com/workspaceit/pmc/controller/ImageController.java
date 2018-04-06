@@ -64,7 +64,7 @@ public class ImageController {
     @RequestMapping(value = "/watermarked-preview",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreview( @Valid WatermarkForm watermarkForm,
                                                          BindingResult error){
-        System.out.println(watermarkForm);
+//        System.out.println(watermarkForm);
         byte[] imageByte = new byte[]{};
         try {
             this.watermarkValidator.validateForWatermarkPreview(watermarkForm,error);
@@ -182,7 +182,6 @@ public class ImageController {
     @RequestMapping(value = "/images/{file_name}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImageAsResponseEntity(@PathVariable("file_name") String fileName) throws IOException, EntityNotFound {
         String path = this.env.getEventImagePath() + "/web/" + fileName;
-        System.out.println(fileName);
         byte[] imageByte = new byte[0];
         HttpHeaders headers = new HttpHeaders();
         try {

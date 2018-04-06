@@ -242,13 +242,9 @@
             <version>1.6.11</version>
         </dependency>
 
-
         <!-- AOP ENDS -->
 
-
         <!-- https://mvnrepository.com/artifact/galdolber/trulia-java-rets-client -->
-
-
 
     </dependencies>
 

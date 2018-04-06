@@ -179,6 +179,7 @@ function configwatermarkLogoDropZone(){
                 file.token = response.token;
                 storewatermarkLogoToken(response.token);
                 console.log(file);
+                previewWatermarkOnSample();
             }
         }
     );

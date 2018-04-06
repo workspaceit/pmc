@@ -15,6 +15,7 @@ import com.workspaceit.pmc.util.FileUtil;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.util.WatermarkUtil;
 import com.workspaceit.pmc.validation.watermark.WatermarkForm;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -252,14 +253,12 @@ public class WatermarkService {
     @Transactional
     public byte[] getImageWithWaterMark(Watermark watermark,boolean useBothWatermark) throws IOException,EntityNotFound {
         byte[] watermarkedImgByte = null;
-
         if(useBothWatermark){
             watermarkedImgByte = this.getImageWithWaterMarkText(watermark);
             watermarkedImgByte = this.getImageWithWaterMarkImage(watermark,watermarkedImgByte);
         }else{
             watermarkedImgByte = this.getImageWithWaterMark(watermark);
         }
-
         return watermarkedImgByte;
     }
     @Transactional
@@ -271,7 +270,6 @@ public class WatermarkService {
         String logoImgAbsPath = "";
         BufferedImage watermarkedImage;
         Map<WATERMARK_ATTR,Object> data = this.watermarkHelper.convertToMap(watermarkForm);
-
         if(logoToken!=null && logoToken>0){
             TempFile tempLogoFile =  this.tempFileService.getByToken(logoToken);
 
@@ -280,14 +278,14 @@ public class WatermarkService {
             }
             logoImgAbsPath = tempLogoFile.getPath();
         }
-
-
         watermarkedImage =  this.watermarkUtil.addWatermarkLogo(originalImgAbsPath,logoImgAbsPath,data);
 
         if(watermarkedImage!=null){
-            ImageIO.write( watermarkedImage, "png", outputStream );
+            BufferedImage smallerImage = Thumbnails.of(watermarkedImage)
+                    .size(450, 450)
+                    .asBufferedImage();
+            ImageIO.write(smallerImage, "png", outputStream );
         }
-
         outputStream.flush();
         return outputStream.toByteArray();
     }
@@ -405,7 +403,10 @@ public class WatermarkService {
         watermarkedImage =  this.watermarkUtil.addWatermarkText(originalImgAbsPath,data);
 
         if(watermarkedImage!=null){
-            ImageIO.write( watermarkedImage, "png", outputStream );
+            BufferedImage smallerImage = Thumbnails.of(watermarkedImage)
+                    .size(450, 450)
+                    .asBufferedImage();
+            ImageIO.write(smallerImage, "png", outputStream );
         }
 
         outputStream.flush();
