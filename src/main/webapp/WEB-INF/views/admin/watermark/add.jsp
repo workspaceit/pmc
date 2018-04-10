@@ -61,9 +61,9 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="form-group timepick">
                                         <label>Font</label><br>
-                                        <select id="e1" class="txt_font" name="txt_font">
+                                        <select id="e1" class="txt_font select_font form-control" name="txt_font">
                                             <c:forEach var="font" items="${fonts}">
-                                                <option value="${font.id}">${font.name}</option>
+                                                <option class="${font.identifier}" value="${font.id}">${font.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

@@ -4,7 +4,7 @@ var WATERMARK_TOKEN_KEY = {_SAMPLE:"sampleToken"};
 
 $(document).ready(function() {
     $("#e9").select2( {maximumSelectionSize: 3});
-    $("#e1").select2();
+    // $("#e1").select2();
     $("#e2").select2();
     $("#e-placement").select2();
     $("#e-size").select2();

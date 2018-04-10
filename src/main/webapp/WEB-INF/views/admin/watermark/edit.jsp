@@ -72,13 +72,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group timepick">
                                         <label>Font</label><br>
-                                        <select id="e1" class="txt_font" name="txt_font">
+                                        <select id="e1" class="txt_font form-control" name="txt_font">
                                             <c:forEach var="font" items="${fonts}" >
                                                 <c:set var="fontSelected" value=""></c:set>
                                                 <c:if test="${watermark.font !=null || watermark.font.id == font.id}" >
-                                                    <c:set var="fontSelected" value="selected='selected'"></c:set>
+                                                    <c:set var="fontSelected"  value="selected='selected'"></c:set>
                                                 </c:if>
-                                                <option value="${font.id}"  ${fontSelected} >${font.name}</option>
+                                                <option class="${font.identifier}" value="${font.id}"  ${fontSelected} >${font.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

@@ -1218,7 +1218,25 @@ ul.submenu li{
     display: inline-block;
 }
 
+/*.select_font{*/
+    /*height: 30px;*/
+    /*width: 100%;*/
+    /*background: #fff;*/
+    /**/
+/*}*/
 
+.timesnewroman{
+    font-family: "Times New Roman", Times, serif;
+}
+.courier{
+    font-family: "Courier New", Courier, monospace;
+}
+.aerial{
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+.helvetica{
+    font-family: Helvetica, sans-serif;
+}
 
 
 
