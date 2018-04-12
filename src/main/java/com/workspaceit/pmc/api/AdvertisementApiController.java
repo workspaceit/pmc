@@ -168,13 +168,10 @@ public class AdvertisementApiController {
                                                               @PathVariable("offset") int offset){
 
         ADVERTISEMENT_TYPE adType = null;
-
         ServiceResponse serviceResponse = this.validationUtil.limitOffsetValidation(limit,offset,10);
-
         if(serviceResponse.hasErrors()){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
-
         List<Advertiser> advertiserList;
         try {
             SentSlideshow sentSlideshow = this.sentSlideShowService.getByIdentifier(identifier);
@@ -184,7 +181,6 @@ public class AdvertisementApiController {
             adType = ADVERTISEMENT_TYPE.getFromString(type);
             advertiserList = this.advertiserService.getByEventAndLocationId(sentSlideshow.getEvent().getId(),true,
                     limit,offset);
-
         } catch (EntityNotFound entityNotFound) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body(serviceResponse
@@ -192,14 +188,11 @@ public class AdvertisementApiController {
                             .getFormError());
 
         }
-
         List<Integer> advertiserIds = new ArrayList<>();
         if(advertiserList!=null && advertiserList.size()>0){
             advertiserList.stream().forEach(advertiser -> advertiserIds.add(advertiser.getId()));
         }
-
         List<Advertisement> advertisementList = this.advertisementService.getByAdvertiserIdAndType(advertiserIds,adType);
-
         return ResponseEntity.ok(advertisementList);
     }
     @RequestMapping("/get/{advertisementId}")

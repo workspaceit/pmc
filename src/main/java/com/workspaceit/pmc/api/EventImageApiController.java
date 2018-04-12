@@ -96,6 +96,7 @@ public class EventImageApiController {
     @GetMapping("/get-by-event-id-where-is-sent-slide-show-true/{eventId}")
     public ResponseEntity<?> getAllEventImagesSentSlideShowByEventId(@PathVariable("eventId") int eventId){
         List<EventImage> eventImages =  this.eventImageService.getImagesByEventIdWhereInSlideshowTrue(eventId);
+        System.out.println("total images:" + eventImages.size());
         return ResponseEntity.status(HttpStatus.OK).body(eventImages);
     }
 

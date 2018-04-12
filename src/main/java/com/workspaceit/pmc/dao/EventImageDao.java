@@ -79,6 +79,7 @@ public class EventImageDao extends BaseDao {
                 .list();
     }
     public List<EventImage> getByEventIdWhereInSlideshowTrue(int eventId){
+        System.out.println("eventIdForSlideshow: " + eventId);
         Session session = this.getCurrentSession();
         return session.createQuery("FROM EventImage  WHERE event.id = :eventId and isActive=true and inSlideshow=true")
                 .setParameter("eventId", eventId)
@@ -132,6 +133,7 @@ public class EventImageDao extends BaseDao {
     public Boolean deleteImage(int id){
         EventImage eventImage = this.getById(id);
         eventImage.setDeleted(true);
+        eventImage.setActive(false);
         this.update(eventImage);
         return true;
     }

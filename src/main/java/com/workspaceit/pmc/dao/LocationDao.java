@@ -28,7 +28,7 @@ public class LocationDao extends BaseDao{
 
     public List<Location> getAll(Integer limit, Integer offset) {
         Session session = this.getCurrentSession();
-        Query query = session.createQuery("FROM Location l order by l.name");
+        Query query = session.createQuery("FROM Location l order by l.createdAt desc");
         query.setMaxResults(limit);
         query.setFirstResult(offset);
         List<Location> locations = query.list();
@@ -38,7 +38,7 @@ public class LocationDao extends BaseDao{
     public List<Location> getActiveLocations(Integer limit, Integer offset) {
         Session session = this.getCurrentSession();
         session.enableFilter("activeLocations");
-        Query query = session.createQuery("FROM Location l order by l.name");
+        Query query = session.createQuery("FROM Location l order by l.createdAt desc");
         query.setMaxResults(limit);
         query.setFirstResult(offset);
         List<Location> locations = query.list();

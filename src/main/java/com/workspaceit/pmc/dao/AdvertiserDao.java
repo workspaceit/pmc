@@ -100,7 +100,7 @@ public class AdvertiserDao extends BaseDao {
                 "LEFT JOIN FETCH a.locations location " +
                 "LEFT JOIN FETCH a.events event " +
                 "WHERE ( location.id=:locationId or " +
-                       " event.id=:eventId ) and a.active = true ")
+                       " event.id=:eventId ) and a.active = true and a.deleted=false ")
                 .setParameter("locationId",locationId)
                 .setParameter("eventId",eventId)
                 .list();
@@ -115,7 +115,7 @@ public class AdvertiserDao extends BaseDao {
                 " event.id=:eventId or" +
                 " a.isAllLocationSelected =true or " +
                 " a.isAllEventSelected = true )" +
-                " and a.active = true ")
+                " and a.active = true and a.deleted=false ")
                 .setParameter("locationId",locationId)
                 .setParameter("eventId",eventId)
                 .list();
@@ -130,7 +130,7 @@ public class AdvertiserDao extends BaseDao {
                         " event.id=:eventId or" +
                         " a.isAllLocationSelected =true or " +
                         " a.isAllEventSelected = true ) and" +
-                        "  a.active = true ")
+                        "  a.active = true and a.deleted=false ")
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .setParameter("locationId",locationId)
