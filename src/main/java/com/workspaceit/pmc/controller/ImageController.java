@@ -221,6 +221,7 @@ public class ImageController {
         ModelAndView modelAndView = new ModelAndView("user/image-with-description");
         EventImage eventImage = eventImageService.getByFileName(fileName);
         modelAndView.addObject("eventImage", eventImage);
+        modelAndView.addObject("fileName", fileName);
         return modelAndView;
     }
 
