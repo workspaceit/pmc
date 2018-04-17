@@ -86,7 +86,7 @@ public class AdminValidator implements Validator {
         this.uniqueEmailCheck(email, errors);
         this.uniqueUserNameCheck(userName, errors);
         this.passwordMatchCheck(password, conPassword, errors);
-
+        this.passwordStrengthCheck(password, errors);
         this.checkWithPhotographer(adminForm , errors);
     }
 
@@ -119,20 +119,41 @@ public class AdminValidator implements Validator {
 
         ValidationUtils.rejectIfEmpty(errors,"password","Password required");
         ValidationUtils.rejectIfEmpty(errors,"confirmPassword","Confirm Password required");
-
         if(errors.getFieldErrorCount("password")>0 || errors.getFieldErrorCount("confirmPassword")>0){
             return;
         }
-
-        if(password!=null && password.length()<5){
-            errors.rejectValue("password","Password at least 5 character required");
-        }
-
         if(errors.getFieldErrorCount("password")>0){
             return;
         }
         this.passwordMatchCheck(password,conPassword,errors);
+    }
 
+    private void passwordStrengthCheck(String password, Errors errors){
+        boolean hasLetter = false;
+        boolean hasDigit = false;
+        if (password.length() >= 8) {
+            for (int i = 0; i < password.length(); i++) {
+                char x = password.charAt(i);
+                if (Character.isLetter(x)) {
+                    hasLetter = true;
+                }
+                else if (Character.isDigit(x)) {
+
+                    hasDigit = true;
+                }
+                // no need to check further, break the loop
+                if(hasLetter && hasDigit){
+                    break;
+                }
+            }
+            if (hasLetter && hasDigit) {
+                System.out.println("STRONG");
+            } else {
+                errors.rejectValue("password", "Password must contain both letter(s) and number(s)");
+            }
+        } else {
+            errors.rejectValue("password", "Password must be at least 8 characters");
+        }
     }
 
     

@@ -248,21 +248,20 @@ public class EventImageAuthApiController {
         Event event = eventService.getById(eventId);
         SentSlideshow sentSlideshowEmail = null;
         SentSlideshow sentSlideshowSms = null;
-        if(email.equals("") && phoneNumber.equals("")){
+        Boolean resultEmail = false;
+        Boolean resultSms = false;
+        if(email.isEmpty() && phoneNumber.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Please provide email or phone number");
         }
         if(!email.equals("")) {
             sentSlideshowEmail = sentSlideShowService.saveByEmail(email, message, imageIds, photographer, event);
+            resultEmail = emailHelper.sendImagesViaEmail(customerName, email, message, sentSlideshowEmail.getIdentifier());
         }
         if(!phoneNumber.equals("")){
             sentSlideshowSms = sentSlideShowService.saveBySms(phoneNumber, message, imageIds, photographer, event);
+            resultSms = smsHelper.sendMessage(customerName, phoneNumber, sentSlideshowSms.getIdentifier(), message);
         }
-        if(sentSlideshowEmail==null || sentSlideshowSms == null){
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
-        }
-        Boolean resultEmail =emailHelper.sendImagesViaEmail(customerName, email, message, sentSlideshowEmail.getIdentifier());
-        Boolean resultSms =smsHelper.sendMessage(customerName, phoneNumber, sentSlideshowSms.getIdentifier(), message);
-        if(!resultEmail || !resultSms){
+        if(!resultEmail && !resultSms) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
         return ResponseEntity.status(HttpStatus.OK).body(true);

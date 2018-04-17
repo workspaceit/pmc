@@ -37,7 +37,7 @@
                             </div>
                             <div id="waterMarkImgFile" class="file-tab panel-body">
                                 <div class="col-md-12">
-                                    <label>Logo</label>
+                                    <label>Watermark</label>
                                     <div id="watermarkLogoImg" >
                                         <div class="dz-default dz-message">
                                             <div class="droper">

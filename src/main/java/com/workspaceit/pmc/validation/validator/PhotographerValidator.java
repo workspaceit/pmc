@@ -47,8 +47,9 @@ public class PhotographerValidator implements Validator {
 
         this.uniqueEmailCheck(email,errors);
         this.uniqueUserNameCheck(userName,errors);
-        this.passwordMatchCheck(password,conPassword,errors);
 
+        this.passwordMatchCheck(password,conPassword,errors);
+        this.passwordStrengthCheck(password, errors);
         this.checkWithAdmin(photographerForm,errors);
 
 
@@ -175,4 +176,33 @@ public class PhotographerValidator implements Validator {
             errors.rejectValue("password", "Password does not match with confirm password");
         }
     }
+
+    private void passwordStrengthCheck(String password, Errors errors){
+        boolean hasLetter = false;
+        boolean hasDigit = false;
+        if (password.length() >= 8) {
+            for (int i = 0; i < password.length(); i++) {
+                char x = password.charAt(i);
+                if (Character.isLetter(x)) {
+                    hasLetter = true;
+                }
+                else if (Character.isDigit(x)) {
+
+                    hasDigit = true;
+                }
+                // no need to check further, break the loop
+                if(hasLetter && hasDigit){
+                    break;
+                }
+            }
+            if (hasLetter && hasDigit) {
+                System.out.println("STRONG");
+            } else {
+                errors.rejectValue("password", "Password must contain both letter(s) and number(s)");
+            }
+        } else {
+            errors.rejectValue("password", "Password must be at least 8 characters");
+        }
+    }
+
 }

@@ -21,7 +21,7 @@ public class WatermarkDao extends BaseDao {
                 "   WHEN w.name LIKE :ptxt THEN 1" +
                 "   WHEN w.name LIKE :txtp THEN 3" +
                 "   ELSE 2 " +
-                "END, w.name ASC, id DESC");
+                "END, createdAt DESC");
         query.setParameter("searchTerm", "%"+searchTerm+"%");
         query.setParameter("txt", searchTerm);
         query.setParameter("ptxt", searchTerm + "%");

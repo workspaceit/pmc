@@ -54,6 +54,16 @@ public class EventImageApiController {
         return ResponseEntity.status(HttpStatus.OK).body(sentSlideShow.getEventImages());
     }
 
+    @GetMapping("/get-event/{identifier}")
+    public ResponseEntity<?> getEventBySentSlideShowIdentifier(@PathVariable("identifier") String identifier){
+        SentSlideshow sentSlideShow =  this.sentSlideShowService.getByIdentifier(identifier);
+        if(sentSlideShow==null){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getInstance()
+                    .setValidationError("identifier","No sent slide show found"));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(sentSlideShow.getEvent());
+    }
+
     @PostMapping("/report-image")
     public ResponseEntity<?> reportEventImage(@RequestParam("eventImageId") Integer eventImageId){
         EventImage eventImage = eventImageService.getById(eventImageId);
