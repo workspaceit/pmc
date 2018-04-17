@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
@@ -266,59 +267,4 @@ public class AdvertiserController {
         return model;
     }
 
-
-
-    @RequestMapping("/checkout/{advertiserId}")
-    public ModelAndView invoice(@PathVariable("advertiserId") int advertiserId){
-
-        Advertiser advertiser =  this.advertiserService.getById(advertiserId);
-
-        if(advertiser==null){
-            return new ModelAndView("redirect:"+"/admin/advertiser/all");
-        }
-
-        AdvertiserTransaction advertiserTransaction =  this.advertiserTransactionService.getLastByAdvertiserId(advertiser.getId());
-
-
-        /* Price and quantity */
-        Map<String,Object>   priceAndQuantity = this.advertisementPriceAndQuantityService.getSoldPriceAndQuantity(advertiserId);
-
-        String priceMapKey = AdvertisementPriceAndQuantityService.priceMapKey;
-        String quantityMapKey =AdvertisementPriceAndQuantityService.quantityMapKey;
-
-        Map<Object,Float> prices =(Map<Object,Float>) priceAndQuantity.get(priceMapKey);
-        Map<Object,Integer> quantities =(Map<Object,Integer>) priceAndQuantity.get(quantityMapKey);
-
-        int transactionId = (advertiserTransaction!=null)?advertiserTransaction.getId():0;
-        float totalPrice = this.advertisementPriceAndQuantityService.calculateTotal(prices,quantities);
-        float discount = (advertiserTransaction!=null)?advertiserTransaction.getDiscount():0;
-        float totalPayedPrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalPaid():0;
-        float totalDuePrice =(advertiserTransaction!=null)?advertiserTransaction.getTotalDue():(totalPrice-discount)-(totalPayedPrice);
-        float priceAfterDiscount = totalPrice-discount;
-        float amountReturn = (totalPayedPrice>priceAfterDiscount)?(totalPayedPrice - priceAfterDiscount):0;
-
-
-        ModelAndView model = new ModelAndView("admin/advertiser/checkout");
-
-        model.addObject("transactionId",transactionId);
-        model.addObject("advertiser",advertiser);
-
-        /* Price and quantity */
-        model.addObject("prices",prices);
-        model.addObject("quantities",quantities);
-        model.addObject("totalPrice",totalPrice);
-        model.addObject("amountReturn",amountReturn);
-        model.addObject("discount",discount);
-        model.addObject("totalDuePrice",totalDuePrice);
-        model.addObject("totalPayedPrice",totalPayedPrice);
-
-
-        /* Number format settings values */
-        model.addObject("currencyCode","USD");
-        model.addObject("currencySymbol","$");
-        model.addObject("maxFractionDigits",2);
-
-
-        return model;
-    }
 }

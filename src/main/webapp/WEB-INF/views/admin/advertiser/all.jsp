@@ -97,7 +97,6 @@
                                 </td>
                                 <td class="action-clm text-center">
                                     <a href="<c:url value="/admin/advertiser/update/${advertiser.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                    <a href="<c:url value="/admin/advertiser/checkout/${advertiser.id}" />" class="btn btn-info"><i class="fa fa fa-shopping-cart"></i></a>
                                     <a href="javascript:void(0)" onclick="deleteEntity(${advertiser.id},false)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
