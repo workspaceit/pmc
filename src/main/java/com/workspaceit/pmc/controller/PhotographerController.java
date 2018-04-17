@@ -29,9 +29,6 @@ public class PhotographerController {
         this.photographerService = photographerService;
     }
 
-
-
-
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     public ModelAndView allPhotographer(Authentication authentication){
         List<Photographer> photographers = this.photographerService.getAll();
@@ -55,4 +52,16 @@ public class PhotographerController {
         model.addObject("photographer",photographer);
         return model;
     }
+
+    @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
+    public ModelAndView photographerDetails(@PathVariable("id") Integer id){
+        Photographer photographer = this.photographerService.getById(id);
+        if(photographer==null){
+            return new ModelAndView("redirect:"+"/admin/photographer/list");
+        }
+        ModelAndView model = new ModelAndView("admin/photographer/details");
+        model.addObject("photographer", photographer);
+        return model;
+    }
+
 }

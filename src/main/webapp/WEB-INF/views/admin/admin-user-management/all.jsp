@@ -81,9 +81,7 @@
                                 <span class="cstm-date-txt">${admin.phoneNumber}</span>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt">
                                     <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${admin.createdAt}"></fmt:formatDate>
-                                </span>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${admin.active}">
@@ -109,33 +107,21 @@
         <script>
             $(document).ready(function() {
                 $('#admin-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0, 1, 7, 8],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0, 1, 7, 8],
+                            "orderable": false
+                        },
+                        {
+                            "targets": [6],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+                    ],
                     "order": [[6, 'desc']]
                 });
-//                $('#admin-datatable').DataTable( {
-//                    "processing": true,
-//                    "columns": [
-//                        { "data": "first_name" },
-//                        { "data": "Username" },
-//                        { "data": "position" },
-//                        { "data": "office" },
-//                        { "data": "start_date" },
-//                        { "data": "salary" }
-//                    ],
-//                    "columnDefs": [ {
-//                        "targets": [0,5],
-//                        "orderable": false,
-//                    } ],
-//                    "serverSide": true,
-//                    "ajax": {
-//                        "url": BASEURL + 'admin/admin-datatable-data',
-//                        "type":"POST",
-////                        "traditional": true
-//                    }
-//                } );
             } );
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

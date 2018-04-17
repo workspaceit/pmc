@@ -43,6 +43,7 @@
         <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
         <script src="<s:url value="/resources/js/jquery.dataTables.min.js"/>"></script>
         <script src="<s:url value="/resources/js/jquery.growl.js"/>"></script>
+        <script src="<s:url value="/resources/js/moment.min.js"/>"></script>
 
         <%--Developer's custom js--%>
         <script>

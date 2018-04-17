@@ -73,6 +73,9 @@
                                     </c:if>
                                 </td>
                                 <td class="action-clm text-center">
+                                    <a href="<c:url value="/admin/event/${event.id}/gallery" />" class="btn btn-info">
+                                        <i class="fa fa-image"></i>
+                                    </a>
                                     <a href="<c:url value="/admin/event/update/${event.id}" />" class="btn btn-success">
                                         <i class="fa fa-pencil"></i>
                                     </a>
@@ -91,10 +94,19 @@
         <script>
             $(document).ready(function() {
                 $('#event-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0,5,6],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0,5,6],
+                            "orderable": false
+                        },
+                        {
+                            "targets": [4],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+                    ],
                     "order": [[4, 'desc']]
                 });
             });

@@ -69,30 +69,6 @@ public class EventImageApiController {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
-    @GetMapping("/reported-image/{eventId}")
-    public ResponseEntity<?> reportedImage(@PathVariable("eventId") Integer eventId){
-        List<ReportedImage> list =reportImageService.getAllByEventId(eventId);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
-    }
-
-    @PostMapping("/report-image-action")
-    public ResponseEntity<?> reportedImageAction(@RequestParam("type") String type,@RequestParam("imageIds") int[] imageIds){
-        boolean result=false;
-        if(type.equals("ignore")){
-            result=reportImageService.takeAction(imageIds);
-        }else if(type.equals("delete")){
-            try {
-                Boolean res = eventImageService.deleteEventImages(imageIds);
-            } catch (EntityNotFound entityNotFound) {
-                entityNotFound.printStackTrace();
-                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(false);
-
-            }
-            result=reportImageService.takeAction(imageIds);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
     @GetMapping("/get-by-event-id-where-is-sent-slide-show-true/{eventId}")
     public ResponseEntity<?> getAllEventImagesSentSlideShowByEventId(@PathVariable("eventId") int eventId){
         List<EventImage> eventImages =  this.eventImageService.getImagesByEventIdWhereInSlideshowTrue(eventId);

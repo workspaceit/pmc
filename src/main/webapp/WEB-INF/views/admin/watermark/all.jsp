@@ -68,7 +68,7 @@
                                 </c:if>
                             </td>
                             <td class="des-clm">
-                                <p class="text-left"><fmt:formatDate pattern='yyyy-MM-dd hh:mm a' value="${wm.createdAt}"/></p>
+                                <fmt:formatDate pattern='yyyy-MM-dd hh:mm a' value="${wm.createdAt}"/>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${wm.active}">
@@ -93,10 +93,19 @@
         <script>
             $(document).ready(function() {
                 $('#watermark-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0, 3, 5, 6],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0, 3, 5, 6],
+                            "orderable": false,
+                        },
+                        {
+                            "targets": [4],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+                    ],
                     "order": [[4, 'desc']]
                 });
             });

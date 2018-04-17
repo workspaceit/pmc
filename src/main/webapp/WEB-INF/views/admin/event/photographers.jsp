@@ -32,6 +32,7 @@
                             <th class="cstm-table-header">
                                 Created At
                             </th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,9 +63,14 @@
                                     <span class="cstm-date-txt">${photographer.phoneNumber}</span>
                                 </td>
                                 <td class="date-clm">
-                                <span class="cstm-date-txt">
-                                    <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${photographer.createdAt}"></fmt:formatDate>
-                                </span>
+                                    <span class="cstm-date-txt">
+                                        <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${photographer.createdAt}"></fmt:formatDate>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="<c:url value="/admin/photographer/details/${photographer.id}"/>" class="btn btn-info">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>

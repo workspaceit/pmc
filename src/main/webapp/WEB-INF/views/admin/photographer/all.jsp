@@ -85,9 +85,7 @@
                                 <span class="cstm-date-txt">${photographer.phoneNumber}</span>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt">
-                                    <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${photographer.createdAt}"></fmt:formatDate>
-                                </span>
+                                <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${photographer.createdAt}"></fmt:formatDate>
                             </td>
                             <td class="date-clm">
                                 <c:if test = "${photographer.active}">
@@ -97,7 +95,8 @@
                                     <input type="checkbox" class="activate-checkbox" value="${photographer.id}">
                                 </c:if>
                             </td>
-                            <td class="action-clm text-center">
+                            <td width="15%" class="action-clm text-center">
+                                <a href="<c:url value="/admin/photographer/details/${photographer.id}" />" class="btn btn-info"><i class="fa fa-user" aria-hidden="true"></i></a>
                                 <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
                                 <a href="javascript:void(0)" onclick="deleteEntity(${photographer.id},false)"  class="btn btn-danger"><i  class="fa fa-trash"></i></a>
                             </td>
@@ -112,10 +111,19 @@
         <script>
             $(document).ready(function() {
                 $('#photographer-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0, 1, 7, 8],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0, 1, 7, 8],
+                            "orderable": false,
+                        },
+                        {
+                            "targets": [6],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+                    ],
                     "order": [[6, 'desc']]
                 });
             });

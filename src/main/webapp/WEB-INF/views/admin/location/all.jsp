@@ -83,9 +83,7 @@
                                     <span class="cstm-date-txt">${location.state.name}</span>
                                 </td>
                                 <td class="date-clm">
-                                    <span class="cstm-date-txt">
                                         <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${location.createdAt}"></fmt:formatDate>
-                                    </span>
                                 </td>
                                 <td class="date-clm">
                                     <c:if test = "${location.active}">
@@ -115,10 +113,19 @@
         <script>
             $(document).ready(function() {
                 $('#location-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0, 1, 7, 8],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0, 1, 7, 8],
+                            "orderable": false
+                        },
+                        {
+                            "targets": [6],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+                    ],
                     "order": [[6, 'desc']]
                 });
             });

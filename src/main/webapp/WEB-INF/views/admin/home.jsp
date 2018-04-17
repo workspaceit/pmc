@@ -88,11 +88,14 @@
                                         <td style="text-align: center;">${event.noOfImages}</td>
                                         <td style="text-align: center;">${event.noOfPhotographers}</td>
                                         <td style="text-align:center;">
-                                            <a
-                                                href="<c:url value="/admin/event/${event.id}/gallery" />"
-                                                class="btns btns1">View Gallery</a>
+                                            <a href="<c:url value="/admin/event/${event.id}/gallery" />"
+                                               class="btn btn-info" style="color: white;">
+                                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                            </a>
                                             <a href="<c:url value="/admin/event/${event.id}/photographers" />"
-                                                    class="btns btns1">View Photographers</a>
+                                                    class="btn btn-info" style="color: white;">
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -67,30 +67,25 @@
                                     <p id="title-${advertiser.id}" class="text-left">${advertiser.name}</p>
                                 </td>
                                 <td class="date-clm">
-                                    <span class="cstm-date-txt">${advertiser.phone}</span>
+                                    ${advertiser.phone}
                                 </td>
                                 <td class="des-clm">
-                                    <p class="text-left">${advertiser.city.name}</p>
+                                    ${advertiser.city.name}
                                 </td>
                                 <td class="des-clm">
-                                    <p class="text-left">${advertiser.state.name}</p>
+                                    ${advertiser.state.name}
                                 </td>
                                 <%--<td class="date-clm">--%>
                                     <%--<span class="cstm-date-txt">${advertiser.zip}</span>--%>
                                 <%--</td>--%>
                                 <td class="date-clm">
-
-                                    <span class="cstm-date-txt"><fmt:formatDate pattern = "yyyy-MM-dd" value="${advertiser.runtimeStarts}"  ></fmt:formatDate></span>
+                                        <fmt:formatDate pattern = "yyyy-MM-dd" value="${advertiser.runtimeStarts}"  ></fmt:formatDate>
                                 </td>
                                 <td class="date-clm">
-                                    <span class="cstm-date-txt">
                                         <fmt:formatDate pattern = "yyyy-MM-dd" value="${advertiser.runtimeEnds}"></fmt:formatDate>
-                                    </span>
                                 </td>
                                 <td class="date-clm">
-                                    <span class="cstm-date-txt">
-                                        <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${advertiser.createdAt}"></fmt:formatDate>
-                                    </span>
+                                    <fmt:formatDate pattern = "yyyy-MM-dd hh:mm a" value="${advertiser.createdAt}"></fmt:formatDate>
                                 </td>
                                 <td class="date-clm">
                                     <c:if test = "${advertiser.active}">
@@ -117,10 +112,20 @@
         <script>
             $(document).ready(function() {
                 $('#advertiser-datatable').DataTable({
-                    "columnDefs": [{
-                        "targets": [0, 8, 9],
-                        "orderable": false,
-                    }],
+                    "columnDefs": [
+                        {
+                            "targets": [0, 8, 9],
+                            "orderable": false
+                        },
+                        {
+                            "targets": [7],
+                            "type": "date",
+                            "render": function (d) {
+                                return moment(d).format('YYYY-MM-DD hh:mm a');
+                            }
+                        }
+
+                    ],
                     "order": [[7, 'desc']]
                 });
             });

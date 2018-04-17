@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.*;
@@ -82,6 +83,7 @@ public class ImageController {
 
         return ResponseEntity.status(HttpStatus.OK).body(imageByte);
     }
+
     @ResponseBody
     @RequestMapping(value = "/watermarked-preview/{watermarkId}",method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public  ResponseEntity<byte[]> defaultSamplePreviewWhileEdit(@PathVariable(name = "watermarkId") Integer watermarkId,
@@ -212,6 +214,14 @@ public class ImageController {
         }
         ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(imageByte, headers, HttpStatus.OK);
         return responseEntity;
+    }
+
+    @RequestMapping(value = "/social-sharing/{file_name}/share", method = RequestMethod.GET)
+    public ModelAndView getImageWithDescription(@PathVariable("file_name") String fileName)  {
+        ModelAndView modelAndView = new ModelAndView("user/image-with-description");
+        EventImage eventImage = eventImageService.getByFileName(fileName);
+        modelAndView.addObject("eventImage", eventImage);
+        return modelAndView;
     }
 
 }
