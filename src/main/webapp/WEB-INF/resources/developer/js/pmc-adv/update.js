@@ -98,6 +98,36 @@ function getAdIdBySelectedSectionTab(){
     var popupTab = $("#tab_default_4").hasClass("active");
 
 }
+function loadCheckoutInModal(){
+
+    $("#checkout-content").modal("show");
+    var id  = parseInt($("#advertiserId").val());
+    $.ajax({
+        url: BASEURL+"admin/invoice/checkout/ajax/"+id,
+        type: "GET",
+        statusCode: {
+            500: function(response) {
+                console.log(response);
+            },
+            401: function(response) {
+                console.log(response.responseJSON);
+            },
+            422: function(response) {
+                notifyUser("advertiserInfoErrorCount",response,false);
+                console.log(response);
+            }
+        },
+        success: function(response) {
+            $("#checkout-body").html(response);
+        }
+    });
+}
+function printOrDownloadInvoice() {
+    var id = parseInt($("#advertiserId").val());
+    var w = window.open(BASEURL + "admin/invoice/checkout/page/" + id);
+    w.print();
+
+}
 $(document).ready(function(){
     /**
      * Get Cities by state
