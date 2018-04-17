@@ -236,25 +236,36 @@ public class EventImageAuthApiController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PostMapping("/send-via-email")
+    @PostMapping("/send")
     public ResponseEntity<?> sendImagesViaEmail(@RequestParam("imageIds") int[] imageIds,
                                                 @RequestParam("customerName") String customerName,
                                                 @RequestParam("email") String email,
+                                                @RequestParam("phoneNumber") String phoneNumber,
                                                 @RequestParam("message") String message,
                                                 @RequestParam("eventId") int eventId,Authentication authentication){
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Event event = eventService.getById(eventId);
-        SentSlideshow sentSlideshow = sentSlideShowService.saveByEmail(email,message,imageIds,photographer,event);
-        if(sentSlideshow==null){
+        SentSlideshow sentSlideshowEmail = null;
+        SentSlideshow sentSlideshowSms = null;
+        if(email.equals("") && phoneNumber.equals("")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Please provide email or phone number");
+        }
+        if(!email.equals("")) {
+            sentSlideshowEmail = sentSlideShowService.saveByEmail(email, message, imageIds, photographer, event);
+        }
+        if(!phoneNumber.equals("")){
+            sentSlideshowSms = sentSlideShowService.saveBySms(phoneNumber, message, imageIds, photographer, event);
+        }
+        if(sentSlideshowEmail==null || sentSlideshowSms == null){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
-        Boolean result =emailHelper.sendImagesViaEmail(customerName,email,message,sentSlideshow.getIdentifier());
-        if(!result){
+        Boolean resultEmail =emailHelper.sendImagesViaEmail(customerName, email, message, sentSlideshowEmail.getIdentifier());
+        Boolean resultSms =smsHelper.sendMessage(customerName, phoneNumber, sentSlideshowSms.getIdentifier(), message);
+        if(!resultEmail || !resultSms){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
-
         }
-        return ResponseEntity.status(HttpStatus.OK).body(sentSlideshow);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
     @PostMapping("/send-via-sms")
