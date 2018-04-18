@@ -282,7 +282,7 @@ public class WatermarkService {
 
         if(watermarkedImage!=null){
             BufferedImage smallerImage = Thumbnails.of(watermarkedImage)
-                    .size(450, 450)
+                    .size(500, 500)
                     .asBufferedImage();
             ImageIO.write(smallerImage, "png", outputStream );
         }
@@ -404,7 +404,7 @@ public class WatermarkService {
 
         if(watermarkedImage!=null){
             BufferedImage smallerImage = Thumbnails.of(watermarkedImage)
-                    .size(450, 450)
+                    .size(500, 500)
                     .asBufferedImage();
             ImageIO.write(smallerImage, "png", outputStream );
         }
