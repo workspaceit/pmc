@@ -117,7 +117,7 @@
 
         <%--Check out Modal--%>
         <div class="modal fade in" id="checkout-content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Invoice</h4>
@@ -125,6 +125,12 @@
                             <button class="btn btn-action-top" onclick="printOrDownloadInvoice()">Prepare to download</button>
 
                         </div>
+
+                        <style>
+                            #checkout-body .col-md-8{
+                                width: 100% !important;
+                            }
+                        </style>
                     <div id="checkout-body" class="modal-body">
                     </div>
                 </div>

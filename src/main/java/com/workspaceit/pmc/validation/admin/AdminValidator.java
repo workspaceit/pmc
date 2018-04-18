@@ -131,29 +131,25 @@ public class AdminValidator implements Validator {
     private void passwordStrengthCheck(String password, Errors errors){
         boolean hasLetter = false;
         boolean hasDigit = false;
-        if (password.length() >= 8) {
-            for (int i = 0; i < password.length(); i++) {
-                char x = password.charAt(i);
-                if (Character.isLetter(x)) {
-                    hasLetter = true;
-                }
-                else if (Character.isDigit(x)) {
-
-                    hasDigit = true;
-                }
-                // no need to check further, break the loop
-                if(hasLetter && hasDigit){
-                    break;
-                }
+        for (int i = 0; i < password.length(); i++) {
+            char x = password.charAt(i);
+            if (Character.isLetter(x)) {
+                hasLetter = true;
             }
-            if (hasLetter && hasDigit) {
-                System.out.println("STRONG");
-            } else {
-                errors.rejectValue("password", "Password must contain both letter(s) and number(s)");
+            else if (Character.isDigit(x)) {
+                hasDigit = true;
             }
-        } else {
-            errors.rejectValue("password", "Password must be at least 8 characters");
+            // no need to check further, break the loop
+            if(hasLetter && hasDigit){
+                break;
+            }
         }
+        if (hasLetter && hasDigit) {
+            System.out.println("STRONG");
+        } else {
+            errors.rejectValue("password", "Password must contain both letter(s) and number(s)");
+        }
+
     }
 
     

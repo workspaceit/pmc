@@ -30,7 +30,7 @@ public class PhotographerForm
 
     @NotBlank(message="Password required")
     @Length.List({
-            @Length(min=5,message = "At least 5 character required"),
+            @Length(min=8,message = "At least 8 character required"),
             @Length(max=50,message = "Value is too large")
 
     })
