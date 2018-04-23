@@ -86,6 +86,7 @@ public class PhotographerValidator implements Validator {
                     break;
                 case "password":
                     this.passwordMatchCheck(password,conPassword,errors);
+                    this.passwordStrengthCheck(password, errors);
                     break;
             }
         }

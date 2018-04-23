@@ -219,21 +219,22 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <%--<div style="text-align: center;">--%>
-                                <%--<label style="font-weight: 200;font-size: 22px;">view as</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-md-12">--%>
-                                <%--<a class="new-cstm-btn" style="width:100%;"--%>
-                                   <%--href="http://163.53.151.2/pcm-dash/album-list.html" target="_blank">--%>
-                                    <%--<i class="fa fa-camera"></i>&nbsp;&nbsp; Photographer View--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-md-12">--%>
-                                <%--<a class="new-cstm-btn" style="width:100%;"--%>
-                                   <%--onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?eventId=${event.id}','_blank')">--%>
-                                    <%--<i class="fa fa-user"></i>&nbsp;&nbsp;Normal User View--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
+                            <div style="text-align: center;">
+                                <label style="font-weight: 200;font-size: 22px;">view as</label>
+                            </div>
+                            <div class="col-md-12">
+                                <a class="new-cstm-btn" style="width:100%;"
+                                   href="http://163.53.151.3:4200/photographer-panel/locations/${event.location.id}/events/${event.id}"
+                                   target="_blank">
+                                    <i class="fa fa-camera"></i>&nbsp;&nbsp; Photographer View
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <a class="new-cstm-btn" style="width:100%;"
+                                   onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?eventId=${event.id}','_blank')">
+                                    <i class="fa fa-user"></i>&nbsp;&nbsp;Normal User View
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -105,6 +105,7 @@ public class AdminValidator implements Validator {
         String conPassword = adminForm.getConfirmPassword();
 
         this.passwordMatchCheck(password,conPassword,errors);
+        this.passwordStrengthCheck(password, errors);
     }
     public void validateProfileUpdate(Object obj, Errors errors) {
         AdminProfileUpdateForm adminProfileUpdateForm = (AdminProfileUpdateForm)obj;
@@ -114,6 +115,7 @@ public class AdminValidator implements Validator {
 
         if( (password!=null && !password.trim().equals("")) || (conPassword!=null && !conPassword.trim().equals("")) )
             this.passwordBasicValidation(password,conPassword,errors);
+            this.passwordStrengthCheck(password, errors);
     }
     private void passwordBasicValidation(String password,String conPassword,Errors errors){
 

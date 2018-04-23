@@ -26,16 +26,16 @@ $(document).ready(function() {
 
     $("#e-placement,#img_fade_range,#e1,#txt_color").each(function () {
         $(this).change(function(){
-            previewWatermarkOnSample();
+            preview();
         });
     });
 
     $("#txt_wm_text").keyup(function(){
-        previewWatermarkOnSample();
+        preview();
     });
 
     $("#fontSize").bind("keyup change", function(e) {
-        previewWatermarkOnSample();
+        preview();
     })
 });
 
@@ -178,8 +178,8 @@ function configwatermarkLogoDropZone(){
 
                 file.token = response.token;
                 storewatermarkLogoToken(response.token);
-                console.log(file);
-                previewWatermarkOnSample();
+                // console.log(file);
+                preview();
             }
         }
     );
@@ -216,6 +216,17 @@ function getWatermarkData(){
         textBackgroundColor:textBackgroundColor
     };
     return data;
+}
+
+
+function preview() {
+    var id  = $("#watermarkId").val();
+    if(id) {
+        previewWatermarkOnSampleEdit();
+    }
+    else {
+        previewWatermarkOnSample();
+    }
 }
 
 
