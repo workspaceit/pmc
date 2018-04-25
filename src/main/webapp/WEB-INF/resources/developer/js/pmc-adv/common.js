@@ -137,8 +137,8 @@ $(document).ready(function(){
     dropZoneElements.galleryTopBanner = configAdvertBdImgDropZone({
                                                             elementId:"advTopBannerImage",
                                                             param:"top-banner",
-                                                            maxFile:6,
-                                                            maxFileSize:1,
+                                                            maxFile: 6,
+                                                            maxFileSize: 1,
                                                             success:function(response){
                                                                 storeToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN,response.token);
                                                             },
@@ -150,7 +150,7 @@ $(document).ready(function(){
     dropZoneElements.galleryBottomBanner = configAdvertBdImgDropZone({
                                                         elementId:"advBottomBannerImage",
                                                         param:"bottom-banner",
-                                                        maxFile:6,
+                                                        maxFile: 6,
                                                         maxFileSize:1,
                                                         success:function(response){
                                                             storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
@@ -519,6 +519,8 @@ function configAdvertBdImgDropZone(data){
     var fnSuccess=data.success;
     var afterServerFileRemove=data.afterServerFileRemove;
     var addFileFn=data.afterAddFile;
+
+    console.log(elementId);
     var advImgDropZone = new Dropzone("#"+elementId,
         {
             url: BASEURL+"file/upload/adv/"+param,
@@ -528,6 +530,7 @@ function configAdvertBdImgDropZone(data){
             maxFiles:maxFile,
             addRemoveLinks: true,
             previewTemplate:$("#dropZonePreview").html(),
+            previewsContainer: '#' + elementId + 'PreviewsContainer',
             init:function(){
 
                 /** If function is overridden */
@@ -545,7 +548,6 @@ function configAdvertBdImgDropZone(data){
                             removeFileByToken(file.token,afterServerFileRemove,file);
                             advImgDropZone.removeFile(file);
                         });
-
                         if(this.files.length > maxFile){
                             if(maxFile==1){
                                 console.log(this.files);

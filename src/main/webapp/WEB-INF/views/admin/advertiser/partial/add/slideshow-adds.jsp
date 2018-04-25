@@ -32,6 +32,7 @@
                     <p class="dropext">Click or Drop your banner images or video here</p>
                 </div>
             </div>
+            <div id="advSlideShowBannerPreviewsContainer" class="image-previewer"></div>
             <p id="errorObj_slideShowAdsBannerTokens"></p>
         </div>
         <div class="panel-footer clearfix">

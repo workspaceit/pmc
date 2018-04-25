@@ -79,6 +79,7 @@
                                 <p class="dropext">Click or Drop your files here</p>
                             </div>
                         </div>
+                        <div id="advertiserOtherImagesPreviewsContainer" class="image-previewer"></div>
                     </div>
                 </div>
 

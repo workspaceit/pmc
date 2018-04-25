@@ -61,26 +61,28 @@
             </div>
         </div>
 
-        <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
-            <c:choose>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
-                    <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
+        <div class="image-previewer">
+            <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
+                <c:choose>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
+                        <div>
+                            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
 
-                        <br>
-                            <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
+                            <br>
+                                <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
 
-                    </div>
-                </c:when>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}">
-                    <video width="400" controls>
-                        <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
-                        Your browser does not support HTML5 video.
-                    </video>
-                </c:when>
-            </c:choose>
-        </c:forEach>
+                        </div>
+                    </c:when>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}">
+                        <video width="400" controls>
+                            <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+        </div>
         <div id="advSmsPopUpBanner"  class="panel-body"   >
             <div class="dz-default dz-message">
                 <div class="droper">
@@ -88,6 +90,7 @@
                     <p class="dropext">Click or Drop your files here</p>
                 </div>
             </div>
+            <div id="advSmsPopUpBannerPreviewsContainer" class="image-previewer"></div>
         </div>
         <p class="text-danger" id="errorObj_smsPopupBanner"></p>
 
@@ -163,27 +166,27 @@
 
             </div>
         </div>
-        <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
-            <c:choose>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                    <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                        <br>
-                            <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
+        <div class="image-previewer">
+            <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
+                <c:choose>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
+                        <div>
+                            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
+                            <br>
+                                <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
 
-                    </div>
-                </c:when>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
-                    <video width="400" controls>
-                        <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
-                        Your browser does not support HTML5 video.
-                    </video>
-                </c:when>
-            </c:choose>
-
-
-        </c:forEach>
+                        </div>
+                    </c:when>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
+                        <video width="400" controls>
+                            <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+        </div>
         <div id="advEmailPopUpBanner"  class="panel-body"  >
             <div class="dz-default dz-message">
                 <div class="droper">
@@ -191,6 +194,7 @@
                     <p class="dropext">Click or Drop your files here</p>
                 </div>
             </div>
+            <div id="advEmailPopUpBannerPreviewsContainer" class="image-previewer"></div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>

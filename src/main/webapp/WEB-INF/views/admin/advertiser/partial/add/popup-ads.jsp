@@ -31,8 +31,8 @@
                     <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
                     <p class="dropext">Click or Drop your banner images or video here</p>
                 </div>
-
             </div>
+            <div id="advSmsPopUpBannerPreviewsContainer" class="image-previewer"></div>
         </div>
         <p class="text-danger" id="errorObj_smsPopupBanner"></p>
 
@@ -79,6 +79,7 @@
                     <p class="dropext">Click or Drop your banner images or video here</p>
                 </div>
             </div>
+            <div id="advEmailPopUpBannerPreviewsContainer" class="image-previewer"></div>
         </div>
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
         <div class="panel-footer clearfix">

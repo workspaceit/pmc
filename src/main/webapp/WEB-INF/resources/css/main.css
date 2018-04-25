@@ -1241,3 +1241,26 @@ ul.submenu li{
 
 
 /****************** End Header Modification Author: Arnab 09/03/2018 ********************/
+
+.image-previewer{
+    background: #fff;
+    padding: 5px;
+    /*min-height: 20px;*/
+    max-height: 250px !important;
+    overflow: auto !important;
+}
+.image-previewer div{
+    background: #fff;
+    padding: 3px;
+}
+.image-previewer div .img-thumbnail{
+    border: 0px;
+    padding: 0px;
+}
+.image-previewer a{
+    color: red;
+}
+/*#advTopBannerImage .dz-preview{*/
+    /*height: 250px !important;*/
+    /*overflow: auto !important;*/
+/*}*/

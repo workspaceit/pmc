@@ -94,10 +94,11 @@
                                     </c:if>
                                 </td>
                                 <td class="action-clm text-center">
-                                    <a href="<c:url value="/admin/location/update/${location.id}" />" class="btn btn-success">
+                                    <a href="<c:url value="/admin/location/update/${location.id}" />" class="btn btn-success"
+                                       data-toggle="tooltip" title="Edit">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="javascript:void(0)" disabled="disabled"
+                                    <a href="javascript:void(0)" disabled="disabled" data-toggle="tooltip" title="Delete"
                                        onclick="deleteEntity(${location.id},false)" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>

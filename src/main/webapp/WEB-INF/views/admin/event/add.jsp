@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <img id="watermark-img-preview" src="" alt="No watermark selected" class="img-responsive"/>
+                                    <img style="display: none;" id="watermark-img-preview" alt="No watermark selected" class="img-responsive"/>
                                 </div>
                             </div>
                             <%--<div style="text-align: center;">--%>
