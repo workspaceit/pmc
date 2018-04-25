@@ -2,25 +2,17 @@ package com.workspaceit.pmc.api;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_TYPE;
-import com.workspaceit.pmc.entity.Advertiser;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.Location;
-import com.workspaceit.pmc.entity.SentSlideshow;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.exception.EntityNotFound;
-import com.workspaceit.pmc.service.AdvertisementService;
-import com.workspaceit.pmc.service.AdvertiserService;
-import com.workspaceit.pmc.service.EventService;
-import com.workspaceit.pmc.service.SentSlideShowService;
+import com.workspaceit.pmc.service.*;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +30,10 @@ public class AdvertisementApiController {
     private AdvertisementService advertisementService;
     private ValidationUtil validationUtil;
     private SentSlideShowService sentSlideShowService;
+    private AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService;
+    private AdvertiserTransactionService advertiserTransactionService;
+
+
 
     @Autowired
     public void setEventService(EventService eventService) {
@@ -63,6 +59,16 @@ public class AdvertisementApiController {
     @Autowired
     public void setSentSlideShowService(SentSlideShowService sentSlideShowService) {
         this.sentSlideShowService = sentSlideShowService;
+    }
+
+    @Autowired
+    public void setAdvertisementPriceAndQuantityService(AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService) {
+        this.advertisementPriceAndQuantityService = advertisementPriceAndQuantityService;
+    }
+
+    @Autowired
+    public void setAdvertiserTransactionService(AdvertiserTransactionService advertiserTransactionService) {
+        this.advertiserTransactionService = advertiserTransactionService;
     }
 
     @RequestMapping("/get/{eventId}/{limit}/{offset}")

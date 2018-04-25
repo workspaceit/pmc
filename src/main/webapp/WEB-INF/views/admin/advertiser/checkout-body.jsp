@@ -164,7 +164,7 @@
                                     <td class="text-center quantity-td" data-quantity="${quantities.get(SlideshowAdsConstant.VIDEO)}" >${quantities.get(SlideshowAdsConstant.VIDEO)}</td>
                                     <td class="text-right">
                                         <fmt:formatNumber
-                                                value="${prices.get('slideShowVideoPrice')*quantities.get('slideShowVideoQuantity')}"
+                                                value="${quantities.get(SlideshowAdsConstant.VIDEO)*quantities.get(SlideshowAdsConstant.VIDEO)}"
                                                 type="currency"
                                                 currencyCode="${currencyCode}"
                                                 currencySymbol="${currencySymbol}"

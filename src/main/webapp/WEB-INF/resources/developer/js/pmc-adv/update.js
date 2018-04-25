@@ -128,6 +128,32 @@ function printOrDownloadInvoice() {
     w.print();
 
 }
+function sendInvoiceToEmail(){
+    var id = parseInt($("#advertiserId").val());
+
+    $.ajax({
+        url: BASEURL+"api/invoice/mail/" + id,
+        type: "POST",
+        data: data,
+        traditional:true,
+        statusCode: {
+            500: function(response) {
+                console.log(response);
+            },
+            401: function(response) {
+                console.log(response.responseJSON);
+            },
+            422: function(response) {
+                notifyUser("advertiserInfoErrorCount",response,false);
+                console.log(response);
+            }
+        },
+        success: function(response) {
+            notifyUser("advertiserInfoErrorCount",response,false);
+            advertiserAfterSaveAction(globalBtnAction,id);
+        }
+    });
+}
 $(document).ready(function(){
     /**
      * Get Cities by state
