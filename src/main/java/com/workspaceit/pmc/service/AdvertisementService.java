@@ -12,6 +12,7 @@ import com.workspaceit.pmc.entity.AdvertiserTransaction;
 import com.workspaceit.pmc.entity.advertisement.Advertisement;
 import com.workspaceit.pmc.util.VelocityUtil;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.tools.generic.MathTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -196,6 +197,7 @@ public class AdvertisementService {
         context.put("PopupAdConstantSMS", PopupAdConstant.SMS);
         context.put("PopupAdConstantEMAIL", PopupAdConstant.EMAIL);
 
+        context.put("math", new MathTool());
 
         String emailHtmlBody = this.velocityUtil.getHtmlByTemplateAndContext("invoice.vm",context);
 

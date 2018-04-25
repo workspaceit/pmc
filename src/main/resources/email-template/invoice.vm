@@ -65,7 +65,7 @@
                                         $quantities.get($GalleryAdsConstantBACKGROUND_IMAGE)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($GalleryAdsConstantBACKGROUND_IMAGE)*$quantities.get($GalleryAdsConstantBACKGROUND_IMAGE)
+                                        $math.mul($prices.get($GalleryAdsConstantBACKGROUND_IMAGE),$quantities.get($GalleryAdsConstantBACKGROUND_IMAGE))
                                     </td>
                                 </tr>
                                 <tr>
@@ -78,7 +78,7 @@
                                         $quantities.get($GalleryAdsConstantTOP_AD_BANNER)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($GalleryAdsConstantTOP_AD_BANNER)*$quantities.get($GalleryAdsConstantTOP_AD_BANNER)
+                                        $math.mul($prices.get($GalleryAdsConstantTOP_AD_BANNER),$quantities.get($GalleryAdsConstantTOP_AD_BANNER))
                                     </td>
                                 </tr>
                                 <tr>
@@ -90,7 +90,7 @@
                                         $quantities.get($GalleryAdsConstantBOTTOM_AD_BANNER)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($GalleryAdsConstantBOTTOM_AD_BANNER)*$quantities.get($GalleryAdsConstantBOTTOM_AD_BANNER)
+                                        $math.mul($prices.get($GalleryAdsConstantBOTTOM_AD_BANNER),$quantities.get($GalleryAdsConstantBOTTOM_AD_BANNER))
                                     </td>
                                 </tr>
 
@@ -103,7 +103,7 @@
                                         $quantities.get($SlideshowAdsConstantBANNER)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($SlideshowAdsConstantBANNER)*$quantities.get($SlideshowAdsConstantBANNER)
+                                        $math.mul($prices.get($SlideshowAdsConstantBANNER),$quantities.get($SlideshowAdsConstantBANNER))
 
                                     </td>
                                 </tr>
@@ -116,7 +116,7 @@
                                         $quantities.get($SlideshowAdsConstantVIDEO)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($SlideshowAdsConstantVIDEO)*$quantities.get($SlideshowAdsConstantVIDEO)
+                                        $math.mul($prices.get($SlideshowAdsConstantVIDEO),$quantities.get($SlideshowAdsConstantVIDEO))
                                     </td>
                                 </tr>
 
@@ -129,7 +129,7 @@
                                         $quantities.get($PopupAdConstantSMS)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($PopupAdConstantSMS)*$quantities.get($PopupAdConstantSMS)
+                                        $math.mul($prices.get($PopupAdConstantSMS),$quantities.get($PopupAdConstantSMS))
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,7 +141,7 @@
                                         $quantities.get($PopupAdConstantEMAIL)
                                     </td>
                                     <td class="text-right">
-                                        $prices.get($PopupAdConstantEMAIL)*$quantities.get($PopupAdConstantEMAIL)
+                                        $math.mul( $prices.get($PopupAdConstantEMAIL),$quantities.get($PopupAdConstantEMAIL))
                                     </td>
                                 </tr>
 
@@ -173,7 +173,7 @@
                                     <td class="no-line"></td>
                                     <td class="no-line text-center"><strong>Total</strong></td>
                                     <td class="no-line text-right" id="totalCheckoutPrice"  >
-                                        $totalPrice-$discount
+                                        $math.sub($totalPrice,$discount)
                                     </td>
                                 </tr>
                                 <tr style="overflow:hidden;">
