@@ -136,7 +136,21 @@
                 </div>
             </div>
         </div>
+        </div>
+        <div class="modal fade in" id="invoice-mail-send" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Email invoice</h4>
+                        <div class="modal-body">
+                            <input type="text" id="invoiceRecipientEmail" >
+                            <input type="button" value="Send" onclick="sendInvoiceToEmail()" >
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <%--Developer Hidden Field--%>
         <input type="hidden" id="advertiserId" value="${advertiser.id}" />

@@ -244,9 +244,21 @@
 
         <!-- AOP ENDS -->
 
+        <!--PDF generator-->
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/galdolber/trulia-java-rets-client -->
 
-
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
 
     </dependencies>
 
