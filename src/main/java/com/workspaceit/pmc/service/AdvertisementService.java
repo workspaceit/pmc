@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,7 +139,7 @@ public class AdvertisementService {
         this.advertisementDao.update(advertisement);
     }
 
-    public String getInvoiceInHtml(Advertiser advertiser){
+    public String getInvoiceInHtml(Advertiser advertiser, HttpServletRequest request){
 
 
         AdvertiserTransaction advertiserTransaction =  this.advertiserTransactionService.getLastByAdvertiserId(advertiser.getId());
@@ -179,6 +180,7 @@ public class AdvertisementService {
         context.put("discount",discount);
         context.put("totalDuePrice",totalDuePrice);
         context.put("totalPayedPrice",totalPayedPrice);
+        context.put("orderDate", (advertiserTransaction!=null)?advertiserTransaction.getCreatedAt():"");
 
 
         /* Number format settings values */
@@ -198,6 +200,11 @@ public class AdvertisementService {
         context.put("PopupAdConstantEMAIL", PopupAdConstant.EMAIL);
 
         context.put("math", new MathTool());
+
+        String uri = request.getScheme() + "://" + request.getServerName() + ":" +request.getServerPort() + request.getContextPath();
+
+        context.put("baseUrl", uri);
+        System.out.println(request.getLocalName());
 
         String emailHtmlBody = this.velocityUtil.getHtmlByTemplateAndContext("invoice.vm",context);
 

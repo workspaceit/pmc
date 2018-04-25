@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -121,7 +122,7 @@ public class InvoiceController {
     }
     @RequestMapping(value = "/mail-tanveer/{advertiserId}",method = RequestMethod.GET)
     public ModelAndView mailInvoiceTanveer(@PathVariable("advertiserId")int advertiserId,
-                                     @RequestParam("email") String email){
+                                           @RequestParam("email") String email, HttpServletRequest request){
         //ModelAndView model = new ModelAndView(pagePath);
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -139,7 +140,7 @@ public class InvoiceController {
             return new ModelAndView("redirect:"+"/admin/advertiser/all");
         }
 
-        String emailBody = this.advertisementService.getInvoiceInHtml(advertiser);
+        String emailBody = this.advertisementService.getInvoiceInHtml(advertiser, request);
         //this.mailUtil.sendAdvertisementInvoice(email,emailBody);
         System.out.println(emailBody);
         ModelAndView model = new ModelAndView("admin/mail-view-test");

@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class InvoiceRestController {
 
     @RequestMapping(value = "/mail/{advertiserId}",method = RequestMethod.POST)
     public ResponseEntity<?> mailInvoice(@PathVariable("advertiserId")int advertiserId,
-                                         @RequestParam("email") String email){
+                                         @RequestParam("email") String email, HttpServletRequest request){
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
 
@@ -72,7 +73,7 @@ public class InvoiceRestController {
                     .getFormError());
         }
 
-        String emailBody = this.advertisementService.getInvoiceInHtml(advertiser);
+        String emailBody = this.advertisementService.getInvoiceInHtml(advertiser, request);
         this.mailUtil.sendAdvertisementInvoice(email,emailBody);
         System.out.println(emailBody);
         return ResponseEntity.ok("Mail sent");
