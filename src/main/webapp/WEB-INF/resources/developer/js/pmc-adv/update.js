@@ -122,6 +122,16 @@ function loadCheckoutInModal(){
         }
     });
 }
+function hideCheckoutInModal(){
+    $("#checkout-content").modal("hide");
+}
+function loadSendInvoiceModal(){
+    hideCheckoutInModal();
+    $("#invoice-mail-send").modal("show");
+}
+function hideSendInvoiceModal(){
+    $("#invoice-mail-send").modal("hide");
+}
 function printOrDownloadInvoice() {
     var id = parseInt($("#advertiserId").val());
     var w = window.open(BASEURL + "admin/invoice/checkout/page/" + id);
@@ -130,11 +140,12 @@ function printOrDownloadInvoice() {
 }
 function sendInvoiceToEmail(){
     var id = parseInt($("#advertiserId").val());
+    var email = $("#invoiceRecipientEmail").val();
 
     $.ajax({
         url: BASEURL+"api/invoice/mail/" + id,
         type: "POST",
-        data: data,
+        data: {"email":email},
         traditional:true,
         statusCode: {
             500: function(response) {
@@ -144,13 +155,11 @@ function sendInvoiceToEmail(){
                 console.log(response.responseJSON);
             },
             422: function(response) {
-                notifyUser("advertiserInfoErrorCount",response,false);
-                console.log(response);
+
             }
         },
         success: function(response) {
-            notifyUser("advertiserInfoErrorCount",response,false);
-            advertiserAfterSaveAction(globalBtnAction,id);
+            hideSendInvoiceModal();
         }
     });
 }
