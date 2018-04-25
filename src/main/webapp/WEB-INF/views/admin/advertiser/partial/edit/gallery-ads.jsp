@@ -28,6 +28,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advLogoPreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_logoToken"></p>
                 <div class="url-tab panel-body" style="display:none;">
@@ -70,6 +71,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advBackgroundImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
                 <div class="panel-footer text-right"><h4 style="font-weight: bold;">
@@ -130,14 +132,16 @@
                     </div>
                 </div>
 
-                <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
-                    <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                        <br>
-                            <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" >Delete</a>
-                    </div>
-                </c:forEach>
+                <div class="image-previewer">
+                    <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
+                        <div>
+                            <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
+                            <br>
+                                <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" >Delete</a>
+                        </div>
+                    </c:forEach>
+                </div>
                 <div id="advTopBannerImage"  class="panel-body"    >
                     <div class="dz-default dz-message">
                         <div class="droper">
@@ -145,6 +149,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advTopBannerImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p id="errorObj_topBannerImgTokens" class="text-danger"></p>
                 <p class="text-danger" id="errorObj_topBannerExpiryDate"></p>
@@ -207,13 +212,14 @@
                         <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" >Delete</a>
                     </div>
                 </c:forEach>
-                <div id="advBottomBannerImage"   class="panel-body"  >
+                <div id="advBottomBannerImage" class="panel-body"  >
                     <div class="dz-default dz-message">
                         <div class="droper">
                             <p class="dropicon"><i class="fa fa-cloud-upload"></i> </p>
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advBottomBannerImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>

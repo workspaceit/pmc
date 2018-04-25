@@ -59,7 +59,7 @@
                                 <input type="checkbox" class="select-checkbox" value="${photographer.id}">
                             </td>
                             <td class="img-clm text-center">
-                                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />">
+                                <a href="<c:url value="/admin/photographer/details/${photographer.id}"/>">
                                 <c:set value="" var="imgSrc" />
                                 <c:choose>
                                     <c:when test="${photographer.profilePhoto==null || photographer.profilePhoto.trim().equals('')}">
@@ -73,7 +73,7 @@
                                 </a>
                             </td>
                             <td class="date-clm">
-                                <span class="cstm-date-txt"><a href="<c:url value="/admin/photographer/update/${photographer.id}" />">${photographer.userName}</a></span>
+                                <span class="cstm-date-txt"><a href="<c:url value="/admin/photographer/details/${photographer.id}"/>">${photographer.userName}</a></span>
                             </td>
                             <td class="date-clm">
                                 <span class="cstm-date-txt">${photographer.email}</span>
@@ -96,9 +96,16 @@
                                 </c:if>
                             </td>
                             <td width="15%" class="action-clm text-center">
-                                <a href="<c:url value="/admin/photographer/details/${photographer.id}" />" class="btn btn-info"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                <a href="javascript:void(0)" onclick="deleteEntity(${photographer.id},false)"  class="btn btn-danger"><i  class="fa fa-trash"></i></a>
+                                <a href="<c:url value="/admin/photographer/details/${photographer.id}" />"
+                                   data-toggle="tooltip" title="Details"class="btn btn-info"><i class="fa fa-user"
+                                                                                                aria-hidden="true"></i>
+                                </a>
+                                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />"
+                                   data-toggle="tooltip" title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i>
+                                </a>
+                                <a href="javascript:void(0)" onclick="deleteEntity(${photographer.id},false)"
+                                   data-toggle="tooltip" title="Delete" class="btn btn-danger"><i  class="fa fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                         </d:forEach>

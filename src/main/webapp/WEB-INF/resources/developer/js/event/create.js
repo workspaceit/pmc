@@ -227,7 +227,7 @@ $(document).ready(function () {
         }
     }).on('change', function (e) {
         var waterMarkLogo = $(this).select2('data')[0].logo;
-        $('#watermark-img-preview').attr('src', '/common/' + waterMarkLogo);
+        $('#watermark-img-preview').attr('src', '/common/' + waterMarkLogo).show();
     });
     var locationSelect2 = $("#locationIds").select2({
         placeholder: 'Select a Location',

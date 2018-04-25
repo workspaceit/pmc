@@ -7,13 +7,11 @@
         <button class="btn btn-action-top"  onclick="redirectToAdvPreview(${slideshowAd.id},'slideshow')" >Preview</button>
     </div>
     <div class="imageupload panel panel-default">
-
         <div class="panel-heading clearfix">
             <div class="col-md-6 col-xs-6" style="padding-top: 4px">
                 <h4 class="panel-title pull-left">Slideshow banner Upload / video </h4>
             </div>
             <div class="col-md-6 col-xs-6 pull-right">
-
                 <div class="" style="margin-left: auto;float:right;">
                     <span id="slideShowBannerExpiryDateLbl" class="date_view">
                         <c:if test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).expireDate!=null}" >
@@ -43,33 +41,32 @@
                     <input id="slideShowBannerExpiryDate" type="text" class="form-control" value="${tbExpDate}"/>
                     <i class="fa fa-calendar"></i>
                 </div>
-
-
             </div>
             <div class="btn-group pull-right">
-
             </div>
         </div>
-        <c:forEach var="secResource" items="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
-            <c:choose>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                    <div>
-                        <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                        <br>
-                            <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${secResource.id})" >Delete</a>
+        <div class="image-previewer">
+            <c:forEach var="secResource" items="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
+                <c:choose>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
+                        <div>
+                            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
+                            <br>
+                                <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
+                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${secResource.id})" >Delete</a>
 
-                    </div>
-                </c:when>
-                <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
-                    <video width="400" controls>
-                        <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
-                        Your browser does not support HTML5 video.
-                    </video>
-                </c:when>
-            </c:choose>
+                        </div>
+                    </c:when>
+                    <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
+                        <video width="400" controls>
+                            <source src="<s:url value="/common/${secResource.fileName}" />"  type="${secResource.mimeType}" >
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </c:when>
+                </c:choose>
 
-        </c:forEach>
+            </c:forEach>
+        </div>
 
 
         <div id="advSlideShowBanner"  class="panel-body">
@@ -79,6 +76,7 @@
                     <p class="dropext">Click or Drop your banner images or video here</p>
                 </div>
             </div>
+            <div id="advSlideShowBannerPreviewsContainer" class="image-previewer"></div>
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:

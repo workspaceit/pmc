@@ -73,13 +73,16 @@
                                     </c:if>
                                 </td>
                                 <td class="action-clm text-center">
-                                    <a href="<c:url value="/admin/event/${event.id}/gallery" />" class="btn btn-info">
+                                    <a href="<c:url value="/admin/event/${event.id}/gallery" />" class="btn btn-info"
+                                       data-toggle="tooltip" title="Event Photos">
                                         <i class="fa fa-image"></i>
                                     </a>
-                                    <a href="<c:url value="/admin/event/update/${event.id}" />" class="btn btn-success">
+                                    <a href="<c:url value="/admin/event/update/${event.id}" />" class="btn btn-success"
+                                       data-toggle="tooltip" title="Edit">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="javascript:void(0)" disabled="disabled" onclick="deleteEntity(${event.id},false)" class="btn btn-danger">
+                                    <a href="javascript:void(0)" disabled="disabled" onclick="deleteEntity(${event.id},false)"
+                                       data-toggle="tooltip" title="Delete" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>

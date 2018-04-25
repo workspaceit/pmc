@@ -30,6 +30,7 @@
         <link href="<s:url value="/resources/css/jquery.growl.css"/>" rel="stylesheet"/>
         <!-- Custom Fonts -->
         <link href="<s:url value="/resources/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
+        <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet" type="text/css">
         <link href="<s:url value="/resources/css/main.css"/>" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Exo:300,400,500" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

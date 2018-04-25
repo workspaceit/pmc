@@ -31,13 +31,13 @@
 
                 </div>
                 <div class="row" style="color:#fff;font-size:16px;">
-                    <div class="col-xs-6">
+                    <%--<div class="col-xs-6">
                         <address>
                             <strong>Payment Method:</strong><br>
                             Visa ending **** 4242<br>
                             jsmith@email.com
                         </address>
-                    </div>
+                    </div>--%>
                     <fmt:formatDate var="orderDate" value="${advertiser.createdAt}" pattern="MMM d, yyyy" />
                     <div class="col-xs-6 text-right">
                         <address>

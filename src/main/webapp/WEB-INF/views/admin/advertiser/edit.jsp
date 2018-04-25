@@ -96,7 +96,7 @@
                 </div>
             </div>
                 <%-- After image add Dropzone Image preview --%>
-            <div id="dropZonePreview" style="display: none">
+            <div id="dropZonePreview"  style="display: none;">
                 <div class="dz-preview dz-file-preview">
                     <div class="dz-details">
                         <div class="dz-filename"><span data-dz-name></span></div>

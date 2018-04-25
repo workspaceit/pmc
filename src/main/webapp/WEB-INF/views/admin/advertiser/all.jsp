@@ -95,9 +95,15 @@
                                         <input type="checkbox" class="activate-checkbox" value="${advertiser.id}">
                                     </c:if>
                                 </td>
-                                <td class="action-clm text-center">
-                                    <a href="<c:url value="/admin/advertiser/update/${advertiser.id}" />" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-                                    <a href="javascript:void(0)" onclick="deleteEntity(${advertiser.id},false)" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <td class="action-clm text-center" width="10%">
+                                    <a href="<c:url value="/admin/advertiser/update/${advertiser.id}" />"
+                                       data-toggle="tooltip" title="Edit" class="btn btn-success"
+                                       style="display: inline;"><i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" data-toggle="tooltip" title="Delete"
+                                       onclick="deleteEntity(${advertiser.id},false)" class="btn btn-danger" style="display: inline;">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </d:forEach>

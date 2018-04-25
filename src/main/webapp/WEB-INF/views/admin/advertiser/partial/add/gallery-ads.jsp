@@ -17,6 +17,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advLogoPreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_logoToken"></p>
                 <div class="url-tab panel-body" style="display:none;">
@@ -47,6 +48,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advBackgroundImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_bgImgTokens"></p>
                 <div class="panel-footer text-right"><span style="font-weight: bold;">
@@ -84,6 +86,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advTopBannerImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p id="errorObj_topBannerImgTokens" class="text-danger"></p>
                 <p class="text-danger" id="errorObj_topBannerExpiryDate"></p>
@@ -117,6 +120,7 @@
                             <p class="dropext">Click or Drop your files here</p>
                         </div>
                     </div>
+                    <div id="advBottomBannerImagePreviewsContainer" class="image-previewer"></div>
                 </div>
                 <p class="text-danger" id="errorObj_bottomBannerExpiryDate"></p>
                 <p class="text-danger" id="errorObj_bottomBannerImgTokens" ></p>
