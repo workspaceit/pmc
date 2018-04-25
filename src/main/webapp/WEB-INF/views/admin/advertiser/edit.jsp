@@ -24,6 +24,8 @@
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/create.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
+            <script src="<s:url value="/resources/developer/js/checkout/common.js"/>"></script>
+            <script src="<s:url value="/resources/developer/js/checkout/create.js"/>"></script>
     </jsp:attribute>
     <jsp:body>
         <div id="page-wrapper">
