@@ -139,16 +139,22 @@
             </div>
         </div>
         </div>
-        <div class="modal fade in" id="invoice-mail-send" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+        <div class="modal fade in" id="invoice-mail-send" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             style="display: none;">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Email invoice</h4>
+                        <form class="form">
+                        <h4 class="modal-title">Email Invoice</h4>
                         <div class="modal-body">
-                            <input type="text" id="invoiceRecipientEmail" >
-                            <input type="button" value="Send" onclick="sendInvoiceToEmail()" >
-
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="invoiceRecipientEmail" >
+                            </div>
+                            <div class="form-group">
+                                <input type="button"  class="btn btn-success" value="Send" onclick="sendInvoiceToEmail()">
+                            </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
