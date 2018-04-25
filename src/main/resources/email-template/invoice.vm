@@ -1,9 +1,25 @@
-<div role="tabpanel" class="tab-pane" id="last">
+<div role="tabpanel" class="tab-pane" id="last" style="width: 700px;">
+    <style>
+        body{
+            font-family: 'Open Sans', sans-serif ;
+        }
+        table,tr,td{
+            border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;
+            background: #fff;
+        }
+        .table td{
+            padding: 8px 5px;
+        }
+        table{
+            border-collapse: collapse;
+        }
+    </style>
     <div class="col-md-12" style="padding-left: 0px;background-color: #ffffff">
         <div class="row" style="background-color: #ffffff;margin-top: 10px;">
-            <div class="col-xs-12 col-md-8" style="float:none;margin:10px auto;background:#241d40;padding-top:20px;">
+            <div class="col-xs-12 col-md-8" style="float:none;margin:10px auto;background:#241d40;padding:15px;">
                 <div class="invoice-title">
-                    <img src="<c:url value="/resources/images/logo2.png" />" />
+                    <img src="$baseUrl/resources/images/logo2.png" width="180"/>
+##                    <img src="$baseUrl" width="180"/>
                 </div>
                 <hr>
                 <div class="row" style="color:#fff;font-size:16px;padding:5px;">
@@ -19,13 +35,13 @@
 
                 </div>
                 <div class="row" style="color:#fff;font-size:16px;">
-                    <div class="col-xs-6">
-                        <address>
-                            <strong>Payment Method:</strong><br>
-                            Visa ending **** 4242<br>
-                            jsmith@email.com
-                        </address>
-                    </div>
+##                    <div class="col-xs-6">
+##                        <address>
+##                            <strong>Payment Method:</strong><br>
+##                            Visa ending **** 4242<br>
+##                            jsmith@email.com
+##                        </address>
+##                    </div>
                     <fmt:formatDate var="orderDate" value="$advertiser.createdAt" pattern="MMM d, yyyy" />
                     <div class="col-xs-6 text-right">
                         <address>
@@ -40,154 +56,154 @@
         <div class="row" style="background-color: #ffffff">
             <div class="col-md-8" style="float:none;margin:0px auto;padding:0px;margin-top:-10px;">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Order summary</strong></h3>
+                    <div class="panel-heading" style="background: #675f8c !important;margin: 0px;color: #fff;padding: 15px;">
+                        <h3 class="panel-title" style="margin: 0px;"><strong>Order summary</strong></h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding: 15px;background: #f1f1f1;">
                         <div class="table-responsive">
-                            <table class="table table-condensed">
+                            <table class="table table-condensed" style="width: 100%;">
                                 <thead>
                                 <tr>
-                                    <td><strong>Item</strong></td>
-                                    <td class="text-center"><strong>Price</strong></td>
-                                    <td class="text-center"><strong>Quantity</strong></td>
-                                    <td class="text-right"><strong>Totals</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;"><strong>Item</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center"><strong>Price</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center"><strong>Quantity</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right"><strong>Totals</strong></td>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <tr>
-                                    <td>Background Image</td>
-                                    <td class="text-center price-td" data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Background Image</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="" >
                                         $prices.get($GalleryAdsConstantBACKGROUND_IMAGE)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($GalleryAdsConstantBACKGROUND_IMAGE)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($GalleryAdsConstantBACKGROUND_IMAGE),$quantities.get($GalleryAdsConstantBACKGROUND_IMAGE))
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Gallery Top Ad Banner</td>
-                                    <td class="text-center price-td"  data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Gallery Top Ad Banner</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td"  data-price="" >
                                         $prices.get($GalleryAdsConstantTOP_AD_BANNER)
 
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($GalleryAdsConstantTOP_AD_BANNER)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($GalleryAdsConstantTOP_AD_BANNER),$quantities.get($GalleryAdsConstantTOP_AD_BANNER))
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Gallery Bottom Ad Banner</td>
-                                    <td class="text-center price-td" data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Gallery Bottom Ad Banner</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="" >
                                         $prices.get($GalleryAdsConstantBOTTOM_AD_BANNER)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($GalleryAdsConstantBOTTOM_AD_BANNER)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($GalleryAdsConstantBOTTOM_AD_BANNER),$quantities.get($GalleryAdsConstantBOTTOM_AD_BANNER))
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>Slide show Ad Banner</td>
-                                    <td class="text-center price-td" data-price="">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Slide show Ad Banner</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="">
                                         $prices.get($SlideshowAdsConstantBANNER)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($SlideshowAdsConstantBANNER)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($SlideshowAdsConstantBANNER),$quantities.get($SlideshowAdsConstantBANNER))
 
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Slide show Ad Video</td>
-                                    <td class="text-center price-td" data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Slide show Ad Video</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="" >
                                         $prices.get($SlideshowAdsConstantVIDEO)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($SlideshowAdsConstantVIDEO)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($SlideshowAdsConstantVIDEO),$quantities.get($SlideshowAdsConstantVIDEO))
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>Popup Sms Ad</td>
-                                    <td class="text-center price-td" data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Popup Sms Ad</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="" >
                                         $prices.get($PopupAdConstantSMS)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($PopupAdConstantSMS)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul($prices.get($PopupAdConstantSMS),$quantities.get($PopupAdConstantSMS))
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Popup Email Ad</td>
-                                    <td class="text-center price-td" data-price="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;">Popup Email Ad</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center price-td" data-price="" >
                                         $prices.get($PopupAdConstantEMAIL)
                                     </td>
-                                    <td class="text-center quantity-td" data-quantity="" >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-center quantity-td" data-quantity="" >
                                         $quantities.get($PopupAdConstantEMAIL)
                                     </td>
-                                    <td class="text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="text-right">
                                         $math.mul( $prices.get($PopupAdConstantEMAIL),$quantities.get($PopupAdConstantEMAIL))
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="thick-line" data-price="" ></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                    <td class="thick-line text-right">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="thick-line" data-price="" ></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="thick-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="thick-line text-center"><strong>Subtotal</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="thick-line text-right">
                                         $totalPrice</td>
                                 </tr>
                                 <tr style="overflow:hidden;">
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Discount</strong></td>
-                                    <td class="no-line text-left">$discount</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong>Discount</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-left">$discount</td>
 
                                 </tr>
                                 <tr style="overflow:hidden;">
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong></strong></td>
-                                    <td class="no-line">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong></strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line">
                                         <p class="text-danger text-right" id="errorObj_discount" />
                                     </td>
 
                                 </tr>
                                 <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Total</strong></td>
-                                    <td class="no-line text-right" id="totalCheckoutPrice"  >
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong>Total</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-right" id="totalCheckoutPrice"  >
                                         $math.sub($totalPrice,$discount)
                                     </td>
                                 </tr>
                                 <tr style="overflow:hidden;">
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Due</strong></td>
-                                    <td class="thin-line text-right" id="totalDuePrice" data-price="$totalDuePrice"  >$totalDuePrice</td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong>Due</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="thin-line text-right" id="totalDuePrice" data-price="$totalDuePrice"  >$totalDuePrice</td>
 
                                 </tr>
                                 <tr style="overflow:hidden;">
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Previously Paid</strong></td>
-                                    <td class="no-line text-right" id="prevPaidPrice" data-price="$totalPayedPrice">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong>Previously Paid</strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-right" id="prevPaidPrice" data-price="$totalPayedPrice">
                                         $totalPayedPrice
                                     </td>
                                 </tr>
@@ -196,10 +212,10 @@
 
                                     <c:set var="checkoutBtnDisable" value="disabled='disabled'" />
                                     <tr style="overflow:hidden;">
-                                        <td class="no-line"></td>
-                                        <td class="no-line"></td>
-                                        <td class="no-line text-center text-danger"><strong>Amount payable</strong></td>
-                                        <td class="no-line text-right text-danger" id="amountReturn" data-price="$amountReturn">
+                                        <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                        <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                        <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center text-danger"><strong>Amount payable</strong></td>
+                                        <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-right text-danger" id="amountReturn" data-price="$amountReturn">
                                             <b>
                                                 $amountReturn
                                             </b>
@@ -208,10 +224,10 @@
                                 #end
 
                                 <tr style="overflow:hidden;">
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong></strong></td>
-                                    <td class="no-line">
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line"></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line text-center"><strong></strong></td>
+                                    <td style="border: 1px solid #a4a4a4;padding:8px 5px;border-collapse:collapse;background:#fff;" class="no-line">
                                         <p class="text-danger text-right" id="errorObj_totalPaidAmount" />
                                     </td>
                                 </tr>
