@@ -123,7 +123,7 @@
                         <h4 class="modal-title">Invoice</h4>
                         <div class="btn-container-top">
                             <button class="btn btn-action-top" onclick="printOrDownloadInvoice()">Prepare to download</button>
-
+                            <button class="btn btn-action-top" onclick="loadSendInvoiceModal()">Mail Invoice</button>
                         </div>
 
                         <style>
