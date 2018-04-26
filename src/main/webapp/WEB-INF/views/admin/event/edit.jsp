@@ -215,7 +215,7 @@
                                         </c:forEach>
                                     </c:if>
                                     <c:if test = "${fn:length(event.watermarks) eq 0}">
-                                        <img id="watermark-img-preview" src="" alt="No watermark selected" class="img-responsive"/>
+                                        <img style="display: none;" id="watermark-img-preview" src="" alt="No watermark selected" class="img-responsive"/>
                                     </c:if>
                                 </div>
                             </div>
