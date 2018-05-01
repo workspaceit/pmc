@@ -70,6 +70,13 @@ public class PhotographerRestController {
         Photographer photographer = photographerService.create(photographerForm,currentUser);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographer);
     }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<?> create(Authentication authentication, @PathVariable("id")  Integer id){
+        Photographer photographer = photographerService.getById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(photographer);
+    }
+
     @PostMapping("/update/profile-picture/{id}")
     public ResponseEntity<?> updateProfilePicture(Authentication authentication,
                                                   @RequestParam("profilePictureToken") Integer token,
@@ -106,6 +113,7 @@ public class PhotographerRestController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Profile picture successfully updated"));
     }
+
     @PostMapping("/update/profile-password/{id}")
     public ResponseEntity<?> updatePassword(Authentication authentication,
                                                 @Valid PhotographerForm photographerForm,
@@ -147,6 +155,7 @@ public class PhotographerRestController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("Password successful updated"));
     }
+
     @PostMapping("/update/profile-info/{id}")
     public ResponseEntity<?> updateBasicInfo(Authentication authentication,
                                             @Valid PhotographerForm photographerForm,

@@ -36,6 +36,17 @@ $(document).ready(function() {
         else{
             $('#edit-selected-btn').prop('disabled', true);
         }
+
+        if(checkedIds.length > 0) {
+            $('#activate-selected-btn').prop('disabled', false);
+            $('#deactivate-selected-btn').prop('disabled', false);
+            $('#delete-selected-btn').prop('disabled', false);
+        }
+        else {
+            $('#activate-selected-btn').prop('disabled', true);
+            $('#deactivate-selected-btn').prop('disabled', true);
+            $('#delete-selected-btn').prop('disabled', true);
+        }
     }
 
     $body.on('click', '#edit-selected-btn', function () {

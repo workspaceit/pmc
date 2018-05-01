@@ -6,12 +6,14 @@
     <jsp:body>
         <div id="page-wrapper" style="min-height: 563px !important;">
             <div class="container">
-                <h3 class="uni-header"><span>Photographer Details
-                <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="pull-right">
-                  <button type="button" class="close" style="font-size: 42px">
-                  <i class="fa fa-pencil-square" aria-hidden="true" style="font-size: 40px;color: #2d2356;"></i>
-                </button>
-                </a>
+                <h3 class="uni-header">
+                    <span>Photographer Details
+                        <a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="pull-right">
+                          <button type="button" class="close" style="font-size: 42px">
+                          <i class="fa fa-pencil-square" aria-hidden="true" style="font-size: 40px;color: #2d2356;"></i>
+                        </button>
+                        </a>
+                    </span>
                 </h3>
                 <div class="col-md-12">
                     <div class="row clearfix">

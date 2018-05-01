@@ -14,8 +14,8 @@
                     <input type="hidden" id="type" value="advertiser">
                     <a href="<c:url value="/admin/advertiser/add"/>" class="ac_btn new"><i class="fa fa-plus"></i>NEW</a>
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
-                    <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
-                    <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
+                    <button id="activate-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
+                    <button id="deactivate-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
                     <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
@@ -60,7 +60,7 @@
                         <tbody>
                         <d:forEach var="advertiser" items="${advertisers}" >
                             <tr>
-                                <td class="des-clm">
+                                <td class="des-clm" style="text-align: center;">
                                     <input type="checkbox" class="select-checkbox" value="${advertiser.id}">
                                 </td>
                                 <td class="img-clm text-center">

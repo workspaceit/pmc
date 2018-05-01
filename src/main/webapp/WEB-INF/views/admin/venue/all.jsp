@@ -40,7 +40,7 @@
                         </thead>
                         <tbody>
                         <d:forEach var="venue" items="${venues}" >
-                            <td class="des-clm">
+                            <td class="des-clm" style="text-align: center;">
                                 <input type="checkbox" class="select-checkbox" value="${venue.id}">
                             </td>
                             <td class="des-clm">

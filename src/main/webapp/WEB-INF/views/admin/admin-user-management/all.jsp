@@ -14,9 +14,9 @@
                     <input type="hidden" id="type" value="user">
                     <a href="<c:url value="/admin/user/add"/>" class="ac_btn new"><i class="fa fa-plus"></i>NEW</a>
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
-                    <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
-                    <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
-                    <button id="delete-selected-btn" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
+                    <button id="activate-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
+                    <button id="deactivate-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
+                    <button id="delete-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
                     <table id="admin-datatable" class="table table-bordered table-hover table-responsive cstm-admin-table">
@@ -44,7 +44,7 @@
                             <th class="cstm-table-header">
                                 Enabled
                             </th>
-                            <th class="cstm-table-header">
+                            <th width="15%" class="cstm-table-header">
                                 Action
                             </th>
                         </tr>
@@ -52,20 +52,22 @@
                         <tbody>
                         <d:forEach var="admin" items="${admins}" >
                         <tr>
-                            <td class="des-clm">
+                            <td class="des-clm" style="text-align: center;">
                                 <input type="checkbox" class="select-checkbox" value="${admin.id}">
                             </td>
                             <td class="img-clm text-center">
-                                <c:set value="" var="imgSrc" />
-                                <c:choose>
-                                    <c:when test="${admin.image==null || admin.image.trim().equals('')}">
-                                        <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set value="/common/${admin.image}" var="imgSrc" />
-                                    </c:otherwise>
-                                </c:choose>
-                                <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}"/>"class="img-circle" width="70">
+                                <c:if test = "${admin.image==null || admin.image.trim().equals('')}">
+                                    <a class="admin-thumbnail" href="#" data-admin-id="${admin.id}"
+                                       data-toggle="modal" data-title="">
+                                        <img class="img-circle" width="70" src="<s:url value="/resources/images/default_profile_pic.png" />" alt="No image">
+                                    </a>
+                                </c:if>
+                                <c:if test = "${admin.image!=null && !admin.image.trim().equals('')}">
+                                    <a class="admin-thumbnail" href="#" data-admin-id="${admin.id}"
+                                       data-toggle="modal" data-title="">
+                                        <img class="img-circle" width="70" src="<s:url value="/common/${admin.image}" />" alt="No image">
+                                    </a>
+                                </c:if>
                             </td>
 
                             <td class="date-clm">
@@ -105,6 +107,49 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="admin-profile-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                    </div>
+                    <div class="modal-body clearfix">
+                        <div class="container">
+                            <h3 class="uni-header">
+                                <span>Admin Profile
+                                    <%--<a href="<c:url value="/admin/photographer/update/${photographer.id}" />" class="pull-right">--%>
+                                      <%--<button type="button" class="close" style="font-size: 42px">--%>
+                                          <%--<i class="fa fa-pencil-square" aria-hidden="true" style="font-size: 40px;color: #2d2356;"></i>--%>
+                                      <%--</button>--%>
+                                    <%--</a>--%>
+                                </span>
+                            </h3>
+                            <div class="col-md-12">
+                                <div class="row clearfix">
+                                    <div class="col-md-5">
+                                        <img id="p-profilephoto" onerror="this.src='<c:url value="/resources/images/default_alternate.png"/>'"
+                                             src="" class="img-responsive">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label class="label-pd">Full Name</label>
+                                        <h4><strong id="p-fullname"></strong></h4>
+                                        <label class="label-pd">Phone Number</label>
+                                        <h4><strong id="p-phone"></strong></h4>
+                                        <label class="label-pd">User Name</label>
+                                        <h4><strong id="p-username"></strong></h4>
+                                        <label class="label-pd">Email</label>
+                                        <h4><strong id="p-email"></strong></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function() {
                 $('#admin-datatable').DataTable({
@@ -123,6 +168,27 @@
                     ],
                     "order": [[6, 'desc']]
                 });
+
+                $('.admin-thumbnail').click(function () {
+                    var $popUp = $('#admin-profile-modal');
+                    var adminId = $(this).data('admin-id');
+                    $.ajax({
+                        url:BASEURL+'api/admin/details/' + adminId,
+                        type:'GET',
+                        dataType:'JSON',
+                        success:function (admin) {
+                            console.log(admin);
+                            var imagePath = BASEURL+ 'common/' + admin.image;
+                            $popUp.find('#p-profilephoto').attr('src', imagePath);
+                            $popUp.find('#p-fullname').html(admin.name);
+                            $popUp.find('#p-phone').html(admin.phoneNumber);
+                            $popUp.find('#p-email').html(admin.email);
+                            $popUp.find('#p-username').html(admin.userName);
+                            $popUp.modal('show');
+                        }
+                    });
+                });
+
             } );
         </script>
         <script src="<s:url value="/resources/developer/js/helper/list.helper.common.js"/>"></script>

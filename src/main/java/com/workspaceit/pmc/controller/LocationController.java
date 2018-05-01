@@ -74,8 +74,10 @@ public class LocationController {
     @RequestMapping(value = "/all")
     public ModelAndView all(){
         List<Location> locations = this.locationService.getAll();
+        String frontEndAppBaseUrl = environment.getFrontEndAppBaseUrl();
         ModelAndView model = new ModelAndView("admin/location/all");
         model.addObject("locations",locations);
+        model.addObject("frontEndAppBaseUrl",frontEndAppBaseUrl);
         return model;
     }
 

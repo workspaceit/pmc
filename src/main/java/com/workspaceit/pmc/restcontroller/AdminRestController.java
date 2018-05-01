@@ -71,6 +71,12 @@ public class AdminRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
 
+    @GetMapping("/details/{id}")
+    public ResponseEntity<?> create(Authentication authentication, @PathVariable("id")  Integer id){
+        Admin admin = adminService.getById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(admin);
+    }
+
     @RequestMapping(value = "/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,

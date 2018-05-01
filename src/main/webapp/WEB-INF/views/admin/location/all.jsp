@@ -14,8 +14,8 @@
                     <input type="hidden" id="type" value="location">
                     <a href="<c:url value="/admin/location/add"/>" class="ac_btn new"><i class="fa fa-plus"></i>NEW</a>
                     <button id="edit-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-pencil"></i>EDIT</button>
-                    <button id="activate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
-                    <button id="deactivate-selected-btn" class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
+                    <button id="activate-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-check"></i>ENABLE</button>
+                    <button id="deactivate-selected-btn" disabled="disabled"  class="ac_btn"><i class="fa fa-check"></i>DISABLE</button>
                     <button id="delete-selected-btn" disabled="disabled" class="ac_btn"><i class="fa fa-trash"></i>DELETE</button>
                 </div>
                 <div class="table-responsive dtble">
@@ -54,21 +54,24 @@
                         <tbody>
                         <d:forEach var="location" items="${locations}" >
                             <tr>
-                                <td class="des-clm">
+                                <td class="des-clm" style="text-align: center;">
                                     <input type="checkbox" class="select-checkbox" value="${location.id}">
                                 </td>
 
                                 <td class="img-clm text-center">
-                                    <c:set value="" var="imgSrc" />
-                                    <c:choose>
-                                        <c:when test="${location.locationLogo==null || location.locationLogo.trim().equals('')}">
-                                            <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set value="/common/${location.locationLogo}" var="imgSrc" />
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
+                                    <a onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?locId=${location.id}','_blank')"
+                                        style="cursor: pointer;">
+                                        <c:set value="" var="imgSrc" />
+                                        <c:choose>
+                                            <c:when test="${location.locationLogo==null || location.locationLogo.trim().equals('')}">
+                                                <c:set value="/resources/images/default_profile_pic.png" var="imgSrc" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set value="/common/${location.locationLogo}" var="imgSrc" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <img onerror="this.src='<c:url value="/resources/images/default_alternate.png" />'" src="<c:url value="${imgSrc}" /> " class="img-circle" width="70">
+                                    </a>
                                 </td>
                                 <td class="des-clm">
                                     <p id="title-${location.id}" class="text-left">${location.name}</p>
