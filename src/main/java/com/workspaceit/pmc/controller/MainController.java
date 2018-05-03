@@ -66,17 +66,7 @@ public class MainController {
 
     @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
     public ModelAndView defaultPage() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Login Form - Database Authentication");
-        model.addObject("message", "This is default page!");
-        model.addObject("totalImages",this.dashboardService.getNumberOfEventPhotoUploaded(0));
-        model.addObject("totalImagesInLastWeek",this.dashboardService.getNumberOfEventPhotoUploaded(7));
-        model.addObject("totalEvents",this.dashboardService.getNumberOfEvents(0));
-        model.addObject("totalEventsInLastWeek",this.dashboardService.getNumberOfEvents(7));
-        model.addObject("topActiveEvents",this.dashboardService.getTopActiveEvents());
-        model.setViewName("admin/home");
-        return model;
-
+        return new ModelAndView("redirect:" + "admin/dashboard");
     }
 
     @RequestMapping(value = "/admin/**", method = RequestMethod.GET)
