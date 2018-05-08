@@ -232,6 +232,7 @@ public class EventService {
     public List<Event> getByAdvertiserId(Integer advertiserId){
         return this.eventDao.getByAdvertiserId(advertiserId);
     }
+
     @Transactional
     public void update(Event event){
         this.eventDao.update(event);

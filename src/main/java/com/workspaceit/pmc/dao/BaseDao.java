@@ -38,7 +38,7 @@ public class BaseDao {
     }
     public void update(Object obj){
         Session session = this.getCurrentSession();
-        session.update(obj);
+        session.merge(obj);
     }
 
     public void updateAll(Collection<? extends Object> entities){

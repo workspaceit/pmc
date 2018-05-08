@@ -44,7 +44,7 @@ public class Oauth2Configuration {
         public void configure(HttpSecurity http) throws Exception {
             http.antMatcher("/auth/api/**")
                     .authorizeRequests()
-                    .antMatchers("/auth/api/**").access("hasRole('photographer')")
+                    .antMatchers("/auth/api/**").access("hasAnyRole('photographer', 'ROLE_superadmin')")
                     .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and().cors();
         }
 

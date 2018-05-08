@@ -8,11 +8,21 @@ import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.CypherHelper;
 import com.workspaceit.pmc.validation.form.PhotographerForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerEndpointsConfiguration;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Created by mi_rafi on 12/28/17.
@@ -20,10 +30,16 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class PhotographerService {
+
+    private AuthorizationServerEndpointsConfiguration configuration;
     private PhotographerDao photographerDao;
     private AdminDao adminDao;
-
     private FileService fileService;
+
+    @Autowired
+    public void setConfiguration(AuthorizationServerEndpointsConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     @Autowired
     public void setPhotographerDao(PhotographerDao photographerDao) {
@@ -181,5 +197,30 @@ public class PhotographerService {
     @Transactional(rollbackFor = Exception.class)
     public List<Photographer> getSuggestedPhotographers(String searchTerm, Boolean active){
         return this.photographerDao.getSuggestedPhotographers(searchTerm, active);
+    }
+
+    public OAuth2AccessToken generateOAuth2AccessToken(UserDetails user, List<String> scopes) {
+
+        Map<String, String> requestParameters = new HashMap<>();
+        Map<String, Serializable> extensionProperties = new HashMap<>();
+
+        boolean approved = true;
+        Set<String> responseTypes = new HashSet<>();
+        responseTypes.add("code");
+
+        // Authorities
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add(new SimpleGrantedAuthority("ROLE_photographer"));
+
+        OAuth2Request oauth2Request = new OAuth2Request(requestParameters, "pmc-app-client", authorities, approved,
+                new HashSet<>(scopes), new HashSet<>(Arrays.asList("oauth2-server")),
+                null, responseTypes, extensionProperties);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user,
+                "N/A", authorities);
+        OAuth2Authentication auth = new OAuth2Authentication(oauth2Request, authenticationToken);
+        AuthorizationServerTokenServices tokenService = configuration.getEndpointsConfigurer().getTokenServices();
+        OAuth2AccessToken token = tokenService.createAccessToken(auth);
+        return token;
     }
 }

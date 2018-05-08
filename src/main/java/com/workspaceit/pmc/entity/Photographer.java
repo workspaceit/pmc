@@ -55,9 +55,6 @@ public class Photographer {
     @JoinColumn(name = "created_by", referencedColumnName = "id", nullable = true)
     private Admin createdBy;
 
-//    @JsonIgnore
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "photographers",fetch = FetchType.LAZY)
-//    private Set<Event> events = new HashSet<Event>();
 
     @Column(name = "active")
     private Boolean active;
@@ -145,14 +142,6 @@ public class Photographer {
     public void setCreatedBy(Admin createdBy) {
         this.createdBy = createdBy;
     }
-
-//    public Set<Event> getEvents() {
-//        return events;
-//    }
-//
-//    public void setEvents(Set<Event> events) {
-//        this.events = events;
-//    }
 
     public Boolean getActive() {
         return active;

@@ -1,5 +1,6 @@
 package com.workspaceit.pmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -12,6 +13,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "admins")
+@JsonIgnoreProperties({"password","createdBy", "createdAt"})
 public class Admin {
 
     @Id
