@@ -50,7 +50,7 @@ public class AdvertisementPricesRestController {
         this.advertisementPricesService = advertisementPricesService;
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/update")
     public ResponseEntity<?> update(Authentication authentication, @Valid AdvertisementPricesForm advertisementPricesForm, BindingResult bindingResult) throws EntityNotFound {
         Admin currentUser = (Admin)authentication.getPrincipal();

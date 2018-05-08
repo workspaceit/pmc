@@ -46,7 +46,7 @@ public class VenueRestController {
         this.venueValidator = venueValidator;
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid VenueForm venueForm, BindingResult bindingResult) {
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -88,7 +88,7 @@ public class VenueRestController {
     }
 
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,@PathVariable("id") int id, @Valid VenueForm venueForm, BindingResult bindingResult) throws EntityNotFound{
         Admin currentUser = (Admin)authentication.getPrincipal();

@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.restcontroller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.service.AdminService;
@@ -9,6 +10,7 @@ import com.workspaceit.pmc.validation.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
@@ -42,7 +44,9 @@ public class AdminRestController {
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
+
     @PostMapping("/create")
+    @Secured({UserRole._SUPER_ADMIN})
     public ResponseEntity<?> create(Authentication authentication, @Valid AdminCreateForm adminCreateForm, BindingResult bindingResult) {
         Admin currentUser = (Admin)authentication.getPrincipal();
 
@@ -78,6 +82,7 @@ public class AdminRestController {
     }
 
     @RequestMapping(value = "/update/{id}")
+    @Secured({UserRole._SUPER_ADMIN})
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,
                                     @Valid AdminEditForm adminEditForm, BindingResult bindingResult){

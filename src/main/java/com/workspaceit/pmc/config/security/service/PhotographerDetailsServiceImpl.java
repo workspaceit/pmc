@@ -29,4 +29,5 @@ public class PhotographerDetailsServiceImpl implements UserDetailsService{
 
         return new PhotographerUserDetails(photographer);
     }
+
 }

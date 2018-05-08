@@ -5,4 +5,5 @@ package com.workspaceit.pmc.constant;
  */
 public class UserRole {
     public final static String _SUPER_ADMIN =  "ROLE_superadmin";
+    public final static String _ADMIN =  "ROLE_admin";
 }

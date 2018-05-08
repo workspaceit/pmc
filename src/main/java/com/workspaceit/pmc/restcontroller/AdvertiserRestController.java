@@ -114,14 +114,14 @@ public class AdvertiserRestController {
     public ResponseEntity<?> getById(Authentication authentication, @PathVariable("id") int id ){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.advertiserService.getById(id));
     }
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/validate-create")
     public ResponseEntity<?> validateCreate(Authentication authentication, @Valid @RequestBody AdvertiserCreateForm advertiserForm, BindingResult bindingResult){
         System.out.println(advertiserForm);
         return this.getValidated(advertiserForm,bindingResult);
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid AdvertiserForm advertiserForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -137,7 +137,7 @@ public class AdvertiserRestController {
         Advertiser advertiser = this.advertiserService.create(advertiserForm,currentUser);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(advertiser);
     }
-    @Secured({UserRole._SUPER_ADMIN})
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/create-all")
     public ResponseEntity<?> advertiserCreate(Authentication authentication, @Valid @RequestBody  AdvertiserAndAllCompositeForm advertiserAndAllCompositeForm, BindingResult bindingResult){
         /**
@@ -311,7 +311,7 @@ public class AdvertiserRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
     }
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/checkout/{transactionId}/{advertiserId}")
     public ResponseEntity<?> checkout(@PathVariable("transactionId") int transactionId,
                                       @PathVariable("advertiserId") int advertiserId,

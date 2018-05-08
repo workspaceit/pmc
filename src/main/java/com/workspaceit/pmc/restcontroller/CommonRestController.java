@@ -28,7 +28,7 @@ public class CommonRestController {
         this.commonService = commonService;
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/activate-entity")
     public ResponseEntity<?> activateEntity(HttpServletRequest request){
         Integer id = Integer.valueOf(request.getParameter("id"));
@@ -43,7 +43,7 @@ public class CommonRestController {
 
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/deactivate-entity")
     public ResponseEntity<?> deActivateEntity(HttpServletRequest request){
         Integer id = Integer.valueOf(request.getParameter("id"));
@@ -57,7 +57,7 @@ public class CommonRestController {
         }
 
     }
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/delete-entity")
     public ResponseEntity<?> delete(HttpServletRequest request){
         Integer id = Integer.valueOf(request.getParameter("id"));
