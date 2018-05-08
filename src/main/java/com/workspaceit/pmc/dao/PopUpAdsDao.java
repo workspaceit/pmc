@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Repository
 public class PopUpAdsDao extends BaseDao{
-    public List<PopupAd> getByAdvertiserId(int advertiserId){
+    /*public List<PopupAd> getByAdvertiserId(int advertiserId){
         Session session = this.getCurrentSession();
         return session.createQuery("FROM PopupAd where advertiserId=:advertiserId")
                 .setParameter("advertiserId",advertiserId)
@@ -47,5 +47,5 @@ public class PopUpAdsDao extends BaseDao{
                 .setParameter("advertiserId",advertiserId)
 
                 .uniqueResult();
-    }
+    }*/
 }

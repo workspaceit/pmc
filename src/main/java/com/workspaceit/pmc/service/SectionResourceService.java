@@ -3,6 +3,7 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.dao.SectionResourceDao;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,20 +80,20 @@ public class SectionResourceService {
         this.sectionResourceDao.delete(sectionResource);
     }
     // Default access
-    List<SectionResource> prepareSectionResource(Integer[] tokens, FILE_TYPE fileType){
+    List<SectionResource> prepareSectionResource(SectionResourceForm[] secResList, FILE_TYPE fileType){
         List<SectionResource> sectionResources = new LinkedList<>();
-        if(tokens==null){
+        if(secResList==null || secResList.length==0){
             return sectionResources;
         }
-        for(Integer token:tokens){
-            SectionResource tmpSectionResources =  this.prepareSectionResource(token,fileType);
+        for(SectionResourceForm secRes : secResList){
+            SectionResource tmpSectionResources =  this.prepareSectionResource(secRes.getToken(),fileType,secRes.getUrl());
             sectionResources.add(tmpSectionResources);
         }
 
         return sectionResources;
     }
     // Default access
-    SectionResource prepareSectionResource(Integer token, FILE_TYPE fileType){
+    SectionResource prepareSectionResource(Integer token, FILE_TYPE fileType,String url){
         String logoFileName = this.fileService.copyFile(token);
         String mimeType = this.fileService.getMimeTypeByToken(token);
         SectionResource sectionResource = new SectionResource();
@@ -100,6 +101,7 @@ public class SectionResourceService {
         sectionResource.setFileType(fileType);
         sectionResource.setFileName(logoFileName);
         sectionResource.setMimeType(mimeType);
+        sectionResource.setUrl(url);
 
         return sectionResource;
     }

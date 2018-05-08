@@ -6,6 +6,10 @@ var errorFound = false;
 var globalBtnAction = "";
 var globalSubmitAction = "";
 
+function SectionResource (token,url) {
+    this.token = token;
+    this.url = url;
+}
 /*DropZoneObject used below code*/
 var dropZoneElements = {
      advertiserOtherImages : {},
@@ -23,7 +27,10 @@ var dropZoneElements = {
 };
 
 
-
+var PREFIX={
+    _IMAGE_URL:"imgUrl_",
+    _IMAGE_UPDATE_URL:"imgUrlUpdated_"
+};
 
 var RotationSettings={
     _GALLERY_BOTTOM:"galleryBottomRotationBtn",
@@ -567,14 +574,19 @@ function configAdvertBdImgDropZone(data){
 
             },
             error:function(file,response){
+                console.log(file);
                 var msg = (typeof response == "object")?((response.length>0)?response[0].msg:""):response;
-                $("#"+elementId).find(".dz-error-message span").html(msg).addClass("text-danger");
+                $(file.previewElement).find(".dz-error-message span").html(msg).addClass("text-danger");
             },
             success:function(file,response){
 
                 file.token = response.token;
+
+
                 console.log(file);
                 fnSuccess(response,file);
+
+                $(file.previewElement).find(".imgUrl").first().attr("id",PREFIX._IMAGE_URL+file.token);
             }
         }
     );
@@ -684,56 +696,48 @@ function submitCreateOrUpdate(btnAction){
        }
 }
 /*Advertiser */
-function getAdvertiserInfoData(prefix){
-    if(prefix==undefined){
-        prefix = "";
-    }else{
-        prefix += "."
-    }
+function getAdvertiserInfoData(){
+   
     var name = $('#name').val();
     var address = $('#address').val();
     var cityId = $('#cityId').val();
-    var eventIds = $('#eventIds').val();
+    var eventIds = [$('#eventIds').val()];
     var stateId = $('#stateId').val();
     var zip = $('#zip').val();
     var phone = $('#phone').val();
     var website = $('#website').val();
-    var runtimeStarts = $('#runtimeStarts').data('daterangepicker').startDate.format("MM/DD/YYYY");
-    var runtimeEnds = $('#runtimeEnds').data('daterangepicker').startDate.format("MM/DD/YYYY");
-    var locationIds = $('#locationIds').val();
+    var runtimeStarts = $('#runtimeStarts').data('daterangepicker').startDate._d.getTime();
+    var runtimeEnds = $('#runtimeEnds').data('daterangepicker').startDate._d.getTime();
+    var locationIds = [$('#locationIds').val()];
     var allLocationSelected = hasAllLocationSelected();
     var allEventSelected = hasAllEventSelected();
     var otherImage = getToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN);
 
     var data={};
 
-    data[prefix+"name"]= name;
-    data[prefix+"address"]= address;
-    data[prefix+"cityId"]= cityId;
-    data[prefix+"eventIds"]= eventIds;
-    data[prefix+"stateId"]= stateId;
-    data[prefix+"zip"]= zip;
-    data[prefix+"phone"]= phone;
-    data[prefix+"website"]= website;
-    data[prefix+"otherImage"]= otherImage;
-    data[prefix+"runtimeStarts"]= runtimeStarts;
-    data[prefix+"runtimeEnds"]= runtimeEnds;
-    data[prefix+"locationIds"]= locationIds;
-    data[prefix+"isAllLocationSelected"]=allLocationSelected;
-    data[prefix+"isAllEventSelected"]=allEventSelected;
-    data[prefix+"otherImage"]=otherImage;
+    data["name"]= name;
+    data["address"]= address;
+    data["cityId"]= cityId;
+    data["eventIds"]= eventIds;
+    data["stateId"]= stateId;
+    data["zip"]= zip;
+    data["phone"]= phone;
+    data["website"]= website;
+    data["otherImage"]= otherImage;
+    data["runtimeStarts"]= runtimeStarts;
+    data["runtimeEnds"]= runtimeEnds;
+    data["locationIds"]= locationIds;
+    data["isAllLocationSelected"]=allLocationSelected;
+    data["isAllEventSelected"]=allEventSelected;
+    data["otherImage"]=otherImage;
 
 
     return data;
 }
 
 /*Gallery Ads */
-function getGalleryAddsData(prefix){
-    if(prefix==undefined){
-        prefix = "";
-    }else{
-        prefix += "."
-    }
+function getGalleryAddsData(){
+    
     var galleryId = ($('#galleryAdId').length>0)?parseInt($('#galleryAdId').val()):0;
     var advertiserId = ($('#galleryAdId').length>0)?parseInt($('#advertiserId').val()):null;
     var logoToken = getToken(ADV_IMG_TYPE._LOGO_TOKEN);
@@ -742,8 +746,8 @@ function getGalleryAddsData(prefix){
     var topBannerImgTokens = getToken(ADV_IMG_TYPE._TOP_BANNER_TOKEN);
     var bottomBannerImgTokens = getToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN);
 
-    var topBannerExpiryDate = $('#topBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
-    var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var topBannerExpiryDate = $('#topBannerExpiryDate').data('daterangepicker').startDate._d.getTime();
+    var bottomBannerExpiryDate = $('#bottomBannerExpiryDate').data('daterangepicker').startDate._d.getTime();
 
     var topBannerRotation = getRotationSetting(RotationSettings._GALLERY_TOP);
     var bottomBannerRotation = getRotationSetting(RotationSettings._GALLERY_BOTTOM);
@@ -753,32 +757,28 @@ function getGalleryAddsData(prefix){
     var galleryAdBottomBannerPrice = $('#galleryAdBottomBannerPrice').val();
 
     var data={};
-    if(galleryId>0)data[prefix+"id"]= galleryId;
+    if(galleryId>0)data["id"]= galleryId;
 
-    data[prefix+"advertiserId"]= advertiserId;
-    data[prefix+"logoToken"]= logoToken;
-    data[prefix+"bgImgTokens"]= bgImgTokens;
-    data[prefix+"topBannerImgTokens"]=topBannerImgTokens;
-    data[prefix+"bottomBannerImgTokens"]=bottomBannerImgTokens;
-    data[prefix+"topBannerExpiryDate"]= topBannerExpiryDate;
-    data[prefix+"bottomBannerExpiryDate"]= bottomBannerExpiryDate;
-    data[prefix+"topBannerRotation"]= topBannerRotation;
-    data[prefix+"bottomBannerRotation"]= bottomBannerRotation;
+    data["advertiserId"]= advertiserId;
+    data["logoSectionResource"]= getSectionResource(logoToken);
+    data["bgSectionResource"]= getSectionResource(bgImgTokens);
+    data["topSectionResource"]=getListOfSectionResource(topBannerImgTokens);
+    data["bottomSectionResource"]=getListOfSectionResource(bottomBannerImgTokens);
+    data["topBannerExpiryDate"]= topBannerExpiryDate;
+    data["bottomBannerExpiryDate"]= bottomBannerExpiryDate;
+    data["topBannerRotation"]= topBannerRotation;
+    data["bottomBannerRotation"]= bottomBannerRotation;
 
-    data[prefix+"bgPrice"]=galleryAdBgPrice;
-    data[prefix+"topBannerPrice"] = galleryAdTopBannerPrice;
-    data[prefix+"bottomBannerPrice"] = galleryAdBottomBannerPrice;
+    data["bgPrice"]=galleryAdBgPrice;
+    data["topBannerPrice"] = galleryAdTopBannerPrice;
+    data["bottomBannerPrice"] = galleryAdBottomBannerPrice;
 
 
     return data;
 }
 /*Slideshow Ads */
-function getSlideShowAdsData(prefix){
-    if(prefix==undefined){
-        prefix="";
-    }else{
-        prefix += "."
-    }
+function getSlideShowAdsData(){
+   
 
     var slideShowAdsId = ($("#slideshowAdId").length>0)?$("#slideshowAdId").val():0;
     var slideShowAdsBannerTokens = getToken(ADV_IMG_TYPE._SLIDESHOW_BANNER_TOKEN);
@@ -786,7 +786,7 @@ function getSlideShowAdsData(prefix){
     var slideShowBannerDuration = $("#slideShowBannerDuration").val();
     var slideShowVideoDuration =  $("#slideShowVideoDuration").val();
 
-    var bannerExpiryDate = $('#slideShowBannerExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var bannerExpiryDate = $('#slideShowBannerExpiryDate').data('daterangepicker').startDate._d.getTime();
 
     var bannerRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_BANNER);
     var videoRotation = getRotationSetting(RotationSettings._SLIDE_SHOW_VIDEO);
@@ -796,18 +796,21 @@ function getSlideShowAdsData(prefix){
 
 
     var data = {};
-    if(slideShowAdsId>0) data[prefix+"id"] = slideShowAdsId;
+    if(slideShowAdsId>0) data["id"] = slideShowAdsId;
 
-    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
-    data[prefix+"slideShowAdsBannerTokens"] = slideShowAdsBannerTokens;
-    data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
-    data[prefix+"slideShowBannerDuration"] = slideShowBannerDuration;
-    data[prefix+"slideShowVideoDuration"] = slideShowVideoDuration;
-    data[prefix+"bannerExpiryDate"] = bannerExpiryDate;
-    data[prefix+"bannerRotation"] = bannerRotation;
-    data[prefix+"videoRotation"] = videoRotation;
-    data[prefix+"bannerPrice"] = bannerPrice;
-    data[prefix+"videoPrice"] = videoPrice;
+
+   // data[prefix+"slideShowAdsVideoToken"] = slideShowAdsVideoToken;
+
+
+    data["slideShowAdsVideoResources"] =  getSectionResource(slideShowAdsVideoToken);
+    data["slideShowAdsBannerResources"] = getListOfSectionResource(slideShowAdsBannerTokens);
+    data["slideShowBannerDuration"] = slideShowBannerDuration;
+    data["slideShowVideoDuration"] = slideShowVideoDuration;
+    data["bannerExpiryDate"] = bannerExpiryDate  ;
+    data["bannerRotation"] = bannerRotation;
+    data["videoRotation"] = videoRotation;
+    data["bannerPrice"] = bannerPrice;
+    data["videoPrice"] = videoPrice;
     return data;
 }
 /*PopUp Ads */
@@ -817,17 +820,19 @@ function getPopUpAdsData(prefix){
     }else{
         prefix += "."
     }
+
+
     var smsPopupId = $("#popupSmsAdId").length>0? parseInt($("#popupSmsAdId").val()):0;
     var smsPopupBanner = getToken(ADV_IMG_TYPE._SMS_POPUP_BANNER_TOKEN);
     var smsPopupVideo = getToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
     var smsPopupVideoDuration = $("#smsPopupVideoDuration").val();
-    var smsExpiryDate = $('#smsExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var smsExpiryDate = $('#smsExpiryDate').data('daterangepicker').startDate._d.getTime();
 
     var emailPopupId = $("#popupEmailAdId").length>0? parseInt($("#popupEmailAdId").val()):0;
     var emailPopupVideo = getToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
     var emailPopupBanner = getToken(ADV_IMG_TYPE._EMAIL_POPUP_BANNER_TOKEN);
     var emailPopupVideoDuration = $("#emailPopupVideoDuration").val();
-    var emailExpiryDate =  $('#emailExpiryDate').data('daterangepicker').startDate.format("MM/DD/YYYY");
+    var emailExpiryDate =  $('#emailExpiryDate').data('daterangepicker').startDate._d.getTime();
 
     var smsRotation = getRotationSetting(RotationSettings._POP_UP_SMS);
     var emailRotation = getRotationSetting(RotationSettings._POP_UP_EMAIL);
@@ -840,10 +845,10 @@ function getPopUpAdsData(prefix){
     if(smsPopupId>0)data[prefix+"smsId"]=smsPopupId;
     if(emailPopupId>0)data[prefix+"emailId"]=emailPopupId;
 
-    data[prefix+"smsPopupBanner"]=smsPopupBanner;
-    data[prefix+"smsPopupVideo"]= smsPopupVideo;
-    data[prefix+"emailPopupBanner"]= emailPopupBanner;
-    data[prefix+"emailPopupVideo"]= emailPopupVideo;
+    data[prefix+"smsPopupBannerResources"]=getListOfSectionResource(smsPopupBanner);
+    data[prefix+"smsPopupVideoResource"]=  getSectionResource(smsPopupVideo);
+    data[prefix+"emailPopupBannerResources"]= getListOfSectionResource(emailPopupBanner);
+    data[prefix+"emailPopupVideoResource"]= getSectionResource(emailPopupVideo);
     data[prefix+"emailPopupVideoDuration"]= emailPopupVideoDuration;
     data[prefix+"smsPopupVideoDuration"]= smsPopupVideoDuration;
     data[prefix+"smsExpiryDate"]= smsExpiryDate;
@@ -855,7 +860,25 @@ function getPopUpAdsData(prefix){
 
     return data;
 }
+function getListOfSectionResource(tokens){
+    var secResList = [];
 
+
+   for(var i=0;i<tokens.length;i++){
+       var token = tokens[i];
+       var url = getSectionResourceUrlByToken(token);
+       secResList.push(new SectionResource(token,url));
+   }
+
+   return secResList;
+}
+function getSectionResource(tokens){
+    return  tokens.length > 0 ? new SectionResource(tokens[0],getSectionResourceUrlByToken(tokens[0])) : new SectionResource(null,null);
+}
+function getSectionResourceUrlByToken(token){
+       var url =  $("#"+PREFIX._IMAGE_URL+token).val();
+       return ( url===undefined || url===null || url==="" )?null:url;
+}
 /*Validation */
 function validateAdvertiser(fnSuccess,fnError){
     var data = getAdvertiserInfoData();
@@ -863,8 +886,9 @@ function validateAdvertiser(fnSuccess,fnError){
     $.ajax({
         url: BASEURL+"api/pmc-advsr/validate-create",
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);
@@ -900,8 +924,9 @@ function validateGalleryAdds(forUpdate,fnSuccess,fnError){
     $.ajax({
         url: url,
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);
@@ -933,8 +958,9 @@ function validateSlideShowAds(forUpdate,fnSuccess,fnError){
     $.ajax({
         url: url,
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);
@@ -969,8 +995,9 @@ function validatePopUpAdsData(forUpdate,fnSuccess,fnError) {
     $.ajax({
         url: url,
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);

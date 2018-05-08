@@ -1,7 +1,10 @@
 package com.workspaceit.pmc.validation.advertisement.slideshow;
 
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -12,9 +15,18 @@ public class SlideShowAdsForm {
 
     private Integer id;
     private Integer advertiserId;
-    private Integer[] slideShowAdsBannerTokens;
-    private Integer slideShowAdsVideoToken;
+    private String videoRotation;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm slideShowAdsVideoResources;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm[] slideShowAdsBannerResources;
+
     private Integer slideShowBannerDuration;
+
     private Date bannerExpiryDate;
 
     private ADVERTISEMENT_ROTATION_SETTINGS bannerRotation;
@@ -37,20 +49,28 @@ public class SlideShowAdsForm {
         this.advertiserId = advertiserId;
     }
 
-    public Integer[] getSlideShowAdsBannerTokens() {
-        return slideShowAdsBannerTokens;
+    public String getVideoRotation() {
+        return videoRotation;
     }
 
-    public void setSlideShowAdsBannerTokens(Integer[] slideShowAdsBannerTokens) {
-        this.slideShowAdsBannerTokens = slideShowAdsBannerTokens;
+    public void setVideoRotation(String videoRotation) {
+        this.videoRotation = videoRotation;
     }
 
-    public Integer getSlideShowAdsVideoToken() {
-        return slideShowAdsVideoToken;
+    public SectionResourceForm[] getSlideShowAdsBannerResources() {
+        return slideShowAdsBannerResources;
     }
 
-    public void setSlideShowAdsVideoToken(Integer slideShowAdsVideoToken) {
-        this.slideShowAdsVideoToken = slideShowAdsVideoToken;
+    public void setSlideShowAdsBannerResources(SectionResourceForm[] slideShowAdsBannerResources) {
+        this.slideShowAdsBannerResources = slideShowAdsBannerResources;
+    }
+
+    public SectionResourceForm getSlideShowAdsVideoResources() {
+        return slideShowAdsVideoResources;
+    }
+
+    public void setSlideShowAdsVideoResources(SectionResourceForm slideShowAdsVideoResources) {
+        this.slideShowAdsVideoResources = slideShowAdsVideoResources;
     }
 
     public Integer getSlideShowBannerDuration() {
@@ -93,8 +113,8 @@ public class SlideShowAdsForm {
         return "SlideShowAdsForm{" +
                 "id=" + id +
                 ", advertiserId=" + advertiserId +
-                ", slideShowAdsBannerTokens=" + Arrays.toString(slideShowAdsBannerTokens) +
-                ", slideShowAdsVideoToken=" + slideShowAdsVideoToken +
+                ", slideShowAdsBannerResources=" + Arrays.toString(slideShowAdsBannerResources) +
+                ", slideShowAdsVideoResources=" + slideShowAdsVideoResources +
                 ", slideShowBannerDuration=" + slideShowBannerDuration +
                 ", bannerExpiryDate=" + bannerExpiryDate +
                 ", bannerRotation=" + bannerRotation +

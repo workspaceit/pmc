@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class GalleryAdQuantityPriceService {
-    private GalleryAdQuantityPriceDao galleryAdQuantityPriceDao;
+    /*private GalleryAdQuantityPriceDao galleryAdQuantityPriceDao;
 
     @Autowired
     public void setGalleryAdQuantityPriceDao(GalleryAdQuantityPriceDao galleryAdQuantityPriceDao) {
@@ -38,5 +38,5 @@ public class GalleryAdQuantityPriceService {
     public GalleryAdQuantityPrice create(GalleryAdQuantityPrice galleryAdQuantityPrice){
         this.galleryAdQuantityPriceDao.insert(galleryAdQuantityPrice);
         return galleryAdQuantityPrice;
-    }
+    }*/
 }

@@ -23,39 +23,14 @@ public class AdvertisementPriceAndQuantityService {
     public final static String quantityMapKey = "quantities";
     private AdvertisementService advertisementService;
 
-    private GalleryAdService galleryAdService;
-    private SlideShowService slideShowService;
-    private PopUpAdsService  popUpAdsService;
 
     @Autowired
     public void setAdvertisementService(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
     }
 
-    @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
-    }
-    @Autowired
-    public void setSlideShowService(SlideShowService slideShowService) {
-        this.slideShowService = slideShowService;
-    }
-    @Autowired
-    public void setPopUpAdsService(PopUpAdsService popUpAdsService) {
-        this.popUpAdsService = popUpAdsService;
-    }
 
-    @Transactional
-    public Map<String,Object> getOLDSoldPriceAndQuantity(int advertiserId){
 
-        GalleryAd galleryAd = this.galleryAdService.getByAdvertiserId(advertiserId);
-        SlideshowAd slideshowAd = this.slideShowService.getByAdvertiserId(advertiserId);
-        PopupAd popupAdSms  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.SMS);
-        PopupAd popupAdEmail  = this.popUpAdsService.getByAdvertiserId(advertiserId, PopupAdConstant.EMAIL);
-
-        return this.getSoldPriceAndQuantity(galleryAd,slideshowAd,popupAdSms,popupAdEmail);
-
-    }
     @Transactional
     public Map<String,Object> getSoldPriceAndQuantity(GalleryAd galleryAd,SlideshowAd slideshowAd,PopupAd popupAdSms,PopupAd popupAdEmail  ){
         Map<String,Object> priceAndQuantity = new HashMap<>();

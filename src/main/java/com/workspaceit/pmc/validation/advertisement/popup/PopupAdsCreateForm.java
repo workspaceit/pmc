@@ -26,14 +26,12 @@ public class PopupAdsCreateForm extends PopupAdsForm {
 
     @Override
     @NotNull(message = "Expiry Date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     public Date getSmsExpiryDate() {
         return super.getSmsExpiryDate();
     }
 
     @Override
     @NotNull(message = "Expiry Date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     public Date getEmailExpiryDate() {
         return super.getEmailExpiryDate();
     }

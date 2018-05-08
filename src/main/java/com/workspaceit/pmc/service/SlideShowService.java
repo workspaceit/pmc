@@ -6,6 +6,7 @@ import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.exception.EntityNotFound;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SlideShowService {
-    private FileService fileService;
+   /* private FileService fileService;
     private SlideshowBannerImageService slideshowBannerImageService;
     private SlideshowQuantityPriceService quantityPriceService;
 
@@ -75,14 +76,15 @@ public class SlideShowService {
     }
     @Transactional(rollbackFor = Exception.class)
     public SlideshowAd update(int id,Advertiser advertiser , SlideShowAdsUpdateForm slideShowAdsForm, Admin admin)throws EntityNotFound{
-        Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoToken();
-        Integer[] bannerTokens = slideShowAdsForm.getSlideShowAdsBannerTokens();
+        SectionResourceForm videoToken = slideShowAdsForm.getSlideShowAdsVideoResources();
+        SectionResourceForm[] bannerTokens = slideShowAdsForm.getSlideShowAdsBannerResources();
+
         Integer[] removeBannerIds = slideShowAdsForm.getRemoveBannerIds();
         SlideshowAd slideshowAd = this.getSlideshowAd(id,advertiser.getId());
 
-        if(videoToken!=null && videoToken>0){
-            String videoType = this.fileService.getMimeTypeByToken(videoToken);
-            String videoName = this.fileService.copyFile(videoToken);
+        if(videoToken.getToken()!=null && videoToken.getToken()>0){
+            String videoType = this.fileService.getMimeTypeByToken(videoToken.getToken());
+            String videoName = this.fileService.copyFile(videoToken.getToken());
             slideshowAd.setVideo(videoName);
             slideshowAd.setVideoType(videoType);
         }
@@ -94,7 +96,7 @@ public class SlideShowService {
         this.update(slideshowAd);
 
         if(bannerTokens!=null && bannerTokens.length>0){
-            this.slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerTokens(),admin);
+            this.slideshowBannerImageService.create(slideshowAd,slideShowAdsForm.getSlideShowAdsBannerResources(),admin);
         }
 
         if(removeBannerIds!=null && removeBannerIds.length>0){
@@ -130,5 +132,5 @@ public class SlideShowService {
     @Transactional(rollbackFor = Exception.class)
     public void update(SlideshowAd slideshowAd){
         this.slideshowAdDao.update(slideshowAd);
-    }
+    }*/
 }

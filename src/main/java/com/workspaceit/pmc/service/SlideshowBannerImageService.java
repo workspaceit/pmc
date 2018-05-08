@@ -2,8 +2,10 @@ package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.SlideshowBannerImageDao;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.advertisement.SectionResource;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowAd;
 import com.workspaceit.pmc.entity.advertisement.slideshow.SlideshowBannerImage;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SlideshowBannerImageService {
-    private FileService fileService;
+  /*  private FileService fileService;
 
     private SlideshowBannerImageDao slideshowBannerImageDao;
 
@@ -33,14 +35,14 @@ public class SlideshowBannerImageService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public List<SlideshowBannerImage> create(SlideshowAd slideshowAd , Integer[] tokens,Admin admin){
-        if(tokens==null ||tokens.length==0){
+    public List<SlideshowBannerImage> create(SlideshowAd slideshowAd , SectionResourceForm[] sectionResources, Admin admin){
+        if(sectionResources==null ||sectionResources.length==0){
             return null;
         }
         List<SlideshowBannerImage> slideshowBannerImageList = new ArrayList<>();
 
-        for(int token:tokens){
-            String fileName = this.fileService.copyFile(token);
+        for(SectionResourceForm secRes:sectionResources){
+            String fileName = this.fileService.copyFile(secRes.getToken());
 
             SlideshowBannerImage slideshowBannerImage = new SlideshowBannerImage();
             slideshowBannerImage.setSlideshowAdId(slideshowAd.getId());
@@ -105,5 +107,5 @@ public class SlideshowBannerImageService {
         return this.slideshowBannerImageDao.getById(ids,slideshowAdId);
     }
 
-
+*/
 }

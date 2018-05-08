@@ -9,6 +9,7 @@ import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.FileHelper;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class PopUpAdsService {
-    private FileService fileService;
+    /*private FileService fileService;
     private PopUpAdsDao popUpAdsDao;
     private PopupBannerImageService popupBannerImageService;
     private PopUpAdsQuantityPriceService popUpAdsQuantityPriceService;
@@ -45,23 +46,23 @@ public class PopUpAdsService {
 
     @Transactional(rollbackFor = Exception.class)
     public void create(Advertiser advertiser,PopupAdsForm popupAdsForm, Admin admin){
-        String smsVideoName = fileService.copyFile(popupAdsForm.getSmsPopupVideo());
-        String emailVideoName = fileService.copyFile(popupAdsForm.getEmailPopupVideo());
+        String smsVideoName = fileService.copyFile(popupAdsForm.getSmsPopupVideoResource().getToken());
+        String emailVideoName = fileService.copyFile(popupAdsForm.getEmailPopupVideoResource().getToken());
 
-        Integer[] smsPopUpBannerToken = popupAdsForm.getSmsPopupBanner();
+        SectionResourceForm[] smsPopUpBannerToken = popupAdsForm.getSmsPopupBannerResources();
         Integer smsPopupAdQuantity =(smsPopUpBannerToken!=null)?smsPopUpBannerToken.length:0;
 
-        Integer[] emailPopUpBannerToken = popupAdsForm.getEmailPopupBanner();
+        SectionResourceForm[] emailPopUpBannerToken = popupAdsForm.getEmailPopupBannerResources();
         Integer emailPopupAdQuantity =(emailPopUpBannerToken!=null)?emailPopUpBannerToken.length:0;
 
         String emailVideoType = (emailVideoName==null ||emailVideoName.equals(""))?"":FileHelper.getMimeType(emailVideoName);
         String smsVideoType= (smsVideoName==null ||smsVideoName.equals(""))?"":FileHelper.getMimeType(smsVideoName);
 
-        if(popupAdsForm.getSmsPopupVideo()!=null && popupAdsForm.getSmsPopupVideo()>0){
+        if(popupAdsForm.getSmsPopupVideoResource().getToken()!=null && popupAdsForm.getSmsPopupVideoResource().getToken()>0){
            smsPopupAdQuantity++;
         }
 
-        if(popupAdsForm.getEmailPopupVideo()!=null && popupAdsForm.getEmailPopupVideo()>0){
+        if(popupAdsForm.getEmailPopupVideoResource().getToken()!=null && popupAdsForm.getEmailPopupVideoResource().getToken()>0){
             emailPopupAdQuantity++;
         }
 
@@ -180,5 +181,5 @@ public class PopUpAdsService {
         PopupAd popupAd =  this.getById(id,advertiserId);
         if(popupAd==null)throw new EntityNotFound("No Popup ad found by id :"+id);
         return popupAd;
-    }
+    }*/
 }

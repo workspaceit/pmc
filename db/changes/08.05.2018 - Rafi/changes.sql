@@ -1,0 +1,3 @@
+ALTER TABLE  `sec_resource` ADD  `url` VARCHAR( 500 ) NOT NULL AFTER  `section_id` ;
+ALTER TABLE  `sec_resource` CHANGE  `url`  `url` VARCHAR( 500 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL ;
+DROP TABLE `gallery_ads`, `gallery_ads_bottom_banner_image`, `gallery_ads_top_banner_images`, `gallery_quantity_price`, `popup_ads`, `popup_ad_quantity_price`, `popup_banner_images`, `slideshow_ads`, `slideshow_ad_quantity_price`, `slideshow_banner_images`;

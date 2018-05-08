@@ -7,6 +7,7 @@ import com.workspaceit.pmc.entity.advertisement.galleryads.GalleryAd;
 import com.workspaceit.pmc.entity.advertisement.galleryads.images.*;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,23 +42,23 @@ public class GalleryAdImageService {
     public void create(GalleryAdsForm galleryAdsForm, GalleryAd galleryAd, Admin admin){
         List<Object> galleryAdsImageList = new ArrayList<>();
 
-        Integer[] topBannerImgTokens = galleryAdsForm.getTopBannerImgTokens();
-        Integer[] bottomBannerImgTokens = galleryAdsForm.getBottomBannerImgTokens();
+        SectionResourceForm[] topSectionResources = galleryAdsForm.getTopSectionResource();
+        SectionResourceForm[] bottomSectionResources = galleryAdsForm.getBottomSectionResource();
 
-        if(topBannerImgTokens==null)topBannerImgTokens=new Integer[0];
-        if(bottomBannerImgTokens==null)bottomBannerImgTokens=new Integer[0];
+        if(topSectionResources==null)topSectionResources=new SectionResourceForm[0];
+        if(bottomSectionResources==null)bottomSectionResources=new SectionResourceForm[0];
 
 
-        for(Integer topBannerImgToken : topBannerImgTokens){
-            String fileName = this.fileService.copyFile(topBannerImgToken);
+        for(SectionResourceForm sectionRes : topSectionResources){
+            String fileName = this.fileService.copyFile(sectionRes.getToken());
 
             GalleryAdsTopBannerImage galleryAdsTopBanner = new GalleryAdsTopBannerImage();
             galleryAdsTopBanner.setImage(fileName);
             galleryAdsTopBanner.setGalleryAdId(galleryAd.getId());
             galleryAdsImageList.add(galleryAdsTopBanner);
         }
-        for(Integer bottomBannerImgToken : bottomBannerImgTokens){
-            String fileName = this.fileService.copyFile(bottomBannerImgToken);
+        for(SectionResourceForm sectionRes : bottomSectionResources){
+            String fileName = this.fileService.copyFile(sectionRes.getToken());
 
             GalleryAdsBottomBannerImage galleryBottomBannerImage = new GalleryAdsBottomBannerImage();
             galleryBottomBannerImage.setImage(fileName);

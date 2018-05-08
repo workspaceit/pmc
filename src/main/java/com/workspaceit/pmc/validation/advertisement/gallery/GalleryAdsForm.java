@@ -1,7 +1,10 @@
 package com.workspaceit.pmc.validation.advertisement.gallery;
 
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -12,12 +15,22 @@ public class GalleryAdsForm {
     protected Integer id;
     protected Integer advertiserId;
 
-    protected Integer logoToken;
-    protected Integer bgImgTokens;
-    protected Integer[] topBannerImgTokens;
-    protected Integer[] bottomBannerImgTokens;
+    @Valid
+    @NotNull
+    protected SectionResourceForm logoSectionResource;
+
+    @Valid
+    @NotNull
+    protected SectionResourceForm bgSectionResource;
 
 
+    @Valid
+    @NotNull
+    protected SectionResourceForm[] topSectionResource;
+
+    @Valid
+    @NotNull
+    protected SectionResourceForm[] bottomSectionResource;
 
     protected Date topBannerExpiryDate;
     protected Date bottomBannerExpiryDate;
@@ -37,22 +50,22 @@ public class GalleryAdsForm {
         return advertiserId;
     }
 
-    public Integer getLogoToken() {
-        return logoToken;
+
+
+    public SectionResourceForm[] getTopSectionResource() {
+        return topSectionResource;
     }
 
-
-
-    public Integer getBgImgTokens() {
-        return bgImgTokens;
+    public SectionResourceForm[] getBottomSectionResource() {
+        return bottomSectionResource;
     }
 
-    public Integer[] getTopBannerImgTokens() {
-        return topBannerImgTokens;
+    public SectionResourceForm getLogoSectionResource() {
+        return logoSectionResource;
     }
 
-    public Integer[] getBottomBannerImgTokens() {
-        return bottomBannerImgTokens;
+    public SectionResourceForm getBgSectionResource() {
+        return bgSectionResource;
     }
 
     public Date getTopBannerExpiryDate() {
@@ -71,20 +84,20 @@ public class GalleryAdsForm {
         this.advertiserId = advertiserId;
     }
 
-    public void setLogoToken(Integer logoToken) {
-        this.logoToken = logoToken;
+    public void setLogoSectionResource(SectionResourceForm logoSectionResource) {
+        this.logoSectionResource = logoSectionResource;
     }
 
-    public void setBgImgTokens(Integer bgImgTokens) {
-        this.bgImgTokens = bgImgTokens;
+    public void setBgSectionResource(SectionResourceForm bgSectionResource) {
+        this.bgSectionResource = bgSectionResource;
     }
 
-    public void setTopBannerImgTokens(Integer[] topBannerImgTokens) {
-        this.topBannerImgTokens = topBannerImgTokens;
+    public void setTopSectionResource(SectionResourceForm[] topSectionResource) {
+        this.topSectionResource = topSectionResource;
     }
 
-    public void setBottomBannerImgTokens(Integer[] bottomBannerImgTokens) {
-        this.bottomBannerImgTokens = bottomBannerImgTokens;
+    public void setBottomSectionResource(SectionResourceForm[] bottomSectionResource) {
+        this.bottomSectionResource = bottomSectionResource;
     }
 
     public void setTopBannerExpiryDate(Date topBannerExpiryDate) {

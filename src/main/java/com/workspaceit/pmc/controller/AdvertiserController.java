@@ -38,9 +38,6 @@ public class AdvertiserController {
     private AdvertisementPriceAndQuantityService advertisementPriceAndQuantityService;
     private AdvertiserTransactionService advertiserTransactionService;
 
-    private GalleryAdService galleryAdService;
-    private SlideShowService slideShowService;
-    private PopUpAdsService popUpAdsService;
 
     private Environment environment;
 
@@ -84,21 +81,6 @@ public class AdvertiserController {
     @Autowired
     public void setAdvertisementPricesService(AdvertisementPricesService advertisementPricesService) {
         this.advertisementPricesService = advertisementPricesService;
-    }
-
-    @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
-    }
-
-    @Autowired
-    public void setSlideShowService(SlideShowService slideShowService) {
-        this.slideShowService = slideShowService;
-    }
-
-    @Autowired
-    public void setPopUpAdsService(PopUpAdsService popUpAdsService) {
-        this.popUpAdsService = popUpAdsService;
     }
 
 
@@ -222,7 +204,7 @@ public class AdvertiserController {
         return model;
     }
 
-    @RequestMapping("/update-old/{id}")
+   /* @RequestMapping("/update-old/{id}")
     public ModelAndView updateOld(@PathVariable("id") int advertiserId){
 
         Advertiser advertiser =  this.advertiserService.getById(advertiserId);
@@ -254,17 +236,17 @@ public class AdvertiserController {
         model.addObject("states",states);
         model.addObject("cities",cities);
 
-          /*For location Modal Page*/
+          *//*For location Modal Page*//*
         model.addObject("fadeInList",this.fadeInList);
         model.addObject("fadeOutList",this.fadeOutList);
         model.addObject("durations",durations);
 
-         /* Number format settings values */
+         *//* Number format settings values *//*
         model.addObject("currencyCode","USD");
         model.addObject("currencySymbol","$");
         model.addObject("maxFractionDigits",2);
 
         return model;
-    }
+    }*/
 
 }

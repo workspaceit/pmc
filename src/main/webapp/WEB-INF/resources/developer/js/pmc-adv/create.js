@@ -15,22 +15,24 @@ function validateAll(){
 
 /*Create advertiser and other adds */
 function createAdvertiser(fnSuccess){
-    var data = {};
-    var advertiserData = getAdvertiserInfoData("advertiser");
-    var galleryAdsData =getGalleryAddsData("galleryAds");
-    var popupAdsData =getPopUpAdsData("popupAds");
-    var slideShowAdsData =getSlideShowAdsData("slideShowAds");
-    data = $.extend({}, data, advertiserData);
-    data = $.extend({}, data,galleryAdsData);
-    data = $.extend({}, data,popupAdsData);
-    data = $.extend({}, data, slideShowAdsData);
+    var data = {advertiser:{}, galleryAds:{}, popupAds:{}, slideShowAds:{}};
+    var advertiserData = getAdvertiserInfoData();
+    var galleryAdsData =getGalleryAddsData();
+    var popupAdsData =getPopUpAdsData();
+    var slideShowAdsData =getSlideShowAdsData();
+
+    data.advertiser = advertiserData;
+    data.galleryAds = galleryAdsData;
+    data.popupAds = popupAdsData;
+    data.slideShowAds = slideShowAdsData;
 
     console.log(data);
     $.ajax({
         url: BASEURL+"api/pmc-advsr/create-all",
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);

@@ -1,8 +1,11 @@
 package com.workspaceit.pmc.validation.advertisement.popup;
 
 import com.workspaceit.pmc.constant.advertisement.ADVERTISEMENT_ROTATION_SETTINGS;
+import com.workspaceit.pmc.entity.advertisement.SectionResource;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 
-import java.util.Arrays;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -12,10 +15,23 @@ public class PopupAdsForm {
     private Integer smsId;
     private Integer emailId;
     private Integer advertiserId;
-    private Integer[] smsPopupBanner;
-    private Integer smsPopupVideo;
-    private Integer[] emailPopupBanner;
-    private Integer emailPopupVideo;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm[] smsPopupBannerResources;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm smsPopupVideoResource;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm[] emailPopupBannerResources;
+
+    @Valid
+    @NotNull
+    private SectionResourceForm emailPopupVideoResource;
+
     private Integer emailPopupVideoDuration;
     private Integer smsPopupVideoDuration;
     private Date smsExpiryDate;
@@ -52,36 +68,36 @@ public class PopupAdsForm {
         this.advertiserId = advertiserId;
     }
 
-    public Integer[] getSmsPopupBanner() {
-        return smsPopupBanner;
+    public SectionResourceForm[] getSmsPopupBannerResources() {
+        return smsPopupBannerResources;
     }
 
-    public void setSmsPopupBanner(Integer[] smsPopupBanner) {
-        this.smsPopupBanner = smsPopupBanner;
+    public void setSmsPopupBannerResources(SectionResourceForm[] smsPopupBannerResources) {
+        this.smsPopupBannerResources = smsPopupBannerResources;
     }
 
-    public Integer getSmsPopupVideo() {
-        return smsPopupVideo;
+    public SectionResourceForm getSmsPopupVideoResource() {
+        return smsPopupVideoResource;
     }
 
-    public void setSmsPopupVideo(Integer smsPopupVideo) {
-        this.smsPopupVideo = smsPopupVideo;
+    public void setSmsPopupVideoResource(SectionResourceForm smsPopupVideoResource) {
+        this.smsPopupVideoResource = smsPopupVideoResource;
     }
 
-    public Integer[] getEmailPopupBanner() {
-        return emailPopupBanner;
+    public SectionResourceForm[] getEmailPopupBannerResources() {
+        return emailPopupBannerResources;
     }
 
-    public void setEmailPopupBanner(Integer[] emailPopupBanner) {
-        this.emailPopupBanner = emailPopupBanner;
+    public void setEmailPopupBannerResources(SectionResourceForm[] emailPopupBannerResources) {
+        this.emailPopupBannerResources = emailPopupBannerResources;
     }
 
-    public Integer getEmailPopupVideo() {
-        return emailPopupVideo;
+    public SectionResourceForm getEmailPopupVideoResource() {
+        return emailPopupVideoResource;
     }
 
-    public void setEmailPopupVideo(Integer emailPopupVideo) {
-        this.emailPopupVideo = emailPopupVideo;
+    public void setEmailPopupVideoResource(SectionResourceForm emailPopupVideoResource) {
+        this.emailPopupVideoResource = emailPopupVideoResource;
     }
 
     public Integer getEmailPopupVideoDuration() {
@@ -149,25 +165,4 @@ public class PopupAdsForm {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "PopupAdsForm{" +
-                "smsId=" + smsId +
-                ", emailId=" + emailId +
-                ", advertiserId=" + advertiserId +
-                ", smsPopupBanner=" + Arrays.toString(smsPopupBanner) +
-                ", smsPopupVideo=" + smsPopupVideo +
-                ", emailPopupBanner=" + Arrays.toString(emailPopupBanner) +
-                ", emailPopupVideo=" + emailPopupVideo +
-                ", emailPopupVideoDuration=" + emailPopupVideoDuration +
-                ", smsPopupVideoDuration=" + smsPopupVideoDuration +
-                ", smsExpiryDate=" + smsExpiryDate +
-                ", emailExpiryDate=" + emailExpiryDate +
-                ", smsRotation=" + smsRotation +
-                ", emailRotation=" + emailRotation +
-                ", smsAdPrice=" + smsAdPrice +
-                ", emailAdPrice=" + emailAdPrice +
-                '}';
-    }
 }

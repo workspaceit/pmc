@@ -4,6 +4,7 @@ import com.workspaceit.pmc.dao.PopupBannerImageDao;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupAd;
 import com.workspaceit.pmc.entity.advertisement.popup.PopupBannerImage;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class PopupBannerImageService {
-    private FileService fileService;
+   /* private FileService fileService;
     private PopupBannerImageDao popupBannerImageDao;
 
 
@@ -31,13 +32,13 @@ public class PopupBannerImageService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public List<PopupBannerImage> create(PopupAd popupAd,Integer[] tokens,Admin admin){
-        if(tokens==null || tokens.length==0){
+    public List<PopupBannerImage> create(PopupAd popupAd, SectionResourceForm[] sectionResources, Admin admin){
+        if(sectionResources==null || sectionResources.length==0){
             return null;
         }
         List<PopupBannerImage> popupBannerImages = new ArrayList<>();
-        for(int token:tokens){
-            String imageName = this.fileService.copyFile(token);
+        for(SectionResourceForm secRes:sectionResources){
+            String imageName = this.fileService.copyFile(secRes.getToken());
             PopupBannerImage popupBannerImage = new PopupBannerImage();
             popupBannerImage.setImage(imageName);
             popupBannerImage.setCreatedBy(admin);
@@ -80,5 +81,5 @@ public class PopupBannerImageService {
     @Transactional(rollbackFor = Exception.class)
     public void remove( PopupBannerImage popupBannerImages){
             this.popupBannerImageDao.delete(popupBannerImages);
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Repository
 public class GalleryAdDao extends BaseDao {
-    public GalleryAd getById(int id){
+   /* public GalleryAd getById(int id){
         Session session = this.getCurrentSession();
         return (GalleryAd)session.createQuery("FROM GalleryAd where id=:id")
                 .setMaxResults(1)
@@ -53,6 +53,6 @@ public class GalleryAdDao extends BaseDao {
                 .setParameter("eDate",eDate)
                 .setParameter("advertiserId",advertiserId)
                 .uniqueResult();
-    }
+    }*/
 
 }

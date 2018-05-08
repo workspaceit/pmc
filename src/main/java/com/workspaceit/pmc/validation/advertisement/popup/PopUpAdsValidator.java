@@ -3,6 +3,7 @@ package com.workspaceit.pmc.validation.advertisement.popup;
 
 import com.workspaceit.pmc.entity.Advertiser;
 import com.workspaceit.pmc.service.AdvertiserService;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -44,27 +45,27 @@ public class PopUpAdsValidator implements Validator {
                     this.checkValidAdvertiserId(popupAdsForm.getAdvertiserId(), errors);
                     break;
                 case "sms-banner-or-video":
-                    Integer smsVideoToken =  popupAdsForm.getSmsPopupVideo();
-                    Integer[] smsBannerTokens =  popupAdsForm.getSmsPopupBanner();
+                    SectionResourceForm smsVideoToken =  popupAdsForm.getSmsPopupVideoResource();
+                    SectionResourceForm[] smsBannerTokens =  popupAdsForm.getSmsPopupBannerResources();
                     this.checkSmsBannerOrVideo(smsVideoToken,smsBannerTokens,errors);
                     break;
                 case "email-banner-or-video":
-                    Integer emailVideoToken =  popupAdsForm.getEmailPopupVideo();
-                    Integer[] emailBannerTokens =  popupAdsForm.getEmailPopupBanner();
+                    SectionResourceForm emailVideoToken =  popupAdsForm.getEmailPopupVideoResource();
+                    SectionResourceForm[] emailBannerTokens =  popupAdsForm.getEmailPopupBannerResources();
                     this.checkEmailBannerOrVideo(emailVideoToken,emailBannerTokens,errors);
                     break;
             }
         }
     }
-    public void checkSmsBannerOrVideo(Integer smsVideoToken,Integer[] smsBannerTokens,Errors errors){
+    public void checkSmsBannerOrVideo(SectionResourceForm smsVideoSecRes,SectionResourceForm[] smsBannerSecRes,Errors errors){
 
-        if(smsVideoToken==null && (smsBannerTokens==null ||smsBannerTokens.length==0)){
+        if(smsVideoSecRes.getToken()==null && (smsBannerSecRes==null ||smsBannerSecRes.length==0)){
             errors.rejectValue("smsPopupBanner","Video or banner required");
         }
     }
-    public void checkEmailBannerOrVideo(Integer emailVideoToken,Integer[] emailBannerTokens,Errors errors){
+    public void checkEmailBannerOrVideo(SectionResourceForm emailVideoToken,SectionResourceForm[] emailBannerTokens,Errors errors){
 
-        if(emailVideoToken==null && (emailBannerTokens==null || emailBannerTokens.length==0)){
+        if(emailVideoToken.getToken()==null && (emailBannerTokens==null || emailBannerTokens.length==0)){
             errors.rejectValue("emailPopupBanner","Video or banner required");
         }
     }

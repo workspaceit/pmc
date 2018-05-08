@@ -20,7 +20,7 @@ import java.util.Date;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class GalleryAdService {
-    GalleryAdDao galleryAdDao;
+    /*GalleryAdDao galleryAdDao;
     GalleryAdImageService galleryImagesAdService;
     FileService fileService;
     GalleryAdQuantityPriceService galleryAdQuantityPriceService;
@@ -43,8 +43,8 @@ public class GalleryAdService {
     }
 
     public GalleryAd create(Advertiser advertiser, GalleryAdsCreateForm galleryAdsForm, Admin admin){
-        Integer logoToken = galleryAdsForm.getLogoToken();
-        Integer bgImgTokens = galleryAdsForm.getBgImgTokens();
+        Integer logoToken = galleryAdsForm.getLogoSectionResource().getToken();
+        Integer bgImgTokens = galleryAdsForm.getBgSectionResource().getToken();
         String logoFileName = this.fileService.copyFile(logoToken);
         String bgFileName = this.fileService.copyFile(bgImgTokens);
         Date topBannerExpiryDate =   galleryAdsForm.getTopBannerExpiryDate();
@@ -54,9 +54,9 @@ public class GalleryAdService {
         Float topBannerPrice =  galleryAdsForm.getTopBannerPrice();
         Float bottomPrice =  galleryAdsForm.getBottomBannerPrice();
 
-        int bgQuantity = (galleryAdsForm.getBgImgTokens()!=null)?1:0;
-        int topBannerQuantity = (galleryAdsForm.getTopBannerImgTokens()!=null)?galleryAdsForm.getTopBannerImgTokens().length:0;
-        int bottomBannerQuantity = (galleryAdsForm.getBottomBannerImgTokens()!=null)?galleryAdsForm.getBottomBannerImgTokens().length:0;
+        int bgQuantity = (galleryAdsForm.getBgSectionResource().getToken()!=null)?1:0;
+        int topBannerQuantity = (galleryAdsForm.getTopSectionResource()!=null)?galleryAdsForm.getTopSectionResource().length:0;
+        int bottomBannerQuantity = (galleryAdsForm.getBottomSectionResource()!=null)?galleryAdsForm.getBottomSectionResource().length:0;
 
         GalleryAd galleryAd = new GalleryAd();
         galleryAd.setAdvertiserId(advertiser.getId());
@@ -71,7 +71,7 @@ public class GalleryAdService {
 
         this.create(galleryAd);
 
-        /** Background,Top Banner,Bottom Banner Images price and quantity */
+        *//** Background,Top Banner,Bottom Banner Images price and quantity *//*
         this.galleryAdQuantityPriceService.create(galleryAd.getId(),bgPrice,bgQuantity,
                                                     GalleryAdsConstant.BACKGROUND_IMAGE,admin);
         this.galleryAdQuantityPriceService.create(galleryAd.getId(),topBannerPrice,topBannerQuantity,
@@ -79,10 +79,10 @@ public class GalleryAdService {
         this.galleryAdQuantityPriceService.create(galleryAd.getId(),bottomPrice,bottomBannerQuantity,
                                                     GalleryAdsConstant.BOTTOM_AD_BANNER,admin);
 
-        /**
+        *//**
          * Background,Top Banner,Bottom Banner Images copy from temp folder to common
          * and save in database
-        * */
+        * *//*
         try{
             this.galleryImagesAdService.create(galleryAdsForm,galleryAd,admin);
         }catch (Exception ex){
@@ -93,8 +93,8 @@ public class GalleryAdService {
         return galleryAd;
     }
     public GalleryAd update(int id,Advertiser advertiser,GalleryAdsUpdateForm galleryAdsForm, Admin admin) throws EntityNotFound {
-        Integer logoToken = galleryAdsForm.getLogoToken();
-        Integer bgImgTokens = galleryAdsForm.getBgImgTokens();
+        Integer logoToken = galleryAdsForm.getLogoSectionResource().getToken();
+        Integer bgImgTokens = galleryAdsForm.getBgSectionResource().getToken();
 
         Date topBannerExpiryDate =   galleryAdsForm.getTopBannerExpiryDate();
         Date bottomBannerExpiryDate = galleryAdsForm.getBottomBannerExpiryDate();
@@ -120,12 +120,12 @@ public class GalleryAdService {
         this.update(galleryAd);
 
         try{
-            if(galleryAdsForm.getTopBannerImgTokens()!=null ||galleryAdsForm.getBottomBannerImgTokens()!=null){
+            if(galleryAdsForm.getTopSectionResource()!=null ||galleryAdsForm.getBottomSectionResource()!=null){
                 this.galleryImagesAdService.create(galleryAdsForm,galleryAd,admin);
             }
-            /**
+            *//**
              * this.galleryImagesAdService.remove handles null checking
-             * */
+             * *//*
             this.galleryImagesAdService.remove(galleryAdsForm,galleryAd,admin);
         }catch (Exception ex){
             ex.printStackTrace();
@@ -162,5 +162,5 @@ public class GalleryAdService {
             throw new EntityNotFound("No gallery found by id "+id);
         }
         return galleryAd;
-    }
+    }*/
 }

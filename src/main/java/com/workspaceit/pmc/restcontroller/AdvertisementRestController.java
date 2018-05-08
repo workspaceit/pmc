@@ -67,7 +67,7 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/gallery-create-validation")
-    public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid GalleryAdsCreateForm galleryAdsForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid @RequestBody  GalleryAdsCreateForm galleryAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -100,7 +100,7 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/popup-create-validation")
-    public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid PopupAdsCreateForm pupAdsCreateForm, BindingResult bindingResult){
+    public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid @RequestBody  PopupAdsCreateForm pupAdsCreateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -128,9 +128,9 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/slideshow-create-validation")
-    public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid SlideShowAdsCreateForm slideShowAdsForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid @RequestBody SlideShowAdsCreateForm slideShowAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
-
+        System.out.println(slideShowAdsForm);
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
         /**
          * Basic Validation
@@ -154,17 +154,17 @@ public class AdvertisementRestController {
     }
 
 
-    @Secured(UserRole._SUPER_ADMIN)
+/*    @Secured(UserRole._SUPER_ADMIN)
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<?> galleryCreate(@PathVariable("id") int id){
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.galleryAdService.getById(id));
-    }
+    }*/
 
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/gallery-update-validation")
-    public ResponseEntity<?> validateGalleryAdsUpdate(Authentication authentication, @Valid GalleryAdsUpdateForm galleryAdsUpdateForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateGalleryAdsUpdate(Authentication authentication, @Valid @RequestBody GalleryAdsUpdateForm galleryAdsUpdateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -192,7 +192,7 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/slideshow-update-validation")
-    public ResponseEntity<?> validateSlideShowUpdate(Authentication authentication, @Valid SlideShowAdsUpdateForm slideShowAdsForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateSlideShowUpdate(Authentication authentication, @Valid @RequestBody SlideShowAdsUpdateForm slideShowAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();
@@ -220,7 +220,7 @@ public class AdvertisementRestController {
 
     @Secured(UserRole._SUPER_ADMIN)
     @PostMapping(value = "/popup-update-validation")
-    public ResponseEntity<?> validatePopUpUpdate(Authentication authentication, @Valid PopupAdsUpdateForm popupAdsUpdateForm, BindingResult bindingResult){
+    public ResponseEntity<?> validatePopUpUpdate(Authentication authentication, @Valid @RequestBody PopupAdsUpdateForm popupAdsUpdateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
 
         ServiceResponse serviceResponse = ServiceResponse.getInstance();

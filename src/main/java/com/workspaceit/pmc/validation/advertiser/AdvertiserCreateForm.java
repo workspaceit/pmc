@@ -2,10 +2,8 @@ package com.workspaceit.pmc.validation.advertiser;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -21,7 +19,7 @@ public class AdvertiserCreateForm extends AdvertiserForm{
     }
 
     @NotBlank(message = "Address is required")
-    @Length(max = 50,message = "Value too large")
+    @Length(max = 200,message = "Value too large")
     @Override
     public String getAddress() {
         return super.getAddress();
@@ -62,14 +60,12 @@ public class AdvertiserCreateForm extends AdvertiserForm{
     }
 
     @NotNull(message = "Start date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Override
     public Date getRuntimeStarts() {
         return super.getRuntimeStarts();
     }
 
     @NotNull(message = "End date is required")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Override
     public Date getRuntimeEnds() {
         return super.getRuntimeEnds();

@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class PopupBannerImageDao extends BaseDao {
 
-    public PopupBannerImage getById(int id){
+/*    public PopupBannerImage getById(int id){
         Session session = this.getCurrentSession();
         return (PopupBannerImage)session.createQuery("FROM PopupBannerImage where id=:id")
                 .setMaxResults(1)
@@ -33,5 +33,5 @@ public class PopupBannerImageDao extends BaseDao {
                 .setParameter("ids", Arrays.asList(ids))
                 .setParameter("popupAdId",popupAdId)
                 .list();
-    }
+    }*/
 }

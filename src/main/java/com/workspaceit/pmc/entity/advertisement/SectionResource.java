@@ -28,6 +28,9 @@ public class SectionResource {
     @Column(name = "mime_type")
     private String mimeType;
 
+    @Column(name = "url")
+    private String url;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
@@ -73,6 +76,14 @@ public class SectionResource {
         this.mimeType = mimeType;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -83,7 +94,6 @@ public class SectionResource {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -94,6 +104,7 @@ public class SectionResource {
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (fileType != that.fileType) return false;
         if (mimeType != null ? !mimeType.equals(that.mimeType) : that.mimeType != null) return false;
+        if (url != null ? !url.equals(that.url) : that.url != null) return false;
         return createdAt != null ? createdAt.equals(that.createdAt) : that.createdAt == null;
     }
 
@@ -104,6 +115,7 @@ public class SectionResource {
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
         result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         return result;
     }
@@ -116,6 +128,7 @@ public class SectionResource {
                 ", fileName='" + fileName + '\'' +
                 ", fileType=" + fileType +
                 ", mimeType='" + mimeType + '\'' +
+                ", url='" + url + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

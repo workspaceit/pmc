@@ -32,33 +32,36 @@ function getIdToRemove(key){
 /*Create advertiser and other adds */
 function updateAdvertiser(){
     var id  = parseInt($("#advertiserId").val());
-    var data = {};
-    var advertiserData = getAdvertiserInfoData("advertiser");
-    var galleryAdsData =getGalleryAddsData("galleryAds");
-    var slideShowAdsData =getSlideShowAdsData("slideShowAds");
-    var popupAdsData =getPopUpAdsData("popupAds");
+    var data = {advertiser:{}, galleryAds:{}, popupAds:{}, slideShowAds:{}};
 
 
-    advertiserData["advertiser.removeOtherImageIds"]= getToken(ID_KEY._ADV_OTHER_IMAGE);
-    galleryAdsData["galleryAds.removeTopBannerIds"]= getToken(ID_KEY._GALLERY_TOP_BANNER);
-    galleryAdsData["galleryAds.removeBottomBannerIds"]= getToken(ID_KEY._GALLERY_BOTTOM_BANNER);
-    slideShowAdsData["slideShowAds.removeBannerIds"]= getToken(ID_KEY._SLIDE_SHOW_BANNER);
+    var advertiserData = getAdvertiserInfoData();
+    var galleryAdsData =getGalleryAddsData();
+    var popupAdsData =getPopUpAdsData();
+    var slideShowAdsData =getSlideShowAdsData();
 
-    popupAdsData["popupAds.removeSmsBannerIds"]= getToken(ID_KEY._POPUP_SMS_BANNER);
-    popupAdsData["popupAds.removeEmailBannerIds"]= getToken(ID_KEY._POPUP_EMAIL_BANNER);
+    advertiserData["removeOtherImageIds"]= getToken(ID_KEY._ADV_OTHER_IMAGE);
+    galleryAdsData["removeTopBannerIds"]= getToken(ID_KEY._GALLERY_TOP_BANNER);
+    galleryAdsData["removeBottomBannerIds"]= getToken(ID_KEY._GALLERY_BOTTOM_BANNER);
+    slideShowAdsData["removeBannerIds"]= getToken(ID_KEY._SLIDE_SHOW_BANNER);
+
+    popupAdsData["removeSmsBannerIds"]= getToken(ID_KEY._POPUP_SMS_BANNER);
+    popupAdsData["removeEmailBannerIds"]= getToken(ID_KEY._POPUP_EMAIL_BANNER);
 
 
-    data = $.extend({}, data, advertiserData);
-    data = $.extend({}, data,galleryAdsData);
-    data = $.extend({}, data,popupAdsData);
-    data = $.extend({}, data, slideShowAdsData);
+    data.advertiser = advertiserData;
+    data.galleryAds = galleryAdsData;
+    data.popupAds = popupAdsData;
+    data.slideShowAds = slideShowAdsData;
+
 
     console.log(data);
     $.ajax({
         url: BASEURL+"api/pmc-advsr/update-all/"+id,
         type: "POST",
-        data: data,
-        traditional:true,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
         statusCode: {
             500: function(response) {
                 console.log(response);
@@ -162,6 +165,10 @@ function sendInvoiceToEmail(){
             hideSendInvoiceModal();
         }
     });
+}
+function addImageUrlForUpdate(id){
+    var url =$(PREFIX._IMAGE_UPDATE_URL+id).val();
+    storeToken(PREFIX._IMAGE_UPDATE_URL+id,url);
 }
 $(document).ready(function(){
     /**

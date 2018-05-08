@@ -42,9 +42,7 @@ public class AdvertiserRestController {
     private PopUpAdsValidator popUpAdsValidator;
 
     private AdvertiserService advertiserService;
-    private GalleryAdService galleryAdService;
-    private SlideShowService slideShowService;
-    private PopUpAdsService popUpAdsService;
+
     private AdvertiserTransactionService advertiserTransactionService;
     private AdvertisementService advertisementService;
     private SectionService sectionService;
@@ -72,20 +70,6 @@ public class AdvertiserRestController {
         this.advertiserService = advertiserService;
     }
 
-    @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
-    }
-
-    @Autowired
-    public void setSlideShowService(SlideShowService slideShowService) {
-        this.slideShowService = slideShowService;
-    }
-
-    @Autowired
-    public void setPopUpAdsService(PopUpAdsService popUpAdsService) {
-        this.popUpAdsService = popUpAdsService;
-    }
 
     @Autowired
     public void setAdvertiserTransactionService(AdvertiserTransactionService advertiserTransactionService) {
@@ -132,7 +116,8 @@ public class AdvertiserRestController {
     }
     @Secured(UserRole._SUPER_ADMIN)
     @RequestMapping(value = "/validate-create")
-    public ResponseEntity<?> validateCreate(Authentication authentication, @Valid AdvertiserCreateForm advertiserForm, BindingResult bindingResult){
+    public ResponseEntity<?> validateCreate(Authentication authentication, @Valid @RequestBody AdvertiserCreateForm advertiserForm, BindingResult bindingResult){
+        System.out.println(advertiserForm);
         return this.getValidated(advertiserForm,bindingResult);
     }
 
@@ -154,7 +139,7 @@ public class AdvertiserRestController {
     }
     @Secured({UserRole._SUPER_ADMIN})
     @PostMapping(value = "/create-all")
-    public ResponseEntity<?> advertiserCreate(Authentication authentication, @Valid AdvertiserAndAllCompositeForm advertiserAndAllCompositeForm, BindingResult bindingResult){
+    public ResponseEntity<?> advertiserCreate(Authentication authentication, @Valid @RequestBody  AdvertiserAndAllCompositeForm advertiserAndAllCompositeForm, BindingResult bindingResult){
         /**
          * Validation should be done separately from Client before submitting
          * Below Validation not meant for client end error showing
@@ -219,8 +204,8 @@ public class AdvertiserRestController {
 
         galleryAd.setSections(this.sectionService.getSectionInMap(gallerySection));
         slideShowAd.setSections(this.sectionService.getSectionInMap(slideShowSection));
-        popupSmsAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_EMAIL)));
-        popupEmailAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_SMS)));
+        popupSmsAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_SMS)));
+        popupEmailAd.setSections(this.sectionService.getSectionInMap(popUpSectionMap.get(ADVERTISEMENT_TYPE.POPUP_EMAIL)));
 
         /**
          * Update Advertiment after setting created Sections
@@ -238,7 +223,7 @@ public class AdvertiserRestController {
     @PostMapping(value = "/update-all/{id}")
     public ResponseEntity<?> advertiserUpdate(@PathVariable("id") int id,
                                               Authentication authentication,
-                                              @Valid AdvertiserAndAllCompositeUpdateForm advertiserAndAllCompositeForm,
+                                              @Valid @RequestBody AdvertiserAndAllCompositeUpdateForm advertiserAndAllCompositeForm,
                                               BindingResult bindingResult){
         /**
          * Validation should be done separately from Client before submitting
