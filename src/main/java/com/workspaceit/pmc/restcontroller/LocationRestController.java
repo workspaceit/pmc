@@ -47,7 +47,7 @@ public class LocationRestController {
         this.locationService = locationService;
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid LocationForm locationForm, BindingResult bindingResult) {
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -77,7 +77,7 @@ public class LocationRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(location);
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,

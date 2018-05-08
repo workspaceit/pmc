@@ -1,10 +1,12 @@
 package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @Secured({UserRole._SUPER_ADMIN})
     @RequestMapping(value = "/add")
     public ModelAndView add(){
         ModelAndView model = new ModelAndView("admin/admin-user-management/add");
@@ -44,6 +47,7 @@ public class AdminController {
         return model;
     }
 
+    @Secured({UserRole._SUPER_ADMIN})
     @RequestMapping(value = "/update/{id}")
     public ModelAndView update(@PathVariable("id") int id){
         Admin admin = this.adminService.getById(id);

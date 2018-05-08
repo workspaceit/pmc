@@ -79,7 +79,7 @@ public class EventRestController {
         imgAllowedMimeType.add("image/png");
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping("/create")
     public ResponseEntity<?> create(Authentication authentication, @Valid EventCreateForm eventForm, BindingResult bindingResult) throws EntityNotFound {
         Admin admin = (Admin) authentication.getPrincipal();
@@ -103,7 +103,7 @@ public class EventRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(event);
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/update/{id}")
     public ResponseEntity<?> update(Authentication authentication,
                                     @PathVariable("id") int id,
@@ -129,7 +129,7 @@ public class EventRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(serviceResponse.getFormError());
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/delete/images")
     public ResponseEntity<?>  deleteEventImages(@RequestParam("eventId") int eventId,@RequestParam("imageIds[]") String[] imageIds){
 
@@ -152,7 +152,7 @@ public class EventRestController {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(result);
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @RequestMapping(value = "/update-name-logo")
     public ResponseEntity<?> updateEventNameLogo(@RequestParam(name = "file",required = false) MultipartFile multipartFile,@RequestParam("eventId") String eventId,@RequestParam("eventName") String eventName){
         int eventID = Integer.parseInt(eventId);

@@ -65,7 +65,7 @@ public class AdvertisementRestController {
         this.galleryAdService = galleryAdService;
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/gallery-create-validation")
     public ResponseEntity<?> validateGalleryAdsCreate(Authentication authentication, @Valid GalleryAdsCreateForm galleryAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -98,7 +98,7 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/popup-create-validation")
     public ResponseEntity<?> validatePopUpCreate(Authentication authentication, @Valid PopupAdsCreateForm pupAdsCreateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -126,7 +126,7 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/slideshow-create-validation")
     public ResponseEntity<?> validateSlideShowCreate(Authentication authentication, @Valid SlideShowAdsCreateForm slideShowAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -154,7 +154,7 @@ public class AdvertisementRestController {
     }
 
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<?> galleryCreate(@PathVariable("id") int id){
 
@@ -162,7 +162,7 @@ public class AdvertisementRestController {
     }
 
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/gallery-update-validation")
     public ResponseEntity<?> validateGalleryAdsUpdate(Authentication authentication, @Valid GalleryAdsUpdateForm galleryAdsUpdateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -190,7 +190,7 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/slideshow-update-validation")
     public ResponseEntity<?> validateSlideShowUpdate(Authentication authentication, @Valid SlideShowAdsUpdateForm slideShowAdsForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();
@@ -218,7 +218,7 @@ public class AdvertisementRestController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ServiceResponse.getMsgInMap("No error found"));
     }
 
-    @Secured(UserRole._SUPER_ADMIN)
+    @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/popup-update-validation")
     public ResponseEntity<?> validatePopUpUpdate(Authentication authentication, @Valid PopupAdsUpdateForm popupAdsUpdateForm, BindingResult bindingResult){
         Admin currentUser = (Admin)authentication.getPrincipal();

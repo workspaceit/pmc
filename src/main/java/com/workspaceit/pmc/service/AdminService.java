@@ -3,10 +3,10 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.auth.AdminUserDetails;
 import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.entity.Admin;
+import com.workspaceit.pmc.entity.AdminRole;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.helper.CypherHelper;
 import com.workspaceit.pmc.util.FileUtil;
-import com.workspaceit.pmc.validation.admin.AdminEditForm;
 import com.workspaceit.pmc.validation.admin.AdminCreateForm;
 import com.workspaceit.pmc.validation.admin.AdminForm;
 import com.workspaceit.pmc.validation.admin.AdminProfileUpdateForm;
@@ -18,7 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -31,6 +33,8 @@ public class AdminService {
 
     private FileService fileService;
     private FileUtil fileUtil;
+    private AdminRoleService adminRoleService;
+
     @Autowired
     AdminDao adminDao;
 
@@ -44,6 +48,11 @@ public class AdminService {
     }
     @Autowired
     SessionFactory sessionFactory;
+
+    @Autowired
+    public void setAdminRoleService(AdminRoleService adminRoleService) {
+        this.adminRoleService = adminRoleService;
+    }
 
     @Transactional
     public void insert(){
@@ -168,7 +177,9 @@ public class AdminService {
 
         return admin;
     }
+
     private Admin getAdminFromAdminForm(AdminCreateForm adminCreateForm){
+        AdminRole adminRole = adminRoleService.getRoleByName("admin");
         Admin admin = new Admin();
         admin.setName(adminCreateForm.getFullName());
         admin.setPhoneNumber(adminCreateForm.getPhoneNumber());
@@ -176,8 +187,12 @@ public class AdminService {
         admin.setEmail(adminCreateForm.getEmail());
         admin.setPassword(CypherHelper.getbCryptPassword(adminCreateForm.getPassword()));
         admin.setActive(true);
+        Set<AdminRole> adminRoles = new HashSet<>();
+        adminRoles.add(adminRole);
+        admin.setAdminRoles(adminRoles);
         return admin;
     }
+
     private void populateAdminByAdminForm(Admin admin, AdminCreateForm adminCreateForm){
         admin.setName(adminCreateForm.getFullName());
         admin.setPhoneNumber(adminCreateForm.getPhoneNumber());
