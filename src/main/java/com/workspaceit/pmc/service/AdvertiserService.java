@@ -215,6 +215,14 @@ public class AdvertiserService {
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected,limit,offset);
     }
     @Transactional
+    public List<Advertiser> getByEventAndLocationId(int eventId,boolean includeAllSelected) throws EntityNotFound {
+        Event event =  this.eventService.getEvent(eventId);
+        Location location = event.getLocation();
+        int locationId = (location!=null)?location.getId():0;
+
+        return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected);
+    }
+    @Transactional
     public List<Advertiser> getByEventAndLocationId(int eventId,int locationId,boolean includeAllSelected){
         return this.advertiserDao.getByEventAndLocationId(eventId,locationId,includeAllSelected);
     }
