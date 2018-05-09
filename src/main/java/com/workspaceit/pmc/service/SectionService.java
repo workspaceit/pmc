@@ -667,7 +667,15 @@ public class SectionService {
         }
 
         /** Section has many file */
-        if(newTokens!=null){
+        if(newTokens!=null && newTokens.size()>0){
+
+            Optional<SectionResource> optionalSectionResource = sectionResources.stream()
+                                                                    .filter(secRes->secRes.getFileType().equals(FILE_TYPE.VIDEO))
+                                                                    .findFirst();
+            if(optionalSectionResource.isPresent()){
+                sectionResources.clear();
+                this.sectionResourceService.delete(optionalSectionResource.get());
+            }
             for(FileToken fileToken: newTokens ){
                 SectionResource sectionResource = this.sectionResourceService.prepareSectionResource(fileToken.getSingleToken(),fileToken.getFileType(),fileToken.getUrl());
                 sectionResources.add(sectionResource);

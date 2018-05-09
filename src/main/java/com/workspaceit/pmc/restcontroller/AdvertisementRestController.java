@@ -4,8 +4,6 @@ import com.workspaceit.pmc.constant.ControllerUriPrefix;
 import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.service.AdminService;
-import com.workspaceit.pmc.service.GalleryAdService;
-import com.workspaceit.pmc.service.SectionResourceService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
@@ -21,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +33,6 @@ public class AdvertisementRestController {
     private GalleryAdsValidator galleryAdsValidator;
     private SlideShowAdsValidator slideShowAdsValidator;
     private AdminService adminService;
-    private GalleryAdService galleryAdService;
 
     private PopUpAdsValidator popupAdsValidator;
 
@@ -61,10 +57,6 @@ public class AdvertisementRestController {
         this.adminService = adminService;
     }
 
-    @Autowired
-    public void setGalleryAdService(GalleryAdService galleryAdService) {
-        this.galleryAdService = galleryAdService;
-    }
 
 
     @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
