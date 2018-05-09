@@ -4,6 +4,7 @@ import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUrlUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 
@@ -29,6 +30,8 @@ public class AdvertiserAndAllCompositeUpdateForm {
     @NotNull
     @Valid
     SlideShowAdsUpdateForm slideShowAds;
+
+    SectionResourceUrlUpdateForm[] urlsUpdate;
 
     public AdvertiserUpdateForm getAdvertiser() {
         return advertiser;
@@ -60,5 +63,13 @@ public class AdvertiserAndAllCompositeUpdateForm {
 
     public void setSlideShowAds(SlideShowAdsUpdateForm slideShowAds) {
         this.slideShowAds = slideShowAds;
+    }
+
+    public SectionResourceUrlUpdateForm[] getUrlsUpdate() {
+        return urlsUpdate;
+    }
+
+    public void setUrlsUpdate(SectionResourceUrlUpdateForm[] urlsUpdate) {
+        this.urlsUpdate = urlsUpdate;
     }
 }

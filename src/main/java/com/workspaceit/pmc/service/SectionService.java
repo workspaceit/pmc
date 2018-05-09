@@ -184,11 +184,12 @@ public class SectionService {
         /** New File */
         SectionResourceForm[] bannerResources =  slideShowAdsForm.getSlideShowAdsBannerResources();
         SectionResourceForm videoResources =  slideShowAdsForm.getSlideShowAdsVideoResources();
+        Integer videoToken = (videoResources!=null )? videoResources.getToken():null;
 
         if(bannerResources==null)bannerResources=new SectionResourceForm[0];
 
         List<FileToken> tBannerNewFileToken = new LinkedList<>();
-        FileToken bBannerVideoNewFileToken = (videoResources!=null)? new FileToken(videoResources.getToken(),FILE_TYPE.VIDEO,videoResources.getUrl()):null;
+        FileToken bBannerVideoNewFileToken = (videoToken!=null && videoToken>0)? new FileToken(videoResources.getToken(),FILE_TYPE.VIDEO,videoResources.getUrl()):null;
 
         /** Removed File */
         Integer[] tBannerRmIds = slideShowAdsForm.getRemoveBannerIds();
@@ -266,8 +267,8 @@ public class SectionService {
         Integer smsVideoToken =  popupAdsUpdateForm.getSmsPopupVideoResource().getToken();
         Integer emailVideoToken =  popupAdsUpdateForm.getEmailPopupVideoResource().getToken();
 
-        FileToken smsVideoNewFileToken = (smsVideoToken!=null)? new FileToken(smsVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getSmsPopupVideoResource().getUrl()):null;
-        FileToken emailVideoNewFileToken = (emailVideoToken!=null)? new FileToken(emailVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getEmailPopupVideoResource().getUrl()):null;
+        FileToken smsVideoNewFileToken = (smsVideoToken!=null && smsVideoToken>0)? new FileToken(smsVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getSmsPopupVideoResource().getUrl()):null;
+        FileToken emailVideoNewFileToken = (emailVideoToken!=null && emailVideoToken>0)? new FileToken(emailVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getEmailPopupVideoResource().getUrl()):null;
 
         /** Removed File */
         Integer[] smsBannerRmIds = popupAdsUpdateForm.getRemoveSmsBannerIds();

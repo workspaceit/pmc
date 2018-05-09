@@ -3,11 +3,14 @@ package com.workspaceit.pmc.service;
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
 import com.workspaceit.pmc.dao.SectionResourceDao;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
+import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUrlUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,14 +37,26 @@ public class SectionResourceService {
     public List<SectionResource> getById(Integer[] id){
        return this.sectionResourceDao.getById(id);
     }
+
     @Transactional
     public List<SectionResource> getById(List<Integer> id){
         return this.sectionResourceDao.getById(id);
     }
+
     @Transactional
     public SectionResource getById(Integer id){
         return this.sectionResourceDao.getById(id);
     }
+
+
+    @Transactional
+    public SectionResource getSectionResource(Integer id)throws EntityNotFound{
+        SectionResource sectionResource = this.getById(id);
+        if(sectionResource==null) throw new EntityNotFound("Section resource not found by id :"+id);
+
+        return sectionResource;
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(Integer[] id){
@@ -73,7 +88,20 @@ public class SectionResourceService {
         return deletedSectionResources;
     }
 
+    public void updateUrls(SectionResourceUrlUpdateForm[] urlUpdateForm) throws EntityNotFound {
+        if(urlUpdateForm==null || urlUpdateForm.length==0)return;
 
+        List<SectionResource> sectionResourceList = new ArrayList<>();
+
+        for(SectionResourceUrlUpdateForm  form:urlUpdateForm){
+
+            SectionResource sectionResource =   this.getSectionResource(form.getId());
+            sectionResource.setUrl(form.getUrl());
+
+            sectionResourceList.add(sectionResource);
+        }
+        this.sectionResourceDao.updateAll(sectionResourceList);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(SectionResource sectionResource){

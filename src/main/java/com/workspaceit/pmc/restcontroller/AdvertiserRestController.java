@@ -46,6 +46,8 @@ public class AdvertiserRestController {
     private AdvertiserTransactionService advertiserTransactionService;
     private AdvertisementService advertisementService;
     private SectionService sectionService;
+    private SectionResourceService sectionResourceService;
+
 
     @Autowired
     public void setAdvertiserValidator(AdvertiserValidator advertiserValidator) {
@@ -83,6 +85,12 @@ public class AdvertiserRestController {
     @Autowired
     public void setSectionService(SectionService sectionService) {
         this.sectionService = sectionService;
+    }
+
+
+    @Autowired
+    public void setSectionResourceService(SectionResourceService sectionResourceService) {
+        this.sectionResourceService = sectionResourceService;
     }
 
     private ResponseEntity<?> getValidated(AdvertiserForm advertiserForm, BindingResult bindingResult){
@@ -265,8 +273,10 @@ public class AdvertiserRestController {
             this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.GALLERY),advertiserAndAllCompositeForm.getGalleryAds());
             this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW),advertiserAndAllCompositeForm.getSlideShowAds());
             this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS),
-                    advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),
-                    advertiserAndAllCompositeForm.getPopupAds());
+                                        advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),
+                                        advertiserAndAllCompositeForm.getPopupAds());
+
+            this.sectionResourceService.updateUrls(advertiserAndAllCompositeForm.getUrlsUpdate());
 
 
 

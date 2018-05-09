@@ -67,7 +67,11 @@
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
                         <div>
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}">
+                            <input class="form-control"
+                                   type="text"
+                                   value="${secResource.url}"
+                                   id="imgUrlUpdated_${secResource.id}"
+                                   onchange="addImageUrlForUpdate(${secResource.id})">
                             <br>
                                 <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
@@ -174,6 +178,11 @@
                         <div>
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
                             <br>
+                            <input class="form-control"
+                                   type="text"
+                                   value="${secResource.url}"
+                                   id="imgUrlUpdated_${secResource.id}"
+                                   onchange="addImageUrlForUpdate(${secResource.id})">
                                 <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
 

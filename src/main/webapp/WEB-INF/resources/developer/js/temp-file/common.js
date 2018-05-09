@@ -2,7 +2,7 @@
  * Created by mi_rafi on 1/4/18.
  * Store tokens and id
  */
-function TempFileTokenStorage () {
+function TokenStorage () {
     this.keyPrefix = "PMC_TOKEN_STORAGE";
     this.storageTypeStatics ={ls:"localStorage",hhi:"htmlHiddenInput"};
         /**
@@ -100,7 +100,7 @@ function injectHiddenTokenFields(keys){
 function getToken(key){
     var tokens=[];
     try{
-        var ls = new TempFileTokenStorage();
+        var ls = new TokenStorage();
         var tokenStr =  ls.getToken(key);
         tokens = JSON.parse( (tokenStr==null || tokenStr=="")?"[]":tokenStr);
 
@@ -110,8 +110,9 @@ function getToken(key){
     }
     return tokens;
 }
-function emptyToken(elemId){
-    $("#"+elemId).val("");
+function emptyToken(key){
+    var ts = new TokenStorage();
+    ts.emptyToken(key)
 }
 
 function storeToken(key,token){
@@ -123,7 +124,7 @@ function storeToken(key,token){
         tokens.push(token);
     }
 
-    var ls = new TempFileTokenStorage();
+    var ls = new TokenStorage();
     ls.setToken(key,JSON.stringify(tokens))
 }
 function removeToken(key,token){
@@ -132,7 +133,7 @@ function removeToken(key,token){
     if(index>=0){
         tokens.splice(index,1);
     }
-    var ls = new TempFileTokenStorage();
+    var ls = new TokenStorage();
     ls.setToken(key,JSON.stringify(tokens))
 }
 function removeFileByToken(token, fn,file){

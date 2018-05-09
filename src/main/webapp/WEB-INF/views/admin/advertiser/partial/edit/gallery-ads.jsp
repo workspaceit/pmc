@@ -17,7 +17,9 @@
                                                             .get(SECTION_TYPE.LOGO).sectionResource}" >
                         <c:if test="${!secResource.fileName.trim().equals('')}" >
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}">
+                            <input class="form-control" type="text" value="${secResource.url}"
+                                   id="imgUrlUpdated_${secResource.id}"
+                                   onchange="addImageUrlForUpdate(${secResource.id})"  >
                         </c:if>
                   </c:forEach>
                 </div>
@@ -59,7 +61,10 @@
                                                             .sectionResource}" >
                         <c:if test="${!secResource.fileName.trim().equals('')}" >
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}">
+                            <input class="form-control" type="text"
+                                   value="${secResource.url}"
+                                   id="imgUrlUpdated_${secResource.id}"
+                                   onchange="addImageUrlForUpdate(${secResource.id})"  >
                         </c:if>
 
                     </c:forEach>
@@ -137,7 +142,7 @@
                     <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
                         <div>
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}">
+                            <input id="imgUrlUpdated_${secResource.id}"   onchange="addImageUrlForUpdate(${secResource.id})" class="form-control" type="text" value="${secResource.url}">
                             <br>
                                 <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" >Delete</a>
@@ -209,7 +214,11 @@
                 <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).sectionResource}" >
                     <div>
                         <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}" />" class="img-thumbnail" width="150">
-                        <input class="form-control" type="text" value="${secResource.url}">
+                        <input id="imgUrlUpdated_${secResource.id}"
+                               class="form-control"
+                               type="text"
+                               value="${secResource.url}"
+                               onchange="addImageUrlForUpdate(${secResource.id})">
                         <br>
                             <%--ID_KEY._GALLERY_BOTTOM_BANNER is global vaiable from update.js --%>
                         <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" >Delete</a>

@@ -51,7 +51,11 @@
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
                         <div>
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}">
+                            <input class="form-control"
+                                   type="text"
+                                   value="${secResource.url}"
+                                   id="imgUrlUpdated_${secResource.id}"
+                                   onchange="addImageUrlForUpdate(${secResource.id})">
                             <br>
                                 <%--ID_KEY._SLIDE_SHOW_BANNER is global vaiable from update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._SLIDE_SHOW_BANNER,${secResource.id})" >Delete</a>

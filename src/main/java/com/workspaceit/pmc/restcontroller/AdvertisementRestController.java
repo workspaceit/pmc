@@ -5,6 +5,7 @@ import com.workspaceit.pmc.constant.UserRole;
 import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.service.AdminService;
 import com.workspaceit.pmc.service.GalleryAdService;
+import com.workspaceit.pmc.service.SectionResourceService;
 import com.workspaceit.pmc.util.ServiceResponse;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
@@ -34,10 +35,10 @@ import javax.validation.Valid;
 public class AdvertisementRestController {
     private GalleryAdsValidator galleryAdsValidator;
     private SlideShowAdsValidator slideShowAdsValidator;
-    private PopUpAdsValidator popupAdsValidator;
-
     private AdminService adminService;
     private GalleryAdService galleryAdService;
+
+    private PopUpAdsValidator popupAdsValidator;
 
 
     @Autowired
@@ -64,6 +65,7 @@ public class AdvertisementRestController {
     public void setGalleryAdService(GalleryAdService galleryAdService) {
         this.galleryAdService = galleryAdService;
     }
+
 
     @Secured({UserRole._SUPER_ADMIN, UserRole._ADMIN})
     @PostMapping(value = "/gallery-create-validation")

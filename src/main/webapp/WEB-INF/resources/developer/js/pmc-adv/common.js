@@ -879,6 +879,7 @@ function getSectionResourceUrlByToken(token){
        var url =  $("#"+PREFIX._IMAGE_URL+token).val();
        return ( url===undefined || url===null || url==="" )?null:url;
 }
+
 /*Validation */
 function validateAdvertiser(fnSuccess,fnError){
     var data = getAdvertiserInfoData();

@@ -32,7 +32,7 @@ function getIdToRemove(key){
 /*Create advertiser and other adds */
 function updateAdvertiser(){
     var id  = parseInt($("#advertiserId").val());
-    var data = {advertiser:{}, galleryAds:{}, popupAds:{}, slideShowAds:{}};
+    var data = {advertiser:{}, galleryAds:{}, popupAds:{}, slideShowAds:{},urlsUpdate:[]};
 
 
     var advertiserData = getAdvertiserInfoData();
@@ -53,7 +53,7 @@ function updateAdvertiser(){
     data.galleryAds = galleryAdsData;
     data.popupAds = popupAdsData;
     data.slideShowAds = slideShowAdsData;
-
+    data.urlsUpdate = getToken(PREFIX._IMAGE_UPDATE_URL);
 
     console.log(data);
     $.ajax({
@@ -167,8 +167,27 @@ function sendInvoiceToEmail(){
     });
 }
 function addImageUrlForUpdate(id){
-    var url =$(PREFIX._IMAGE_UPDATE_URL+id).val();
-    storeToken(PREFIX._IMAGE_UPDATE_URL+id,url);
+    var key = PREFIX._IMAGE_UPDATE_URL+id;
+    var url =$("#"+key).val();
+    var allToken = getToken(PREFIX._IMAGE_UPDATE_URL);
+    console.log(allToken);
+    /**
+     * Carry unique object
+     * Uniqueness defined by Id
+     * */
+    for(var i=0;i<allToken.length;i++){
+        if( allToken[i].id === id){
+            allToken.splice(i,1);
+        }
+    }
+    emptyToken(PREFIX._IMAGE_UPDATE_URL);
+    for(var i=0;i<allToken.length;i++){
+        storeToken( PREFIX._IMAGE_UPDATE_URL,allToken[i]);
+    }
+
+    var urlObj = {id:id,url:url};
+    storeToken( PREFIX._IMAGE_UPDATE_URL,urlObj);
+
 }
 $(document).ready(function(){
     /**
