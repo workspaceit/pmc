@@ -215,7 +215,7 @@
                                                     <fmt:parseNumber var = "breakTimeVal" integerOnly = "true"
                                                                      type = "number" value ="${location.breakTime}" />
                                                     <input min="0" type="number" class="form-control" id="breakTime" placeholder="" value="${breakTimeVal}" >
-                                                    <div class="input-group-addon">min</div>
+                                                    <div class="input-group-addon">sec</div>
 
                                                 </div>
                                                 <p class="text-danger" id="errorObj_breakTime"></p>
