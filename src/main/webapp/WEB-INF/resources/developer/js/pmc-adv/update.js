@@ -18,8 +18,7 @@ var ID_KEY = {
     _POPUP_EMAIL_BANNER : "_POPUP_EMAIL_BANNER"
 };
 function addIdToRemove(elem,key,id){
-    $(elem).parent().find(".img-thumbnail").hide();
-    $(elem).hide();
+    $(elem).parent().hide();
     storeToken(key,id);
 }
 function getIdToRemove(key){

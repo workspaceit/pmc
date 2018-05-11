@@ -133,7 +133,7 @@
                                                 <p style="text-align: left;">Ad Break Time</p>
                                                 <div class="input-group">
                                                     <input type="number" min="0" class="form-control" id="breakTime" value="1" placeholder="">
-                                                    <div class="input-group-addon">min</div>
+                                                    <div class="input-group-addon">sec</div>
 
                                                 </div>
                                                 <p class="text-danger" id="errorObjLocation_breakTime"></p>
