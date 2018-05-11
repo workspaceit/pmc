@@ -219,21 +219,23 @@ public class EventImageAuthApiController {
         }
     }
     @PostMapping("/send-to-slideshow")
-    public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") int[] imageIds){
+    public ResponseEntity<?> sendImagesToSlideShow(@RequestParam("imageIds") List<Integer> imageIds){
         boolean result = eventImageService.sendImagesToSlideShow(imageIds);
         if(!result){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+        return ResponseEntity.status(HttpStatus.OK).body(eventImages);
     }
 
     @PostMapping("/remove-from-slideshow")
-    public ResponseEntity<?> removeImagesFromSlideShow(@RequestParam("imageIds") int[] imageIds){
+    public ResponseEntity<?> removeImagesFromSlideShow(@RequestParam("imageIds") List<Integer> imageIds){
         boolean result = eventImageService.removeImagesFromSlideShow(imageIds);
         if(!result){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        List<EventImage> eventImages = eventImageService.getImagesByIds(imageIds);
+        return ResponseEntity.status(HttpStatus.OK).body(eventImages);
     }
 
     @PostMapping("/send")

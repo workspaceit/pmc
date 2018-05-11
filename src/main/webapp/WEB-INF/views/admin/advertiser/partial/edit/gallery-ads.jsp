@@ -11,12 +11,13 @@
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Logo</h4>
                 </div>
-                <div>
+                <div class="preview-holder">
                     <c:forEach var="secResource" items="${galleryAd
                                                             .sections
                                                             .get(SECTION_TYPE.LOGO).sectionResource}" >
                         <c:if test="${!secResource.fileName.trim().equals('')}" >
-                            <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
+                            <img onerror="this.src='/resources/images/default_alternate.png'"
+                                 src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
                             <input class="form-control" type="text" value="${secResource.url}"
                                    id="imgUrlUpdated_${secResource.id}"
                                    onchange="addImageUrlForUpdate(${secResource.id})"  >
@@ -54,7 +55,7 @@
                         <button type="button" class="btn btn-default">URL</button>
                     </div> -->
                 </div>
-                <div>
+                <div class="preview-holder">
                     <c:forEach var="secResource" items="${galleryAd
                                                             .sections
                                                             .get(SECTION_TYPE.BACKGROUND)

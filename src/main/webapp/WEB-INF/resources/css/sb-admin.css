@@ -416,6 +416,22 @@ ul.alert-dropdown {
     background-color:#000;
 }
 
+.preview-holder{
+    padding: 15px;
+}
+.preview-holder input{
+    border: 1px dashed #4c4c4c;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.preview-holder-nopad{
+    padding: 0px;
+}
+.preview-holder-nopad input{
+    border: 1px dashed #4c4c4c;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
 /*event gallery*/
 
 /* Side Navigation */
