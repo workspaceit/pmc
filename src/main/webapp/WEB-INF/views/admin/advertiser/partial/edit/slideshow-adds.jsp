@@ -49,10 +49,11 @@
             <c:forEach var="secResource" items="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                        <div>
+                        <div class="preview-holder">
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
                             <input class="form-control"
                                    type="text"
+                                   placeholder="Advertisement URL"
                                    value="${secResource.url}"
                                    id="imgUrlUpdated_${secResource.id}"
                                    onchange="addImageUrlForUpdate(${secResource.id})">
