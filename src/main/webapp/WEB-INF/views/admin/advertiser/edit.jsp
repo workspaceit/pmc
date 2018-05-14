@@ -99,7 +99,7 @@
             </div>
                 <%-- After image add Dropzone Image preview --%>
             <%@  include file="/WEB-INF/views/admin/advertiser/partial/file-preview.jsp" %>
-
+            <%@  include file="/WEB-INF/views/admin/advertiser/partial/file-preview-without-url.jsp" %>
         </div>
 
 

@@ -519,18 +519,23 @@ public class SectionService {
     @Transactional(rollbackFor = Exception.class)
     public List<Section> create(Advertisement advertisement,SlideShowAdsForm slideShowAdsForm,Admin admin){
 
-
+        Integer videoToken = slideShowAdsForm.getSlideShowAdsVideoResources().getToken();
 
         List<Section> sections = new ArrayList<>();
         List<SectionResource> topBannerSectionResources = this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsBannerResources(),FILE_TYPE.IMAGE);
-        List<SectionResource> videoSectionResources = new LinkedList<>();
 
-        SectionResource tmpVideoSecResource =  this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsVideoResources().getToken(),
-                FILE_TYPE.VIDEO,
-                slideShowAdsForm.getSlideShowAdsVideoResources().getUrl());
+        SectionResource tmpVideoSecResource = null;
+        if(videoToken!=null && videoToken>0){
+            tmpVideoSecResource =  this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsVideoResources().getToken(),
+                    FILE_TYPE.VIDEO,
+                    slideShowAdsForm.getSlideShowAdsVideoResources().getUrl());
 
-        if(tmpVideoSecResource.getFileName()!=null && !tmpVideoSecResource.getFileName().trim().equals("")){
-            videoSectionResources.add(tmpVideoSecResource);
+        }
+
+        if( tmpVideoSecResource != null
+                && tmpVideoSecResource.getFileName()!=null
+                && !tmpVideoSecResource.getFileName().trim().equals("")){
+            topBannerSectionResources.add(tmpVideoSecResource);
         }
 
         Section topBannerSection = this.getSection(

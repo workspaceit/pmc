@@ -9,8 +9,9 @@ import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import java.util.Date;
 
 
 /**
@@ -76,16 +77,24 @@ public class AdvertiserValidator implements Validator {
            this.checkEventExistence(advertiserForm.getEventIds(),errors);
         }
 
+        if(advertiserForm.getRuntimeStarts()!=null && advertiserForm.getRuntimeEnds()!=null ){
+            this.runtimeDateValidation(advertiserForm.getRuntimeStarts(), advertiserForm.getRuntimeEnds(),errors);
+        }
 
     }
-
+    private void runtimeDateValidation(Date startDate, Date endDate, Errors errors){
+       boolean flag =  startDate.before(endDate);
+       if(!flag){
+           errors.rejectValue("runtimeStarts","Start date can not be ahead of end date");
+       }
+    }
     public void basicFormValidate(Object obj, Errors errors) {
         AdvertiserForm advertiserForm = (AdvertiserForm)obj;
 
         if(!advertiserForm.getIsAllLocationSelected()){
             this.checkMinLocationSelected(advertiserForm.getLocationIds(),errors);
         }
-        System.out.println("advertiserForm.getIsAllEventSelected() "+advertiserForm.getIsAllEventSelected());
+
         if(!advertiserForm.getIsAllEventSelected()){
             this.checkMinEventSelected(advertiserForm.getEventIds(),errors);
         }
