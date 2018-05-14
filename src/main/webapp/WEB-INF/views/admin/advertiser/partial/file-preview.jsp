@@ -4,8 +4,8 @@
             <div class="dz-filename"><span data-dz-name></span></div>
             <div class="dz-size" data-dz-size></div>
             <img data-dz-thumbnail />
-            <div>
-                <input placeholder="url" type="text" class="form-control imgUrl">
+            <div class="preview-holder">
+                <input placeholder="Advertisement URL"  type="text" class="form-control imgUrl">
             </div>
         </div>
         <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>

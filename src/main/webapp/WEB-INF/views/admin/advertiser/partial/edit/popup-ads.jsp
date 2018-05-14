@@ -65,12 +65,13 @@
             <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
-                        <div>
+                        <div class="preview-holder">
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
                             <input class="form-control"
                                    type="text"
                                    value="${secResource.url}"
                                    id="imgUrlUpdated_${secResource.id}"
+                                   placeholder="Advertisement URL"
                                    onchange="addImageUrlForUpdate(${secResource.id})">
                             <br>
                                 <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
@@ -162,7 +163,7 @@
                     </c:if>
                     <input id="emailExpiryDate"
                            type="text" class="form-control"
-                           value="${emailExpDate}" />
+                           value="${emailExpDate}"/>
 
                     <i class="fa fa-calendar"></i>
                 </div>
@@ -175,13 +176,14 @@
             <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                        <div>
+                        <div class="preview-holder">
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
                             <br>
                             <input class="form-control"
                                    type="text"
                                    value="${secResource.url}"
                                    id="imgUrlUpdated_${secResource.id}"
+                                   placeholder="Advertisement URL"
                                    onchange="addImageUrlForUpdate(${secResource.id})">
                                 <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>

@@ -203,6 +203,7 @@ function deleteEntityFromServer(id,  multiple){
             if(!multiple){
                 showSuccessMessage(title,data.msg);
             }
+            window.location.reload();
         }
     });
 }

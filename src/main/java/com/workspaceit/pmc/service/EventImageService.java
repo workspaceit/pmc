@@ -114,7 +114,7 @@ public class EventImageService {
     }
 
     @Transactional
-    public Boolean sendImagesToSlideShow(int[] imageIds){
+    public Boolean sendImagesToSlideShow(List<Integer> imageIds){
         for(int imageId : imageIds){
             Boolean result = this.eventImageDao.sendToSlideShow(imageId);
             if(!result){
@@ -125,7 +125,7 @@ public class EventImageService {
     }
 
     @Transactional
-    public Boolean removeImagesFromSlideShow(int[] imageIds){
+    public Boolean removeImagesFromSlideShow(List<Integer> imageIds){
         for(int imageId : imageIds){
             Boolean result = this.eventImageDao.removeFromSlideShow(imageId);
             if(!result){
