@@ -109,6 +109,12 @@
             });
 
             function submitProfileUpdateData(actionName){
+                var url = BASEURL+"admin/user";
+                if(actionName == "cancel") {
+                    url += "/profile";
+                    window.location = url;
+                    return;
+                }
                 var fullName = $('#fullName').val();
                 var phoneNumber = $('#phoneNumber').val();
                 var password = $('#password').val();

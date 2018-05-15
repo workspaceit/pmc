@@ -131,6 +131,9 @@ public class AdminValidator implements Validator {
     }
 
     private void passwordStrengthCheck(String password, Errors errors){
+        if(password.length() == 0){
+            return;
+        }
         boolean hasLetter = false;
         boolean hasDigit = false;
         for (int i = 0; i < password.length(); i++) {

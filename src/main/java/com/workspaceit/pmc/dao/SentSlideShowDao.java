@@ -16,10 +16,14 @@ public class SentSlideShowDao extends BaseDao{
     }
     public SentSlideshow getByIdentifier(String identifier){
         Session session = this.getCurrentSession();
-        return (SentSlideshow)session.createQuery("FROM SentSlideshow  where identifier = :identifier")
-                .setParameter("identifier",identifier)
-                .setMaxResults(1)
-                .uniqueResult();
+        session.enableFilter("activeImages");
+
+        SentSlideshow sentSlideshow = (SentSlideshow)session.createQuery("FROM SentSlideshow  where identifier = :identifier")
+        .setParameter("identifier",identifier)
+        .setMaxResults(1)
+        .uniqueResult();
+        session.disableFilter("activeImages");
+        return sentSlideshow;
     }
     public void save(SentSlideshow sentSlideshow){
         this.insert(sentSlideshow);

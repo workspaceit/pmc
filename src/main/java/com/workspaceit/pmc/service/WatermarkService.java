@@ -473,7 +473,7 @@ public class WatermarkService {
 
 
         if(watermarkedImage!=null){
-            ImageIO.write( watermarkedImage, "jpg", outputStream );
+            ImageIO.write( watermarkedImage, "jpg", outputStream);
         }
 
         outputStream.flush();

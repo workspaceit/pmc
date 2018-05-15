@@ -11,6 +11,7 @@ $(document).ready(function() {
     function clearSelectionAfterOperation() {
         $('.select-checkbox:checked').prop('checked', false);
         $('#select-all-checkbox').prop('checked', false);
+        enableOrDisableEditButton();
     }
 
     $body.on('click', '#select-all-checkbox',function () {

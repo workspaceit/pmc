@@ -74,6 +74,7 @@ public class WatermarkHelper {
 
 
         mergedData.put(WATERMARK_ATTR._TYPE,watermarkType);
+        mergedData.put(WATERMARK_ATTR._FONT_SIZE, watermark.getFontSize());
         mergedData.put(WATERMARK_ATTR._COLOR,color);
         mergedData.put(WATERMARK_ATTR._FADE,fadeVal);
         mergedData.put(WATERMARK_ATTR._SIZE,size);
@@ -84,6 +85,7 @@ public class WatermarkHelper {
         mergedData.put(WATERMARK_ATTR._TEXT,watermarkText);
         mergedData.put(WATERMARK_ATTR._LOGO_TOKEN,logoToken);
         mergedData.put(WATERMARK_ATTR._SAMPLE_TOKEN,sampleToken);
+        mergedData.put(WATERMARK_ATTR._TEXT_BG_COLOR, "FFFFFF");
 
         return mergedData;
     }

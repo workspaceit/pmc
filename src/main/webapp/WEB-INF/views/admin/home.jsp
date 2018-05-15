@@ -71,7 +71,7 @@
                                 <tbody>
                                 <c:forEach items="${topActiveEvents}" var="event">
                                     <tr>
-                                        <td><a href="events.html">${event.name}</a></td>
+                                        <td>${event.name}</td>
                                         <td style="text-align: center;">
                                             <fmt:formatDate value="${event.createAt}" pattern="yyyy/MM/dd"/>
                                         </td>

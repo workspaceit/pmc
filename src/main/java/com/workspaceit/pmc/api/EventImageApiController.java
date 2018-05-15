@@ -51,6 +51,7 @@ public class EventImageApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ServiceResponse.getInstance()
                     .setValidationError("identifier","No sent slide show found"));
         }
+        sentSlideShow.getEventImages().removeIf(eventImage -> eventImage.getDeleted());
         return ResponseEntity.status(HttpStatus.OK).body(sentSlideShow.getEventImages());
     }
 
