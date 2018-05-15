@@ -68,6 +68,7 @@
                         <div>
                             <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${otherImage.image}" />" class="img-thumbnail" width="150">
                             <br>
+
                             <%--ID_KEY._ADV_OTHER_IMAGE is global vaiable from update.js --%>
                             <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._ADV_OTHER_IMAGE,${otherImage.id})" >Delete</a>
                         </div>

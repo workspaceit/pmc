@@ -104,6 +104,7 @@ $(document).ready(function(){
                                                      param:"other-images",
                                                      maxFile:6,
                                                      maxFileSize:1,
+                                                     preViewHtmlId:"dropZonePreviewWithOutUrl",
                                                      success:function(response){
                                                          storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
                                                      },
@@ -526,7 +527,7 @@ function configAdvertBdImgDropZone(data){
     var fnSuccess=data.success;
     var afterServerFileRemove=data.afterServerFileRemove;
     var addFileFn=data.afterAddFile;
-
+    var preViewHtmlId = (data.preViewHtmlId ==undefined)?"dropZonePreview":data.preViewHtmlId;
     console.log(elementId);
     var advImgDropZone = new Dropzone("#"+elementId,
         {
@@ -536,7 +537,7 @@ function configAdvertBdImgDropZone(data){
             maxFilesize: maxFileSize,
             maxFiles:maxFile,
             addRemoveLinks: true,
-            previewTemplate:$("#dropZonePreview").html(),
+            previewTemplate:$("#"+preViewHtmlId).html(),
             previewsContainer: '#' + elementId + 'PreviewsContainer',
             init:function(){
 

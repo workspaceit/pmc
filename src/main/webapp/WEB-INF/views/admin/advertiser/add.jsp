@@ -62,6 +62,7 @@
 
                 <%-- After image add Dropzone Image preview --%>
             <%@  include file="/WEB-INF/views/admin/advertiser/partial/file-preview.jsp" %>
+            <%@  include file="/WEB-INF/views/admin/advertiser/partial/file-preview-without-url.jsp" %>
         </div>
 
         <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
