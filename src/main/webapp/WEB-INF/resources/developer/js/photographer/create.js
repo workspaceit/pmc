@@ -105,9 +105,10 @@ function photographerAfterSaveActionCreate(btnAction, id){
         case "save_and_new":
             urlStr = "admin/photographer/add";
             break;
-        case "cancel":
-            urlStr = "admin/photographer/all";
-            break;
     }
-    window.location =BASEURL+urlStr;
+    $.growl.notice({title: 'Success!', message: "Photographer saved"});
+    setTimeout(function(){
+        window.location =BASEURL+urlStr;
+    }, 600);
+
 }

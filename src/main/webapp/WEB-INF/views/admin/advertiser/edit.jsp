@@ -36,7 +36,7 @@
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save','update')">Save</button>
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_close','update')">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
-                    <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
+                    <a class="btn btn-action-top" href="<c:url value="/admin/advertiser/all"/>">Cancel</a>
                     <button class="btn btn-action-top" onclick="loadCheckoutInModal()">Checkout</button>
                     <button onclick="deleteEntity(${advertiser.id}, 'advertiser')" class="btn btn-action-top">Delete</button>
                 </div>

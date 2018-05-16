@@ -13,7 +13,7 @@
                             <button class="btn btn-action-top" onclick="submitPhotographerData('save')" >Save</button>
                             <button class="btn btn-action-top" onclick="submitPhotographerData('save_and_close')" >Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="submitPhotographerData('save_and_new')" >Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top" onclick="photographerAfterSaveActionCreate('cancel')" >Cancel</button>
+                            <a class="btn btn-action-top" href="<c:url value="/admin/photographer/all"/>" >Cancel</a>
                         </div>
                         <div class="form-group">
                             <label>Full Name</label>

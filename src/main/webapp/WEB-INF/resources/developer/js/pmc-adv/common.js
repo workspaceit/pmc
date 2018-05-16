@@ -621,12 +621,12 @@ function advertiserAfterSaveAction(btnAction,id){
         case "save_and_new":
             urlStr += "/advertiser/add";
             break;
-        case "cancel":
-            urlStr += "/advertiser/all";
-            break;
     }
+    $.growl.notice({title: 'Success!', message: "Advertiser saved"});
+    setTimeout(function(){
+        window.location =urlStr;
+    }, 600);
 
-    window.location =urlStr;
 }
 function submitAdvertiserData(submitType,forUpdate,marker){
     switch (marker){

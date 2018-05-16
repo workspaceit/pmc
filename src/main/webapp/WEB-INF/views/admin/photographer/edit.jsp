@@ -14,7 +14,7 @@
                             <button class="btn btn-action-top" onclick="initUpdate('save')">Save</button>
                             <button class="btn btn-action-top" onclick="initUpdate('save_and_close')">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="initUpdate('save_and_new')">Save&nbsp;&&nbsp;New</button>
-                            <button class="btn btn-action-top" onclick="photographerAfterSaveAction('cancel')">Cancel</button>
+                            <a class="btn btn-action-top" href="<c:url value="/admin/photographer/all"/>">Cancel</a>
                             <button onclick="deleteEntity(${photographer.id},'photographer')" class="btn btn-action-top">Delete</button>
                             <br>
                             <span id="successMsg"></span>
