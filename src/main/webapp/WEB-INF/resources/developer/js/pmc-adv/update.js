@@ -19,7 +19,7 @@ var ID_KEY = {
 };
 function addIdToRemove(elem,key,id){
     $(elem).parent().hide();
-    storeToken(key,id);
+    storeToken(ID_KEY[key],id);
 }
 function getIdToRemove(key){
     return getToken(key);
@@ -52,7 +52,7 @@ function updateAdvertiser(){
     data.galleryAds = galleryAdsData;
     data.popupAds = popupAdsData;
     data.slideShowAds = slideShowAdsData;
-    data.urlsUpdate = getToken(PREFIX._IMAGE_UPDATE_URL);
+    data.urlsUpdate = getToken(PREFIX._UPDATE_URL);
 
     console.log(data);
     $.ajax({
@@ -166,9 +166,9 @@ function sendInvoiceToEmail(){
     });
 }
 function addImageUrlForUpdate(id){
-    var key = PREFIX._IMAGE_UPDATE_URL+id;
+    var key = PREFIX.SEC_RES.URL._UPDATE+id;
     var url =$("#"+key).val();
-    var allToken = getToken(PREFIX._IMAGE_UPDATE_URL);
+    var allToken = getToken(PREFIX.SEC_RES.URL._UPDATE);
     console.log(allToken);
     /**
      * Carry unique object
@@ -179,13 +179,13 @@ function addImageUrlForUpdate(id){
             allToken.splice(i,1);
         }
     }
-    emptyToken(PREFIX._IMAGE_UPDATE_URL);
+    emptyToken(PREFIX.SEC_RES.URL._UPDATE);
     for(var i=0;i<allToken.length;i++){
-        storeToken( PREFIX._IMAGE_UPDATE_URL,allToken[i]);
+        storeToken( PREFIX.SEC_RES.URL._UPDATE,allToken[i]);
     }
 
     var urlObj = {id:id,url:url};
-    storeToken( PREFIX._IMAGE_UPDATE_URL,urlObj);
+    storeToken( PREFIX.SEC_RES.URL._UPDATE,urlObj);
 
 }
 $(document).ready(function(){

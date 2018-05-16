@@ -11,20 +11,22 @@
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Logo</h4>
                 </div>
-                <div class="preview-holder">
+
                     <c:forEach var="secResource" items="${galleryAd
                                                             .sections
                                                             .get(SECTION_TYPE.LOGO).sectionResource}" >
-                        <c:if test="${!secResource.fileName.trim().equals('')}" >
-                            <img onerror="this.src='/resources/images/default_alternate.png'"
-                                 src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" value="${secResource.url}"
-                                   id="imgUrlUpdated_${secResource.id}"
-                                   placeholder="Advertisement URL"
-                                   onchange="addImageUrlForUpdate(${secResource.id})"  >
-                        </c:if>
+                        <div class="preview-holder">
+                            <c:if test="${!secResource.fileName.trim().equals('')}" >
+                                <img onerror="this.src='/resources/images/default_alternate.png'"
+                                     src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
+                                <input class="form-control" type="text" value="${secResource.url}"
+                                       id="imgUrlUpdated_${secResource.id}"
+                                       placeholder="Advertisement URL"
+                                       onchange="addImageUrlForUpdate(${secResource.id})"  >
+                            </c:if>
+                        </div>
                   </c:forEach>
-                </div>
+
 
                 <div id="advLogo"  class="panel-body"  >
                     <div class="dz-default dz-message">
@@ -52,11 +54,12 @@
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Background Image</h4>
                 </div>
-                <div class="preview-holder">
+
                     <c:forEach var="secResource" items="${galleryAd
                                                             .sections
                                                             .get(SECTION_TYPE.BACKGROUND)
                                                             .sectionResource}" >
+                <div class="preview-holder">
                         <c:if test="${!secResource.fileName.trim().equals('')}" >
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
                             <input class="form-control" type="text" style="display: none;"
@@ -65,9 +68,9 @@
                                    placeholder="Advertisement URL"
                                    onchange="addImageUrlForUpdate(${secResource.id})"  >
                         </c:if>
-
-                    </c:forEach>
                 </div>
+                    </c:forEach>
+
 
                 <div id="advBackgroundImage"  class="panel-body"    >
                     <div class="dz-default dz-message">
@@ -137,15 +140,16 @@
 
                 <div class="image-previewer preview-holder">
                     <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
-                        <div>
-                            <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input id="imgUrlUpdated_${secResource.id}"   onchange="addImageUrlForUpdate(${secResource.id})"
-                                   class="form-control" type="text" value="${secResource.url}"
-                                   placeholder="Advertisement URL">
-                            <br>
-                                <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
-                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_TOP_BANNER,${secResource.id})" >Delete</a>
-                        </div>
+                        <jsp:include page="partial/sectionResource.jsp">
+                            <jsp:param name="key" value="_GALLERY_TOP_BANNER"/>
+
+                            <jsp:param name="id" value="${secResource.id}"/>
+                            <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                            <jsp:param name="fileName" value="${secResource.fileName}"/>
+                            <jsp:param name="fileType" value="${secResource.fileType}"/>
+                            <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                            <jsp:param name="url" value="${secResource.url}"/>
+                        </jsp:include>
                     </c:forEach>
                 </div>
                 <div id="advTopBannerImage"  class="panel-body"    >
@@ -211,18 +215,16 @@
 
                 </div>
                 <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).sectionResource}" >
-                    <div class="preview-holder">
-                        <img  onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}" />" class="img-thumbnail" width="150">
-                        <input id="imgUrlUpdated_${secResource.id}"
-                               class="form-control"
-                               type="text"
-                               value="${secResource.url}"
-                               placeholder="Advertisement URL"
-                               onchange="addImageUrlForUpdate(${secResource.id})">
-                        <br>
-                            <%--ID_KEY._GALLERY_BOTTOM_BANNER is global vaiable from update.js --%>
-                        <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._GALLERY_BOTTOM_BANNER,${secResource.id})" >Delete</a>
-                    </div>
+                    <jsp:include page="partial/sectionResource.jsp">
+                        <jsp:param name="key" value="_GALLERY_BOTTOM_BANNER"/>
+
+                        <jsp:param name="id" value="${secResource.id}"/>
+                        <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                        <jsp:param name="fileName" value="${secResource.fileName}"/>
+                        <jsp:param name="fileType" value="${secResource.fileType}"/>
+                        <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                        <jsp:param name="url" value="${secResource.url}"/>
+                    </jsp:include>
                 </c:forEach>
                 <div id="advBottomBannerImage" class="panel-body"  >
                     <div class="dz-default dz-message">

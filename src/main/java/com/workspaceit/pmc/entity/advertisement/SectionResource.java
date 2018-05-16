@@ -18,6 +18,9 @@ public class SectionResource {
     @Column(name = "section_id",insertable = false,updatable = false)
     private Integer sectionId;
 
+    @Column(name = "selected_static")
+    private boolean selectedStatic;
+
     @Column(name = "file_name")
     private String fileName;
 
@@ -50,6 +53,14 @@ public class SectionResource {
 
     public void setSectionId(Integer sectionId) {
         this.sectionId = sectionId;
+    }
+
+    public boolean isSelectedStatic() {
+        return selectedStatic;
+    }
+
+    public void setSelectedStatic(boolean selectedStatic) {
+        this.selectedStatic = selectedStatic;
     }
 
     public String getFileName() {
@@ -100,6 +111,7 @@ public class SectionResource {
         SectionResource that = (SectionResource) o;
 
         if (id != that.id) return false;
+        if (selectedStatic != that.selectedStatic) return false;
         if (sectionId != null ? !sectionId.equals(that.sectionId) : that.sectionId != null) return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (fileType != that.fileType) return false;
@@ -112,6 +124,7 @@ public class SectionResource {
     public int hashCode() {
         int result = id;
         result = 31 * result + (sectionId != null ? sectionId.hashCode() : 0);
+        result = 31 * result + (selectedStatic ? 1 : 0);
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
         result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);

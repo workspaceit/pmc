@@ -6,9 +6,10 @@ var errorFound = false;
 var globalBtnAction = "";
 var globalSubmitAction = "";
 
-function SectionResource (token,url) {
+function SectionResource (token,url,selectedStatic) {
     this.token = token;
     this.url = url;
+    this.selectedStatic = selectedStatic;
 }
 /*DropZoneObject used below code*/
 var dropZoneElements = {
@@ -28,8 +29,18 @@ var dropZoneElements = {
 
 
 var PREFIX={
-    _IMAGE_URL:"imgUrl_",
-    _IMAGE_UPDATE_URL:"imgUrlUpdated_"
+    SEC_RES:{
+        URL:{
+            _ADD:"imgUrl_",
+            _UPDATE:"imgUrlUpdated_"
+        },
+        STATIC_SELECTOR:{
+            _ADD:"staticSelectorAdd_",
+            _UPDATE:"staticSelectorUpdate_"
+
+        }
+
+    }
 };
 
 var RotationSettings={
@@ -52,14 +63,14 @@ $(document).ready(function(){
 
     for(var key in RotationSettings){
         var id = RotationSettings[key];
-        initRtationSettings(id);
+        initRotationSettings(id);
     }
     showHideLocationSelectBox();
     showHideEventSelectBox();
 });
 
 function getRotationSetting(id){
-   var rotationSettingVal =  $("#"+id+" .active").data("val");
+    var rotationSettingVal =  $("#"+id+" .active").data("val");
     rotationSettingVal = parseInt(rotationSettingVal);
 
     if(rotationSettingVal==1){
@@ -68,10 +79,35 @@ function getRotationSetting(id){
         return "STATIC";
     }
 }
-function initRtationSettings(id){
+function isRotationSettingsStatic(id){
+    var val = $("#"+id).parents(".imageupload").find(".btn-switch.active").first().attr("data-val");
+    try{
+        val = parseInt(val);
+
+    }catch(e){
+        console.log(e);
+    }
+    if(val===0)
+        return true;
+    return false;
+}
+function initRotationSettings(id){
     $("#"+id+" .btn").click(function(){
+
         $("#"+id+" .btn").removeClass("active");
         $(this).addClass("active");
+
+        $("#"+id+" .active").data("val");
+
+        var rotationSettingVal =  $("#"+id+" .active").data("val");
+        var parentElement = $("#"+id).parents(".imageupload").first();
+        rotationSettingVal = parseInt(rotationSettingVal);
+        if(rotationSettingVal===1){
+            $(parentElement).find(".static-selector").hide();
+        }else{
+            $(parentElement).find(".static-selector").show();
+        }
+
     });
 }
 
@@ -172,7 +208,7 @@ $(document).ready(function(){
                                             elementId:"advSlideShowBanner",
                                             param:"slide-show-banner-or-video",
                                             maxFile:6,
-                                            maxFileSize:3,
+                                            maxFileSize:50,
                                             success:function(response,file){
                                                 if(isVideoFile(file)){
                                                     emptyToken(ADV_IMG_TYPE._SLIDESHOW_VIDEO_TOKEN);
@@ -242,7 +278,7 @@ $(document).ready(function(){
         elementId:"advSmsPopUpBanner",
         param:"sms-popup-banner-or-video",
         maxFile:6,
-        maxFileSize:3,
+        maxFileSize:50,
         success:function(response,file){
             if(isVideoFile(file)){
                 emptyToken(ADV_IMG_TYPE._SMS_POPUP_VIDEO_TOKEN);
@@ -316,9 +352,9 @@ $(document).ready(function(){
     });
     dropZoneElements.popUpEmailBannerOrVideo = configAdvertBdImgDropZone({
         elementId:"advEmailPopUpBanner",
-        param:"email-popup-banner",
+        param:"email-popup-banner-or-video",
         maxFile:6,
-        maxFileSize:1,
+        maxFileSize:50,
         success:function(response,file){
             if(isVideoFile(file)){
                 emptyToken(ADV_IMG_TYPE._EMAIL_POPUP_VIDEO_TOKEN);
@@ -520,6 +556,7 @@ function showHideEventSelectBox(){
     }
 }
 function configAdvertBdImgDropZone(data){
+    console.log( data.elementId);
     var elementId = data.elementId;
     var param=data.param;
     var maxFile=data.maxFile;
@@ -529,6 +566,7 @@ function configAdvertBdImgDropZone(data){
     var addFileFn=data.afterAddFile;
     var preViewHtmlId = (data.preViewHtmlId ==undefined)?"dropZonePreview":data.preViewHtmlId;
     console.log(elementId);
+
     var advImgDropZone = new Dropzone("#"+elementId,
         {
             url: BASEURL+"file/upload/adv/"+param,
@@ -581,13 +619,27 @@ function configAdvertBdImgDropZone(data){
             },
             success:function(file,response){
 
+                /**
+                 * Token Storing
+                 * */
                 file.token = response.token;
-
-
-                console.log(file);
                 fnSuccess(response,file);
 
-                $(file.previewElement).find(".imgUrl").first().attr("id",PREFIX._IMAGE_URL+file.token);
+                /**
+                 * Show static selection radio
+                 * */
+
+                var flag =  isRotationSettingsStatic(elementId);
+                if(flag){
+                    showStaticSectionRadio(elementId);
+                }
+
+                /**
+                 * Assign id to Url text and Radio
+                 * */
+                $(file.previewElement).find(".imgUrl").first().attr("id",PREFIX.SEC_RES.URL._ADD+file.token);
+                $(file.previewElement).find(".static-selector").first().attr("id",PREFIX.SEC_RES.STATIC_SELECTOR._ADD+file.token);
+
             }
         }
     );
@@ -868,19 +920,30 @@ function getListOfSectionResource(tokens){
    for(var i=0;i<tokens.length;i++){
        var token = tokens[i];
        var url = getSectionResourceUrlByToken(token);
-       secResList.push(new SectionResource(token,url));
+       var isSelected = getSectionResourceStaticSectorByToken(token);
+       secResList.push(new SectionResource(token,url,isSelected));
    }
 
    return secResList;
 }
 function getSectionResource(tokens){
-    return  tokens.length > 0 ? new SectionResource(tokens[0],getSectionResourceUrlByToken(tokens[0])) : new SectionResource(null,null);
+    var sectionResource;
+    if( tokens.length > 0){
+        var url = getSectionResourceUrlByToken(tokens[0]);
+        var isSelected = getSectionResourceStaticSectorByToken(tokens[0]);
+        sectionResource = new SectionResource(tokens[0],url,isSelected);
+    }else{
+        sectionResource = new SectionResource(null,null,false);
+    }
+    return  sectionResource;
 }
 function getSectionResourceUrlByToken(token){
-       var url =  $("#"+PREFIX._IMAGE_URL+token).val();
+       var url =  $("#"+PREFIX.SEC_RES.URL._ADD+token).val();
        return ( url===undefined || url===null || url==="" )?null:url;
 }
-
+function getSectionResourceStaticSectorByToken(token){
+    return  $("#"+PREFIX.SEC_RES.STATIC_SELECTOR._ADD+token).is(":checked");
+}
 /*Validation */
 function validateAdvertiser(fnSuccess,fnError){
     var data = getAdvertiserInfoData();
@@ -1030,4 +1093,23 @@ function hasAllLocationSelected(){
 function hasAllEventSelected(){
     var isChecked = $("#allEventSelection:checked").length;
     return (isChecked==1)?true:false;
+}
+function staticSelected(elem){
+    var parentElem = $(elem).parents(".imageupload").first();
+    $(parentElem).find(".static-selector").each(function(){
+        if(this!==elem){
+
+            $(this).attr('checked', false);
+        }
+    });
+}
+function showStaticSectionRadio(elemId,includeParent){
+    var parentElem = $("#"+elemId);
+    if(includeParent){
+        parentElem = $("#"+elemId).parents(".imageupload");
+    }
+
+    $(parentElem).find(".static-selector").each(function(){
+        $(this).show();
+    });
 }

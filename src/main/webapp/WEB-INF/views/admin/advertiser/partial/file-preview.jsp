@@ -3,6 +3,7 @@
         <div class="dz-details">
             <div class="dz-filename"><span data-dz-name></span></div>
             <div class="dz-size" data-dz-size></div>
+            <input type="radio" class="static-selector" style="display: none;" onclick=" staticSelected(this)">
             <img data-dz-thumbnail />
             <div class="preview-holder">
                 <input placeholder="Advertisement URL"  type="text" class="form-control imgUrl">

@@ -90,52 +90,65 @@ public class FileUploadController{
                                            @PathVariable("uploader") String uploader) {
         long fileSizeLimit=0;
         Set<String> imgContentType=this.imgAllowedMimeType;
-
-         
+        String mimeType = FileHelper.getMimeType(multipartFile);
 
         switch (uploader){
             case "other-images":
-                fileSizeLimit = FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit = FileHelper.getMBtoByte(2) ;// 2 MB
                 break;
             case "logo-image":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
                 break;
             case "background-image":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
                 break;
             case "top-banner":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
                 break;
             case "bottom-banner":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
-                break;
-            case "slide-show-banner":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
-                break;
-            case "slide-show-video":
-                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
-                imgContentType = this.videoAllowedMimeType;
+                fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
                 break;
             case "slide-show-banner-or-video":
-                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 1 MB
-                imgContentType = this.imgAllowedMimeType;
+                fileSizeLimit = 0;
+
+
+                if(this.imgAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
+                }else  if(this.videoAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(50) ;// 1 MB
+                }
+
+                imgContentType = new HashSet<>(this.imgAllowedMimeType);
                 imgContentType.addAll(this.videoAllowedMimeType);
+
                 break;
-            case "email-popup-banner":
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
-                imgContentType = this.imgAllowedMimeType;
-                break;
-            case "email-popup-video":
-                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
-                imgContentType = this.videoAllowedMimeType;
-                break;
+
             case "sms-popup-banner-or-video":
-                fileSizeLimit =FileHelper.getMBtoByte(3) ;// 3 MB
-                imgContentType = this.imgAllowedMimeType;
+                fileSizeLimit = 0;
+
+                if(this.imgAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
+                }else  if(this.videoAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(50) ;// 1 MB
+                }
+                imgContentType = new HashSet<>(this.imgAllowedMimeType);
+                imgContentType.addAll(this.videoAllowedMimeType);
+
+                break;
+            case "email-popup-banner-or-video":
+                fileSizeLimit = 0;
+
+                if(this.imgAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(2) ;// 2 MB
+                }else  if(this.videoAllowedMimeType.contains(mimeType)){
+                    fileSizeLimit =FileHelper.getMBtoByte(50) ;// 1 MB
+                }
+
+                imgContentType = new HashSet<>(this.imgAllowedMimeType);
                 imgContentType.addAll(this.videoAllowedMimeType);
                 break;
             default:
-                fileSizeLimit =FileHelper.getMBtoByte(1) ;// 1 MB
+                fileSizeLimit =FileHelper.getMBtoByte(2) ;// 1 MB
         }
 
         return validateAndProcessMultiPart(  "advImg",fileSizeLimit,multipartFile,imgContentType);
@@ -162,7 +175,7 @@ public class FileUploadController{
 
 
         if(multipartFile.getSize()>fileSizeLimit){
-            serviceResponse.setValidationError(param,"File size exceeds. Max size "+FileHelper.getByteToMb(fileSizeLimit));
+            serviceResponse.setValidationError(param,"File size exceeds. Max size "+FileHelper.getByteToMb(fileSizeLimit) +" MB");
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
 

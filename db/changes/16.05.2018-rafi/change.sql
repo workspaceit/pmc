@@ -1,0 +1,1 @@
+ALTER TABLE  `sec_resource` ADD  `selected_static` TINYINT( 1 ) UNSIGNED NOT NULL AFTER  `section_id` ;

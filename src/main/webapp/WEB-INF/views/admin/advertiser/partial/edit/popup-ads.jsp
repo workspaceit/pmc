@@ -65,19 +65,17 @@
             <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
-                        <div class="preview-holder">
-                            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                            <input class="form-control"
-                                   type="text"
-                                   value="${secResource.url}"
-                                   id="imgUrlUpdated_${secResource.id}"
-                                   placeholder="Advertisement URL"
-                                   onchange="addImageUrlForUpdate(${secResource.id})">
-                            <br>
-                                <%--ID_KEY._POPUP_SMS_BANNER is global vaiable update.js --%>
-                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_SMS_BANNER,${secResource.id})"  >Delete</a>
+                        <jsp:include page="partial/sectionResource.jsp">
+                            <jsp:param name="key" value="_POPUP_SMS_BANNER"/>
 
-                        </div>
+                            <jsp:param name="id" value="${secResource.id}"/>
+                            <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                            <jsp:param name="fileName" value="${secResource.fileName}"/>
+                            <jsp:param name="fileType" value="${secResource.fileType}"/>
+                            <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                            <jsp:param name="url" value="${secResource.url}"/>
+                        </jsp:include>
+
                     </c:when>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}">
                         <video width="400" controls>
@@ -176,19 +174,16 @@
             <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
-                        <div class="preview-holder">
-                            <img onerror="this.src='/resources/images/default_alternate.png'" src="/common/${secResource.fileName}" class="img-thumbnail" width="150">
-                            <br>
-                            <input class="form-control"
-                                   type="text"
-                                   value="${secResource.url}"
-                                   id="imgUrlUpdated_${secResource.id}"
-                                   placeholder="Advertisement URL"
-                                   onchange="addImageUrlForUpdate(${secResource.id})">
-                                <%--ID_KEY._POPUP_EMAIL_BANNER is global vaiable update.js --%>
-                            <a href="javascript:void(0)" onclick="addIdToRemove(this,ID_KEY._POPUP_EMAIL_BANNER,${secResource.id})" >Delete</a>
+                        <jsp:include page="partial/sectionResource.jsp">
+                            <jsp:param name="key" value="_POPUP_EMAIL_BANNER"/>
 
-                        </div>
+                            <jsp:param name="id" value="${secResource.id}"/>
+                            <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                            <jsp:param name="fileName" value="${secResource.fileName}"/>
+                            <jsp:param name="fileType" value="${secResource.fileType}"/>
+                            <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                            <jsp:param name="url" value="${secResource.url}"/>
+                        </jsp:include>
                     </c:when>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
                         <video width="400" controls>
