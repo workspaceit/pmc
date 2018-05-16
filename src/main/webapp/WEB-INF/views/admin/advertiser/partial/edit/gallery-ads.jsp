@@ -51,10 +51,6 @@
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h4 class="panel-title pull-left">Background Image</h4>
-                    <!-- <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default active">File</button>
-                        <button type="button" class="btn btn-default">URL</button>
-                    </div> -->
                 </div>
                 <div class="preview-holder">
                     <c:forEach var="secResource" items="${galleryAd
@@ -63,7 +59,7 @@
                                                             .sectionResource}" >
                         <c:if test="${!secResource.fileName.trim().equals('')}" >
                             <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text"
+                            <input class="form-control" type="text" style="display: none;"
                                    value="${secResource.url}"
                                    id="imgUrlUpdated_${secResource.id}"
                                    placeholder="Advertisement URL"

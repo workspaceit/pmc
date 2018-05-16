@@ -6,6 +6,7 @@ import com.workspaceit.pmc.entity.Photographer;
 import com.workspaceit.pmc.service.EventImageService;
 import com.workspaceit.pmc.service.EventService;
 import com.workspaceit.pmc.service.PhotographerService;
+import com.workspaceit.pmc.service.ReportImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class EventAuthApiController {
     private EventService eventService;
     private PhotographerService photographerService;
     private EventImageService eventImageService;
+    private ReportImageService reportImageService;
 
 
     @Autowired
@@ -38,6 +40,10 @@ public class EventAuthApiController {
     public void setEventImageService(EventImageService eventImageService) {
         this.eventImageService = eventImageService;
     }
+    @Autowired
+    public void setReportImageService(ReportImageService reportImageService) {
+        this.reportImageService = reportImageService;
+    }
 
     @GetMapping("/{eventId}/details")
     public ResponseEntity<?> getEventDetails(@PathVariable("eventId") Integer eventId){
@@ -46,6 +52,8 @@ public class EventAuthApiController {
             Map<String, Object> eventDetails = new HashMap<>();
             eventDetails.put("event", event);
             eventDetails.put("imageCount", eventImageService.getImageCountForEvent(event));
+            eventDetails.put("slideshowImageCount", eventImageService.getSlideshowImageCountForEvent(event));
+            eventDetails.put("reportedImageCount", reportImageService.getReportedImageCountByEvent(event));
             return ResponseEntity.status(HttpStatus.OK).body(eventDetails);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");

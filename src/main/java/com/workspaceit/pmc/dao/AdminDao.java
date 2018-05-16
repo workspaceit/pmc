@@ -19,6 +19,7 @@ public class AdminDao extends BaseDao {
         session.save(admin);
         return admin;
     }
+
     public Admin getByEmail(String email){
         Session session = this.openSession();
         try{
@@ -55,6 +56,7 @@ public class AdminDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
+
     public Admin getByUserName(String userName){
         Session session = this.openSession();
         return (Admin)session.createQuery("FROM Admin  WHERE userName=:userName")
@@ -62,6 +64,7 @@ public class AdminDao extends BaseDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+
     public Admin getByUserName(String userName, Admin admin){
         Session session = this.openSession();
         return (Admin)session.createQuery("FROM Admin  WHERE userName=:userName AND id !=:id")
@@ -70,15 +73,18 @@ public class AdminDao extends BaseDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+
     public List<Admin> getAll(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Admin ORDER BY createdAt DESC")
-                .list();
+        session.enableFilter("activeAdmins");
+        List<Admin> admins = session.createQuery("FROM Admin ORDER BY createdAt DESC").list();
+        session.disableFilter("activeAdmins");
+        return admins;
     }
 
     public List<Admin> getActiveAdmins(){
         Session session = this.getCurrentSession();
-        return session.createQuery("FROM Admin WHERE active=true ORDER BY id DESC")
+        return session.createQuery("FROM Admin WHERE active=true and deleted=false ORDER BY id DESC")
                 .list();
     }
 
@@ -93,21 +99,5 @@ public class AdminDao extends BaseDao {
             if(session!=null)session.close();
         }
     }
-
-
-//    public void update(Admin admin){
-//        Session session = this.openSession();
-//        session.beginTransaction();
-//        try {
-//            session.update(admin);
-//        }
-//        finally {
-//            if(session!=null) {
-//                session.close();
-//                session.getTransaction().commit();
-//            }
-//        }
-//
-//    }
 
 }

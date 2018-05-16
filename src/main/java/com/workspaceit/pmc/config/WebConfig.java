@@ -111,7 +111,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean(name="durationList")
     public  Set<Integer> Durations(){
         Set<Integer> durations = new HashSet<>();
-        for(int i=1;i<=5;i++){
+        for(int i=1;i<=15;i++){
             durations.add(i);
         }
 

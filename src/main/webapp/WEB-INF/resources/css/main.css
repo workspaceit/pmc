@@ -1264,3 +1264,8 @@ ul.submenu li{
     /*height: 250px !important;*/
     /*overflow: auto !important;*/
 /*}*/
+
+
+#advBackgroundImagePreviewsContainer .preview-holder {
+    display: none;
+}

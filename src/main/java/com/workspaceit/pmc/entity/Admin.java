@@ -1,17 +1,19 @@
 package com.workspaceit.pmc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.*;
 
 /**
  * Created by anik on 12/19/17.
  */
 @Entity
+@FilterDef(name = "activeAdmins")
+@Filter(name = "activeAdmins", condition = "deleted = false AND active = true")
 @Table(name = "admins")
 @JsonIgnoreProperties({"password","createdBy", "createdAt"})
 public class Admin {
@@ -57,6 +59,9 @@ public class Admin {
 
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "deleted")
+    private Boolean deleted;
 
     public int getId() {
         return id;
@@ -146,6 +151,14 @@ public class Admin {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

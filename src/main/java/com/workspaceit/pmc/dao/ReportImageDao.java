@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.dao;
 
 import com.workspaceit.pmc.entity.Advertiser;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.ReportedImage;
 import org.hibernate.Session;
@@ -36,6 +37,16 @@ public class ReportImageDao extends BaseDao {
                 "WHERE a.actionTaken=0 and a.eventImage.event.id=:eventId" +
                 " ORDER BY id desc").setParameter("eventId",eventId)
                 .list();
+    }
+
+    public int getCountByEvent(Event event){
+        Session session = this.getCurrentSession();
+
+        int count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ri.id) FROM ReportedImage ri " +
+                "WHERE ri.actionTaken=0 and ri.eventImage.event.id=:eventId")
+                .setParameter("eventId", event.getId()).uniqueResult()).intValue();
+
+        return count;
     }
 
     public Boolean isReported(EventImage eventImage){

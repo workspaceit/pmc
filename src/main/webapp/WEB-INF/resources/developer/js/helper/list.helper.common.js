@@ -67,8 +67,10 @@ $(document).ready(function() {
     });
 
     $body.on('click', '#delete-selected-btn', function () {
+        console.log("POS");
         bindDeleteModalButtonAction(function(){
             var ids = getCheckedIds();
+            console.log(ids);
             for(var i= 0; i < ids.length; i++) {
                 var id = ids[i];
                 deleteEntityFromServer(id, false);

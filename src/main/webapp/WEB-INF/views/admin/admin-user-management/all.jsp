@@ -98,7 +98,8 @@
                                    data-toggle="tooltip" title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="#" data-toggle="tooltip" title="Delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <a onclick="deleteEntity(${admin.id}, false)" data-toggle="tooltip" title="Delete"
+                                   class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         </d:forEach>
@@ -149,6 +150,8 @@
                 </div>
             </div>
         </div>
+
+        <%@include file="../others/delete-modal.jsp"%>
 
         <script>
             $(document).ready(function() {

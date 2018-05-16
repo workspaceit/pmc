@@ -107,6 +107,14 @@ public class EventImageDao extends BaseDao {
         return count;
     }
 
+    public Integer getSlideshowImageCountForEvent(Event event){
+        Session session = this.getCurrentSession();
+        Integer count = ((Long) session.createQuery("SELECT DISTINCT COUNT(ei.id) FROM EventImage ei WHERE " +
+                "ei.event.id=:eventId and ei.isDeleted=0 and ei.inSlideshow=true")
+                .setParameter("eventId" , event.getId()).uniqueResult()).intValue();
+        return count;
+    }
+
     public  Integer getAllImageCount(int days){
         Integer count=0;
         Session session = this.getCurrentSession();

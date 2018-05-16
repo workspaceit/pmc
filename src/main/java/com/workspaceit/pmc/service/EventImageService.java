@@ -57,6 +57,12 @@ public class EventImageService {
     }
 
     @Transactional
+    public Integer getSlideshowImageCountForEvent(Event event) {
+        return eventImageDao.getSlideshowImageCountForEvent(event);
+    }
+
+
+    @Transactional
     public EventImage getById(Integer id){
         return eventImageDao.getById(id);
     }

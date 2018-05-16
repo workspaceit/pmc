@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.dao.ReportImageDao;
+import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.EventImage;
 import com.workspaceit.pmc.entity.ReportedImage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,10 @@ public class ReportImageService {
 
         }
         return true;
+    }
+
+    @Transactional
+    public int getReportedImageCountByEvent(Event event) {
+        return reportImageDao.getCountByEvent(event);
     }
 }
