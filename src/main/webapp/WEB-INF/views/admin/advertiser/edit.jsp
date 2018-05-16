@@ -38,6 +38,7 @@
                     <button class="btn btn-action-top" onclick="initValidationForUpdate('save_and_new','update')">Save&nbsp;&&nbsp;New</button>
                     <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
                     <button class="btn btn-action-top" onclick="loadCheckoutInModal()">Checkout</button>
+                    <button onclick="deleteEntity(${advertiser.id}, 'advertiser')" class="btn btn-action-top">Delete</button>
                 </div>
 
                 <div class="tabbable-panel clearfix">
@@ -147,6 +148,8 @@
             </div>
         </div>
 
+        <%@include file="../others/delete-modal.jsp"%>
+
         <%--Developer Hidden Field--%>
         <input type="hidden" id="advertiserId" value="${advertiser.id}" />
         <input type="hidden" id="galleryAdId" value="${galleryAd.id}" />
@@ -158,6 +161,9 @@
 
 
         <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
+
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
 
     </jsp:body>
 

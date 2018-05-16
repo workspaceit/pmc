@@ -9,8 +9,8 @@
                 <p class="text-center"></p>
             </div>--%>
             <div class="modal-footer">
-                <button id="delete-content-no" type="button" class="btn btn-default"  >No</button>
-                <button id="delete-content-yes" type="button" class="btn btn-primary" >Yes</button>
+                <button id="delete-content-no" type="button" class="btn btn-default">No</button>
+                <button id="delete-content-yes" type="button" class="btn btn-primary">Yes</button>
             </div>
         </div>
     </div>

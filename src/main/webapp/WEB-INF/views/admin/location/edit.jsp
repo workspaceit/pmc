@@ -19,6 +19,7 @@
                             <button class="btn btn-action-top" onclick="submitUpdatedData('save_and_new')">Save&nbsp;&&nbsp;New</button>
                             <button class="btn btn-action-top" onclick="locationAfterSaveActionUpdate('cancel')">Cancel</button>
                             <button class="btn btn-action-top" onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?locId=${location.id}','_blank')">Preview</button>
+                            <button onclick="deleteEntity(${location.id}, 'location')" class="btn btn-action-top">Delete</button>
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -265,6 +266,9 @@
 
                 </div>
             </div>
+
+            <%@include file="../others/delete-modal.jsp"%>
+
                 <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
@@ -297,8 +301,9 @@
         <script src="<s:url value="/resources/developer/js/location/update.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/cities.js"/>"></script>
         <!-- dropzone -->
-        <script>
 
-        </script>
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
+
     </jsp:body>
 </t:genericpage>

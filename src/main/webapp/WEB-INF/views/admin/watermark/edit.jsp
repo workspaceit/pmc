@@ -18,6 +18,7 @@
                     <button class="btn btn-action-top" onclick="submitWatermark('save-close')">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top" onclick="submitWatermark('save-new')">Save&nbsp;&&nbsp;New</button>
                     <a href="<c:url value="/admin/watermark/all"/>" class="btn btn-action-top">Cancel</a>
+                    <button onclick="deleteEntity(${watermark.id}, 'watermark')" class="btn btn-action-top">Delete</button>
                 </div>
                 <!-- Page Heading -->
                 <div class="imageupload panel panel-default">
@@ -170,6 +171,9 @@
                     </div>
                 </div>
             </div>
+
+            <%@include file="../others/delete-modal.jsp"%>
+
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
                     <div class="dz-details">
@@ -200,7 +204,8 @@
         <script src="<s:url value="/resources/developer/js/watermark/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/watermark/update.js"/>"></script>
 
-
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
 
         <script>
             $(document).ready(function () {
@@ -210,11 +215,7 @@
 
                     $("#wm_tab_image_btn").trigger("click")
                 }
-
             });
-
-
         </script>
-
     </jsp:body>
 </t:genericpage>

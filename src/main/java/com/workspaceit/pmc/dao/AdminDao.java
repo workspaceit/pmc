@@ -76,10 +76,8 @@ public class AdminDao extends BaseDao {
 
     public List<Admin> getAll(){
         Session session = this.getCurrentSession();
-        session.enableFilter("activeAdmins");
-        List<Admin> admins = session.createQuery("FROM Admin ORDER BY createdAt DESC").list();
-        session.disableFilter("activeAdmins");
-        return admins;
+        return session.createQuery("FROM Admin ORDER BY createdAt DESC")
+                .list();
     }
 
     public List<Admin> getActiveAdmins(){

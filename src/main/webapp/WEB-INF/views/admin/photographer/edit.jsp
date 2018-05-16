@@ -15,6 +15,7 @@
                             <button class="btn btn-action-top" onclick="initUpdate('save_and_close')">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="initUpdate('save_and_new')">Save&nbsp;&&nbsp;New</button>
                             <button class="btn btn-action-top" onclick="photographerAfterSaveAction('cancel')">Cancel</button>
+                            <button onclick="deleteEntity(${photographer.id},'photographer')" class="btn btn-action-top">Delete</button>
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -91,6 +92,9 @@
 
                 </div>
             </div>
+
+            <%@include file="../others/delete-modal.jsp"%>
+
             <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
@@ -108,26 +112,15 @@
 
                 </div>
             </div>
-
             <%--Developer's Hidden Fields--%>
             <input id="photographer_id" type="hidden" value="${photographer.id}" />
-
-
         </div>
-
-        
-        
-        
         <!-- /#wrapper -->
-
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
         <script src="https://rawgit.com/enyo/dropzone/master/dist/min/dropzone.min.js"></script>
         <script src="<s:url value="/resources/developer/js/photographer/update.js"/>" ></script>
 
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
     </jsp:body>
-
-
-
-
-
 </t:genericpage>
