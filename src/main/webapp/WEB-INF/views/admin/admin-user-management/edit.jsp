@@ -16,7 +16,7 @@
                             <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-close')">Save&nbsp;&&nbsp;Close</button>
                             <button class="btn btn-action-top" onclick="submitUpdatedAdminUserData('save-new')">Save&nbsp;&&nbsp;New</button>
                             <a href="<c:url value="/admin/user/all"/>" class="btn btn-action-top">Cancel</a>
-
+                            <button onclick="deleteEntity(${admin.id}, 'user')" class="btn btn-action-top">Delete</button>
                             <br>
                             <span id="successMsg"></span>
                         </div>
@@ -88,6 +88,8 @@
 
                 </div>
             </div>
+
+        <%@include file="../others/delete-modal.jsp"%>
             <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
@@ -109,11 +111,6 @@
             <%--Developer's Hidden Fields--%>
             <input id="admin_id" type="hidden" value="${admin.id}" />
 
-
-
-
-
-
         <!-- /#wrapper -->
 
         <link href="<s:url value="/resources/css/dropzone.css"/>" rel="stylesheet">
@@ -122,6 +119,9 @@
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/admin-user/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/admin-user/update.js"/>"></script>
+
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
 
 
 

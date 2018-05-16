@@ -15,7 +15,7 @@
                     <button class="btn btn-action-top" id="update-new-watermark-btn">Save&nbsp;&&nbsp;New</button>
                     <a href="<c:url value="/admin/event/all"/>" class="btn btn-action-top">Cancel</a>
                     <button class="btn btn-action-top" onclick="window.open('${frontEndAppBaseUrl}/user-panel/slideshow?eventId=${event.id}','_blank')">Preview</button>
-
+                    <button onclick="deleteEntity(${event.id}, 'event')" class="btn btn-action-top">Delete</button>
                 </div>
                 <!-- Page Heading -->
                 <div class="row cstm-tab tab-pane clearfix" style="margin:0px !important">
@@ -239,6 +239,9 @@
                     </form>
                 </div>
             </div>
+
+            <%@include file="../others/delete-modal.jsp"%>
+
                 <%-- After image add Dropzone Image preview --%>
             <div id="dropZonePreview" style="display: none">
                 <div class="dz-preview dz-file-preview">
@@ -385,5 +388,8 @@
         <script src="<s:url value="/resources/developer/js/location/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/temp-file/common.js"/>"></script>
         <script src="<s:url value="/resources/developer/js/location/common-modal.js"/>"></script>
+
+        <%--Edit helper--%>
+        <script src="<s:url value="/resources/developer/js/helper/edit.helper.js"/>"></script>
     </jsp:body>
 </t:genericpage>

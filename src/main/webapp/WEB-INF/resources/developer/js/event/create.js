@@ -84,15 +84,24 @@ $(document).ready(function () {
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
+                var partialUrl = '';
                 if(action === "save") {
-                    window.location = BASEURL + "admin/event/update/" + data.id;
+                    $.growl.notice({title: 'Success!', message: "Event saved"});
+                    setTimeout(function(){
+                        partialUrl = "admin/event/update/" + data.id;
+                        window.location = BASEURL + partialUrl;
+                    }, 600);
+
                 }
                 else if(action === "save-close") {
-                    window.location = BASEURL + "admin/event/all";
+                    partialUrl = "admin/event/all";
+                    window.location = BASEURL + partialUrl;
                 }
                 else if(action === "save-new"){
-                    window.location = BASEURL + "admin/event/add";
+                    partialUrl = "admin/event/add";
+                    window.location = BASEURL + partialUrl;
                 }
+
             }
         });
     }
@@ -160,7 +169,10 @@ $(document).ready(function () {
                 }
             },success: function(data){
                 UnBindErrors("errorObj_");
-                if(action === "save-close") {
+                if(action === "save") {
+                    $.growl.notice({title: 'Success!', message: "Event saved"});
+                }
+                else if(action === "save-close") {
                     window.location = BASEURL + "admin/event/all";
                 }
                 else if(action === "save-new"){

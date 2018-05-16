@@ -10,7 +10,7 @@ import java.util.List;
  * Created by mi_rafi on 1/1/18.
  */
 @Repository
-public class StateDao extends BaseDao{
+public class StateDao extends BaseDao {
     public State getById(int id){
         Session session = this.getCurrentSession();
         return (State)session.createQuery("FROM State WHERE id=:id")

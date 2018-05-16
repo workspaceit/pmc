@@ -190,6 +190,7 @@ public class AdminService {
         Set<AdminRole> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
         admin.setAdminRoles(adminRoles);
+        admin.setDeleted(false);
         return admin;
     }
 
