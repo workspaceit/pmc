@@ -12,20 +12,24 @@
                     <h4 class="panel-title pull-left">Logo</h4>
                 </div>
 
-                    <c:forEach var="secResource" items="${galleryAd
-                                                            .sections
-                                                            .get(SECTION_TYPE.LOGO).sectionResource}" >
-                        <div class="preview-holder">
-                            <c:if test="${!secResource.fileName.trim().equals('')}" >
-                                <img onerror="this.src='/resources/images/default_alternate.png'"
-                                     src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                                <input class="form-control" type="text" value="${secResource.url}"
-                                       id="imgUrlUpdated_${secResource.id}"
-                                       placeholder="Advertisement URL"
-                                       onchange="addImageUrlForUpdate(${secResource.id})"  >
-                            </c:if>
-                        </div>
-                  </c:forEach>
+
+                <div id="galleryLogoSectionResource" class="preview-holder">
+                      <c:forEach var="secResource" items="${galleryAd
+                                                    .sections
+                                                    .get(SECTION_TYPE.LOGO).sectionResource}" >
+                            <jsp:include page="partial/sectionResource.jsp">
+                                <jsp:param name="key" value=""/>
+                                <jsp:param name="isDeletable" value="true"/>
+                                <jsp:param name="id" value="${secResource.id}"/>
+                                <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                                <jsp:param name="fileName" value="${secResource.fileName}"/>
+                                <jsp:param name="fileType" value="${secResource.fileType}"/>
+                                <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                                <jsp:param name="url" value="${secResource.url}"/>
+                                <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
+                            </jsp:include>
+                    </c:forEach>
+                </div>
 
 
                 <div id="advLogo"  class="panel-body"  >
@@ -55,21 +59,25 @@
                     <h4 class="panel-title pull-left">Background Image</h4>
                 </div>
 
+
+                <div id="galleryBackgroundSectionResource" class="preview-holder">
                     <c:forEach var="secResource" items="${galleryAd
-                                                            .sections
-                                                            .get(SECTION_TYPE.BACKGROUND)
-                                                            .sectionResource}" >
-                <div class="preview-holder">
-                        <c:if test="${!secResource.fileName.trim().equals('')}" >
-                            <img onerror="this.src='/resources/images/default_alternate.png'" src="<s:url value="/common/${secResource.fileName}"/>" class="img-thumbnail" width="150">
-                            <input class="form-control" type="text" style="display: none;"
-                                   value="${secResource.url}"
-                                   id="imgUrlUpdated_${secResource.id}"
-                                   placeholder="Advertisement URL"
-                                   onchange="addImageUrlForUpdate(${secResource.id})"  >
-                        </c:if>
-                </div>
+                                                    .sections
+                                                    .get(SECTION_TYPE.BACKGROUND).sectionResource}" >
+                        <jsp:include page="partial/sectionResource.jsp">
+                            <jsp:param name="key" value=""/>
+                            <jsp:param name="isDeletable" value="true"/>
+                            <jsp:param name="id" value="${secResource.id}"/>
+                            <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                            <jsp:param name="fileName" value="${secResource.fileName}"/>
+                            <jsp:param name="fileType" value="${secResource.fileType}"/>
+                            <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                            <jsp:param name="url" value="${secResource.url}"/>
+                            <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
+                        </jsp:include>
                     </c:forEach>
+                </div>
+
 
 
                 <div id="advBackgroundImage"  class="panel-body"    >
@@ -138,7 +146,7 @@
                     </div>
                 </div>
 
-                <div class="image-previewer preview-holder">
+                <div id="galleryTopSectionResource"  class="image-previewer preview-holder">
                     <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.TOP_BANNER).sectionResource}" >
                         <jsp:include page="partial/sectionResource.jsp">
                             <jsp:param name="key" value="_GALLERY_TOP_BANNER"/>
@@ -149,6 +157,7 @@
                             <jsp:param name="fileType" value="${secResource.fileType}"/>
                             <jsp:param name="mimeType" value="${secResource.mimeType}"/>
                             <jsp:param name="url" value="${secResource.url}"/>
+                            <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
                         </jsp:include>
                     </c:forEach>
                 </div>
@@ -214,18 +223,21 @@
                     </div>
 
                 </div>
-                <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).sectionResource}" >
-                    <jsp:include page="partial/sectionResource.jsp">
-                        <jsp:param name="key" value="_GALLERY_BOTTOM_BANNER"/>
+                <div id="galleryBottomSectionResource" class="image-previewer preview-holder">
+                    <c:forEach var="secResource" items="${galleryAd.sections.get(SECTION_TYPE.BOTTOM_BANNER).sectionResource}" >
+                        <jsp:include page="partial/sectionResource.jsp">
+                            <jsp:param name="key" value="_GALLERY_BOTTOM_BANNER"/>
 
-                        <jsp:param name="id" value="${secResource.id}"/>
-                        <jsp:param name="sectionId" value="${secResource.sectionId}"/>
-                        <jsp:param name="fileName" value="${secResource.fileName}"/>
-                        <jsp:param name="fileType" value="${secResource.fileType}"/>
-                        <jsp:param name="mimeType" value="${secResource.mimeType}"/>
-                        <jsp:param name="url" value="${secResource.url}"/>
-                    </jsp:include>
-                </c:forEach>
+                            <jsp:param name="id" value="${secResource.id}"/>
+                            <jsp:param name="sectionId" value="${secResource.sectionId}"/>
+                            <jsp:param name="fileName" value="${secResource.fileName}"/>
+                            <jsp:param name="fileType" value="${secResource.fileType}"/>
+                            <jsp:param name="mimeType" value="${secResource.mimeType}"/>
+                            <jsp:param name="url" value="${secResource.url}"/>
+                            <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
+                        </jsp:include>
+                    </c:forEach>
+                </div>
                 <div id="advBottomBannerImage" class="panel-body"  >
                     <div class="dz-default dz-message">
                         <div class="droper">

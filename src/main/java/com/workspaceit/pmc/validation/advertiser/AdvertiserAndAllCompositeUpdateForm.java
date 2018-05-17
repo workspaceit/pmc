@@ -1,11 +1,8 @@
 package com.workspaceit.pmc.validation.advertiser;
 
-import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.gallery.GalleryAdsUpdateForm;
-import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsCreateForm;
 import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
-import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUrlUpdateForm;
-import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsCreateForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
 
 import javax.validation.Valid;
@@ -17,21 +14,22 @@ import javax.validation.constraints.NotNull;
 public class AdvertiserAndAllCompositeUpdateForm {
     @NotNull
     @Valid
-    AdvertiserUpdateForm advertiser;
+    private AdvertiserUpdateForm advertiser;
 
     @NotNull
     @Valid
-    GalleryAdsUpdateForm galleryAds;
+    private GalleryAdsUpdateForm galleryAds;
 
     @NotNull
     @Valid
-    PopupAdsUpdateForm popupAds;
+    private PopupAdsUpdateForm popupAds;
 
     @NotNull
     @Valid
-    SlideShowAdsUpdateForm slideShowAds;
+    private SlideShowAdsUpdateForm slideShowAds;
 
-    SectionResourceUrlUpdateForm[] urlsUpdate;
+    private SectionResourceUpdateForm[] urlsUpdate;
+
 
     public AdvertiserUpdateForm getAdvertiser() {
         return advertiser;
@@ -65,11 +63,11 @@ public class AdvertiserAndAllCompositeUpdateForm {
         this.slideShowAds = slideShowAds;
     }
 
-    public SectionResourceUrlUpdateForm[] getUrlsUpdate() {
+    public SectionResourceUpdateForm[] getUrlsUpdate() {
         return urlsUpdate;
     }
 
-    public void setUrlsUpdate(SectionResourceUrlUpdateForm[] urlsUpdate) {
+    public void setUrlsUpdate(SectionResourceUpdateForm[] urlsUpdate) {
         this.urlsUpdate = urlsUpdate;
     }
 }

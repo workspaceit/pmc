@@ -1,18 +1,17 @@
 package com.workspaceit.pmc.service;
 
 import com.workspaceit.pmc.constant.advertisement.FILE_TYPE;
+import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.dao.SectionResourceDao;
 import com.workspaceit.pmc.entity.advertisement.SectionResource;
 import com.workspaceit.pmc.exception.EntityNotFound;
 import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
-import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUrlUpdateForm;
+import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Transactional
 @Service
@@ -87,16 +86,25 @@ public class SectionResourceService {
 
         return deletedSectionResources;
     }
+    public void update(Map<SECTION_TYPE,SectionResourceUpdateForm[]> updateForms){
+        if(updateForms==null )return;
 
-    public void updateUrls(SectionResourceUrlUpdateForm[] urlUpdateForm) throws EntityNotFound {
+        Set<SECTION_TYPE> keys =  updateForms.keySet();
+        for(SECTION_TYPE key :keys){
+            this.update(updateForms.get(key));
+        }
+    }
+    public void update(SectionResourceUpdateForm[] urlUpdateForm) {
         if(urlUpdateForm==null || urlUpdateForm.length==0)return;
 
         List<SectionResource> sectionResourceList = new ArrayList<>();
 
-        for(SectionResourceUrlUpdateForm  form:urlUpdateForm){
+        for(SectionResourceUpdateForm form:urlUpdateForm){
 
-            SectionResource sectionResource =   this.getSectionResource(form.getId());
+            SectionResource sectionResource =   this.getById(form.getId());
+            if(sectionResource==null)continue;
             sectionResource.setUrl(form.getUrl());
+            sectionResource.setSelectedStatic(form.getSelectedStatic());
 
             sectionResourceList.add(sectionResource);
         }

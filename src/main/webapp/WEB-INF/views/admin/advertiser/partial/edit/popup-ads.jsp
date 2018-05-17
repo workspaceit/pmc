@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="image-previewer">
+        <div id="popUpSmsBannerSectionResource"  class="image-previewer">
             <c:forEach var="secResource" items="${popupAdSms.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}">
@@ -74,6 +74,7 @@
                             <jsp:param name="fileType" value="${secResource.fileType}"/>
                             <jsp:param name="mimeType" value="${secResource.mimeType}"/>
                             <jsp:param name="url" value="${secResource.url}"/>
+                            <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
                         </jsp:include>
 
                     </c:when>
@@ -170,7 +171,7 @@
 
             </div>
         </div>
-        <div class="image-previewer">
+        <div id="popUpEmailBannerSectionResource" class="image-previewer">
             <c:forEach var="secResource" items="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).sectionResource}" >
                 <c:choose>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.IMAGE)}" >
@@ -183,6 +184,8 @@
                             <jsp:param name="fileType" value="${secResource.fileType}"/>
                             <jsp:param name="mimeType" value="${secResource.mimeType}"/>
                             <jsp:param name="url" value="${secResource.url}"/>
+                            <jsp:param name="selectedStatic" value="${secResource.selectedStatic}"/>
+
                         </jsp:include>
                     </c:when>
                     <c:when test="${secResource.fileType.equals(FILE_TYPE.VIDEO)}" >
