@@ -7,8 +7,7 @@ public class FileToken {
     private boolean multiFile;
     private FILE_TYPE fileType;
     private SectionResourceForm[] secResources;
-    private Integer singleToken;
-    private String url;
+    private SectionResourceForm singleSecResource;
 
     public FileToken(SectionResourceForm[] secResources, FILE_TYPE fileType) {
         this.multiFile = true;
@@ -16,11 +15,10 @@ public class FileToken {
         this.secResources = secResources;
     }
 
-    public FileToken(Integer token, FILE_TYPE fileType,String url) {
+    public FileToken(SectionResourceForm singleSecResource, FILE_TYPE fileType) {
         this.multiFile = false;
         this.fileType = fileType;
-        this.singleToken = token;
-        this.url = url;
+        this.singleSecResource = singleSecResource;
     }
 
     public boolean hasMultiFile() {
@@ -35,11 +33,9 @@ public class FileToken {
         return secResources;
     }
 
-    public Integer getSingleToken() {
-        return singleToken;
+    public SectionResourceForm getSingleSecResource() {
+        return singleSecResource;
     }
 
-    public String getUrl() {
-        return url;
-    }
+
 }

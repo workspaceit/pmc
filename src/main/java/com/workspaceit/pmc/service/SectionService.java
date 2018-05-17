@@ -56,8 +56,8 @@ public class SectionService {
         if(tBannerSectionResource==null)tBannerSectionResource=new SectionResourceForm[0];
         if(bBannerSectionResource==null)bBannerSectionResource=new SectionResourceForm[0];
 
-        FileToken logoNewFileToken =(logoToken!=null && logoToken>0)?new FileToken(logoToken,FILE_TYPE.IMAGE,galleryAdsForm.getLogoSectionResource().getUrl()):null;
-        FileToken bgNewFileToken = (bgToken!=null && bgToken>0)?new FileToken(bgToken,FILE_TYPE.IMAGE,galleryAdsForm.getBgSectionResource().getUrl()):null;
+        FileToken logoNewFileToken =(logoToken!=null && logoToken>0)?new FileToken(galleryAdsForm.getLogoSectionResource(),FILE_TYPE.IMAGE):null;
+        FileToken bgNewFileToken = (bgToken!=null && bgToken>0)?new FileToken(galleryAdsForm.getBgSectionResource(),FILE_TYPE.IMAGE):null;
         List<FileToken> tBannerNewFileToken = new LinkedList<>();
         List<FileToken> bBannerNewFileToken = new LinkedList<>();
 
@@ -77,11 +77,11 @@ public class SectionService {
 
 
         for(SectionResourceForm sectionResource :tBannerSectionResource){
-            tBannerNewFileToken.add(new FileToken(sectionResource.getToken(),FILE_TYPE.IMAGE,sectionResource.getUrl()));
+            tBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
         }
 
         for(SectionResourceForm sectionResource  :bBannerSectionResource){
-            bBannerNewFileToken.add(new FileToken(sectionResource.getToken(),FILE_TYPE.IMAGE,sectionResource.getUrl()));
+            bBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
         }
 
         logoSection =  this.populateIfChange(logoSection,
@@ -189,7 +189,7 @@ public class SectionService {
         if(bannerResources==null)bannerResources=new SectionResourceForm[0];
 
         List<FileToken> tBannerNewFileToken = new LinkedList<>();
-        FileToken bBannerVideoNewFileToken = (videoToken!=null && videoToken>0)? new FileToken(videoResources.getToken(),FILE_TYPE.VIDEO,videoResources.getUrl()):null;
+        FileToken bBannerVideoNewFileToken = (videoToken!=null && videoToken>0)? new FileToken(videoResources,FILE_TYPE.VIDEO):null;
 
         /** Removed File */
         Integer[] tBannerRmIds = slideShowAdsForm.getRemoveBannerIds();
@@ -201,7 +201,7 @@ public class SectionService {
 
 
         for(SectionResourceForm sectionResource :bannerResources){
-            tBannerNewFileToken.add(new FileToken(sectionResource.getToken(),FILE_TYPE.IMAGE,sectionResource.getUrl()));
+            tBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
         }
 
 
@@ -267,8 +267,8 @@ public class SectionService {
         Integer smsVideoToken =  popupAdsUpdateForm.getSmsPopupVideoResource().getToken();
         Integer emailVideoToken =  popupAdsUpdateForm.getEmailPopupVideoResource().getToken();
 
-        FileToken smsVideoNewFileToken = (smsVideoToken!=null && smsVideoToken>0)? new FileToken(smsVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getSmsPopupVideoResource().getUrl()):null;
-        FileToken emailVideoNewFileToken = (emailVideoToken!=null && emailVideoToken>0)? new FileToken(emailVideoToken,FILE_TYPE.VIDEO,popupAdsUpdateForm.getEmailPopupVideoResource().getUrl()):null;
+        FileToken smsVideoNewFileToken = (smsVideoToken!=null && smsVideoToken>0)? new FileToken(popupAdsUpdateForm.getSmsPopupVideoResource(),FILE_TYPE.VIDEO):null;
+        FileToken emailVideoNewFileToken = (emailVideoToken!=null && emailVideoToken>0)? new FileToken(popupAdsUpdateForm.getEmailPopupVideoResource(),FILE_TYPE.VIDEO):null;
 
         /** Removed File */
         Integer[] smsBannerRmIds = popupAdsUpdateForm.getRemoveSmsBannerIds();
@@ -281,10 +281,10 @@ public class SectionService {
 
 
         for(SectionResourceForm sectionResourceForm :smsBannerToken){
-            smsBannerNewFileToken.add(new FileToken(sectionResourceForm.getToken(),FILE_TYPE.IMAGE,sectionResourceForm.getUrl()));
+            smsBannerNewFileToken.add(new FileToken(sectionResourceForm,FILE_TYPE.IMAGE));
         }
         for(SectionResourceForm sectionResourceForm :emailBannerToken){
-            emailBannerNewFileToken.add(new FileToken(sectionResourceForm.getToken(),FILE_TYPE.IMAGE,sectionResourceForm.getUrl()));
+            emailBannerNewFileToken.add(new FileToken(sectionResourceForm,FILE_TYPE.IMAGE));
         }
 
         smsBannerSection =  this.populateIfChange(smsBannerSection,
@@ -387,8 +387,8 @@ public class SectionService {
         List<SectionResource> topBannerSectionResources = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getTopSectionResource(),FILE_TYPE.IMAGE);
         List<SectionResource> bottomBannerSectionResources = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getBottomSectionResource(),FILE_TYPE.IMAGE);
 
-        SectionResource tmpLogoSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getLogoSectionResource().getToken(),FILE_TYPE.IMAGE,galleryAdsForm.getBgSectionResource().getUrl());
-        SectionResource tmpBGSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getBgSectionResource().getToken(),FILE_TYPE.IMAGE,galleryAdsForm.getBgSectionResource().getUrl());
+        SectionResource tmpLogoSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getLogoSectionResource(),FILE_TYPE.IMAGE);
+        SectionResource tmpBGSectionResource = this.sectionResourceService.prepareSectionResource(galleryAdsForm.getBgSectionResource(),FILE_TYPE.IMAGE);
 
         if(tmpLogoSectionResource.getFileName()!=null && !tmpLogoSectionResource.getFileName().trim().equals("")){
 
@@ -465,12 +465,12 @@ public class SectionService {
 
 
         if(smsVideoToken!=null && smsVideoToken>0){
-            SectionResource tmpSmsVideoSecResource =  this.sectionResourceService.prepareSectionResource(popupAdsForm.getSmsPopupVideoResource().getToken(),FILE_TYPE.VIDEO,popupAdsForm.getSmsPopupVideoResource().getUrl());
+            SectionResource tmpSmsVideoSecResource =  this.sectionResourceService.prepareSectionResource(popupAdsForm.getSmsPopupVideoResource(),FILE_TYPE.VIDEO);
             smsSecResources.add(tmpSmsVideoSecResource);
         }
 
         if(emailVideoToken!=null && emailVideoToken>0){
-            SectionResource tmpEmailVideoSecResource =  this.sectionResourceService.prepareSectionResource(popupAdsForm.getEmailPopupVideoResource().getToken(),FILE_TYPE.VIDEO,popupAdsForm.getEmailPopupVideoResource().getUrl());
+            SectionResource tmpEmailVideoSecResource =  this.sectionResourceService.prepareSectionResource(popupAdsForm.getEmailPopupVideoResource(),FILE_TYPE.VIDEO);
             emailSecResources.add(tmpEmailVideoSecResource);
         }
 
@@ -526,9 +526,7 @@ public class SectionService {
 
         SectionResource tmpVideoSecResource = null;
         if(videoToken!=null && videoToken>0){
-            tmpVideoSecResource =  this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsVideoResources().getToken(),
-                    FILE_TYPE.VIDEO,
-                    slideShowAdsForm.getSlideShowAdsVideoResources().getUrl());
+            tmpVideoSecResource =  this.sectionResourceService.prepareSectionResource(slideShowAdsForm.getSlideShowAdsVideoResources(),FILE_TYPE.VIDEO);
 
         }
 
@@ -667,7 +665,7 @@ public class SectionService {
             this.sectionResourceService.delete(sectionResources);
             sectionResources.clear();
 
-            SectionResource sectionResource = this.sectionResourceService.prepareSectionResource(newSingleFileToken.getSingleToken(),newSingleFileToken.getFileType(),newSingleFileToken.getUrl());
+            SectionResource sectionResource = this.sectionResourceService.prepareSectionResource(newSingleFileToken.getSingleSecResource(),newSingleFileToken.getFileType());
             sectionResources.add(sectionResource);
         }
 
@@ -682,7 +680,7 @@ public class SectionService {
                 this.sectionResourceService.delete(optionalSectionResource.get());
             }
             for(FileToken fileToken: newTokens ){
-                SectionResource sectionResource = this.sectionResourceService.prepareSectionResource(fileToken.getSingleToken(),fileToken.getFileType(),fileToken.getUrl());
+                SectionResource sectionResource = this.sectionResourceService.prepareSectionResource(fileToken.getSingleSecResource(),fileToken.getFileType());
                 sectionResources.add(sectionResource);
             }
         }

@@ -114,14 +114,19 @@ public class SectionResourceService {
             return sectionResources;
         }
         for(SectionResourceForm secRes : secResList){
-            SectionResource tmpSectionResources =  this.prepareSectionResource(secRes.getToken(),fileType,secRes.getUrl());
+            SectionResource tmpSectionResources =  this.prepareSectionResource(secRes,fileType);
             sectionResources.add(tmpSectionResources);
         }
 
         return sectionResources;
     }
     // Default access
-    SectionResource prepareSectionResource(Integer token, FILE_TYPE fileType,String url){
+    SectionResource prepareSectionResource(SectionResourceForm secResForm, FILE_TYPE fileType){
+        Integer token = secResForm.getToken();
+        String url = secResForm.getUrl();
+        Boolean staticSelected = secResForm.getSelectedStatic();
+        staticSelected = (staticSelected==null)?false:staticSelected;
+
         String logoFileName = this.fileService.copyFile(token);
         String mimeType = this.fileService.getMimeTypeByToken(token);
         SectionResource sectionResource = new SectionResource();
@@ -130,6 +135,7 @@ public class SectionResourceService {
         sectionResource.setFileName(logoFileName);
         sectionResource.setMimeType(mimeType);
         sectionResource.setUrl(url);
+        sectionResource.setSelectedStatic(staticSelected);
 
         return sectionResource;
     }
