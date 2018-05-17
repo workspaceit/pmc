@@ -79,8 +79,9 @@ function getRotationSetting(id){
         return "STATIC";
     }
 }
-function isRotationSettingsStatic(id){
-    var val = $("#"+id).parents(".imageupload").find(".btn-switch.active").first().attr("data-val");
+function isRotationSettingsStatic(id,includeParent){
+    var val =  (includeParent)?$("#"+id).parents(".imageupload").find(".btn-switch.active").first().attr("data-val"):
+                                $("#"+id).find(".btn-switch.active").first().attr("data-val");
     try{
         val = parseInt(val);
 
@@ -629,7 +630,7 @@ function configAdvertBdImgDropZone(data){
                  * Show static selection radio
                  * */
 
-                var flag =  isRotationSettingsStatic(elementId);
+                var flag =  isRotationSettingsStatic(elementId,true);
                 if(flag){
                     showStaticSectionRadio(elementId);
                 }
@@ -920,7 +921,7 @@ function getListOfSectionResource(tokens){
    for(var i=0;i<tokens.length;i++){
        var token = tokens[i];
        var url = getSectionResourceUrlByToken(token);
-       var isSelected = getSectionResourceStaticSectorByToken(token);
+       var isSelected = isStaticSelectorSelectedCheckByToken(token);
        secResList.push(new SectionResource(token,url,isSelected));
    }
 
@@ -930,7 +931,7 @@ function getSectionResource(tokens){
     var sectionResource;
     if( tokens.length > 0){
         var url = getSectionResourceUrlByToken(tokens[0]);
-        var isSelected = getSectionResourceStaticSectorByToken(tokens[0]);
+        var isSelected = isStaticSelectorSelectedCheckByToken(tokens[0]);
         sectionResource = new SectionResource(tokens[0],url,isSelected);
     }else{
         sectionResource = new SectionResource(null,null,false);
@@ -941,8 +942,11 @@ function getSectionResourceUrlByToken(token){
        var url =  $("#"+PREFIX.SEC_RES.URL._ADD+token).val();
        return ( url===undefined || url===null || url==="" )?null:url;
 }
-function getSectionResourceStaticSectorByToken(token){
+function isStaticSelectorSelectedCheckByToken(token){
     return  $("#"+PREFIX.SEC_RES.STATIC_SELECTOR._ADD+token).is(":checked");
+}
+function isStaticSelectorSelectedCheckBySecResId(id){
+    return  $("#"+PREFIX.SEC_RES.STATIC_SELECTOR._UPDATE+id).is(":checked");
 }
 /*Validation */
 function validateAdvertiser(fnSuccess,fnError){

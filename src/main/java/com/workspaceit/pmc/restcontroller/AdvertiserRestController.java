@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -256,10 +255,9 @@ public class AdvertiserRestController {
 
         this.advertiserValidator.validate(advertiserAndAllCompositeForm.getAdvertiser(), bindingResult);
 
-
-        //this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
-        //this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
-        //this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
+        this.galleryAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getGalleryAds(),bindingResult);
+        this.slideShowAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getSlideShowAds(),bindingResult);
+        this.popUpAdsValidator.validateUpdate(advertiserAndAllCompositeForm.getPopupAds(),bindingResult);
 
         if (bindingResult.hasErrors()) {
             serviceResponse.bindValidationError(bindingResult);
@@ -276,31 +274,11 @@ public class AdvertiserRestController {
                                         advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),
                                         advertiserAndAllCompositeForm.getPopupAds());
 
-            this.sectionResourceService.updateUrls(advertiserAndAllCompositeForm.getUrlsUpdate());
+            this.sectionResourceService.update(advertiserAndAllCompositeForm.getGalleryAds().getUpdateSectionResources());
+            this.sectionResourceService.update(advertiserAndAllCompositeForm.getSlideShowAds().getUpdateSectionResources());
+            this.sectionResourceService.update(advertiserAndAllCompositeForm.getPopupAds().getUpdateEmailSectionResources());
+            this.sectionResourceService.update(advertiserAndAllCompositeForm.getPopupAds().getUpdateSmsSectionResources());
 
-
-
-            /*int galleryAdId = advertiserAndAllCompositeForm.getGalleryAds().getId();
-            int slideShowAdId = advertiserAndAllCompositeForm.getSlideShowAds().getId();
-            int smsPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getSmsId();
-            int emailPopUpAdId = advertiserAndAllCompositeForm.getPopupAds().getEmailId();*/
-
-
-            /*
-            this.galleryAdService.update(galleryAdId,
-                                        advertiser,
-                                        advertiserAndAllCompositeForm.getGalleryAds(),
-                                        currentUser);
-
-            this.slideShowService.update(slideShowAdId,advertiser,
-                                        advertiserAndAllCompositeForm.getSlideShowAds(),
-                                        currentUser);
-
-            this.popUpAdsService.update(smsPopUpAdId,
-                                            emailPopUpAdId,
-                                            advertiser,
-                                            advertiserAndAllCompositeForm.getPopupAds(),
-                                            currentUser);*/
 
         } catch (EntityNotFound entityNotFound) {
 

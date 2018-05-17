@@ -6,7 +6,7 @@
  */
 
 if(!isScriptLoadedAtPage("/developer/js/pmc-adv/common.js")){
-    console.log("/js/pmc-adv/common.js is reuired")
+    console.log("/js/pmc-adv/common.js is required")
 }
 
 var ID_KEY = {
@@ -17,14 +17,44 @@ var ID_KEY = {
     _POPUP_SMS_BANNER : "_POPUP_SMS_BANNER",
     _POPUP_EMAIL_BANNER : "_POPUP_EMAIL_BANNER"
 };
+
+var SECTION_TYPE = {
+    LOGO:"LOGO",
+    BACKGROUND:"BACKGROUND",
+    BANNER:"BANNER",
+    TOP_BANNER:"TOP_BANNER",
+    BOTTOM_BANNER:"BOTTOM_BANNER",
+    VIDEO:"VIDEO"
+};
 function addIdToRemove(elem,key,id){
-    $(elem).parent().hide();
+    $(elem).parent().hide().remove();
     storeToken(ID_KEY[key],id);
 }
 function getIdToRemove(key){
     return getToken(key);
 }
+function getSectionResourceForUpdate(id){
+    var secResources = [];
+    $("#"+id).find(".section-resource").find(".sec-res-url").each(function(){
+        var secRes = {id:$(this).data("sec-res-id")};
+        secRes.url = $(this).val();
+        secResources.push(secRes);
 
+    });
+    $("#"+id).find(".section-resource").find(".static-selector").each(function(){
+        var id = $(this).data("sec-res-id");
+        var selectedStatic = $(this).is(":checked");
+
+        for(var i=0;i<secResources.length;i++){
+            var secRes = secResources[i];
+            if(secRes.id === id){
+                secRes.selectedStatic = selectedStatic;
+                break;
+            }
+        }
+    });
+    return secResources;
+}
 
 
 
@@ -52,7 +82,30 @@ function updateAdvertiser(){
     data.galleryAds = galleryAdsData;
     data.popupAds = popupAdsData;
     data.slideShowAds = slideShowAdsData;
-    data.urlsUpdate = getToken(PREFIX._UPDATE_URL);
+
+
+    var gallerySection={};
+    gallerySection[SECTION_TYPE.LOGO]= getSectionResourceForUpdate("galleryLogoSectionResource");
+    gallerySection[SECTION_TYPE.BACKGROUND]= getSectionResourceForUpdate("galleryBackgroundSectionResource");
+    gallerySection[SECTION_TYPE.TOP_BANNER]= getSectionResourceForUpdate("galleryTopSectionResource");
+    gallerySection[SECTION_TYPE.BOTTOM_BANNER]= getSectionResourceForUpdate("galleryBottomSectionResource");
+
+
+    var slideShowSection={};
+    slideShowSection[SECTION_TYPE.BANNER]= getSectionResourceForUpdate("slideShowBannerSectionResource");
+
+    var popUpSmsSection ={};
+    popUpSmsSection[SECTION_TYPE.BANNER] = getSectionResourceForUpdate("popUpSmsBannerSectionResource");
+
+    var popUpEmailSection= {};
+    popUpEmailSection[SECTION_TYPE.BANNER] =  getSectionResourceForUpdate("popUpEmailBannerSectionResource");
+
+    data.galleryAds.updateSectionResources = gallerySection;
+
+    data.slideShowAds.updateSectionResources = slideShowSection;
+
+    data.popupAds.updateSmsSectionResources = popUpSmsSection;
+    data.popupAds.updateEmailSectionResources = popUpEmailSection;
 
     console.log(data);
     $.ajax({
@@ -74,6 +127,7 @@ function updateAdvertiser(){
             }
         },
         success: function(response) {
+            debugger;
             notifyUser("advertiserInfoErrorCount",response,false);
             advertiserAfterSaveAction(globalBtnAction,id);
         }
@@ -165,29 +219,34 @@ function sendInvoiceToEmail(){
         }
     });
 }
-function addImageUrlForUpdate(id){
-    var key = PREFIX.SEC_RES.URL._UPDATE+id;
-    var url =$("#"+key).val();
-    var allToken = getToken(PREFIX.SEC_RES.URL._UPDATE);
-    console.log(allToken);
-    /**
+function addSectionResourceForUpdate(secResId,key){
+    /*
+    var id = PREFIX.SEC_RES.URL._UPDATE+secResId;
+    var url =$("#"+id).val();
+    var selectedStatic = isStaticSelectorSelectedCheckBySecResId(secResId);
+    var allToken = getToken(ID_KEY[key]);
+
+    /!**
      * Carry unique object
      * Uniqueness defined by Id
-     * */
+     * *!/
     for(var i=0;i<allToken.length;i++){
-        if( allToken[i].id === id){
+        if( allToken[i].id === secResId){
             allToken.splice(i,1);
         }
     }
-    emptyToken(PREFIX.SEC_RES.URL._UPDATE);
+    emptyToken(ID_KEY[key]);
     for(var i=0;i<allToken.length;i++){
-        storeToken( PREFIX.SEC_RES.URL._UPDATE,allToken[i]);
+        allToken[i].selectedStatic = isStaticSelectorSelectedCheckBySecResId(allToken[i].id);
+        storeToken( ID_KEY[key],allToken[i]);
     }
 
-    var urlObj = {id:id,url:url};
-    storeToken( PREFIX.SEC_RES.URL._UPDATE,urlObj);
+    var urlObj = {id:secResId,url:url,selectedStatic:selectedStatic};
+    storeToken( ID_KEY[key],urlObj);*/
 
 }
+
+
 $(document).ready(function(){
     /**
      * Get Cities by state
@@ -203,4 +262,17 @@ $(document).ready(function(){
             $("#cityId").append(html);
         });
     },'locationFormBody');
+
+
+    /**
+     * Show static selected radio show
+     * */
+    for(var key in RotationSettings){
+        var id = RotationSettings[key];
+        var isRotationStatic = isRotationSettingsStatic(id);
+        if(isRotationStatic){
+
+            showStaticSectionRadio(id,true);
+        }
+    }
 });
