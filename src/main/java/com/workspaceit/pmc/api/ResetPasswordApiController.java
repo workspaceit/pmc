@@ -23,7 +23,7 @@ public class ResetPasswordApiController {
     private PhotographerService photographerService;
 
     @Autowired
-    EmailHelper emailHelper;
+    private EmailHelper emailHelper;
 
     @Autowired
     public void setPhotographerPasswordResetService(PhotographerPasswordResetService photographerPasswordResetService) {
@@ -42,11 +42,17 @@ public class ResetPasswordApiController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("not a user");
         }
         String token = UUID.randomUUID().toString();
-        PhotographerPasswordResetToken photographerPasswordResetToken= this.photographerPasswordResetService.generatePasswordToken(photographer,token);
-        if(emailHelper.sendPasswordResetMailToPhotoGrapher(photographer.getId(),email,token)){
-            return ResponseEntity.status(HttpStatus.OK).body(photographer);
-        }
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("problem in sending mail");
+        PhotographerPasswordResetToken photographerPasswordResetToken= this.photographerPasswordResetService
+                .generatePasswordToken(photographer,token);
+
+        new Thread(new Runnable() {
+            public void run() {
+                System.out.println("Inside Email sending");
+                emailHelper.sendPasswordResetMailToPhotoGrapher(photographer.getId(),email,token);
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+        return ResponseEntity.status(HttpStatus.OK).body(true);
 
 
     }
@@ -63,7 +69,8 @@ public class ResetPasswordApiController {
     }
 
     @PostMapping("/update-password")
-    public ResponseEntity<?> updatePassword(@RequestParam("photographerId") String photographerId,@RequestParam("password") String password) {
+    public ResponseEntity<?> updatePassword(@RequestParam("photographerId") String photographerId,
+                                            @RequestParam("password") String password) {
         int userId = Integer.parseInt(photographerId);
         Photographer photographer = null;
         try {

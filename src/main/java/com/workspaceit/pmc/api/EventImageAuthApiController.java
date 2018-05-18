@@ -248,23 +248,28 @@ public class EventImageAuthApiController {
         Object principle = authentication.getPrincipal();
         Photographer photographer = (PhotographerUserDetails) principle;
         Event event = eventService.getById(eventId);
-        SentSlideshow sentSlideshowEmail = null;
-        SentSlideshow sentSlideshowSms = null;
-        Boolean resultEmail = false;
-        Boolean resultSms = false;
         if(email.isEmpty() && phoneNumber.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Please provide email or phone number");
         }
         if(!email.equals("")) {
-            sentSlideshowEmail = sentSlideShowService.saveByEmail(email, message, imageIds, photographer, event);
-            resultEmail = emailHelper.sendImagesViaEmail(customerName, email, message, sentSlideshowEmail.getIdentifier());
+            final SentSlideshow sentSlideshowEmail = sentSlideShowService.saveByEmail(email, message, imageIds, photographer, event);
+            new Thread(new Runnable() {
+                public void run() {
+                    System.out.println("Inside Email sending");
+                    emailHelper.sendImagesViaEmail(customerName, email, message, sentSlideshowEmail.getIdentifier());
+                    System.out.println("Inside Email sent");
+                }
+            }).start();
         }
         if(!phoneNumber.equals("")){
-            sentSlideshowSms = sentSlideShowService.saveBySms(phoneNumber, message, imageIds, photographer, event);
-            resultSms = smsHelper.sendMessage(customerName, phoneNumber, sentSlideshowSms.getIdentifier(), message);
-        }
-        if(!resultEmail && !resultSms) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Something went wrong");
+            final SentSlideshow sentSlideshowSms = sentSlideShowService.saveBySms(phoneNumber, message, imageIds, photographer, event);
+            new Thread(new Runnable() {
+                public void run() {
+                    System.out.println("Inside Email sending");
+                    smsHelper.sendMessage(customerName, phoneNumber, sentSlideshowSms.getIdentifier(), message);
+                    System.out.println("Inside Email sent");
+                }
+            }).start();
         }
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
