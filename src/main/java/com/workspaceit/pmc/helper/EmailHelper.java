@@ -1,6 +1,9 @@
 package com.workspaceit.pmc.helper;
 
 import com.workspaceit.pmc.config.Environment;
+import com.workspaceit.pmc.entity.Event;
+import com.workspaceit.pmc.entity.Location;
+import com.workspaceit.pmc.entity.Photographer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +28,10 @@ public class EmailHelper {
     private static String from= "developer_beta@workspaceit.com";
     private  static String username = "developer_beta@workspaceit.com";
     private  static String password = "wsit9748!@";
-    //private static String link = "http://localhost:3000/#/";
-    private static String link = "http://localhost:8080/";
+    private static String link = "http://163.53.151.3:8080/";
 
-    private static String appBaseUrl = "http://localhost:4200/";
+    private static String appBaseUrl = "http://163.53.151.3:4200/";
+    private static String photographerBaseUrl = "http://163.53.151.3:4200/photographer-panel/";
 
 //    @PostConstruct
 //    public void init(){
@@ -179,5 +182,36 @@ public class EmailHelper {
         return true;
     }
 
+    public boolean sendReportedImageNotifierMail(Photographer photographer, Event event) {
+        String email = photographer.getEmail();
+        Properties properties = getProperties();
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(
+                        username, password);// Specify the Username and the PassWord
+            }
+        });
+        String reportedImageUrl = photographerBaseUrl + "locations/" + event.getLocation().getId()+ "/events/" + event.getId() + "/reported-images";
+        String link = "<a href='" + reportedImageUrl + "'>click here</a>";
+        String emailHtmlBody = "Hi, " + photographer.getFullName() + ",<br>" +
+                "There are one more images reported for the event <b>" + event.getName() + "</b>. " +
+                "Please " + link + " to see the reported images.";
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(email));
+            message.setSubject("Reported Images");
+            message.setText(emailHtmlBody, null, "html");
+            Transport.send(message);
+            String title = "Reported Images";
+            String body = "";
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 }
