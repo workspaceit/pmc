@@ -557,7 +557,6 @@ function showHideEventSelectBox(){
     }
 }
 function configAdvertBdImgDropZone(data){
-    console.log( data.elementId);
     var elementId = data.elementId;
     var param=data.param;
     var maxFile=data.maxFile;
@@ -619,7 +618,7 @@ function configAdvertBdImgDropZone(data){
                 $(file.previewElement).find(".dz-error-message span").html(msg).addClass("text-danger");
             },
             success:function(file,response){
-
+                console.log(file);
                 /**
                  * Token Storing
                  * */
@@ -629,9 +628,9 @@ function configAdvertBdImgDropZone(data){
                 /**
                  * Show static selection radio
                  * */
-
+                var isVideoFile = file.type.startsWith("video");
                 var flag =  isRotationSettingsStatic(elementId,true);
-                if(flag){
+                if(flag && !isVideoFile){
                     showStaticSectionRadio(elementId);
                 }
 

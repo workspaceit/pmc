@@ -367,13 +367,13 @@ public class SectionService {
     @Transactional(rollbackFor = Exception.class)
     public void  update(List<Section> sections) throws EntityNotFound{
         this.sectionDao.updateAll(sections);
-        this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
-        sections.stream().forEach(section -> {System.out.println("Section "+section.getId()+" TYPE "+section.getSectionType());});
+        //this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
+        //sections.stream().forEach(section -> {System.out.println("Section "+section.getId()+" TYPE "+section.getSectionType());});
         System.out.println("****************** Section Ends ******************");
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(Section section) throws EntityNotFound{
-        this.makePreviousSectionStaticToRotatingByAdvertisementId(section);
+       // this.makePreviousSectionStaticToRotatingByAdvertisementId(section);
         this.sectionDao.update(section);
     }
     @Transactional(rollbackFor = Exception.class)
