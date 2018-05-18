@@ -140,7 +140,7 @@ $(document).ready(function(){
                                                      elementId:"advertiserOtherImages",
                                                      param:"other-images",
                                                      maxFile:6,
-                                                     maxFileSize:1,
+                                                     maxFileSize:2,
                                                      preViewHtmlId:"dropZonePreviewWithOutUrl",
                                                      success:function(response){
                                                          storeToken(ADV_IMG_TYPE._ADVERTISER_OTHER_IMAGES_TOKEN,response.token);
@@ -156,7 +156,7 @@ $(document).ready(function(){
                                 elementId:"advLogo",
                                 param:"logo-image",
                                 maxFile:1,
-                                maxFileSize:1,
+                                maxFileSize:2,
                                 success:function(response){
                                     emptyToken(ADV_IMG_TYPE._LOGO_TOKEN);
                                     storeToken(ADV_IMG_TYPE._LOGO_TOKEN,response.token);
@@ -170,7 +170,7 @@ $(document).ready(function(){
                                                         elementId:"advBackgroundImage",
                                                         param:"background-image",
                                                         maxFile:1,
-                                                        maxFileSize:1,
+                                                        maxFileSize:2,
                                                         success:function(response){
                                                             storeToken(ADV_IMG_TYPE._BACKGROUND_IMAGE,response.token);
                                                         },
@@ -196,7 +196,7 @@ $(document).ready(function(){
                                                         elementId:"advBottomBannerImage",
                                                         param:"bottom-banner",
                                                         maxFile: 6,
-                                                        maxFileSize:1,
+                                                        maxFileSize:2,
                                                         success:function(response){
                                                             storeToken(ADV_IMG_TYPE._BOTTOM_BANNER_TOKEN,response.token);
                                                         },
