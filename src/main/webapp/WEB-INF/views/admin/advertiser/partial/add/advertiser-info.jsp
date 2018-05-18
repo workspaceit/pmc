@@ -30,7 +30,7 @@
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
                             <label style="width:100%;">
-                                <label>State</label>
+                                <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-state">State</a>
                                 <select id="stateId" class="form-control" >
                                     <c:forEach var="state" items="${states}" >
                                         <option value="${state.id}" >${state.name}</option>
@@ -43,7 +43,7 @@
 
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
-                            <label>City</label>
+                            <a href="#" style="color:#333;font-size: 14px;" data-toggle="modal" data-target="#add-new-city">City</a>
                             <div>
                                 <select id="cityId" class="form-control">
                                 </select>
@@ -158,11 +158,16 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
         </div>
     </div>
+</div>
+
+<%--State add modal--%>
+<div class="modal fade" id="add-new-state" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <%@include file="/WEB-INF/views/admin/state/add.jsp" %>
+</div>
+
+<%--City add modal--%>
+<div class="modal fade" id="add-new-city" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <%@include file="/WEB-INF/views/admin/city/add.jsp" %>
 </div>

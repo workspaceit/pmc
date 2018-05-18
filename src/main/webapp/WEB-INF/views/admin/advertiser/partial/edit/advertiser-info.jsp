@@ -1,4 +1,3 @@
-
 <div class="tab-pane active" id="tab_default_1">
     <div class="row clearfix">
         <div class="col-md-6">
@@ -175,4 +174,14 @@
 
         </div>
     </div>
+</div>
+
+<%--State add modal--%>
+<div class="modal fade" id="add-new-state" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <%@include file="/WEB-INF/views/admin/state/add.jsp" %>
+</div>
+
+<%--City add modal--%>
+<div class="modal fade" id="add-new-city" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <%@include file="/WEB-INF/views/admin/city/add.jsp" %>
 </div>
