@@ -2,6 +2,7 @@ package com.workspaceit.pmc.controller;
 
 import com.workspaceit.pmc.config.Environment;
 import com.workspaceit.pmc.constant.ControllerUriPrefix;
+import com.workspaceit.pmc.dao.ReportImageDao;
 import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class EventController {
     private StateService stateService;
     private EventImageService eventImageService;
     private Environment environment;
+    private ReportImageService reportImageService;
 
     /** For Location modal*/
     private List<Double> fadeInList;
@@ -84,6 +86,11 @@ public class EventController {
     @Autowired
     public void setFadeOutList(List<Double> fadeOutList) {
         this.fadeOutList = fadeOutList;
+    }
+
+    @Autowired
+    public void setReportImageService(ReportImageService reportImageService) {
+        this.reportImageService = reportImageService;
     }
 
     @Autowired
@@ -162,6 +169,17 @@ public class EventController {
         modelAndView.addObject("photographers",photographers);
         modelAndView.addObject("event", event);
 
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/{eventId}/reported-images")
+    public ModelAndView reportedImages(@PathVariable("eventId") int eventId){
+        Event event = this.eventService.getById(eventId);
+        List<ReportedImage> reportedImages = reportImageService.getAllByEventId(eventId);
+        ModelAndView modelAndView = new ModelAndView("admin/event/reported-image");
+        modelAndView.addObject("event", event);
+        modelAndView.addObject("reportedImages", reportedImages);
+        modelAndView.addObject("imageCount", reportedImages.size());
         return modelAndView;
     }
 

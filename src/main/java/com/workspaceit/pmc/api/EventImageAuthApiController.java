@@ -83,7 +83,7 @@ public class EventImageAuthApiController {
          * */
         imgAllowedMimeType.add("image/jpeg");
         imgAllowedMimeType.add("image/pjpeg");
-        imgAllowedMimeType.add("image/jpeg");
+        imgAllowedMimeType.add("image/jpg");
         imgAllowedMimeType.add("image/png");
     }
 
@@ -147,7 +147,7 @@ public class EventImageAuthApiController {
             eventImageService.saveEventImage(eventImage);
 
         } catch(IOException e) {
-            serviceResponse.setValidationError(param,"Internal server error : "+e.getMessage());
+            serviceResponse.setValidationError(param,"Internal server error : "+e);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(serviceResponse.getFormError());
         }
         return ResponseEntity.status(HttpStatus.OK).body(eventImage);

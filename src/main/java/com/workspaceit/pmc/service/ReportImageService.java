@@ -1,10 +1,8 @@
 package com.workspaceit.pmc.service;
 
+import com.workspaceit.pmc.dao.AdminDao;
 import com.workspaceit.pmc.dao.ReportImageDao;
-import com.workspaceit.pmc.entity.Event;
-import com.workspaceit.pmc.entity.EventImage;
-import com.workspaceit.pmc.entity.Photographer;
-import com.workspaceit.pmc.entity.ReportedImage;
+import com.workspaceit.pmc.entity.*;
 import com.workspaceit.pmc.helper.EmailHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,7 @@ public class ReportImageService {
 
     private ReportImageDao reportImageDao;
     private EmailHelper emailHelper;
+    private AdminDao adminDao;
 
     @Autowired
     public void setReportImageDao(ReportImageDao reportImageDao) {
@@ -31,6 +30,11 @@ public class ReportImageService {
     @Autowired
     public void setEmailHelper(EmailHelper emailHelper) {
         this.emailHelper = emailHelper;
+    }
+
+    @Autowired
+    public void setAdminDao(AdminDao adminDao) {
+        this.adminDao = adminDao;
     }
 
     @Transactional
@@ -43,12 +47,12 @@ public class ReportImageService {
     }
 
     public void sendReportedImageNotifierMail(EventImage eventImage){
-        Set<Photographer> photographers = eventImage.getEvent().getPhotographers();
-        for(Photographer photographer: photographers){
+        List<Admin> admins = adminDao.getAll();
+        for(Admin admin: admins){
             new Thread(new Runnable() {
                 public void run() {
                     System.out.println("Inside Email sending");
-                    emailHelper.sendReportedImageNotifierMail(photographer, eventImage.getEvent());
+                    emailHelper.sendReportedImageNotifierMail(admin, eventImage.getEvent());
                     System.out.println("Inside Email sent");
                 }
             }).start();

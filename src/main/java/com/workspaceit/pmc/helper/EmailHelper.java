@@ -1,6 +1,7 @@
 package com.workspaceit.pmc.helper;
 
 import com.workspaceit.pmc.config.Environment;
+import com.workspaceit.pmc.entity.Admin;
 import com.workspaceit.pmc.entity.Event;
 import com.workspaceit.pmc.entity.Location;
 import com.workspaceit.pmc.entity.Photographer;
@@ -130,7 +131,7 @@ public class EmailHelper {
 //        String activationUrl = link + "slideshow-images/"+code;
         String activationUrl = appBaseUrl + "/user-panel/gallery/email/"+code;
         String link = "<a href='" + activationUrl + "'>Click here</a>";
-        String emailHtmlBody = "Hi "+name+","+msg+"<br>Please click this link " + link + " to see your images";
+        String emailHtmlBody = "Hi "+name+"," + (msg != null? " "+ msg: "") +"<br>Please click this link " + link + " to see your images";
         try {
             MimeMessage message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/html");
@@ -182,18 +183,19 @@ public class EmailHelper {
         return true;
     }
 
-    public boolean sendReportedImageNotifierMail(Photographer photographer, Event event) {
-        String email = photographer.getEmail();
+    public boolean sendReportedImageNotifierMail(Admin admin, Event event) {
+        String email = admin.getEmail();
         Properties properties = getProperties();
         Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(
-                        username, password);// Specify the Username and the PassWord
+                        username, password);
             }
         });
-        String reportedImageUrl = photographerBaseUrl + "locations/" + event.getLocation().getId()+ "/events/" + event.getId() + "/reported-images";
+        System.out.println("role");
+        String reportedImageUrl = link + "admin/event/" + event.getId()+ "/reported-images";
         String link = "<a href='" + reportedImageUrl + "'>click here</a>";
-        String emailHtmlBody = "Hi, " + photographer.getFullName() + ",<br>" +
+        String emailHtmlBody = "Hi, " + admin.getName() + ",<br>" +
                 "There are one more images reported for the event <b>" + event.getName() + "</b>. " +
                 "Please " + link + " to see the reported images.";
         try {
