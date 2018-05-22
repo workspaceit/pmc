@@ -18,8 +18,10 @@ import com.workspaceit.pmc.validation.advertisement.popup.PopupAdsUpdateForm;
 import com.workspaceit.pmc.validation.advertisement.section.SectionResourceForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsForm;
 import com.workspaceit.pmc.validation.advertisement.slideshow.SlideShowAdsUpdateForm;
+import com.workspaceit.pmc.validation.advertiser.AdvertiserAndAllCompositeUpdateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -29,9 +31,8 @@ import java.util.*;
 public class SectionService {
 
     private SectionDao sectionDao;
-
     private SectionResourceService sectionResourceService;
-
+    private AdvertisementService advertisementService;
 
 
     @Autowired
@@ -44,10 +45,17 @@ public class SectionService {
         this.sectionResourceService = sectionResourceService;
     }
 
+    @Autowired
+    public void setAdvertisementService(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
+    }
 
-    @Transactional(rollbackFor = Exception.class)
+    public void commit(){
+        this.sectionDao.commit();
+    }
+    /*@Transactional(rollbackFor = Exception.class)
     public void  update(Advertisement advertisement, GalleryAdsUpdateForm galleryAdsForm) throws EntityNotFound{
-        /** New File */
+        *//** New File *//*
         Integer logoToken =  galleryAdsForm.getLogoSectionResource().getToken();
         Integer bgToken =  galleryAdsForm.getBgSectionResource().getToken();
         SectionResourceForm[] tBannerSectionResource = galleryAdsForm.getTopSectionResource();
@@ -63,12 +71,14 @@ public class SectionService {
 
 
 
-        /** Removed File */
+        *//** Removed File *//*
+        Integer logoRmId = galleryAdsForm.getRemoveLogoId();
+        Integer[] backgroundRmIds = galleryAdsForm.getRemoveBackgroundIds();
         Integer[] tBannerRmIds = galleryAdsForm.getRemoveTopBannerIds();
         Integer[] bBannerRmIds = galleryAdsForm.getRemoveBottomBannerIds();
 
 
-        /** All gallery section */
+        *//** All gallery section *//*
         List<Section> gallerySections = new LinkedList<>();
         Section logoSection =  advertisement.getSections().get(SECTION_TYPE.LOGO);
         Section bgSection = advertisement.getSections().get(SECTION_TYPE.BACKGROUND);
@@ -83,6 +93,8 @@ public class SectionService {
         for(SectionResourceForm sectionResource  :bBannerSectionResource){
             bBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
         }
+
+
 
         logoSection =  this.populateIfChange(logoSection,
                 null,
@@ -131,13 +143,31 @@ public class SectionService {
 
         this.update(gallerySections);
 
+        List<Integer> bgrmIds = (backgroundRmIds!=null)? Arrays.asList(backgroundRmIds):new ArrayList<>();
         List<Integer> tBrmIds = (tBannerRmIds!=null) ? Arrays.asList(tBannerRmIds):new ArrayList<>();
         List<Integer> bBrmIds = (bBannerRmIds!=null) ? Arrays.asList(bBannerRmIds):new ArrayList<>();
 
         List<SectionResource> rmSecResource = new ArrayList<>();
+
+        List<SectionResource> logoSectionRes = logoSection.getSectionResource();
+        List<SectionResource> backgroundSectionRes =  bgSection.getSectionResource();
         List<SectionResource> tBannerSectionRes =  tBannerSection.getSectionResource();
         List<SectionResource> bBannerSectionRes =  bBannerSection.getSectionResource();
 
+
+        for(SectionResource secRes:logoSectionRes){
+            if(logoRmId==null){
+                break;
+            }
+            if(secRes.getId() == logoRmId){
+                rmSecResource.add(secRes);
+            }
+        }
+        for(SectionResource secRes:backgroundSectionRes){
+            if(bgrmIds.contains(secRes.getId())){
+                rmSecResource.add(secRes);
+            }
+        }
 
         for(SectionResource secRes:tBannerSectionRes){
             if(tBrmIds.contains(secRes.getId())){
@@ -145,10 +175,12 @@ public class SectionService {
             }
         }
 
-        /** Remove from  of oneToMany association  section first
-         *  Cascade All re-save if delete object exist in List of section
-         * */
-        tBannerSectionRes.removeAll(rmSecResource);
+        for(SectionResource secRes:tBannerSectionRes){
+            if(tBrmIds.contains(secRes.getId())){
+                rmSecResource.add(secRes);
+            }
+        }
+
 
         for(SectionResource secRes:bBannerSectionRes){
             if(bBrmIds.contains(secRes.getId())){
@@ -156,9 +188,12 @@ public class SectionService {
             }
         }
 
-        /** Remove from  of oneToMany association  section first
+        *//** Remove from  of oneToMany association  section first
          *  Cascade All re-save if delete object exist in List of section
-         * */
+         * *//*
+        logoSectionRes.removeAll(rmSecResource);
+        backgroundSectionRes.removeAll(rmSecResource);
+        tBannerSectionRes.removeAll(rmSecResource);
         bBannerSectionRes.removeAll(rmSecResource);
 
         if(rmSecResource.size()>0){
@@ -176,7 +211,128 @@ public class SectionService {
         bBannerSection.setQuantity(bbQ);
 
         this.update(gallerySections);
+    }*/
+    public void update(int advertiserId,AdvertiserAndAllCompositeUpdateForm updateForm) throws EntityNotFound {
+        Map<ADVERTISEMENT_TYPE,Advertisement> advertisements =  this.advertisementService.getMapByAdvertiserId(advertiserId);
+        this.update(advertisements.get(ADVERTISEMENT_TYPE.GALLERY),updateForm.getGalleryAds());
+        this.update(advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW),updateForm.getSlideShowAds());
+        this.update(advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS),advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),updateForm.getPopupAds());
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void  update(Advertisement advertisement, GalleryAdsUpdateForm galleryAdsForm) throws EntityNotFound{
+        /** New File */
+        Integer logoToken =  galleryAdsForm.getLogoSectionResource().getToken();
+        Integer bgToken =  galleryAdsForm.getBgSectionResource().getToken();
+        SectionResourceForm[] tBannerSectionResource = galleryAdsForm.getTopSectionResource();
+        SectionResourceForm[] bBannerSectionResource = galleryAdsForm.getBottomSectionResource();
+
+        if(tBannerSectionResource==null)tBannerSectionResource=new SectionResourceForm[0];
+        if(bBannerSectionResource==null)bBannerSectionResource=new SectionResourceForm[0];
+
+        FileToken logoNewFileToken =(logoToken!=null && logoToken>0)?new FileToken(galleryAdsForm.getLogoSectionResource(),FILE_TYPE.IMAGE):null;
+        FileToken bgNewFileToken = (bgToken!=null && bgToken>0)?new FileToken(galleryAdsForm.getBgSectionResource(),FILE_TYPE.IMAGE):null;
+        List<FileToken> tBannerNewFileToken = new LinkedList<>();
+        List<FileToken> bBannerNewFileToken = new LinkedList<>();
+
+
+
+        /** All gallery section */
+        List<Section> gallerySections = new LinkedList<>();
+        Section logoSection =  advertisement.getSections().get(SECTION_TYPE.LOGO);
+        Section bgSection = advertisement.getSections().get(SECTION_TYPE.BACKGROUND);
+        Section tBannerSection = advertisement.getSections().get(SECTION_TYPE.TOP_BANNER);
+        Section bBannerSection = advertisement.getSections().get(SECTION_TYPE.BOTTOM_BANNER);
+
+
+        for(SectionResourceForm sectionResource :tBannerSectionResource){
+            tBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
+        }
+
+        for(SectionResourceForm sectionResource  :bBannerSectionResource){
+            bBannerNewFileToken.add(new FileToken(sectionResource,FILE_TYPE.IMAGE));
+        }
+
+
+
+        logoSection =  this.populateIfChange(logoSection,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                logoNewFileToken,
+                null);
+
+        bgSection =  this.populateIfChange(bgSection,
+                galleryAdsForm.getBgPrice(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                bgNewFileToken,
+                null);
+
+        tBannerSection =  this.populateIfChange(tBannerSection,
+                galleryAdsForm.getTopBannerPrice(),
+                null,
+                null,
+                null,
+                galleryAdsForm.getTopBannerRotation(),
+                galleryAdsForm.getTopBannerExpiryDate(),
+                null,
+                tBannerNewFileToken);
+
+        bBannerSection=  this.populateIfChange(bBannerSection,
+                galleryAdsForm.getBottomBannerPrice(),
+                null,
+                null,
+                null,
+                galleryAdsForm.getBottomBannerRotation(),
+                galleryAdsForm.getBottomBannerExpiryDate(),
+                null,
+                bBannerNewFileToken);
+
+        gallerySections.add(logoSection);
+        gallerySections.add(bgSection);
+        gallerySections.add(tBannerSection);
+        gallerySections.add(bBannerSection);
+
+        this.update(gallerySections);
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateQuantity(int advertiserId) throws EntityNotFound {
+        List<Advertisement> advertisements =  this.advertisementService.getByAdvertiserId(advertiserId);
+        List<Section> sections = new ArrayList<>();
+        List<Section> sectionsList = new ArrayList<>();
+
+        for(Advertisement advertisement:advertisements){
+            List<Section> tmpSection = this.getByAdvertisementId(advertisement.getId());
+            sectionsList.addAll(tmpSection);
+        }
+
+        for(Section section : sectionsList){
+            if(section==null){
+                continue;
+            }
+            List<SectionResource> sectionResources =  section.getSectionResource();
+
+            if(sectionResources==null){
+                section.setQuantity(0);
+            }else{
+                section.setQuantity(sectionResources.size());
+            }
+            sections.add(section);
+        }
+
+        this.update(sections);
+
+    }
+
+
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -190,9 +346,6 @@ public class SectionService {
 
         List<FileToken> tBannerNewFileToken = new LinkedList<>();
         FileToken bBannerVideoNewFileToken = (videoToken!=null && videoToken>0)? new FileToken(videoResources,FILE_TYPE.VIDEO):null;
-
-        /** Removed File */
-        Integer[] tBannerRmIds = slideShowAdsForm.getRemoveBannerIds();
 
 
         /** All slide show section */
@@ -220,36 +373,6 @@ public class SectionService {
         slideShowSections.add(tBannerSection);
 
         this.update(slideShowSections);
-
-
-        /** Remove section resource*/
-
-        List<Integer> tBrmIds = (tBannerRmIds!=null) ? Arrays.asList(tBannerRmIds):new ArrayList<>();
-
-        List<SectionResource> rmSecResource = new ArrayList<>();
-        List<SectionResource> tBannerSectionRes =  tBannerSection.getSectionResource();
-
-        for(SectionResource secRes:tBannerSectionRes){
-            if(tBrmIds.contains(secRes.getId())){
-                rmSecResource.add(secRes);
-            }
-        }
-
-        /** Remove from  of oneToMany association  section first
-         *  Cascade All re-save if delete object exist in List of section
-         * */
-        tBannerSectionRes.removeAll(rmSecResource);
-
-
-        if(rmSecResource.size()>0){
-            this.sectionResourceService.delete(rmSecResource);
-        }
-
-        Integer tBQ = (tBannerSection.getSectionResource()==null)?0:tBannerSection.getSectionResource().size();
-
-        tBannerSection.setQuantity(tBQ);
-
-        this.update(slideShowSections);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -270,9 +393,7 @@ public class SectionService {
         FileToken smsVideoNewFileToken = (smsVideoToken!=null && smsVideoToken>0)? new FileToken(popupAdsUpdateForm.getSmsPopupVideoResource(),FILE_TYPE.VIDEO):null;
         FileToken emailVideoNewFileToken = (emailVideoToken!=null && emailVideoToken>0)? new FileToken(popupAdsUpdateForm.getEmailPopupVideoResource(),FILE_TYPE.VIDEO):null;
 
-        /** Removed File */
-        Integer[] smsBannerRmIds = popupAdsUpdateForm.getRemoveSmsBannerIds();
-        Integer[] emailBannerRmIds = popupAdsUpdateForm.getRemoveEmailBannerIds();
+
 
         /** All popup show section */
         List<Section> popupAdSections = new LinkedList<>();
@@ -314,62 +435,12 @@ public class SectionService {
         /** Update Section and remove section resource */
 
         this.update(popupAdSections);
-        /** Single video or Multiple images*/
 
-        List<SectionResource> smsSectionResources = smsBannerSection.getSectionResource();
-        List<SectionResource> emailSectionResources = emailBannerSection.getSectionResource();
-
-
-        if(smsBannerNewFileToken.size()>0){
-            this.deleteResourceAndRemoveFromList(smsSectionResources,FILE_TYPE.VIDEO);
-        }
-
-        if(emailBannerNewFileToken.size()>0){
-            this.deleteResourceAndRemoveFromList(emailSectionResources,FILE_TYPE.VIDEO);
-        }
-
-
-        if(smsBannerRmIds!=null && smsBannerRmIds.length>0){
-            this.deleteResourceAndRemoveFromList(smsSectionResources,smsBannerRmIds);
-        }
-        if(emailBannerRmIds!=null && emailBannerRmIds.length>0){
-            this.deleteResourceAndRemoveFromList(emailSectionResources,emailBannerRmIds);
-        }
-
-
-        Integer smsBQ = (smsBannerSection.getSectionResource()==null)?0:smsBannerSection.getSectionResource().size();
-        Integer emailBQ = (emailBannerSection.getSectionResource()==null)?0:emailBannerSection.getSectionResource().size();
-
-        smsBannerSection.setQuantity(smsBQ);
-        emailBannerSection.setQuantity(emailBQ);
-
-        /** Update Section and remove section resource */
-
-        this.update(popupAdSections);
-
-    }
-
-    private void deleteResourceAndRemoveFromList(List<SectionResource> sectionResources,FILE_TYPE fileType){
-        List<SectionResource> tmpSectionResources = null;
-        if(sectionResources!=null){
-            tmpSectionResources = this.sectionResourceService.delete(sectionResources,fileType);
-        }
-        if(tmpSectionResources!=null && tmpSectionResources.size()>0){
-            sectionResources.removeAll(tmpSectionResources);
-        }
-    }
-    private void deleteResourceAndRemoveFromList(List<SectionResource> sectionResources,Integer[] removeIds){
-        List<SectionResource> tmpSecResources = this.sectionResourceService.getById(removeIds);
-        this.sectionResourceService.delete(tmpSecResources);
-        sectionResources.removeAll(tmpSecResources);
 
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(List<Section> sections) throws EntityNotFound{
         this.sectionDao.updateAll(sections);
-        //this.makePreviousSectionStaticToRotatingByAdvertisementId(sections);
-        //sections.stream().forEach(section -> {System.out.println("Section "+section.getId()+" TYPE "+section.getSectionType());});
-        System.out.println("****************** Section Ends ******************");
     }
     @Transactional(rollbackFor = Exception.class)
     public void  update(Section section) throws EntityNotFound{
@@ -707,7 +778,8 @@ public class SectionService {
         sectionMap.put(section.getSectionType(),section);
         return sectionMap;
     }
-    private Section getSection(Integer id) throws EntityNotFound {
+    @Transactional
+    public Section getSection(Integer id) throws EntityNotFound {
 
         Section section = this.sectionDao.getById(id);
 
@@ -718,4 +790,10 @@ public class SectionService {
         return section;
 
     }
+    @Transactional
+    public List<Section> getByAdvertisementId(Integer advertisementId){
+        return this.sectionDao.getByAdvertisementId(advertisementId);
+    }
+
+
 }

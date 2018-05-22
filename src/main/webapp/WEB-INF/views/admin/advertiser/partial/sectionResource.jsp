@@ -27,10 +27,7 @@
            placeholder="Advertisement URL">
     <br>
     <%--ID_KEY._GALLERY_TOP_BANNER is global vaiable update.js --%>
-    <c:if test="${param.isDeletable==null || param.isDeletable==false}" >
-        <a href="javascript:void(0)" onclick="addIdToRemove(this,'${param.key}',${param.id})" >Delete</a>
-
-    </c:if>
+    <a href="javascript:void(0)" onclick="addIdToRemove(this,'${param.key}',${param.id})" >Delete</a>
 </div>
 
 

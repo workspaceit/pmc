@@ -5,7 +5,6 @@ import com.workspaceit.pmc.constant.advertisement.SECTION_TYPE;
 import com.workspaceit.pmc.validation.advertisement.section.SectionResourceUpdateForm;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -13,6 +12,8 @@ import java.util.Map;
  */
 public class GalleryAdsUpdateForm extends GalleryAdsForm{
 
+    private Integer removeLogoId;
+    private Integer[] removeBackgroundIds;
     private Integer[] removeTopBannerIds;
     private Integer[] removeBottomBannerIds;
 
@@ -55,12 +56,21 @@ public class GalleryAdsUpdateForm extends GalleryAdsForm{
         this.updateSectionResources = updateSectionResources;
     }
 
-    @Override
-    public String toString() {
-        return "GalleryAdsUpdateForm{" +
-                "removeTopBannerIds=" + Arrays.toString(removeTopBannerIds) +
-                ", removeBottomBannerIds=" + Arrays.toString(removeBottomBannerIds) +
-                ", updateSectionResources=" + updateSectionResources +
-                '}';
+    public Integer getRemoveLogoId() {
+        return removeLogoId;
     }
+
+    public void setRemoveLogoId(Integer removeLogoId) {
+        this.removeLogoId = removeLogoId;
+    }
+
+    public Integer[] getRemoveBackgroundIds() {
+        return removeBackgroundIds;
+    }
+
+    public void setRemoveBackgroundIds(Integer[] removeBackgroundIds) {
+        this.removeBackgroundIds = removeBackgroundIds;
+    }
+
+
 }

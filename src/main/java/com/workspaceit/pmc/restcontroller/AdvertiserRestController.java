@@ -267,17 +267,10 @@ public class AdvertiserRestController {
         try {
             Advertiser advertiser = this.advertiserService.update(id,advertiserAndAllCompositeForm.getAdvertiser(),currentUser);
 
-            Map<ADVERTISEMENT_TYPE,Advertisement> advertisements =  this.advertisementService.getMapByAdvertiserId(advertiser.getId());
-            this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.GALLERY),advertiserAndAllCompositeForm.getGalleryAds());
-            this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.SLIDESHOW),advertiserAndAllCompositeForm.getSlideShowAds());
-            this.sectionService.update(advertisements.get(ADVERTISEMENT_TYPE.POPUP_SMS),
-                                        advertisements.get(ADVERTISEMENT_TYPE.POPUP_EMAIL),
-                                        advertiserAndAllCompositeForm.getPopupAds());
-
-            this.sectionResourceService.update(advertiserAndAllCompositeForm.getGalleryAds().getUpdateSectionResources());
-            this.sectionResourceService.update(advertiserAndAllCompositeForm.getSlideShowAds().getUpdateSectionResources());
-            this.sectionResourceService.update(advertiserAndAllCompositeForm.getPopupAds().getUpdateEmailSectionResources());
-            this.sectionResourceService.update(advertiserAndAllCompositeForm.getPopupAds().getUpdateSmsSectionResources());
+            this.sectionService.update(advertiser.getId(),advertiserAndAllCompositeForm);
+            this.sectionResourceService.update(advertiserAndAllCompositeForm);
+            this.sectionResourceService.removeSectionResource(advertiserAndAllCompositeForm);
+            this.sectionService.updateQuantity(advertiser.getId());
 
 
         } catch (EntityNotFound entityNotFound) {
