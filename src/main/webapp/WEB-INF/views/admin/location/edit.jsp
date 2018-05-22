@@ -225,29 +225,13 @@
                                             <div class="col-md-6">
                                                 <h3 style="text-align: left;"> TRANSITIONS</h3>
                                                 <p style="text-align: left">Fade In</p>
-                                                <select id="fadeInTime" class="form-control" style="margin-bottom: 13px">
-                                                    <c:forEach var="fadeIn" items="${fadeInList}">
-                                                        <c:set var="fadeInOption" value="" />
-                                                        <c:if test="${location.fadeInTime == fadeIn }">
-                                                            <c:set var="fadeInOption" value="selected='selected'" />
-                                                        </c:if>
-                                                        <fmt:parseNumber var = "fadeInVal" integerOnly = "true"
-                                                                         type = "number" value = "${fadeIn}" />
-                                                        <option value="${fadeInVal}" ${fadeInOption}>${fadeInVal}s</option>
-                                                    </c:forEach>
-                                                </select>
+                                                <fmt:parseNumber var = "fadeInVal" integerOnly = "true"
+                                                                 type = "number" value = "${location.fadeInTime}" />
+                                                <input type="number" min="0" value="${fadeInVal}" id="fadeInTime" class="form-control" style="margin-bottom: 13px" />
                                                 <p style="text-align: left">Fade Out</p>
-                                                <select id="fadeOutTime" class="form-control" style="margin-bottom: 13px">
-                                                    <c:forEach var="fadeOut" items="${fadeOutList}">
-                                                        <c:set var="fadeOutOption" value="" />
-                                                        <c:if test="${location.fadeOutTime == fadeOut }">
-                                                            <c:set var="fadeOutOption" value="selected='selected'" />
-                                                        </c:if>
-                                                        <fmt:parseNumber var = "fadeOutVal" integerOnly = "true"
-                                                                         type = "number" value ="${fadeOut}" />
-                                                        <option value="${fadeOutVal}" ${fadeOutOption}>${fadeOutVal}s</option>
-                                                    </c:forEach>
-                                                </select>
+                                                <fmt:parseNumber var = "fadeOutVal" integerOnly = "true"
+                                                                 type = "number" value ="${location.fadeOutTime}" />
+                                                <input type="number" min="0" value="${fadeOutVal}" id="fadeOutTime" class="form-control" style="margin-bottom: 13px" />
                                             </div>
 
 

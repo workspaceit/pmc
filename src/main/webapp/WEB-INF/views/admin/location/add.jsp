@@ -142,21 +142,9 @@
                                             <div class="col-md-6">
                                                 <h3 style="text-align: left;"> TRANSITIONS</h3>
                                                 <p style="text-align: left">Fade In</p>
-                                                <select id="fadeInTime" class="form-control" style="margin-bottom: 13px">
-                                                    <c:forEach var="fadeIn" items="${fadeInList}">
-                                                        <fmt:parseNumber var = "fadeInVal" integerOnly = "true"
-                                                                         type = "number" value = "${fadeIn}" />
-                                                        <option value="${fadeInVal}" >${fadeInVal}s</option>
-                                                    </c:forEach>
-                                                </select>
+                                                <input type="number" min="0" value="0" id="fadeInTime" class="form-control" style="margin-bottom: 13px" />
                                                 <p style="text-align: left">Fade Out</p>
-                                                <select id="fadeOutTime" class="form-control" style="margin-bottom: 13px">
-                                                    <c:forEach var="fadeOut" items="${fadeOutList}">
-                                                        <fmt:parseNumber var = "fadeOutVal" integerOnly = "true"
-                                                                         type = "number" value ="${fadeOut}" />
-                                                        <option value="${fadeOutVal}" >${fadeOutVal}s</option>
-                                                    </c:forEach>
-                                                </select>
+                                                <input type="number" min="0" value="0" id="fadeOutTime" class="form-control" style="margin-bottom: 13px"/>
                                             </div>
                                         </div>
                                         <div class="url-tab panel-body" style="display:none;">

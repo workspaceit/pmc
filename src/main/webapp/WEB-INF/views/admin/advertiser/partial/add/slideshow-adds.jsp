@@ -36,13 +36,9 @@
             <p id="errorObj_slideShowAdsBannerTokens"></p>
         </div>
         <div class="panel-footer clearfix">
-                              <span class="pull-left" style="font-weight: bold;">Duration:
-                                <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
-                                    <c:forEach var="duration" items="${durations}" >
-                                         <option value="${duration}">${duration}s</option>
-                                    </c:forEach>
-                              </select>
-                              </span>
+          <span class="pull-left" style="font-weight: bold;">Duration :
+            <input type="number" min="1" id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" value="1"/>
+          </span>
             <span class="pull-right " style="font-weight: bold;">Price: $ <input id="slideshowAdBannerPrice" type="text" class="form-control" value="${slideshowAdPrice.get(SlideshowAdsConstant.BANNER).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
     </div>

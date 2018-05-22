@@ -38,11 +38,10 @@
 
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
-                                    <c:forEach var="duration" items="${durations}" >
-                                        <option value="${duration}">${duration}s</option>
-                                    </c:forEach>
-                              </select>
+                            <input id="smsPopupVideoDuration"
+                                   type="number"
+                                   min="1"
+                                   value="1" class="form-control" style="display:inline;width:100px;height:35px;" />
                           </span>
             <span class="pull-right " style="font-weight: bold;">Price: $ <input id="popUpAdSmsPrice" type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.SMS).price}" style="display:inline;width:100px;height:35px;"/></span>
         </div>
@@ -84,11 +83,10 @@
         <p class="text-danger" id="errorObj_emailPopupBanner"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
-                                <c:forEach var="duration" items="${durations}" >
-                                    <option value="${duration}">${duration}s</option>
-                                </c:forEach>
-                          </select>
+                            <input id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;"
+                                    type="number"
+                                    min="1"
+                                    value="1" />
                           </span>
 
             <span class="pull-right " style="font-weight: bold;">Price: $ <input id="popUpAdEmailPrice" type="text" class="form-control" value="${popupAdPrice.get(PopupAdConstant.EMAIL).price}" style="display:inline;width:100px;height:35px;"/></span>

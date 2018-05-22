@@ -53,6 +53,14 @@ public class LocationValidator implements Validator {
             this.rejectIfNull("fadeInTime","Fade In Time is required",locationForm.getFadeInTime(),errors);
             this.rejectIfNull("fadeOutTime","Fade Out Time is required",locationForm.getFadeOutTime(),errors);
 
+            if(!errors.hasFieldErrors("fadeInTime") && locationForm.getFadeInTime()<0){
+                errors.rejectValue("fadeInTime","Can't be negative");
+            }
+
+            if(!errors.hasFieldErrors("fadeOutTime") && locationForm.getFadeOutTime()<0){
+                errors.rejectValue("fadeOutTime","Can't be negative");
+            }
+
         }
         if(errors.getFieldErrorCount("durationSpeed")==0 && locationForm.getDurationSpeed() != null){
             this.checkDurationSpeed(locationForm.getDurationSpeed(),errors);

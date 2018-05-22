@@ -85,16 +85,11 @@
         </div>
         <div class="panel-footer clearfix">
                               <span class="pull-left" style="font-weight: bold;">Duration:
-                                <select id="slideShowBannerDuration" class="form-control" style="display:inline;width:100px;height:35px;" >
-
-                                    <c:forEach var="duration" items="${durations}" >
-                                        <c:set var="durationOptions" value=""></c:set>
-                                        <c:if test="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).duration == duration}">
-                                            <c:set var="durationOptions" value="selected=\"selected\""></c:set>
-                                        </c:if>
-                                        <option value="${duration}" ${durationOptions} >${duration}s</option>
-                                    </c:forEach>
-                              </select>
+                                <input type="number"
+                                       id="slideShowBannerDuration"
+                                       class="form-control" style="display:inline;width:100px;height:35px;"
+                                       value="${slideshowAd.sections.get(SECTION_TYPE.TOP_BANNER).duration}"
+                                />
                               </span>
             <span class="pull-right " style="font-weight: bold;">
 

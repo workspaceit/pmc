@@ -101,15 +101,11 @@
 
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;"  >
-                                    <c:forEach var="duration" items="${durations}" >
-                                        <c:set var="durationOptionsSelected" value=""></c:set>
-                                        <c:if test="${popupAdSms.sections.get(SECTION_TYPE.BANNER).duration == duration}">
-                                            <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
-                                        </c:if>
-                                        <option value="${duration}" ${durationOptionsSelected}>${duration}s</option>
-                                    </c:forEach>
-                              </select>
+                            <input id="smsPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;"
+                                    type="number"
+                                    min="1"
+                                    value="${popupAdSms.sections.get(SECTION_TYPE.BANNER).duration}"
+                                />
                           </span>
             <span class="pull-right " style="font-weight: bold;">
                 Price: $ <input id="popUpAdSmsPrice" type="text" class="form-control"
@@ -210,15 +206,12 @@
         <p class="text-danger" id="errorObj_emailPopupVideo"></p>
         <div class="panel-footer clearfix">
                           <span class="pull-left" style="font-weight: bold;">Duration:
-                            <select id="emailPopupVideoDuration" class="form-control" style="display:inline;width:100px;height:35px;">
-                                <c:forEach var="duration" items="${durations}" >
-                                    <c:set var="durationOptionsSelected" value=""></c:set>
-                                    <c:if test="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).duration == duration}">
-                                        <c:set var="durationOptionsSelected" value="selected=\"selected\""></c:set>
-                                    </c:if>
-                                    <option value="${duration}" ${durationOptionsSelected} >${duration}s</option>
-                                </c:forEach>
-                          </select>
+                            <input id="emailPopupVideoDuration"
+                                   class="form-control" style="display:inline;width:100px;height:35px;"
+                                   type="number"
+                                   min="1"
+                                   value="${popupAdEmail.sections.get(SECTION_TYPE.BANNER).duration}"
+                            />
                           </span>
             <span class="pull-right " style="font-weight: bold;">
                 Price: $ <input id="popUpAdEmailPrice"  type="text" class="form-control"
