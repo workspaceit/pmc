@@ -4,6 +4,7 @@ package com.workspaceit.pmc.dao;
 import com.workspaceit.pmc.entity.advertisement.Section;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
@@ -70,5 +71,11 @@ public class BaseDao {
             session.clear();
         }
     }
-
+    public void commit(){
+        Session session = this.getCurrentSession();
+        if(session==null)return;
+        Transaction transaction = session.getTransaction();
+        if(transaction==null)return;
+        transaction.commit();
+    }
 }

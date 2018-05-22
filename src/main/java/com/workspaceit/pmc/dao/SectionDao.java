@@ -46,6 +46,15 @@ public class SectionDao extends BaseDao{
                 .setParameter("ids",ids)
                 .list();
     }
+    public List<Section> getByAdvertisementId(int advertisementId){
+
+        Session session = this.getCurrentSession();
+        return session.createQuery("FROM Section sec " +
+                "join fetch sec.advertisement as adv  " +
+                "WHERE adv.id = :advertisementId ")
+                .setParameter("advertisementId",advertisementId)
+                .list();
+    }
     public List<Section> getByAdTypeSectionTypeAndRotation(ADVERTISEMENT_TYPE adType, SECTION_TYPE sectionType,
                                                            ADVERTISEMENT_ROTATION_SETTINGS rotationSettings){
 

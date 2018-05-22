@@ -18,8 +18,7 @@
                                                     .sections
                                                     .get(SECTION_TYPE.LOGO).sectionResource}" >
                             <jsp:include page="partial/sectionResource.jsp">
-                                <jsp:param name="key" value=""/>
-                                <jsp:param name="isDeletable" value="true"/>
+                                <jsp:param name="key" value="_GALLERY_LOGO"/>
                                 <jsp:param name="id" value="${secResource.id}"/>
                                 <jsp:param name="sectionId" value="${secResource.sectionId}"/>
                                 <jsp:param name="fileName" value="${secResource.fileName}"/>
@@ -65,8 +64,8 @@
                                                     .sections
                                                     .get(SECTION_TYPE.BACKGROUND).sectionResource}" >
                         <jsp:include page="partial/sectionResource.jsp">
-                            <jsp:param name="key" value=""/>
-                            <jsp:param name="isDeletable" value="true"/>
+                            <jsp:param name="key" value="_GALLERY_BACKGROUND"/>
+
                             <jsp:param name="id" value="${secResource.id}"/>
                             <jsp:param name="sectionId" value="${secResource.sectionId}"/>
                             <jsp:param name="fileName" value="${secResource.fileName}"/>

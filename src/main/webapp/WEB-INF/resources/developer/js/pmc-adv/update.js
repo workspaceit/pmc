@@ -11,6 +11,8 @@ if(!isScriptLoadedAtPage("/developer/js/pmc-adv/common.js")){
 
 var ID_KEY = {
     _ADV_OTHER_IMAGE : "_ADV_OTHER_IMAGE",
+    _GALLERY_LOGO : "_GALLERY_LOGO",
+    _GALLERY_BACKGROUND : "_GALLERY_BACKGROUND",
     _GALLERY_TOP_BANNER : "_GALLERY_TOP_BANNER",
     _GALLERY_BOTTOM_BANNER : "_GALLERY_BOTTOM_BANNER",
     _SLIDE_SHOW_BANNER : "_SLIDE_SHOW_BANNER",
@@ -70,8 +72,12 @@ function updateAdvertiser(){
     var slideShowAdsData =getSlideShowAdsData();
 
     advertiserData["removeOtherImageIds"]= getToken(ID_KEY._ADV_OTHER_IMAGE);
+
+    galleryAdsData["removeLogoId"]= (getToken(ID_KEY._GALLERY_LOGO).length>0)?getToken(ID_KEY._GALLERY_LOGO)[0]:null;
+    galleryAdsData["removeBackgroundIds"]= getToken(ID_KEY._GALLERY_BACKGROUND);
     galleryAdsData["removeTopBannerIds"]= getToken(ID_KEY._GALLERY_TOP_BANNER);
     galleryAdsData["removeBottomBannerIds"]= getToken(ID_KEY._GALLERY_BOTTOM_BANNER);
+
     slideShowAdsData["removeBannerIds"]= getToken(ID_KEY._SLIDE_SHOW_BANNER);
 
     popupAdsData["removeSmsBannerIds"]= getToken(ID_KEY._POPUP_SMS_BANNER);
@@ -127,7 +133,6 @@ function updateAdvertiser(){
             }
         },
         success: function(response) {
-            debugger;
             notifyUser("advertiserInfoErrorCount",response,false);
             advertiserAfterSaveAction(globalBtnAction,id);
         }
