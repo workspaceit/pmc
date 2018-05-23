@@ -1256,6 +1256,7 @@ ul.submenu li{
 .image-previewer div .img-thumbnail{
     border: 0px;
     padding: 0px;
+    margin-bottom: 10px;
 }
 .image-previewer a{
     color: red;
