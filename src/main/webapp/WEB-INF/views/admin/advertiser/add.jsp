@@ -13,7 +13,7 @@
                     <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save','create')">Save</button>
                     <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_close','create')">Save&nbsp;&&nbsp;Close</button>
                     <button class="btn btn-action-top" onclick="initSubmitAdvertiserData('save_and_new','create')">Save&nbsp;&&nbsp;New</button>
-                    <button class="btn btn-action-top" onclick="advertiserAfterSaveAction('cancel')">Cancel</button>
+                    <a class="btn btn-action-top" href='<s:url value="/admin/advertiser/all"/>'>Cancel</a>
                 </div>
 
                 <div class="tabbable-panel clearfix">
